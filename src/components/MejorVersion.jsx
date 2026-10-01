@@ -6,29 +6,37 @@ const MejorVersion = () => {
   const totalImages = 4;
 
   return (
+    // font-principal aplica Montserrat a toda la sección por defecto
     <section className="relative w-full py-20 md:py-28 bg-[#f9f9f9] overflow-hidden font-principal flex justify-center">
       
       {/* Contenedor principal alineado */}
       <div className="relative z-10 w-full max-w-[1200px] pl-6 lg:pl-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
         
         {/* =========================================
-            COLUMNA IZQUIERDA: Textos y Botón (Sin cambios)
+            COLUMNA IZQUIERDA: Textos y Botón
             ========================================= */}
         <div className="flex flex-col justify-center h-full max-w-[440px] pr-6 lg:pr-0">
           
-          <p className="text-[#88807a] text-[15px] md:text-[16px] font-light leading-relaxed mb-8 md:mb-12">
+          {/* Se redujo el margin-bottom (mb-4) para acercarlo al título */}
+          <p className="text-[#88807a] text-[15px] md:text-[16px] font-light leading-relaxed mb-4">
             Clínica con especialistas CERTIFICADOS<br />
             en dermatología, cirugía plástica, láser,<br />
             estética y expertos en faciales.
           </p>
 
-          <h2 className="text-4xl md:text-5xl lg:text-[3.2rem] text-[#053d57] font-serif leading-[1.15] tracking-wide mb-8 md:mb-12">
-            <span className="font-light">TU MEJOR VERSIÓN,</span><br />
+          {/* Se redujo el interlineado (leading-[0.95]) y el margin-bottom (mb-4) */}
+          <h2 
+            className="text-4xl md:text-5xl lg:text-[3.2rem] text-[#053d57] leading-[0.95] tracking-wide mb-4"
+            style={{ fontFamily: 'Alta, serif' }}
+          >
+            {/* Agregamos whitespace-nowrap para mantener la primera línea junta */}
+            <span className="font-light whitespace-nowrap">TU MEJOR VERSIÓN,</span><br />
             <span className="font-light">ESTÁ AÚN POR</span><br />
             <span className="font-normal">LLEGAR</span>
           </h2>
           
-          <p className="text-[#88807a] text-[15px] md:text-[16px] font-light leading-relaxed mb-10 md:mb-14">
+          {/* Se ajustó el margin-bottom antes del botón */}
+          <p className="text-[#88807a] text-[15px] md:text-[16px] font-light leading-relaxed mb-8">
             Nuestros servicios son realizados por<br />
             especialistas altamente capacitados fuera<br />
             y dentro del país, y priorizamos el manejo<br />
@@ -51,12 +59,10 @@ const MejorVersion = () => {
             ========================================= */}
         <div className="relative w-full h-[450px] md:h-[650px]">
           
-          {/* 1. FIGURA CELESTE DE FONDO 
-              Pegada a la derecha, ocupa el 100% de alto, asoma por arriba y abajo */}
+          {/* 1. FIGURA CELESTE DE FONDO */}
           <div className="absolute right-0 top-0 w-[70%] md:w-[65%] h-full bg-[#7caebc] rounded-l-[2.5rem] md:rounded-l-[3.5rem] z-0"></div>
 
-          {/* 2. IMAGEN PRINCIPAL
-              Centrada verticalmente (top-10%), empujada a la izquierda, más baja (h-80%) para dejar ver el celeste arriba y abajo */}
+          {/* 2. IMAGEN PRINCIPAL */}
           <div className="absolute left-0 top-[10%] w-[90%] md:w-[92%] h-[80%] rounded-l-[2.5rem] md:rounded-l-[3.5rem] overflow-hidden shadow-2xl z-10">
             <img 
               src="/clinica-recepcion.png" 
@@ -65,8 +71,7 @@ const MejorVersion = () => {
             />
           </div>
 
-          {/* 3. PUNTOS DEL CARRUSEL
-              Ubicados exactamente en la franja celeste inferior (bottom-0) y centrados sobre ese espacio */}
+          {/* 3. PUNTOS DEL CARRUSEL */}
           <div className="absolute bottom-0 right-0 w-[70%] md:w-[65%] h-[10%] flex justify-center items-center gap-3 md:gap-4 z-20">
             {Array.from({ length: totalImages }).map((_, index) => (
               <button

@@ -6,7 +6,11 @@ const Ubicacion = () => {
       
       {/* Título y Subtítulo */}
       <div className="text-center max-w-3xl px-6 mb-16">
-        <h2 className="text-3xl md:text-5xl text-[#053d57] font-serif font-light tracking-wide mb-4">
+        {/* AQUÍ EL CAMBIO: Fuente Alta aplicada al título */}
+        <h2 
+          className="text-3xl md:text-5xl text-[#053d57] font-light tracking-wide mb-4"
+          style={{ fontFamily: 'Alta, serif' }}
+        >
           TODOS LOS CAMINOS CONDUCEN A SALVAR
         </h2>
         <p className="text-[#7c7570] text-sm md:text-base font-light leading-relaxed">

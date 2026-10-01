@@ -8,16 +8,18 @@ export default {
     extend: {
       colors: {
         marca: {
-          primario: '#053d57',   // Azul petróleo (Footer y fondos oscuros)
-          secundario: '#78b5c5', // Celeste (Botón Reservas)
-          acento: '#dfcdc1',     // Beige (Fondos de tarjetas)
-          texto: '#4a4a4a',      // Gris oscuro para textos generales
+          primario: '#053d57',
+          secundario: '#78b5c5',
+          acento: '#dfcdc1',
+          texto: '#4a4a4a',
           blanco: '#ffffff'
         }
       },
       fontFamily: {
-        // "principal" es el nombre en clave. Tailwind aplicará esto a toda la web.
-        principal: ['FuenteProyecto', 'sans-serif'], 
+        // Textos generales
+        principal: ['MontserratLocal', 'sans-serif'],
+        // Títulos
+        alta: ['Alta', 'serif'], 
       },
     },
   },

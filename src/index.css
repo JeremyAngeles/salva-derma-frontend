@@ -1,23 +1,27 @@
-/* 1. Imports de fuentes externas siempre al inicio */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-
-/* 2. Directivas de Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* 3. Configuración de Fuente Dinámica Local */
+/* 1. Fuente Alta (Para Títulos) */
 @font-face {
-  font-family: 'FuenteProyecto';
-  src: url('/fonts/mi-fuente.woff2') format('woff2'),
-       url('/fonts/mi-fuente.woff') format('woff'),
-       url('/fonts/mi-fuente.ttf') format('truetype');
+  font-family: 'Alta';
+  src: url('/Alta_caption.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
-/* 4. Estilos globales */
+/* 2. Fuente Montserrat Local (Para Textos Generales) */
+@font-face {
+  font-family: 'MontserratLocal';
+  src: url('/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900; /* Al ser variable, soporta todos los grosores */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 3. Estilos globales */
 body {
-  font-family: 'FuenteProyecto', 'Montserrat', sans-serif;
+  /* Todo el texto por defecto usará Montserrat */
+  font-family: 'MontserratLocal', sans-serif;
 }

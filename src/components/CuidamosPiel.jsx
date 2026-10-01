@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const CuidamosPiel = () => {
   const [openCard, setOpenCard] = useState(null);
+  
+  // Referencia al contenedor del carrusel para móvil
+  const carouselRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const toggleCard = (index) => {
     setOpenCard(openCard === index ? null : index);
@@ -72,12 +76,31 @@ const CuidamosPiel = () => {
     }
   ];
 
+  // Efecto para el auto-desplazamiento en móvil cada 5 segundos
+  useEffect(() => {
+    const timer = setInterval(() => {
+      // Solo hacer auto-scroll si estamos en una pantalla pequeña (móvil)
+      if (window.innerWidth < 768 && carouselRef.current) {
+        const nextIndex = (currentIndex + 1) % cards.length;
+        setCurrentIndex(nextIndex);
+        
+        const cardWidth = carouselRef.current.offsetWidth;
+        carouselRef.current.scrollTo({
+          left: nextIndex * cardWidth,
+          behavior: 'smooth'
+        });
+      }
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [currentIndex, cards.length]);
+
   return (
     <section className="relative w-full py-20 bg-white overflow-hidden font-principal">
       
       {/* Fondo superior mejorado con desvanecimiento suave */}
-      <div className="absolute top-0 left-0 w-full h-[650px]">
-        {/* Capa base con la foto (tiene un color de respaldo para que no se vea blanco si falta la foto) */}
+      <div className="absolute top-0 left-0 w-full h-[650px] md:h-[750px]">
+        {/* Capa base con la foto */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[#eedbd1]"
           style={{ backgroundImage: "url('/bg-piel.jpg')" }}
@@ -86,25 +109,38 @@ const CuidamosPiel = () => {
         {/* Capa de color multiplicada */}
         <div className="absolute inset-0 bg-[#dcbca9] bg-opacity-40 mix-blend-multiply"></div>
         
-        {/* DEGRADADO NUEVO: Hace que el fondo se funda suavemente con el blanco de abajo, borrando la línea recta */}
+        {/* DEGRADADO NUEVO */}
         <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-b from-transparent to-white"></div>
       </div>
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-10">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-0 md:px-10">
         
-        {/* Título Principal */}
-        <h2 className="text-3xl md:text-5xl text-white text-center font-serif font-light tracking-widest mb-16 drop-shadow-md">
-          CUIDAMOS TU PIEL, TE CUIDAMOS A TI
-        </h2>
+        {/* AQUÍ EL CAMBIO PARA EL CENTRADO PERFECTO */}
+        {/* Contenedor flex para asegurar el centrado sin importar el ancho */}
+        <div className="w-full flex justify-center mt-12 md:mt-24 mb-16 px-4">
+          <h2 
+            className="text-3xl sm:text-4xl md:text-[2.4rem] lg:text-[3rem] xl:text-[3.5rem] leading-[1.2] text-white text-center tracking-widest drop-shadow-md whitespace-normal md:whitespace-nowrap pl-[0.1em]"
+            style={{ fontFamily: 'Alta, serif' }}
+          >
+            CUIDAMOS TU PIEL, <br className="block md:hidden" /> TE CUIDAMOS A TI
+          </h2>
+        </div>
 
-        {/* Grid de las 3 Tarjetas */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start">
+        {/* CONTENEDOR GRID (Desktop) Y CARRUSEL (Móvil) */}
+        <div 
+          ref={carouselRef}
+          className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-6 md:gap-8 items-start scrollbar-hide px-6 md:px-0 pb-10"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }} // Ocultar scrollbar
+        >
           
           {cards.map((card, index) => {
             const isOpen = openCard === index;
             
             return (
-              <div key={card.id} className="flex flex-col w-full relative z-20">
+              <div 
+                key={card.id} 
+                className="flex flex-col w-full flex-shrink-0 snap-center relative z-20 md:flex-shrink"
+              >
                 
                 {/* 1. Parte Superior: Imagen Principal */}
                 <div 
@@ -167,6 +203,19 @@ const CuidamosPiel = () => {
             );
           })}
         </div>
+
+        {/* Indicadores de carrusel (Puntitos) solo para móvil */}
+        <div className="flex justify-center gap-2 mt-2 md:hidden">
+          {cards.map((_, idx) => (
+            <div 
+              key={idx} 
+              className={`w-2 h-2 rounded-full transition-all ${
+                currentIndex === idx ? 'bg-[#053d57] w-4' : 'bg-gray-300'
+              }`}
+            />
+          ))}
+        </div>
+
       </div>
     </section>
   );

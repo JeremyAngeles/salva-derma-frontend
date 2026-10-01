@@ -3,26 +3,30 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-[#053d57] text-white py-16 md:py-20 font-principal">
+    // Aplicamos Montserrat directamente mediante style para forzar que el 100% del footer use esta fuente
+    <footer 
+      className="w-full bg-[#053d57] text-white py-16 md:py-20"
+      style={{ fontFamily: 'Montserrat, sans-serif' }}
+    >
       <div className="max-w-[1200px] mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
         
         {/* COLUMNA 1: Logo y Correo centrados */}
-<div className="flex flex-col items-center text-center justify-center">
-  <Link to="/" className="inline-block mb-4">
-    <img
-      src="/logo-salva.png"
-      alt="Salvar Dermatoplástica"
-      className="h-14 w-auto object-contain brightness-0 invert"
-    />
-  </Link>
+        <div className="flex flex-col items-center text-center justify-center">
+          <Link to="/" className="inline-block mb-4">
+            <img
+              src="/logo-salva.png"
+              alt="Salvar Dermatoplástica"
+              className="h-14 w-auto object-contain brightness-0 invert"
+            />
+          </Link>
 
-  <div className="flex items-center justify-center gap-3 mt-4">
-    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-    </svg>
-    <span className="text-sm md:text-base font-light tracking-wide">salvar.peru@gmail.com</span>
-  </div>
-</div>
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <span className="text-sm md:text-base font-light tracking-wide">salvar.peru@gmail.com</span>
+          </div>
+        </div>
 
         {/* COLUMNA 2: Explorar */}
         <div className="flex flex-col">

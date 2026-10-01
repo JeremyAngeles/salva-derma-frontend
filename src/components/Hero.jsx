@@ -18,9 +18,10 @@ const Hero = () => {
   }, [images.length]);
 
   return (
-    <section className="relative w-full mb-32 md:mb-40">
+    // Agregamos font-principal para asegurar que Montserrat sea la base general
+    <section className="relative w-full mb-32 md:mb-40 font-principal">
       
-      {/* 1. Contenedor de la Imagen: Altura incrementada a 95vh y min-h-[850px] para que sea mucho más largo */}
+      {/* 1. Contenedor de la Imagen */}
       <div className="relative w-full h-[90vh] md:h-[90vh] min-h-[750px] md:min-h-[800px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden flex flex-col justify-center items-center">
         
         {images.map((img, index) => (
@@ -33,21 +34,31 @@ const Hero = () => {
           ></div>
         ))}
 
-        <div className="absolute inset-0 bg-black bg-opacity-20 z-10"></div>
+        {/* Overlay oscuro para que el logo y letras resalten más */}
+        <div className="absolute inset-0 bg-black bg-opacity-30 z-10"></div>
 
-        {/* 2. Textos centrados (Ligeramente subidos con pb-12 para compensar visualmente el espacio de la tarjeta) */}
-        <div className="relative z-20 text-center text-white px-4 pb-12 md:pb-20">
-          <h1 className="text-6xl md:text-8xl font-bold flex flex-col md:flex-row items-center justify-center gap-2 mb-0">
-            <span className="text-7xl md:text-9xl font-light">@</span>
-            SALVAR
-          </h1>
-          <h2 className="text-3xl md:text-4xl font-light tracking-wide mb-8 md:mb-12">
-            Dermatoplástica
-          </h2>
-          <p className="text-lg md:text-2xl font-light max-w-2xl mx-auto leading-relaxed">
+        {/* 2. Centro (Logo + Texto) */}
+        <div className="relative z-20 text-center text-white px-4 pb-12 md:pb-20 w-full flex flex-col items-center">
+          
+          {/* EL LOGO (reemplaza al texto anterior) */}
+          <img 
+            src="/logo-salva.png" 
+            alt="Salvar Dermatoplástica" 
+            className="w-auto h-20 md:h-32 lg:h-40 object-contain mb-8 md:mb-12 drop-shadow-2xl" 
+          />
+          
+          {/* TÍTULO PRINCIPAL (Aplicamos la fuente Alta a la frase) */}
+          <h1 
+            className="text-2xl md:text-4xl font-light max-w-2xl mx-auto leading-relaxed drop-shadow-lg"
+            style={{ fontFamily: 'Alta, serif' }}
+          >
             Todo lo que buscas para tu piel,<br />
-            <strong className="font-semibold">EN UN SOLO LUGAR</strong>
-          </p>
+            {/* Obligamos a que esta parte en negrita vuelva a Montserrat */}
+            <strong className="font-semibold tracking-wider" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+              EN UN SOLO LUGAR
+            </strong>
+          </h1>
+          
         </div>
 
         {/* 3. Puntitos del Carrusel */}
@@ -69,7 +80,13 @@ const Hero = () => {
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[90%] md:w-auto bg-white rounded-[2rem] md:rounded-[3rem] py-6 px-8 md:px-20 flex flex-col md:flex-row items-center justify-center shadow-2xl gap-8 md:gap-20 z-40">
         
         <div className="flex items-center gap-4 md:gap-6">
-          <span className="text-5xl md:text-[3.5rem] font-bold text-gray-500 tracking-tighter">+1000</span>
+          {/* Números grandes con fuente Alta */}
+          <span 
+            className="text-5xl md:text-[3.5rem] font-bold text-gray-500 tracking-tighter"
+            style={{ fontFamily: 'Alta, serif' }}
+          >
+            +1000
+          </span>
           <div className="flex flex-col text-left">
             <span className="text-xl md:text-2xl font-semibold text-gray-600 leading-none mb-1">Pacientes</span>
             <span className="text-sm md:text-base font-light text-gray-400 leading-tight">confían en<br/>nosotros</span>
@@ -79,7 +96,13 @@ const Hero = () => {
         <div className="hidden md:block w-[1px] h-20 bg-gray-300"></div>
 
         <div className="flex items-center gap-4 md:gap-6">
-          <span className="text-5xl md:text-[3.5rem] font-bold text-gray-500 tracking-tighter">+6</span>
+          {/* Números grandes con fuente Alta */}
+          <span 
+            className="text-5xl md:text-[3.5rem] font-bold text-gray-500 tracking-tighter"
+            style={{ fontFamily: 'Alta, serif' }}
+          >
+            +6
+          </span>
           <div className="flex flex-col text-left">
             <span className="text-xl md:text-2xl font-semibold text-gray-600 leading-none mb-1">Años</span>
             <span className="text-sm md:text-base font-light text-gray-400 leading-tight">de experiencia</span>
