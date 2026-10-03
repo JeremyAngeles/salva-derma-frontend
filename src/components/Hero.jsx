@@ -76,40 +76,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* 4. Tarjeta Flotante Blanca */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[90%] md:w-auto bg-white rounded-[2rem] md:rounded-[3rem] py-6 px-8 md:px-20 flex flex-col md:flex-row items-center justify-center shadow-2xl gap-8 md:gap-20 z-40">
-        
-        <div className="flex items-center gap-4 md:gap-6">
-          {/* Números grandes con fuente Alta */}
-          <span 
-            className="text-5xl md:text-[3.5rem] font-bold text-gray-500 tracking-tighter"
-            style={{ fontFamily: 'Alta, serif' }}
-          >
-            +1000
-          </span>
-          <div className="flex flex-col text-left">
-            <span className="text-xl md:text-2xl font-semibold text-gray-600 leading-none mb-1">Pacientes</span>
-            <span className="text-sm md:text-base font-light text-gray-400 leading-tight">confían en<br/>nosotros</span>
-          </div>
-        </div>
-
-        <div className="hidden md:block w-[1px] h-20 bg-gray-300"></div>
-
-        <div className="flex items-center gap-4 md:gap-6">
-          {/* Números grandes con fuente Alta */}
-          <span 
-            className="text-5xl md:text-[3.5rem] font-bold text-gray-500 tracking-tighter"
-            style={{ fontFamily: 'Alta, serif' }}
-          >
-            +6
-          </span>
-          <div className="flex flex-col text-left">
-            <span className="text-xl md:text-2xl font-semibold text-gray-600 leading-none mb-1">Años</span>
-            <span className="text-sm md:text-base font-light text-gray-400 leading-tight">de experiencia</span>
-          </div>
-        </div>
-        
-      </div>
+      
     </section>
   );
 };

@@ -1,12 +1,32 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
 
 const Navbar = () => {
   const location = useLocation();
-  const isActive = (path) => location.pathname === path;
+  const [isDermaOpen, setIsDermaOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Lógica mejorada: detecta si la ruta exacta es '/' o si empieza con el path (para subpáginas)
+  const isActive = (path) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
+
+  // Cierra el menú si se hace clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDermaOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
-<nav className="fixed top-0 left-0 w-full z-50 px-6 md:px-10 py-4 flex justify-between items-center gap-4 bg-transparent text-white">        {/* Logo */}
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 md:px-10 py-4 flex justify-between items-center gap-4 bg-transparent text-white font-principal">
+        {/* Logo */}
         <Link to="/" className="flex-shrink-0">
           <img
             src="/logo-salva.png"
@@ -17,20 +37,60 @@ const Navbar = () => {
 
         {/* Barra central */}
         <div className="hidden lg:flex flex-1 items-center justify-between backdrop-blur-md rounded-full px-12 py-2.5 shadow-md text-sm md:text-base mx-4 xl:mx-8 bg-white bg-opacity-20 text-white">
-          <Link
-            to="/"
-            className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/') ? 'font-semibold' : ''}`}
-          >
+          
+          <Link to="/" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/') ? 'font-semibold' : ''}`}>
             Inicio
-            {isActive('/') && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>
-            )}
+            {isActive('/') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
           </Link>
-          <Link to="/nosotros" className="transition-colors hover:text-marca-secundario">Nosotros</Link>
-          <Link to="/dermatologia" className="transition-colors hover:text-marca-secundario">Dermatología</Link>
-          <Link to="/cirugia" className="transition-colors hover:text-marca-secundario">Cirugía Plástica</Link>
-          <Link to="/tratamientos" className="transition-colors hover:text-marca-secundario">T. Estéticos</Link>
-          <Link to="/skinlounge" className="transition-colors hover:text-marca-secundario">SkinLounge</Link>
+          
+          <Link to="/nosotros" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/nosotros') ? 'font-semibold' : ''}`}>
+            Nosotros
+            {isActive('/nosotros') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+          </Link>
+
+          {/* Menú Desplegable Dermatología */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setIsDermaOpen(!isDermaOpen)}
+              className={`relative pb-1 flex items-center gap-1.5 transition-colors hover:text-marca-secundario ${isActive('/dermatologia') ? 'font-semibold' : ''}`}
+            >
+              Dermatología
+              <svg xmlns="http://www.w3.org/2000/svg" className={`w-3.5 h-3.5 transition-transform duration-300 ${isDermaOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+              {isActive('/dermatologia') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+            </button>
+
+            {/* Submenú */}
+            {isDermaOpen && (
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-5 w-56 bg-white text-[#053d57] rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-100 font-normal">
+                <Link to="/dermatologia/laser" onClick={() => setIsDermaOpen(false)} className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm border-b border-gray-100">
+                  Dermatología Láser
+                </Link>
+                <Link to="/dermatologia/clinica" onClick={() => setIsDermaOpen(false)} className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm border-b border-gray-100">
+                  Dermatología Clínica
+                </Link>
+                <Link to="/dermatologia/estetica" onClick={() => setIsDermaOpen(false)} className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm">
+                  Dermatología Estética
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <Link to="/cirugia" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/cirugia') ? 'font-semibold' : ''}`}>
+            Cirugía Plástica
+            {isActive('/cirugia') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+          </Link>
+          
+          <Link to="/tratamientos" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/tratamientos') ? 'font-semibold' : ''}`}>
+            T. Estéticos
+            {isActive('/tratamientos') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+          </Link>
+          
+          <Link to="/skinlounge" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/skinlounge') ? 'font-semibold' : ''}`}>
+            SkinLounge
+            {isActive('/skinlounge') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+          </Link>
         </div>
 
         {/* Botón de Reservas */}
@@ -42,7 +102,7 @@ const Navbar = () => {
         </Link>
       </nav>
 
-      {/* Botón de WhatsApp */}
+      {/* Botón de WhatsApp (Se mantiene igual) */}
       <a
         href="https://wa.me/51994060977"
         target="_blank"
