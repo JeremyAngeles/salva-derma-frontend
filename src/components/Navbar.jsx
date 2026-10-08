@@ -4,15 +4,17 @@ import { useState, useRef, useEffect } from 'react';
 const Navbar = () => {
   const location = useLocation();
   const [isDermaOpen, setIsDermaOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Estado para el menú de celular
+  const [isScrolled, setIsScrolled] = useState(false);             // Estado para el efecto de scroll
   const dropdownRef = useRef(null);
 
-  // Lógica mejorada: detecta si la ruta exacta es '/' o si empieza con el path (para subpáginas)
+  // Detecta si la ruta exacta es '/' o si empieza con el path (para subpáginas)
   const isActive = (path) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
   };
 
-  // Cierra el menú si se hace clic fuera de él
+  // Cierra el menú desplegable si se hace clic fuera de él
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -23,29 +25,60 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Detecta el scroll para cambiar el color del Navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Cierra los menús al cambiar de página
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsDermaOpen(false);
+  }, [location.pathname]);
+
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 md:px-10 py-4 flex justify-between items-center gap-4 bg-transparent text-white font-principal">
-        {/* Logo */}
-        <Link to="/" className="flex-shrink-0">
+      <nav 
+        className={`fixed top-0 left-0 w-full z-50 px-6 md:px-10 py-4 flex justify-between items-center gap-4 font-principal transition-all duration-300 ${
+          isScrolled || isMobileMenuOpen ? 'bg-white shadow-md text-[#053d57]' : 'bg-transparent text-white'
+        }`}
+      >
+        {/* =========================================
+            LOGO
+            ========================================= */}
+        <Link to="/" className="flex-shrink-0 z-50">
           <img
             src="/logo-salva.png"
             alt="Salvar Dermatoplástica"
-            className="h-10 md:h-12 w-auto object-contain"
+            // Si tu logo original es 100% blanco y quieres que se vea oscuro al hacer scroll, 
+            // puedes descomentar la clase de invert en la siguiente línea:
+            className={`h-10 md:h-12 w-auto object-contain transition-all duration-300 /* ${isScrolled || isMobileMenuOpen ? 'brightness-0' : ''} */`}
           />
         </Link>
 
-        {/* Barra central */}
-        <div className="hidden lg:flex flex-1 items-center justify-between backdrop-blur-md rounded-full px-12 py-2.5 shadow-md text-sm md:text-base mx-4 xl:mx-8 bg-white bg-opacity-20 text-white">
+        {/* =========================================
+            MENÚ CENTRAL (Escritorio)
+            ========================================= */}
+        <div className={`hidden lg:flex flex-1 items-center justify-between backdrop-blur-md rounded-full px-12 py-2.5 text-sm md:text-base mx-4 xl:mx-8 transition-colors duration-300 ${
+          isScrolled ? 'bg-[#f4f2ef] shadow-sm' : 'bg-white bg-opacity-20 shadow-md text-white'
+        }`}>
           
           <Link to="/" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/') ? 'font-semibold' : ''}`}>
             Inicio
-            {isActive('/') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+            {isActive('/') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${isScrolled ? 'bg-[#053d57]' : 'bg-white'}`}></span>}
           </Link>
           
           <Link to="/nosotros" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/nosotros') ? 'font-semibold' : ''}`}>
             Nosotros
-            {isActive('/nosotros') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+            {isActive('/nosotros') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${isScrolled ? 'bg-[#053d57]' : 'bg-white'}`}></span>}
           </Link>
 
           {/* Menú Desplegable Dermatología */}
@@ -58,19 +91,19 @@ const Navbar = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className={`w-3.5 h-3.5 transition-transform duration-300 ${isDermaOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
-              {isActive('/dermatologia') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+              {isActive('/dermatologia') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${isScrolled ? 'bg-[#053d57]' : 'bg-white'}`}></span>}
             </button>
 
-            {/* Submenú */}
+            {/* Submenú Dermatología */}
             {isDermaOpen && (
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-5 w-56 bg-white text-[#053d57] rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-100 font-normal">
-                <Link to="/dermatologia/laser" onClick={() => setIsDermaOpen(false)} className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm border-b border-gray-100">
+                <Link to="/dermatologia/laser" className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm border-b border-gray-100">
                   Dermatología Láser
                 </Link>
-                <Link to="/dermatologia/clinica" onClick={() => setIsDermaOpen(false)} className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm border-b border-gray-100">
+                <Link to="/dermatologia/clinica" className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm border-b border-gray-100">
                   Dermatología Clínica
                 </Link>
-                <Link to="/dermatologia/estetica" onClick={() => setIsDermaOpen(false)} className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm">
+                <Link to="/dermatologia/estetica" className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm">
                   Dermatología Estética
                 </Link>
               </div>
@@ -79,30 +112,79 @@ const Navbar = () => {
 
           <Link to="/cirugia" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/cirugia') ? 'font-semibold' : ''}`}>
             Cirugía Plástica
-            {isActive('/cirugia') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+            {isActive('/cirugia') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${isScrolled ? 'bg-[#053d57]' : 'bg-white'}`}></span>}
           </Link>
           
           <Link to="/tratamientos" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/tratamientos') ? 'font-semibold' : ''}`}>
             T. Estéticos
-            {isActive('/tratamientos') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+            {isActive('/tratamientos') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${isScrolled ? 'bg-[#053d57]' : 'bg-white'}`}></span>}
           </Link>
           
           <Link to="/skinlounge" className={`relative pb-1 transition-colors hover:text-marca-secundario ${isActive('/skinlounge') ? 'font-semibold' : ''}`}>
             SkinLounge
-            {isActive('/skinlounge') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
+            {isActive('/skinlounge') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${isScrolled ? 'bg-[#053d57]' : 'bg-white'}`}></span>}
           </Link>
         </div>
 
-        {/* Botón de Reservas */}
+        {/* Botón de Reservas (Escritorio) */}
         <Link
           to="/reservar-cita"
-          className="flex-shrink-0 bg-marca-secundario text-white px-8 py-3 rounded-full font-medium shadow-md hover:opacity-90 transition-all text-base md:text-lg"
+          className="hidden lg:block flex-shrink-0 bg-marca-secundario text-white px-8 py-3 rounded-full font-medium shadow-md hover:bg-[#c59e93] transition-all text-base"
         >
           Reservas
         </Link>
+
+        {/* =========================================
+            BOTÓN HAMBURGUESA (Celulares)
+            ========================================= */}
+        <button 
+          className="lg:hidden p-2 z-50 transition-colors"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {isMobileMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </nav>
 
-      {/* Botón de WhatsApp (Se mantiene igual) */}
+      {/* =========================================
+          MENÚ DESPLEGABLE CELULAR
+          ========================================= */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-white text-[#053d57] flex flex-col pt-24 px-6 overflow-y-auto font-principal lg:hidden">
+          <Link to="/" className="py-4 border-b border-gray-100 text-lg">Inicio</Link>
+          <Link to="/nosotros" className="py-4 border-b border-gray-100 text-lg">Nosotros</Link>
+          
+          {/* Sección Dermatología en Móvil */}
+          <div className="py-4 border-b border-gray-100 flex flex-col gap-3">
+            <span className="text-lg font-semibold text-marca-secundario">Dermatología</span>
+            <div className="flex flex-col gap-2 pl-4">
+              <Link to="/dermatologia/laser" className="py-2 text-base text-gray-600">Dermatología Láser</Link>
+              <Link to="/dermatologia/clinica" className="py-2 text-base text-gray-600">Dermatología Clínica</Link>
+              <Link to="/dermatologia/estetica" className="py-2 text-base text-gray-600">Dermatología Estética</Link>
+            </div>
+          </div>
+
+          <Link to="/cirugia" className="py-4 border-b border-gray-100 text-lg">Cirugía Plástica</Link>
+          <Link to="/tratamientos" className="py-4 border-b border-gray-100 text-lg">T. Estéticos</Link>
+          <Link to="/skinlounge" className="py-4 border-b border-gray-100 text-lg font-semibold">SkinLounge</Link>
+
+          <Link
+            to="/reservar-cita"
+            className="mt-8 mb-10 bg-marca-secundario text-white px-8 py-3.5 rounded-full font-medium text-center shadow-md text-lg"
+          >
+            Reservar Cita
+          </Link>
+        </div>
+      )}
+
+      {/* =========================================
+          BOTÓN WHATSAPP FLOTANTE
+          ========================================= */}
       <a
         href="https://wa.me/51994060977"
         target="_blank"
