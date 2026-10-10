@@ -6,6 +6,7 @@ import Tratamientos from './pages/Tratamientos';
 import DermatologiaClinica from './pages/DermatologiaClinica'; 
 import DermatologiaEstetica from './pages/DermatologiaEstetica';
 import SkinLounge from './pages/SkinLounge'; 
+import Nosotros from './pages/Nosotros'; // <-- 1. Importamos la página Nosotros
 
 function App() {
   return (
@@ -18,9 +19,10 @@ function App() {
           <Route path="/dermatologia/clinica" element={<DermatologiaClinica />} />
           <Route path="/dermatologia/estetica" element={<DermatologiaEstetica />} /> 
           <Route path="/skinlounge" element={<SkinLounge />} /> 
-          
-          {/* <-- Nueva ruta de Tratamientos Estéticos agregada aquí --> */}
           <Route path="/tratamientos" element={<Tratamientos />} /> 
+          
+          {/* <-- 2. Nueva ruta de Nosotros agregada aquí --> */}
+          <Route path="/nosotros" element={<Nosotros />} /> 
         </Routes>
       </div>
     </BrowserRouter>
