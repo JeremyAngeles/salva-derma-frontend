@@ -113,34 +113,49 @@ const OtrosTratamientosEsteticos = () => {
         {/* =========================================
             BARRA INFERIOR AZUL (Beneficios)
             ========================================= */}
-        <div className="w-full bg-[#7ca1b4] rounded-2xl md:rounded-full mt-12 md:mt-16 py-5 md:py-6 px-6 shadow-md flex flex-col md:flex-row items-center justify-around gap-6 md:gap-0">
+        <div className="w-full bg-[#7ca1b4] rounded-2xl md:rounded-[2.5rem] mt-12 md:mt-16 py-5 md:py-6 px-6 lg:px-10 shadow-md flex flex-col md:flex-row items-center justify-around gap-8 md:gap-0">
           
-          {/* Beneficio 1 */}
-          <div className="flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /> {/* Icono provisional de planta/naturaleza */}
-            </svg>
-            <span className="text-white font-light tracking-wide text-[14px] md:text-[16px]">Naturalidad</span>
+          {/* Beneficio 1: Naturalidad */}
+          <div className="flex items-center gap-4">
+            <div className="w-9 h-9 md:w-11 md:h-11 flex-shrink-0 flex items-center justify-center">
+              <img 
+                src="/natarulidad.svg" 
+                alt="Naturalidad" 
+                className="w-full h-full object-contain"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            </div>
+            <span className="text-white font-light tracking-wide text-[15px] md:text-[17px]">Naturalidad</span>
           </div>
 
-          <div className="hidden md:block w-[1px] h-10 bg-white/40"></div> {/* Divisor vertical */}
+          <div className="hidden md:block w-[1.5px] h-12 bg-white/40"></div> {/* Divisor vertical */}
 
-          {/* Beneficio 2 */}
-          <div className="flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="text-white font-light tracking-wide text-[14px] md:text-[16px]">Rejuvenecimiento</span>
+          {/* Beneficio 2: Rejuvenecimiento */}
+          <div className="flex items-center gap-4">
+            <div className="w-9 h-9 md:w-11 md:h-11 flex-shrink-0 flex items-center justify-center">
+              <img 
+                src="/rejuvenecimiento.svg" 
+                alt="Rejuvenecimiento" 
+                className="w-full h-full object-contain"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            </div>
+            <span className="text-white font-light tracking-wide text-[15px] md:text-[17px]">Rejuvenecimiento</span>
           </div>
 
-          <div className="hidden md:block w-[1px] h-10 bg-white/40"></div> {/* Divisor vertical */}
+          <div className="hidden md:block w-[1.5px] h-12 bg-white/40"></div> {/* Divisor vertical */}
 
-          {/* Beneficio 3 */}
-          <div className="flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div className="flex flex-col">
+          {/* Beneficio 3: Resultados rápidos */}
+          <div className="flex items-center gap-4">
+            <div className="w-9 h-9 md:w-11 md:h-11 flex-shrink-0 flex items-center justify-center">
+              <img 
+                src="/rapidez.svg" 
+                alt="Resultados rápidos" 
+                className="w-full h-full object-contain"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            </div>
+            <div className="flex flex-col justify-center">
               <span className="text-white font-light tracking-wide text-[14px] md:text-[16px] leading-tight">Resultados</span>
               <span className="text-white font-light tracking-wide text-[14px] md:text-[16px] leading-tight">rápidos!</span>
             </div>

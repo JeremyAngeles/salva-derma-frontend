@@ -32,14 +32,19 @@ const PatologiasPiel = () => {
           QUE TRATAMOS
         </h2>
 
-        {/* Subtítulo con Ícono */}
+        {/* Subtítulo con Ícono Personalizado */}
         <div className="flex flex-col items-start gap-4 mb-8">
-          <div className="w-12 h-12 rounded-full border border-[#c59e93] flex items-center justify-center text-[#c59e93]">
-            {/* Ícono representativo de piel */}
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-4-8c.83 0 1.5-.67 1.5-1.5S8.83 9 8 9s-1.5.67-1.5 1.5S7.17 12 8 12zm8 0c.83 0 1.5-.67 1.5-1.5S16.83 9 16 9s-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm-4 4c1.66 0 3-1.34 3-3H9c0 1.66 1.34 3 3 3z" />
-            </svg>
+          
+          {/* Ícono de Enfermedades de la piel (Limpio) */}
+          <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center">
+            <img 
+              src="/enfermedades-de-la-piel.svg" 
+              alt="Icono Enfermedades de la piel" 
+              className="w-full h-full object-contain"
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
           </div>
+          
           <h3 className="text-[#c59e93] text-lg md:text-xl font-light tracking-[0.15em] uppercase">
             Enfermedades de la piel
           </h3>
