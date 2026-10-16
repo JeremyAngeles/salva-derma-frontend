@@ -65,4 +65,4 @@ const PatologiasPiel = () => {
   );
 };
 
-export default PatologiasPiel;
+export default PatologiasPiel;  

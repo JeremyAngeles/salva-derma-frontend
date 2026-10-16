@@ -7,12 +7,13 @@ import DermatologiaClinica from './pages/DermatologiaClinica';
 import DermatologiaEstetica from './pages/DermatologiaEstetica';
 import SkinLounge from './pages/SkinLounge'; 
 import Nosotros from './pages/Nosotros'; 
-import ScrollToTop from './components/ScrollToTop'; // <-- 1. Importamos el componente
+import CirugiaPlastica from './pages/CirugiaPlastica'; // <-- Importamos la nueva página
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <BrowserRouter>
-      {/* <-- 2. Lo colocamos dentro del BrowserRouter para que siempre suba el scroll al cambiar de página --> */}
+      {/* <-- ScrollToTop asegura que al cambiar de ruta, empieces desde arriba --> */}
       <ScrollToTop />
       
       <div className="relative min-h-screen bg-marca-blanco font-principal">
@@ -25,6 +26,9 @@ function App() {
           <Route path="/skinlounge" element={<SkinLounge />} /> 
           <Route path="/tratamientos" element={<Tratamientos />} /> 
           <Route path="/nosotros" element={<Nosotros />} /> 
+          
+          {/* <-- Nueva ruta agregada para Cirugía Plástica --> */}
+          <Route path="/cirugia" element={<CirugiaPlastica />} /> 
         </Routes>
       </div>
     </BrowserRouter>
