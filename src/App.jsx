@@ -6,11 +6,15 @@ import Tratamientos from './pages/Tratamientos';
 import DermatologiaClinica from './pages/DermatologiaClinica'; 
 import DermatologiaEstetica from './pages/DermatologiaEstetica';
 import SkinLounge from './pages/SkinLounge'; 
-import Nosotros from './pages/Nosotros'; // <-- 1. Importamos la página Nosotros
+import Nosotros from './pages/Nosotros'; 
+import ScrollToTop from './components/ScrollToTop'; // <-- 1. Importamos el componente
 
 function App() {
   return (
     <BrowserRouter>
+      {/* <-- 2. Lo colocamos dentro del BrowserRouter para que siempre suba el scroll al cambiar de página --> */}
+      <ScrollToTop />
+      
       <div className="relative min-h-screen bg-marca-blanco font-principal">
         <Navbar />
         <Routes>
@@ -20,8 +24,6 @@ function App() {
           <Route path="/dermatologia/estetica" element={<DermatologiaEstetica />} /> 
           <Route path="/skinlounge" element={<SkinLounge />} /> 
           <Route path="/tratamientos" element={<Tratamientos />} /> 
-          
-          {/* <-- 2. Nueva ruta de Nosotros agregada aquí --> */}
           <Route path="/nosotros" element={<Nosotros />} /> 
         </Routes>
       </div>
