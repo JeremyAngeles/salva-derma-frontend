@@ -5,110 +5,113 @@ const TiposLaser = () => {
     {
       id: 1,
       title: "LÁSER FRACCIONADO",
-      subtitle: "• Picosegundos\n• Erbio",
-      img: "/tipo-laser-1.png" // Reemplaza con la imagen del circulito
+      subtitle: "• Picosegundos\nErbio",
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531271/l%C3%A1ser_fracionado.png"
     },
     {
       id: 2,
       title: "LÁSER NO ABLATIVO",
       subtitle: "",
-      img: "/tipo-laser-2.png"
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531267/L%C3%A1ser_no_ablativo.jpg"
     },
     {
       id: 3,
       title: "LÁSER ABLATIVO",
       subtitle: "",
-      img: "/tipo-laser-3.png"
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531272/L%C3%A1ser_ablativo.png"
     },
     {
       id: 4,
       title: "LÁSER PIGMENTARIO\nQ-SWITCH PICOSEGUNDOS",
       subtitle: "",
-      img: "/tipo-laser-4.png"
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531268/L%C3%A1ser_pigmentario_Q-Switch.jpg"
     },
     {
       id: 5,
       title: "LÁSER VASCULAR",
       subtitle: "",
-      img: "/tipo-laser-5.png"
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531270/L%C3%A1ser_vascular.png"
     }
   ];
 
   return (
-    <section className="w-full py-16 md:py-24 bg-white font-principal flex flex-col items-center overflow-hidden">
+    <section className="w-full font-principal flex flex-col items-center overflow-hidden bg-white">
       
-      {/* Texto Introductorio Superior */}
-      {/* Se aumentó el ancho máximo a 900px para acomodar el texto más grande */}
-      <div className="max-w-[1000px] text-center px-12 mb-16 md:mb-24 mx-auto">
-        {/* Se cambió text-[15px] md:text-base por text-lg md:text-xl */}
-        <p className="text-[#88807a] text-lg md:text-xl font-light leading-relaxed">
+      {/* =========================================
+          TEXTO INTRODUCTORIO (ARRIBA Y FUERA DE LA FOTO)
+          ========================================= */}
+      <div className="w-full max-w-[1000px] text-center px-6 md:px-12 pt-16 pb-8 md:pt-24 md:pb-12 mx-auto">
+        <p className="text-[#88807a] text-base md:text-lg font-light leading-relaxed">
           Nuestra unidad Dermoláser utiliza la mejor tecnología en dermatología láser.<br className="hidden md:block" />
           Está a cargo de nuestro staff de dermatólogas y especialistas en láser, brindamos<br className="hidden md:block" />
           protocolos personalizados según cada necesidad.
         </p>
       </div>
 
-      {/* Contenedor Principal (Máquina a la izquierda, Tipos a la derecha) */}
-      <div className="w-full max-w-[1000px] px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+      {/* =========================================
+          CONTENEDOR DE LA FOTO DE FONDO Y LA LISTA
+          ========================================= */}
+      <div 
+        // Agregamos min-h-[600px] md:min-h-[750px] lg:min-h-[850px] para que la foto no se recorte y se vea COMPLETA
+        className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[850px] py-12 md:py-20 flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531261/02_-_l%C3%A1ser_tipos.png')" }}
+      >
         
-        {/* COLUMNA IZQUIERDA: Máquina Láser */}
-        <div className="flex justify-center relative">
-          {/* Fondo sutil curvo (opcional para replicar las ondas grises de la imagen) */}
-          <div className="absolute inset-0 bg-gray-50 rounded-full w-[120%] h-[120%] -left-[10%] -top-[10%] -z-10 blur-3xl opacity-50"></div>
-          
-          <img 
-            src="/maquina-laser.png" // Reemplaza con tu imagen del manípulo láser
-            alt="Máquina Dermoláser" 
-            className="w-full max-w-[220px] md:max-w-[280px] object-contain drop-shadow-2xl"
-          />
-        </div>
+        {/* Capa de protección opcional para celular por si el texto se cruza con partes oscuras */}
+        <div className="absolute inset-0 bg-white/50 md:bg-transparent pointer-events-none z-0"></div>
 
-        {/* COLUMNA DERECHA: Título y Lista */}
-        <div className="flex flex-col">
+        {/* Contenedor Principal (Grid) */}
+        <div className="relative z-10 w-full max-w-[1100px] px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           
-          {/* Título */}
-          <h2 
-            className="text-4xl md:text-5xl lg:text-6xl text-[#053d57] leading-[1.1] mb-10"
-            style={{ fontFamily: 'Alta, serif' }}
-          >
-            TIPOS DE<br />
-            LÁSER
-          </h2>
+          {/* COLUMNA IZQUIERDA: Vacía para dejar ver a la modelo/máquina de la foto de fondo */}
+          <div className="hidden md:block"></div>
 
-          {/* Lista de Tipos de Láser */}
-          <div className="flex flex-col gap-6 md:gap-8">
-            {tipos.map((tipo) => (
-              <div key={tipo.id} className="flex items-center gap-5">
-                
-                {/* Imagen Circular */}
-                <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 rounded-full overflow-hidden border-2 border-white shadow-md">
-                  <img 
-                    src={tipo.img} 
-                    alt={tipo.title} 
-                    className="w-full h-full object-cover"
-                    // Si no tienes la imagen, esto mostrará un fondo plomo temporal:
-                    onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; }}
-                  />
+          {/* COLUMNA DERECHA: Título y Lista */}
+          <div className="flex flex-col bg-white/70 md:bg-transparent p-6 md:p-0 rounded-[1.5rem] backdrop-blur-sm md:backdrop-blur-none">
+            
+            {/* Título */}
+            <h2 
+              className="text-4xl md:text-5xl lg:text-6xl text-[#053d57] leading-[1.1] mb-8 md:mb-10 drop-shadow-sm md:drop-shadow-none"
+              style={{ fontFamily: 'Alta, serif' }}
+            >
+              TIPOS DE<br />
+              LÁSER
+            </h2>
+
+            {/* Lista de Tipos de Láser */}
+            <div className="flex flex-col gap-4 md:gap-6">
+              {tipos.map((tipo) => (
+                <div key={tipo.id} className="flex items-center gap-4 group">
+                  
+                  {/* Imagen Circular */}
+                  <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 rounded-full overflow-hidden border-2 border-white shadow-md transition-transform duration-300 group-hover:scale-105">
+                    <img 
+                      src={tipo.img} 
+                      alt={tipo.title} 
+                      className="w-full h-full object-cover"
+                      onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; }}
+                    />
+                  </div>
+                  
+                  {/* Textos del Item */}
+                  <div className="flex flex-col">
+                    <h4 className="text-[#c59e93] text-sm md:text-base font-medium tracking-wide uppercase whitespace-pre-line leading-tight transition-colors duration-300 group-hover:text-[#a88277]">
+                      {tipo.title}
+                    </h4>
+                    {tipo.subtitle && (
+                      <p className="text-[#88807a] text-xs md:text-sm font-semibold md:font-light whitespace-pre-line mt-0.5 leading-snug">
+                        {tipo.subtitle}
+                      </p>
+                    )}
+                  </div>
+                  
                 </div>
-                
-                {/* Textos del Item */}
-                <div className="flex flex-col">
-                  <h4 className="text-[#c59e93] text-sm md:text-base font-medium tracking-wide uppercase whitespace-pre-line leading-tight">
-                    {tipo.title}
-                  </h4>
-                  {tipo.subtitle && (
-                    <p className="text-[#88807a] text-xs md:text-sm font-light whitespace-pre-line mt-1 leading-snug">
-                      {tipo.subtitle}
-                    </p>
-                  )}
-                </div>
-                
-              </div>
-            ))}
+              ))}
+            </div>
+
           </div>
 
         </div>
-
       </div>
     </section>
   );

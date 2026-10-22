@@ -2,19 +2,16 @@ import React from 'react';
 
 const SalvarHydrolips = () => {
   return (
-    // La sección ahora es el contenedor de la imagen directamente y ocupa w-full (todo el ancho)
-    // Le ponemos margin-bottom (mb-16 md:mb-24) para separarlo del Footer
     <section 
-      className="relative w-full h-[450px] md:h-[550px] lg:h-[650px] bg-cover bg-center flex items-center font-principal mb-16 md:mb-24"
-      style={{ backgroundImage: "url('/hydrolips-bg.jpg')" }} // Reemplaza con la foto de los labios
+      className="relative w-full h-[550px] md:h-[650px] lg:h-[750px] bg-cover bg-center flex items-center font-principal mb-16 md:mb-24"
+      style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792692165/03_-_sexy_lips.jpg')" }}
     >
       
-      {/* Overlay: Degradado oscuro sutil a la izquierda (ocupa toda la pantalla) */}
+      {/* Overlay: Degradado oscuro sutil a la izquierda */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 md:from-black/50 via-black/20 to-transparent pointer-events-none"></div>
 
       {/* =========================================
           CONTENEDOR DE TEXTOS 
-          (Centrado con max-w para que el texto no se pegue a los bordes en pantallas gigantes)
           ========================================= */}
       <div className="relative z-10 w-full max-w-[1300px] mx-auto px-6 lg:px-12 flex flex-col justify-center">
         

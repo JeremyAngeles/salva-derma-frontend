@@ -12,57 +12,66 @@ const PatologiasPiel = () => {
   ];
 
   return (
-    <section className="w-full bg-[#fbfbfb] font-principal flex flex-col md:flex-row items-stretch">
+    <section 
+      // Agregamos margen superior (mt-16 md:mt-24) para separarlo del hero
+      // Aumentamos min-h y paddings para que la sección sea notablemente más grande
+      className="relative w-full mt-16 md:mt-24 min-h-[600px] md:min-h-[750px] lg:min-h-[850px] py-16 md:py-28 font-principal flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
+      style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792614076/Primer_plano_de_piel_con_ros%C3%A1cea_en_cl%C3%ADnica.png')" }}
+    >
       
-      {/* Mitad Izquierda: Imagen */}
-      <div 
-        className="w-full md:w-1/2 h-[400px] md:h-auto bg-cover bg-center" 
-        style={{ backgroundImage: "url('/patologias-piel.jpg')" }} // Reemplaza con tu imagen
-      ></div>
+      {/* Capa de protección muy sutil solo para celular por legibilidad, invisible en PC */}
+      <div className="absolute inset-0 bg-white/30 md:bg-transparent pointer-events-none z-0"></div>
 
-      {/* Mitad Derecha: Contenido */}
-      <div className="w-full md:w-1/2 px-8 py-16 md:px-16 lg:px-24 flex flex-col justify-center">
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         
-        {/* Título Principal */}
-        <h2 
-          className="text-4xl md:text-5xl lg:text-6xl text-[#053d57] leading-[1.1] mb-10"
-          style={{ fontFamily: 'Alta, serif' }}
-        >
-          PATOLOGÍAS<br/>
-          QUE TRATAMOS
-        </h2>
+        {/* Mitad Izquierda: Completamente vacía para dejar lucir el fondo gigante */}
+        <div className="hidden md:block"></div>
 
-        {/* Subtítulo con Ícono Personalizado */}
-        <div className="flex flex-col items-start gap-4 mb-8">
+        {/* Mitad Derecha: Contenido SIN MARCO (Escalado para que combine con el nuevo tamaño) */}
+        <div className="flex flex-col py-6">
           
-          {/* Ícono de Enfermedades de la piel (Limpio) */}
-          <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center">
-            <img 
-              src="/enfermedades-de-la-piel.svg" 
-              alt="Icono Enfermedades de la piel" 
-              className="w-full h-full object-contain"
-              onError={(e) => { e.target.style.display = 'none'; }}
-            />
+          {/* Título Principal */}
+          <h2 
+            className="text-5xl md:text-6xl lg:text-[4.5rem] text-[#053d57] leading-[1.05] mb-10"
+            style={{ fontFamily: 'Alta, serif' }}
+          >
+            PATOLOGÍAS<br/>
+            QUE TRATAMOS
+          </h2>
+
+          {/* Subtítulo con Ícono Personalizado */}
+          <div className="flex flex-col items-start gap-5 mb-10">
+            
+            {/* Ícono de Enfermedades de la piel (Más grande) */}
+            <div className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center">
+              <img 
+                src="/enfermedades-de-la-piel.svg" 
+                alt="Icono Enfermedades de la piel" 
+                className="w-full h-full object-contain"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            </div>
+            
+            <h3 className="text-[#c59e93] text-xl md:text-2xl font-medium tracking-[0.15em] uppercase">
+              Enfermedades de la piel
+            </h3>
           </div>
+
+          {/* Lista de Patologías */}
+          <ul className="flex flex-col gap-4">
+            {patologias.map((item, index) => (
+              <li key={index} className="flex items-start gap-4 text-[#504a46] font-medium md:font-light text-base md:text-lg leading-snug">
+                <span className="mt-2.5 w-2 h-2 rounded-full bg-[#c59e93] flex-shrink-0"></span>
+                {item}
+              </li>
+            ))}
+          </ul>
           
-          <h3 className="text-[#c59e93] text-lg md:text-xl font-light tracking-[0.15em] uppercase">
-            Enfermedades de la piel
-          </h3>
         </div>
 
-        {/* Lista de Patologías */}
-        <ul className="flex flex-col gap-3.5">
-          {patologias.map((item, index) => (
-            <li key={index} className="flex items-start gap-3 text-[#6b625c] font-light text-[15px] md:text-base leading-snug">
-              <span className="mt-2 w-1 h-1 rounded-full bg-[#6b625c] flex-shrink-0"></span>
-              {item}
-            </li>
-          ))}
-        </ul>
-        
       </div>
     </section>
   );
 };
 
-export default PatologiasPiel;  
+export default PatologiasPiel;

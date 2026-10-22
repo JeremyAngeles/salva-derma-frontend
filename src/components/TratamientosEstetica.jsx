@@ -5,7 +5,7 @@ const TratamientosEstetica = () => {
     {
       id: 1,
       title: "REJUVENECIMIENTO FACIAL",
-      img: "/estetica-1.jpg", // Reemplaza con la foto de las arrugas en la frente
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531331/lineaas_de_expreci%C3%B3n.png", // Foto actualizada
       items: [
         "Líneas de expresión (arrugas)",
         "Flacidez (mejora del efecto lifting)",
@@ -15,7 +15,7 @@ const TratamientosEstetica = () => {
     {
       id: 2,
       title: "CALIDAD Y TEXTURA DE PIEL",
-      img: "/estetica-2.jpg", // Reemplaza con la foto de los poros/textura
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531330/textura_de_piel.png", // Foto actualizada
       items: [
         "Poros dilatados",
         "Alteraciones de textura",
@@ -25,7 +25,7 @@ const TratamientosEstetica = () => {
     {
       id: 3,
       title: "PIGMENTACIÓN Y MANCHAS",
-      img: "/estetica-3.jpg", // Reemplaza con la foto de las ojeras
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531333/ojera.png", // Foto actualizada
       items: [
         "Manchas en la piel",
         "Rojeces persistentes",
@@ -35,20 +35,20 @@ const TratamientosEstetica = () => {
   ];
 
   return (
-    // La sección ahora usa la imagen de la chica como fondo total (bg-cover bg-center)
     <section 
+      // La sección ahora usa la imagen de la chica como fondo total
       className="relative w-full py-20 md:py-28 font-principal bg-cover bg-center bg-no-repeat min-h-[850px] flex items-center overflow-hidden"
-      style={{ backgroundImage: "url('/estetica-principal.jpg')" }} // Reemplaza con la foto de la modelo
+      style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792615004/01_-_estetica_tratamiento.png')" }} 
     >
       
-      {/* Overlay sutil (opcional) para oscurecer un poco la parte derecha y que el texto blanco sea súper legible */}
-      <div className="absolute inset-0 bg-black/10 md:bg-gradient-to-r md:from-transparent md:to-[#86685f]/50"></div>
+      {/* Overlay sutil para oscurecer un poco la parte derecha y que el texto blanco sea súper legible */}
+      <div className="absolute inset-0 bg-black/10 md:bg-gradient-to-r md:from-transparent md:to-[#86685f]/60"></div>
 
       {/* Contenedor Principal: Usamos justify-end para empujar el contenido a la derecha en PC */}
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-10 flex justify-center md:justify-end">
         
         {/* Contenedor del Título y Tarjetas */}
-        <div className="w-full md:w-[60%] lg:w-[50%] flex flex-col justify-center">
+        <div className="w-full md:w-[65%] lg:w-[55%] flex flex-col justify-center">
           
           {/* Título */}
           <h2 
@@ -85,8 +85,8 @@ const TratamientosEstetica = () => {
                   <ul className="flex flex-col gap-2">
                     {trat.items.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-white text-[13px] md:text-[14px] font-light leading-snug">
-                        <span className="mt-1.5 w-1 h-1 rounded-full bg-white flex-shrink-0"></span>
-                        <span>{item}</span>
+                        <span className="mt-1.5 w-1 h-1 rounded-full bg-white flex-shrink-0 shadow-sm"></span>
+                        <span className="drop-shadow-sm">{item}</span>
                       </li>
                     ))}
                   </ul>

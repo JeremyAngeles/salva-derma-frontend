@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
+  // Las 4 imágenes de fondo correspondientes a cada sección del carrusel
   const images = [
-    '/fondo-hero-1.png',
-    '/fondo-hero-1.png',
-    '/fondo-hero-1.png',
-    '/fondo-hero-1.png',
+    '/fondo-hero-1.png', // Imagen de Inicio (Logo Salvar)
+    'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/cirujia.png', // Imagen +1000 Cirugías
+    'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/derma.png', // Imagen Dermatología
+    'https://res.cloudinary.com/cgfzvuli/image/upload/v1792530955/casosss2.png', // Imagen Casos Antes y Después (Ya viene con su título)
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -18,7 +20,6 @@ const Hero = () => {
   }, [images.length]);
 
   return (
-    // Agregamos font-principal para asegurar que Montserrat sea la base general
     <section className="relative w-full mb-32 md:mb-40 font-principal">
       
       {/* 1. Contenedor de la Imagen */}
@@ -34,30 +35,61 @@ const Hero = () => {
           ></div>
         ))}
 
-        {/* Overlay oscuro para que el logo y letras resalten más */}
-        <div className="absolute inset-0 bg-black bg-opacity-30 z-10"></div>
+        {/* Overlay oscuro (Lo hacemos dinámico: en la imagen 4 lo quitamos porque ya trae diseño propio) */}
+        <div className={`absolute inset-0 bg-black transition-opacity duration-1000 z-10 ${currentSlide === 3 ? 'opacity-0' : 'opacity-30'}`}></div>
 
-        {/* 2. Centro (Logo + Texto) */}
+        {/* 2. Centro (Textos dinámicos según el slide) */}
         <div className="relative z-20 text-center text-white px-4 pb-12 md:pb-20 w-full flex flex-col items-center">
           
-          {/* EL LOGO (reemplaza al texto anterior) */}
-          <img 
-            src="/logo-salva.png" 
-            alt="Salvar Dermatoplástica" 
-            className="w-auto h-20 md:h-32 lg:h-40 object-contain mb-8 md:mb-12 drop-shadow-2xl" 
-          />
-          
-          {/* TÍTULO PRINCIPAL (Aplicamos la fuente Alta a la frase) */}
-          <h1 
-            className="text-2xl md:text-4xl font-light max-w-2xl mx-auto leading-relaxed drop-shadow-lg"
-            style={{ fontFamily: 'Alta, serif' }}
-          >
-            Todo lo que buscas para tu piel,<br />
-            {/* Obligamos a que esta parte en negrita vuelva a Montserrat */}
-            <strong className="font-semibold tracking-wider" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              EN UN SOLO LUGAR
-            </strong>
-          </h1>
+          {/* SLIDE 1: Inicio (Logo) */}
+          <div className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full ${currentSlide === 0 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'}`}>
+            <img 
+              src="/logo-salva.png" 
+              alt="Salvar Dermatoplástica" 
+              className="w-auto h-20 md:h-32 lg:h-40 object-contain mb-8 md:mb-12 drop-shadow-2xl" 
+            />
+            <h1 
+              className="text-2xl md:text-4xl font-light max-w-2xl mx-auto leading-relaxed drop-shadow-lg"
+              style={{ fontFamily: 'Alta, serif' }}
+            >
+              Todo lo que buscas para tu piel,<br />
+              <strong className="font-semibold tracking-wider" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                EN UN SOLO LUGAR
+              </strong>
+            </h1>
+          </div>
+
+          {/* SLIDE 2: Cirugías (+1000) */}
+          <div className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full ${currentSlide === 1 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'}`}>
+            <h3 className="text-white text-[1.4rem] md:text-[1.8rem] font-light tracking-wide mb-2 md:mb-4 drop-shadow-md">
+              Hemos realizado
+            </h3>
+            <h2 
+              className="text-white text-[3.8rem] md:text-[5.5rem] lg:text-[6.5rem] leading-none tracking-wide drop-shadow-lg"
+              style={{ fontFamily: 'Alta, serif' }}
+            >
+              +1000 CIRUGÍAS
+            </h2>
+          </div>
+
+          {/* SLIDE 3: Dermatología */}
+          <div className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full ${currentSlide === 2 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'}`}>
+            <h2 
+              className="text-white text-[3.2rem] md:text-[5rem] lg:text-[6rem] leading-[1.05] tracking-wide mb-4 drop-shadow-lg"
+              style={{ fontFamily: 'Alta, serif' }}
+            >
+              DERMATOLOGÍA<br />
+              CLÍNICA Y ESTÉTICA
+            </h2>
+            <p className="text-white text-[1.1rem] md:text-[1.4rem] font-light tracking-wide drop-shadow-md">
+              Conoce más de nuestra unidad Dermoláser.
+            </p>
+          </div>
+
+          {/* SLIDE 4: Casos (Vacío porque el texto ya viene en la imagen, solo lo dejamos para que ocupe el espacio) */}
+          <div className={`transition-all duration-700 absolute w-full h-[200px] ${currentSlide === 3 ? 'opacity-100 relative' : 'opacity-0 pointer-events-none'}`}>
+            {/* Aquí no ponemos texto porque 'casosss2.png' ya lo incluye */}
+          </div>
           
         </div>
 

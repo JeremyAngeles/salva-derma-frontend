@@ -4,7 +4,7 @@ import CirugiaPlasticaInfo from '../components/CirugiaPlasticaInfo';
 import ConoceNuestrasCirugias from '../components/ConoceNuestrasCirugias';
 import CirugiasDeExito from '../components/CirugiasDeExito';
 import CadaPasoCirugia from '../components/CadaPasoCirugia';
-import ContactoDoctorCirugia from '../components/ContactoDoctorCirugia'; // <-- Importamos el nuevo componente
+import ContactoDoctorCirugia from '../components/ContactoDoctorCirugia';
 
 const CirugiaPlastica = () => {
   return (
@@ -18,7 +18,7 @@ const CirugiaPlastica = () => {
           
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/cirugia-plastica-bg.jpg')` }}
+            style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792615585/Gemini_Generated_Image_sqs2lsqs2lsqs2ls.jpg')` }}
           ></div>
 
           <div className="absolute inset-0 bg-[#053d57]/50 z-10 pointer-events-none mix-blend-multiply"></div>

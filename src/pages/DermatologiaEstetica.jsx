@@ -16,7 +16,7 @@ const DermatologiaEstetica = () => {
         <div className="relative w-full h-[90vh] md:h-[90vh] min-h-[750px] md:min-h-[800px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden flex flex-col items-center justify-center">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/derma-estetica-bg.jpg')` }} 
+            style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531300/01_-_xportada.png')` }} 
           ></div>
           <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none"></div>
           <div className="relative z-20 flex flex-col items-center text-center px-4 w-full mt-10 md:mt-20">

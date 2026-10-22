@@ -19,7 +19,7 @@ const CirugiasDeExito = () => {
           {/* 1. OTOPLASTÍA (Arriba Izquierda) */}
           <div className="relative w-full h-[260px] lg:h-full rounded-[1.8rem] md:rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b]">
             <img 
-              src="/exito-otoplastia.jpg" 
+              src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/otoplastia.png" 
               alt="Otoplastía" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#3a3a3a]' }}
@@ -35,7 +35,7 @@ const CirugiasDeExito = () => {
           {/* 2. BLEFAROPLASTÍA (Arriba Centro) */}
           <div className="relative w-full h-[260px] lg:h-full rounded-[1.8rem] md:rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b]">
             <img 
-              src="/exito-blefaroplastia.jpg" 
+              src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/BLEFARO.png" 
               alt="Blefaroplastía" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#3a3a3a]' }}
@@ -51,7 +51,7 @@ const CirugiasDeExito = () => {
           {/* 3. ARMONIZACIÓN FACIAL (Columna Derecha Completa - Ocupa 2 filas en PC) */}
           <div className="relative w-full h-[450px] sm:col-span-2 lg:col-span-1 lg:row-span-2 lg:h-full rounded-[1.8rem] md:rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b]">
             <img 
-              src="/exito-armonizacion.jpg" 
+              src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616262/ARMONIZACI%C3%93N_FACIAL.png" 
               alt="Armonización Facial" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#3a3a3a]' }}
@@ -67,7 +67,7 @@ const CirugiasDeExito = () => {
           {/* 4. LIFTING FACIAL (Abajo Izquierda) */}
           <div className="relative w-full h-[260px] lg:h-full rounded-[1.8rem] md:rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b]">
             <img 
-              src="/exito-lifting.jpg" 
+              src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/LIFTING_FACIAL.png" 
               alt="Lifting Facial" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#3a3a3a]' }}
@@ -83,7 +83,7 @@ const CirugiasDeExito = () => {
           {/* 5. RINOSEPTOPLASTÍA (Abajo Centro) */}
           <div className="relative w-full h-[260px] lg:h-full rounded-[1.8rem] md:rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b]">
             <img 
-              src="/exito-rinoseptoplastia.jpg" 
+              src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/RINOSEPTOPLASTIA.png" 
               alt="Rinoseptoplastía" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#3a3a3a]' }}

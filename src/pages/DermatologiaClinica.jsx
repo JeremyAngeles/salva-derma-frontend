@@ -17,7 +17,7 @@ const DermatologiaClinica = () => {
           
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/derma-clinica.jpg')` }} 
+            style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531282/01_-_PORTADA_CLINICA.png')` }} 
           ></div>
 
           <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none"></div>

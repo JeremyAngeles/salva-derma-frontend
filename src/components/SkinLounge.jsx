@@ -45,10 +45,10 @@ const SkinLounge = () => {
   return (
     <section className="relative w-full py-20 md:py-28 overflow-hidden font-principal flex justify-center min-h-[850px] items-center">
       
-      {/* Fondo a pantalla completa */}
+      {/* Fondo a pantalla completa usando Cloudinary */}
       <div 
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/bg-skinlounge.jpg')" }}
+        style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792529036/SKIN_LOUNGE_fondo.png')" }}
       >
         <div className="absolute inset-0 bg-[#3b2a22] bg-opacity-40 mix-blend-multiply"></div>
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>

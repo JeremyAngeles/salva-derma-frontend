@@ -2,7 +2,7 @@ import React from 'react';
 
 const EsteticaEspecialistas = () => {
   return (
-    <section className="relative w-full bg-[#faf9f8] pt-16 md:pt-24 pb-20 font-principal">
+    <section className="relative w-full bg-white pt-16 md:pt-24 pb-20 font-principal">
       
       <div className="max-w-[1000px] mx-auto px-6 lg:px-12 text-center relative z-10">
         

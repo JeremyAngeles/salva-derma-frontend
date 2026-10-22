@@ -5,23 +5,23 @@ const EspacioSkinLounge = () => {
     {
       id: 1,
       texto: "EXPERIENCIA DE LIMPIEZAS\nDERMATOLOGICAS PREMIUM",
-      img: "/espacio-limpieza.jpg" // Reemplaza con la foto de la chica con vapor
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792692168/FACIAL.png"
     },
     {
       id: 2,
       texto: "AROMATERAPIA / MASAJES",
-      img: "/espacio-aromaterapia.jpg" // Reemplaza con la foto de las velas y toalla
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792693587/Bodeg%C3%B3n_de_spa_con_velas_y_aceites.png"
     },
     {
       id: 3,
       texto: "CATERING ESPECIAL",
-      img: "/espacio-catering.jpg" // Reemplaza con la foto de las bebidas y bocaditos
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792693585/CATERING.png"
     }
   ];
 
   return (
-    // Reducimos el padding superior (pt-8 md:pt-12) para que el componente "suba" y se pegue a la sección anterior
-    <section className="w-full bg-[#faf9f8] pt-8 md:pt-12 pb-16 md:pb-20 font-principal px-6 lg:px-12">
+    // Agregamos un margen superior negativo (-mt-12 md:-mt-20) para que suba y se acople mejor a la sección de arriba
+    <section className="w-full bg-[#faf9f8] -mt-12 md:-mt-20 pt-8 md:pt-12 pb-16 md:pb-20 font-principal px-6 lg:px-12 relative z-20">
       <div className="max-w-[1250px] mx-auto">
         
         {/* =========================================

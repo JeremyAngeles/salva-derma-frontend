@@ -10,52 +10,59 @@ const ProblemasCapilares = () => {
   ];
 
   return (
-    <section className="w-full bg-[#7ba9b7] font-principal flex flex-col-reverse md:flex-row items-stretch">
+    <section 
+      // La imagen de Cloudinary ahora cubre TODA la sección de fondo
+      className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[850px] py-16 md:py-28 font-principal flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
+      style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531283/03_-_cabello.png')" }}
+    >
       
-      {/* Mitad Izquierda: Contenido */}
-      <div className="w-full md:w-1/2 px-8 py-16 md:pr-12 lg:pr-20 flex flex-col justify-center text-white">
-        
-        <div className="w-full max-w-[550px] ml-auto">
+      {/* Capa de protección sutil para que el texto blanco resalte bien, especialmente en celular */}
+      <div className="absolute inset-0 bg-black/30 md:bg-black/10 pointer-events-none z-0"></div>
+
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+
+        {/* Mitad Izquierda: Contenido escalado al nuevo tamaño gigante */}
+        <div className="flex flex-col text-white bg-[#7ba9b7]/60 md:bg-transparent p-8 md:p-0 rounded-[2rem] backdrop-blur-md md:backdrop-blur-none shadow-lg md:shadow-none">
           
-          {/* Ícono de Problemas Capilares (Personalizado y limpio) */}
-          <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center mb-6">
+          {/* Ícono de Problemas Capilares (Más grande) */}
+          <div className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center mb-6 md:mb-8">
             <img 
               src="/problemas-capilares.svg" 
               alt="Icono Problemas Capilares" 
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain drop-shadow-md"
               onError={(e) => { e.target.style.display = 'none'; }}
             />
           </div>
 
+          {/* Título Principal */}
           <h2 
-            className="text-4xl md:text-5xl lg:text-6xl leading-[1.1] mb-6"
+            className="text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.05] mb-6 md:mb-8 drop-shadow-md"
             style={{ fontFamily: 'Alta, serif' }}
           >
-            PROBLEMAS CAPILARES
+            PROBLEMAS<br className="hidden lg:block" /> CAPILARES
           </h2>
 
-          <p className="font-light text-[15px] md:text-base leading-relaxed mb-10">
+          {/* Párrafo */}
+          <p className="font-light text-base md:text-lg leading-relaxed mb-8 md:mb-10 max-w-[550px] drop-shadow-sm">
             Tratamos distintos tipos de alopecias con tratamiento médico y la combinación de nuestras mesoterapias (dutasteride, exosomas y otros), plasma rico en plaquetas. Además, también utilizamos tecnologías como micropunción, Nanopore y láser.
           </p>
 
-          <ul className="flex flex-col gap-3.5">
+          {/* Lista */}
+          <ul className="flex flex-col gap-4">
             {problemas.map((item, index) => (
-              <li key={index} className="flex items-start gap-3 font-light text-[15px] md:text-base leading-snug">
-                <span className="mt-2 w-1 h-1 rounded-full bg-white flex-shrink-0"></span>
+              <li key={index} className="flex items-start gap-4 font-medium md:font-light text-base md:text-lg leading-snug drop-shadow-sm">
+                <span className="mt-2.5 w-2 h-2 rounded-full bg-white flex-shrink-0 shadow-sm"></span>
                 {item}
               </li>
             ))}
           </ul>
 
         </div>
+
+        {/* Mitad Derecha: Completamente vacía para dejar lucir el fondo */}
+        <div className="hidden md:block"></div>
+
       </div>
-
-      {/* Mitad Derecha: Imagen */}
-      <div 
-        className="w-full md:w-1/2 h-[400px] md:h-auto bg-cover bg-center" 
-        style={{ backgroundImage: "url('/problemas-capilares.jpg')" }} 
-      ></div>
-
     </section>
   );
 };

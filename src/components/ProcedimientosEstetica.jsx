@@ -6,48 +6,49 @@ const ProcedimientosEstetica = () => {
       id: 1,
       title: "LÁSER",
       desc: "De rejuvenecimiento fraccionado, láser 4D con efecto lifting/tensado, láser despigmentante y láser para zona de ojeras.",
-      img: "/proc-laser.jpg" // Reemplaza con la foto del láser
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531324/1xd.png" // Foto actualizada
     },
     {
       id: 2,
       title: "MICROPUNCIONES / NANOPORE",
       desc: "",
-      img: "/proc-nanopore.jpg" // Reemplaza con la foto
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531325/2xd.png" // Foto actualizada
     },
     {
       id: 3,
       title: "PEELINGS",
       desc: "",
-      img: "/proc-peelings.jpg" // Reemplaza con la foto
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531326/3xd.png" // Foto actualizada
     },
     {
       id: 4,
       title: "MESOTERAPIA",
       desc: "Despigmentantes, hidratantes, exosomas y PDRN de salmón.",
-      img: "/proc-mesoterapia.jpg" // Reemplaza con la foto
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531327/4xd.png" // Foto actualizada
     },
     {
       id: 5,
       title: "INYECTABLES",
       desc: "Botox, Ácido hialurónico, Bioestimuladores de colágeno, etc.",
-      img: "/proc-inyectables.jpg" // Reemplaza con la foto
+      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531328/5xd.png" // Foto actualizada
     }
   ];
 
   return (
-    <section className="relative w-full py-20 md:py-28 bg-[#f8f9fa] font-principal overflow-hidden">
+    <section 
+      // Se agregó el fondo principal desde Cloudinary
+      className="relative w-full py-20 md:py-28 font-principal overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531302/03_fondo_blanco.png')" }}
+    >
       
-      {/* Fondo tenue (Opcional: replica la máquina de fondo sutil que se ve en la imagen) */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-multiply pointer-events-none"
-        style={{ backgroundImage: "url('/fondo-clinica-claro.jpg')" }}
-      ></div>
+      {/* Capa de protección opcional para legibilidad */}
+      <div className="absolute inset-0 bg-white/40 md:bg-white/20 pointer-events-none z-0"></div>
 
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-10">
         
         {/* Título Principal */}
         <h2 
-          className="text-4xl md:text-5xl lg:text-[4rem] text-[#053d57] text-center mb-16 md:mb-20 tracking-wide"
+          className="text-4xl md:text-5xl lg:text-[4rem] text-[#053d57] text-center mb-16 md:mb-20 tracking-wide drop-shadow-sm"
           style={{ fontFamily: 'Alta, serif' }}
         >
           PROCEDIMIENTOS
@@ -57,12 +58,12 @@ const ProcedimientosEstetica = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
           
           {/* COLUMNA IZQUIERDA: Lista de Procedimientos */}
-          <div className="flex flex-col gap-6 md:gap-8">
+          <div className="flex flex-col gap-6 md:gap-8 bg-white/50 md:bg-transparent p-6 md:p-0 rounded-[2rem] backdrop-blur-sm md:backdrop-blur-none shadow-sm md:shadow-none">
             {procedimientos.map((proc) => (
-              <div key={proc.id} className="flex items-center gap-5 md:gap-6">
+              <div key={proc.id} className="flex items-center gap-5 md:gap-6 group">
                 
                 {/* Imagen Circular */}
-                <div className="w-16 h-16 md:w-[85px] md:h-[85px] flex-shrink-0 rounded-full overflow-hidden shadow-md border-[3px] border-white bg-white">
+                <div className="w-16 h-16 md:w-[85px] md:h-[85px] flex-shrink-0 rounded-full overflow-hidden shadow-md border-[3px] border-white bg-white transition-transform duration-300 group-hover:scale-105">
                   <img 
                     src={proc.img} 
                     alt={proc.title} 
@@ -73,11 +74,11 @@ const ProcedimientosEstetica = () => {
 
                 {/* Textos del Item */}
                 <div className="flex flex-col justify-center">
-                  <h3 className="text-[#c59e93] font-medium text-sm md:text-base tracking-widest uppercase mb-1 drop-shadow-sm">
+                  <h3 className="text-[#c59e93] font-medium text-sm md:text-base tracking-widest uppercase mb-1 drop-shadow-sm transition-colors duration-300 group-hover:text-[#a88277]">
                     {proc.title}
                   </h3>
                   {proc.desc && (
-                    <p className="text-[#88807a] text-[13px] md:text-[15px] font-light leading-relaxed max-w-[450px]">
+                    <p className="text-[#88807a] text-[13px] md:text-[15px] font-semibold md:font-light leading-relaxed max-w-[450px]">
                       {proc.desc}
                     </p>
                   )}

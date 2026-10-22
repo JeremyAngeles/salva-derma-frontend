@@ -1,81 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CasosExitoEstetica = () => {
   const [currentCase, setCurrentCase] = useState(0);
 
-  // Puedes ir agregando más fotos a este arreglo
   const casos = [
-    {
-      id: 1,
-      antes: '/estetica-antes.jpg',   // Reemplaza con la ruta de tu foto "Antes"
-      despues: '/estetica-despues.jpg' // Reemplaza con la ruta de tu foto "Después"
-    },
-    { id: 2, antes: '/estetica-antes-2.jpg', despues: '/estetica-despues-2.jpg' },
-    { id: 3, antes: '/estetica-antes-3.jpg', despues: '/estetica-despues-3.jpg' }
+    { id: 1, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696123/antes_y_despu%C3%A9s_estetica_1.jpg' },
+    { id: 2, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696120/antes_y_despu%C3%A9s_estetica_2.jpg' },
+    { id: 3, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696121/antes_y_despu%C3%A9s_estetica_3.jpg' },
+    { id: 4, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696123/antes_y_despu%C3%A9s_estetica_4.jpg' }
   ];
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCase((prev) => (prev + 1) % casos.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [casos.length]);
+
   return (
-    // Contenedor principal con mucho padding vertical para dar espacio a que las fotos sobresalgan
-    <section className="w-full py-24 md:py-32 bg-[#fafafa] font-principal flex flex-col items-center justify-center">
-      
-      {/* FRANJA GRIS (El contenedor real del contenido) */}
-      <div 
-        className="relative w-full bg-[#8c8c8c] bg-cover bg-center flex justify-center py-12 md:py-0"
+    <section className="w-full bg-[#f8f8f6] font-principal pt-6 pb-10 md:pt-[140px] md:pb-[95px]">
+      {/* FRANJA GRIS (ancho completo) */}
+      <div
+        className="w-full bg-[#8c8c8c] bg-cover bg-center md:min-h-[477px] flex items-center"
         style={{ backgroundImage: "url('/fondo-clinica-gris.jpg')", backgroundBlendMode: 'multiply' }}
       >
-        
-        {/* Grid interno */}
-        <div className="w-full max-w-[1100px] px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          
-          {/* =========================================
-              COLUMNA IZQUIERDA: Fotos que "sobresalen"
-              ========================================= */}
-          <div className="w-full flex justify-center md:justify-start lg:ml-10">
-            {/* 
-                AQUÍ ESTÁ EL TRUCO: 
-                Usamos -mt-16 y -mb-16 en PC (y valores menores en móvil) para que 
-                el bloque de fotos rompa los bordes superior e inferior de la franja gris.
-            */}
-            <div className="w-full max-w-[320px] md:max-w-[350px] flex flex-col rounded-[2rem] overflow-hidden shadow-2xl bg-white border-4 border-white transform -translate-y-6 md:-mt-16 md:-mb-16 relative z-10">
-              
-              {/* ANTES (Arriba) */}
-              <div className="w-full h-[220px] sm:h-[260px] relative border-b-2 border-white">
-                <img
-                  src={casos[currentCase].antes}
-                  alt="Antes"
-                  className="w-full h-full object-cover"
-                  onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#dcc4bc]' }}
-                />
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div className="absolute bottom-4 left-0 w-full text-center">
-                  <span className="text-white font-medium tracking-widest text-xs md:text-sm drop-shadow-md">ANTES</span>
-                </div>
-              </div>
+        {/* Contenedor interno centrado */}
+        <div className="w-full max-w-[1000px] mx-auto px-6 md:px-0 flex flex-col md:flex-row items-center md:items-center justify-between gap-10 py-12 md:py-0">
 
-              {/* DESPUÉS (Abajo) */}
-              <div className="w-full h-[220px] sm:h-[260px] relative border-t-2 border-white">
-                <img
-                  src={casos[currentCase].despues}
-                  alt="Después"
-                  className="w-full h-full object-cover"
-                  onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#ceb5ac]' }}
-                />
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div className="absolute bottom-4 left-0 w-full text-center">
-                  <span className="text-white font-medium tracking-widest text-xs md:text-sm drop-shadow-md">DESPUÉS</span>
-                </div>
-              </div>
-
-            </div>
+          {/* FOTO VERTICAL: sobresale ~58px arriba y abajo de la franja */}
+          <div className="relative z-20 w-full max-w-[340px] h-[560px] md:h-[680px] md:-my-[101px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-sm">
+            <img
+              src={casos[currentCase].img}
+              alt={`Caso Estética ${currentCase + 1}`}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
+                e.target.className = 'w-full h-full object-cover bg-[#dcc4bc]';
+              }}
+            />
           </div>
 
-          {/* =========================================
-              COLUMNA DERECHA: Textos
-              ========================================= */}
-          <div className="flex flex-col items-center md:items-end text-center md:text-right text-white relative z-10">
-            
+          {/* TEXTOS alineados a la derecha */}
+          <div className="relative z-10 flex flex-col items-center md:items-end text-center md:text-right text-white md:ml-auto">
             <h2
-              className="text-3xl md:text-4xl lg:text-[2.5rem] leading-[1.1] mb-6 max-w-[500px] tracking-wide drop-shadow-sm"
+              className="text-[28px] md:text-[40px] leading-[1.12] tracking-[0.07em] font-light mb-7"
               style={{ fontFamily: 'Alta, serif' }}
             >
               QUERERTE ES ACEPTARTE<br />
@@ -84,15 +52,14 @@ const CasosExitoEstetica = () => {
               COMO QUIERES
             </h2>
 
-            {/* Línea divisoria decorativa (opcional, si quieres separar título de texto) */}
-            <div className="w-[150px] h-[1px] bg-white/40 mb-6"></div>
+            <div className="w-[180px] h-[3px] bg-[#cfaaa6] mb-7"></div>
 
-            <p className="text-white/90 text-[14px] md:text-[15px] font-light leading-relaxed mb-6 max-w-[480px]">
-              Nuestros tratamientos en dermatología estética<br className="hidden lg:block"/>
-              buscan calidad y belleza, sin olvidar que la piel<br className="hidden lg:block"/>
-              es un órgano complejo que tiene distintas capas<br className="hidden lg:block"/>
-              y también posibles enfermedades. Nuestro<br className="hidden lg:block"/>
-              objetivo es mejorar la piel con conocimiento y<br className="hidden lg:block"/>
+            <p className="text-white text-[19px] md:text-[20px] font-light leading-[20px] max-w-[420px]">
+              Nuestros tratamientos en dermatología estética
+              buscan calidad y belleza, sin olvidar que la piel
+              es un órgano complejo que tiene distintas capas
+              y también posibles enfermedades. Nuestro
+              objetivo es mejorar la piel con conocimiento y
               ciencia que nos brinda nuestra especialidad.
             </p>
           </div>
@@ -100,20 +67,23 @@ const CasosExitoEstetica = () => {
         </div>
       </div>
 
-      {/* Puntitos indicadores (Por fuera de la franja gris, abajo) */}
-      <div className="flex gap-3 mt-12 md:mt-16">
-        {casos.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentCase(index)}
-            className={`w-3.5 h-3.5 md:w-4 md:h-4 rounded-full transition-all border border-[#dcc4bc] shadow-sm ${
-              currentCase === index ? 'bg-[#dcc4bc]' : 'bg-transparent hover:bg-[#dcc4bc]/50'
-            }`}
-            aria-label={`Ver caso ${index + 1}`}
-          ></button>
-        ))}
+      {/* PUNTOS: debajo de la franja, a la derecha de la foto */}
+      <div className="w-full max-w-[960px] mx-auto px-6 md:px-0 pt-7 flex justify-center md:justify-start md:pl-[385px]">
+        <div className="flex gap-[13px]">
+          {casos.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentCase(index)}
+              aria-label={`Ver caso ${index + 1}`}
+              className={`w-[18px] h-[18px] rounded-full border-[1.5px] transition-colors ${
+                currentCase === index
+                  ? 'bg-[#cfaaa6] border-[#cfaaa6]'
+                  : 'bg-transparent border-[#1b4a72] hover:bg-[#1b4a72]/10'
+              }`}
+            ></button>
+          ))}
+        </div>
       </div>
-
     </section>
   );
 };

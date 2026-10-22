@@ -22,7 +22,8 @@ const CuidamosPiel = () => {
           • D. Estética
         </>
       ),
-      image: "/card-derma.jpg",
+      // Imagen de Dermatología actualizada
+      image: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792529032/dermatologiia.jpg",
       treatments: [
         "Acné",
         "Rosácea/Telangiectasias",
@@ -38,7 +39,8 @@ const CuidamosPiel = () => {
       id: 1,
       title: (<>TRATAMIENTOS<br/>ESTÉTICOS POR<br/>ESPECIALISTAS</>),
       subtitle: null,
-      image: "/card-estetica.jpg",
+      // Imagen de Tratamientos Estéticos actualizada
+      image: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792529031/ttratamiento.jpg",
       treatments: [
         "Bioestimuladores de Colágeno",
         "Toxina Botulínica",
@@ -60,7 +62,8 @@ const CuidamosPiel = () => {
           &nbsp;&nbsp;reconstructiva
         </>
       ),
-      image: "/card-cirugia.jpg",
+      // Imagen de Cirugía Plástica actualizada
+      image: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792530710/plasticaa.png",
       treatments: [
         "Otoplastia",
         "Rinoseptoplastia",
@@ -100,10 +103,10 @@ const CuidamosPiel = () => {
       
       {/* Fondo superior mejorado con desvanecimiento suave */}
       <div className="absolute top-0 left-0 w-full h-[650px] md:h-[750px]">
-        {/* Capa base con la foto */}
+        {/* Capa base con la foto actualizada */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[#eedbd1]"
-          style={{ backgroundImage: "url('/bg-piel.jpg')" }}
+          style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792529033/servis.png')" }}
         ></div>
         
         {/* Capa de color multiplicada */}
@@ -115,7 +118,6 @@ const CuidamosPiel = () => {
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-0 md:px-10">
         
-        {/* AQUÍ EL CAMBIO PARA EL CENTRADO PERFECTO */}
         {/* Contenedor flex para asegurar el centrado sin importar el ancho */}
         <div className="w-full flex justify-center mt-12 md:mt-24 mb-16 px-4">
           <h2 

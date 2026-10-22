@@ -12,29 +12,25 @@ const CadaPasoCirugia = () => {
   ];
 
   return (
-    <section className="w-full bg-[#f8f8f8] pt-12 md:pt-16 pb-0 font-principal overflow-hidden">
-      <div className="max-w-[1250px] mx-auto px-6 lg:px-12 flex flex-col-reverse lg:flex-row items-center lg:items-end justify-between gap-10 lg:gap-8">
+    <section 
+      className="relative w-full py-16 md:py-24 font-principal overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792617218/03_-_antes_y_despues_casos_2.jpg')` }}
+    >
+      
+      {/* Capa sutil de protección (opcional) para asegurar legibilidad sobre el fondo fotográfico */}
+      <div className="absolute inset-0 bg-white/20 md:bg-white/10 pointer-events-none z-0"></div>
+
+      {/* Contenedor principal alineado a la derecha (justify-end) ya que quitamos la foto de la izquierda */}
+      <div className="relative z-10 max-w-[1250px] mx-auto px-6 lg:px-12 flex justify-center lg:justify-end">
         
         {/* =========================================
-            COLUMNA IZQUIERDA: Modelo Corporal
+            COLUMNA ÚNICA: Textos y Antes/Después
             ========================================= */}
-        <div className="w-full lg:w-[46%] flex justify-center lg:justify-start self-end">
-          <img 
-            src="/modelo-cuerpo-cirugia.png" // Imagen PNG sin fondo de la modelo
-            alt="Cirugía Plástica Corporal" 
-            className="w-full max-w-[440px] lg:max-w-[520px] object-contain object-bottom"
-            onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full max-w-[420px] h-[550px] bg-gray-200 rounded-t-3xl' }}
-          />
-        </div>
-
-        {/* =========================================
-            COLUMNA DERECHA: Textos y Antes/Después
-            ========================================= */}
-        <div className="w-full lg:w-[54%] flex flex-col items-center lg:items-end text-center lg:text-right pb-14 lg:pb-20">
+        <div className="w-full lg:w-[55%] flex flex-col items-center lg:items-end text-center lg:text-right">
           
           {/* Título Principal */}
           <h2 
-            className="text-[#053d57] text-[2.4rem] sm:text-[3rem] md:text-[3.6rem] xl:text-[4rem] leading-[1.08] tracking-wide mb-3"
+            className="text-[#053d57] text-[2.4rem] sm:text-[3rem] md:text-[3.6rem] xl:text-[4rem] leading-[1.08] tracking-wide mb-3 drop-shadow-sm"
             style={{ fontFamily: 'Alta, serif' }}
           >
             CADA PASO TE ACERCA<br />
@@ -43,14 +39,14 @@ const CadaPasoCirugia = () => {
 
           {/* Subtítulo en fuente Alta */}
           <h3 
-            className="text-[#7c7570] text-[15px] sm:text-[18px] md:text-[21px] tracking-wider uppercase mb-6 font-light"
+            className="text-[#7c7570] text-[15px] sm:text-[18px] md:text-[21px] tracking-wider uppercase mb-6 font-light drop-shadow-sm"
             style={{ fontFamily: 'Alta, serif' }}
           >
             PARA TODO LO DEMÁS, EXISTE LA CIRUGÍA PLÁSTICA
           </h3>
 
           {/* Párrafo descriptivo */}
-          <p className="text-[#7c7570] text-[13.5px] md:text-[15px] font-light leading-relaxed max-w-[600px] mb-8 md:mb-10">
+          <p className="text-[#7c7570] text-[13.5px] md:text-[15px] font-light leading-relaxed max-w-[600px] mb-8 md:mb-10 drop-shadow-sm">
             La cirugía plástica, sea facial o corporal es un universo en el cual el
             centro es el paciente, no existen dos resultados iguales, cada caso
             es único y se refleja en el plan pre - operatorio y se define según
@@ -62,7 +58,7 @@ const CadaPasoCirugia = () => {
           <div className="w-full max-w-[560px] flex flex-col items-center">
             
             {/* Tarjeta Dividida */}
-            <div className="w-full h-[230px] sm:h-[270px] md:h-[290px] rounded-[1.4rem] overflow-hidden shadow-md flex relative bg-white">
+            <div className="w-full h-[230px] sm:h-[270px] md:h-[290px] rounded-[1.4rem] overflow-hidden shadow-lg flex relative bg-white/40 backdrop-blur-sm border border-white/30">
               
               {/* Mitad Izquierda: ANTES */}
               <div className="relative w-1/2 h-full">
@@ -80,7 +76,7 @@ const CadaPasoCirugia = () => {
               </div>
 
               {/* Línea divisoria blanca central */}
-              <div className="w-[2px] h-full bg-white z-10"></div>
+              <div className="w-[2px] h-full bg-white z-10 shadow-[0_0_5px_rgba(0,0,0,0.3)]"></div>
 
               {/* Mitad Derecha: DESPUÉS */}
               <div className="relative w-1/2 h-full">
@@ -106,10 +102,10 @@ const CadaPasoCirugia = () => {
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   aria-label={`Ver caso ${index + 1}`}
-                  className={`w-4 h-4 rounded-full transition-all ${
+                  className={`w-4 h-4 rounded-full transition-all shadow-sm ${
                     currentSlide === index
                       ? 'bg-[#c9a79e] border border-[#c9a79e]'
-                      : 'bg-transparent border-[1.5px] border-[#053d57] hover:bg-[#053d57]/10'
+                      : 'bg-white/50 border-[1.5px] border-[#053d57] hover:bg-[#053d57]/30'
                   }`}
                 />
               ))}

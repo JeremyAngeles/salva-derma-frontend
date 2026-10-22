@@ -5,52 +5,44 @@ const ConoceNuestrasCirugias = () => {
     <section className="relative w-full font-principal overflow-hidden">
       
       {/* =========================================
-          FONDO: Gris con imagen tenue arriba (88%) y claro abajo (12%)
+          FONDO: SOLO LA IMAGEN, 100% LIMPIA, SIN NADA ENCIMA
           ========================================= */}
-      <div className="absolute inset-0 flex flex-col z-0 pointer-events-none">
-        {/* Parte superior gris con imagen de fondo en blanco y negro */}
-        <div className="relative h-[88%] w-full bg-[#5c5c5c] overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center grayscale opacity-25 mix-blend-luminosity"
-            style={{ backgroundImage: `url('/cirugia-plastica-bg.jpg')` }} // Puedes usar la misma del hero u otra foto médica
-          ></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#4a4a4a]/80 via-[#6e6e6e]/70 to-[#7a7a7a]/90"></div>
-        </div>
-        
-        {/* Parte inferior clara donde apoyan las tarjetas */}
-        <div className="h-[12%] w-full bg-[#f4f2ef]"></div>
-      </div>
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none z-0"
+        style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792615981/01_-_FONDO.png')` }}
+      ></div>
 
       {/* =========================================
           CONTENIDO PRINCIPAL
           ========================================= */}
-      <div className="relative z-10 max-w-[1150px] mx-auto px-4 sm:px-6 lg:px-8 pt-14 md:pt-20 pb-8">
+      <div className="relative z-10 max-w-[1150px] mx-auto px-4 sm:px-6 lg:px-8 pt-14 md:pt-20 pb-16 md:pb-20">
         
-        {/* Título Principal CORREGIDO: Usa la fuente principal (Montserrat) en font-light */}
-        <h2 className="text-white text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.2rem] font-light text-center mb-8 md:mb-10 tracking-widest drop-shadow-sm leading-none">
+        {/* Título Principal */}
+        <h2 className="text-white text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.2rem] font-light text-center mb-8 md:mb-10 tracking-widest drop-shadow-md leading-none">
           CONOCE NUESTRAS CIRUGÍAS
         </h2>
 
         {/* MARCO TRANSLÚCIDO ÚNICO QUE ENVUELVE AMBAS TARJETAS */}
-        <div className="w-full bg-white/25 backdrop-blur-sm p-3 sm:p-4 md:p-5 rounded-[2.2rem] md:rounded-[3rem] shadow-xl">
+        <div className="w-full bg-white/40 backdrop-blur-md p-3 sm:p-4 md:p-5 rounded-[2.2rem] md:rounded-[3rem] shadow-xl border border-white/50">
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5">
+          {/* AQUÍ ESTÁ EL CAMBIO: md:grid-cols-2 fuerza a que estén en una sola fila */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             
             {/* =========================================
                 TARJETA 1: CIRUGÍA FACIAL
                 ========================================= */}
-            <div className="relative w-full h-[380px] sm:h-[430px] md:h-[470px] rounded-[1.8rem] md:rounded-[2.4rem] overflow-hidden bg-[#222222] group">
+            <div className="relative w-full h-[380px] sm:h-[430px] md:h-[470px] rounded-[1.8rem] md:rounded-[2.4rem] overflow-hidden bg-[#222222] group shadow-inner">
               
-              {/* Imagen de fondo nítida */}
+              {/* Imagen de fondo Facial (Cloudinary) */}
               <img 
-                src="/cirugia-facial.jpg" 
+                src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792615767/02_-_FACIAL.png" 
                 alt="Cirugía Facial" 
                 className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
                 onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute inset-0 w-full h-full bg-[#262626]' }}
               />
               
-              {/* Sombra muy sutil solo a la izquierda para asegurar lectura del texto sin tapar la foto */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-transparent pointer-events-none"></div>
+              {/* Sombra interna para el texto de la tarjeta */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent pointer-events-none"></div>
               
               {/* Textos */}
               <div className="relative z-10 w-full h-full flex flex-col justify-between p-7 sm:p-9 md:p-11">
@@ -79,18 +71,18 @@ const ConoceNuestrasCirugias = () => {
             {/* =========================================
                 TARJETA 2: CIRUGÍA CORPORAL
                 ========================================= */}
-            <div className="relative w-full h-[380px] sm:h-[430px] md:h-[470px] rounded-[1.8rem] md:rounded-[2.4rem] overflow-hidden bg-[#222222] group">
+            <div className="relative w-full h-[380px] sm:h-[430px] md:h-[470px] rounded-[1.8rem] md:rounded-[2.4rem] overflow-hidden bg-[#222222] group shadow-inner">
               
-              {/* Imagen de fondo nítida */}
+              {/* Imagen de fondo Corporal (Cloudinary) */}
               <img 
-                src="/cirugia-corporal.jpg" 
+                src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792615768/03_-_CORPORAL.png" 
                 alt="Cirugía Corporal" 
                 className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
                 onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute inset-0 w-full h-full bg-[#262626]' }}
               />
               
-              {/* Sombra muy sutil solo a la izquierda */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-transparent pointer-events-none"></div>
+              {/* Sombra interna para el texto de la tarjeta */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent pointer-events-none"></div>
               
               {/* Textos */}
               <div className="relative z-10 w-full h-full flex flex-col justify-between p-7 sm:p-9 md:p-11">

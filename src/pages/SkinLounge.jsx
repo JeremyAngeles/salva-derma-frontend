@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import TratamientosSkinLounge from '../components/TratamientosSkinLounge';
 import SalvarHydrolips from '../components/SalvarHydrolips';
 import EspacioSkinLounge from '../components/EspacioSkinLounge';
-import MasAllaSkinLounge from '../components/MasAllaSkinLounge'; // <-- Importamos el nuevo cierre
+import MasAllaSkinLounge from '../components/MasAllaSkinLounge';
 
 const SkinLounge = () => {
   return (
@@ -17,9 +17,9 @@ const SkinLounge = () => {
         <div className="absolute top-0 left-0 w-full h-[95vh] min-h-[850px] md:min-h-[900px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden z-0 shadow-sm">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/skinlounge-bg.jpg')` }} 
+            style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792692283/01_-_portadaxx.png')` }} 
           ></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/70 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black/60 pointer-events-none"></div>
         </div>
 
         <div className="relative z-10 w-full h-[95vh] min-h-[850px] md:min-h-[900px] flex flex-col justify-between pt-28 pb-12 md:pb-20 px-6 lg:px-16">
@@ -85,7 +85,7 @@ const SkinLounge = () => {
       <EspacioSkinLounge />
 
       {/* =========================================
-          5. MÁS ALLÁ DE UN FACIAL (Nuevo Componente)
+          5. MÁS ALLÁ DE UN FACIAL
           ========================================= */}
       <MasAllaSkinLounge />
 

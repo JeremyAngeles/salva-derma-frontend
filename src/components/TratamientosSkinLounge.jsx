@@ -6,24 +6,25 @@ const TratamientosSkinLounge = () => {
       id: 1,
       titulo: "HYDROFACIAL GLOW UP",
       descripcion: "Da vida brillo, nutrición y mayor hidratación a todo tipo de pieles pero sobre todo aquellas sensibles, apagadas, con tendencia a rojeces y quieren un glow up adicional, además tiene un efecto antiedad y antioxidante. Con Aparatología Hydrofacial y mascarilla EGYPTIAN aprobada por FDA. Brinda un booster de hidratación y detox, cuenta con 13 pasos.",
-      imagen: "/skin-glowup.jpg" // Reemplaza con tu foto
+      imagen: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792692751/11.jpg"
     },
     {
       id: 2,
       titulo: "HYDROFACIAL PURE BALANCE",
       descripcion: "Para piel mixta a grasa, control de poros dilatados, tendencia a acné, espinillas. Con Aparatología Hydrafacial variada, prioriza el control de grasa sin olvidar la hidratación y efecto antiedad de tu piel. Cuenta con dos tipos de mascarilla seborreguladoras y de Carbón Activado, lleva 13 pasos.",
-      imagen: "/skin-purebalance.jpg" // Reemplaza con tu foto
+      imagen: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792692750/22.jpg"
     },
     {
       id: 3,
       titulo: "HYDRAFACIAL ELITE",
       descripcion: "La experiencia más completa incluye cara, cuello y escote. Enfocada en el máximo efecto antiedad, se puede adaptar a todo tipo de piel grasa mixta, sensible, seca. Con moderna aparatología Hydrafacial y mascarilla de PDRN de Salmón (o la del mes) aprobado por FDA. Objetivos: nutrición intensa, control de grasa, hidratación profunda, renovación y antiedad. Cuenta con 15 pasos.",
-      imagen: "/skin-elite.jpg" // Reemplaza con tu foto
+      imagen: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792692751/33.png"
     }
   ];
 
   return (
-    <section className="w-full bg-[#faf9f8] py-16 md:py-24 font-principal">
+    // Agregamos un margen superior negativo (-mt-16 md:-mt-24) para que suba con fuerza hacia el banner
+    <section className="w-full bg-[#faf9f8] -mt-16 md:-mt-24 pt-4 pb-16 md:pb-24 font-principal relative z-20">
       <div className="max-w-[1250px] mx-auto px-6 lg:px-12">
 
         {/* =========================================
@@ -55,7 +56,6 @@ const TratamientosSkinLounge = () => {
         {/* =========================================
             LISTA DE TRATAMIENTOS
             ========================================= */}
-        {/* Aquí controlamos la separación entre cada bloque (gap-6 o gap-8) para que las fotos estén pegadas pero no tanto */}
         <div className="flex flex-col gap-6 md:gap-8">
           {tratamientos.map((trat, index) => (
             <div 
@@ -64,7 +64,7 @@ const TratamientosSkinLounge = () => {
             >
               
               {/* =========================================
-                  COLUMNA IZQUIERDA (Textos y Raya Marrón)
+                  COLUMNA IZQUIERDA (Textos)
                   ========================================= */}
               <div 
                 className={`w-full md:w-1/2 flex flex-col justify-center py-4 md:py-6 ${
