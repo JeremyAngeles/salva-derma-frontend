@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CadaPasoCirugia = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Puedes agregar las rutas de tus 4 casos de Antes y Después aquí
+  // Las 4 imágenes completas de Antes y Después
   const casos = [
-    { id: 1, antes: '/antes-rino-1.jpg', despues: '/despues-rino-1.jpg' },
-    { id: 2, antes: '/antes-rino-2.jpg', despues: '/despues-rino-2.jpg' },
-    { id: 3, antes: '/antes-rino-3.jpg', despues: '/despues-rino-3.jpg' },
-    { id: 4, antes: '/antes-rino-4.jpg', despues: '/despues-rino-4.jpg' },
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1792813684/b0ty46jvnqhlt1pyksvi.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1792813683/pg5tczoxsiodki2upaye.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1792813683/aprh49gczng5wqsq3tan.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1792813683/mqlna8o8zv4lcaykxfum.jpg',
   ];
+
+  // Efecto para que cambien automáticamente cada 5 segundos
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % casos.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [casos.length]);
 
   return (
     <section 
@@ -17,16 +25,13 @@ const CadaPasoCirugia = () => {
       style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792617218/03_-_antes_y_despues_casos_2.jpg')` }}
     >
       
-      {/* Capa sutil de protección (opcional) para asegurar legibilidad sobre el fondo fotográfico */}
+      {/* Capa sutil de protección para legibilidad */}
       <div className="absolute inset-0 bg-white/20 md:bg-white/10 pointer-events-none z-0"></div>
 
-      {/* Contenedor principal alineado a la derecha (justify-end) ya que quitamos la foto de la izquierda */}
-      <div className="relative z-10 max-w-[1250px] mx-auto px-6 lg:px-12 flex justify-center lg:justify-end">
+      {/* Contenedor principal alineado a la derecha */}
+      <div className="relative z-10 max-w-[1350px] mx-auto px-6 lg:px-12 flex justify-center lg:justify-end">
         
-        {/* =========================================
-            COLUMNA ÚNICA: Textos y Antes/Después
-            ========================================= */}
-        <div className="w-full lg:w-[55%] flex flex-col items-center lg:items-end text-center lg:text-right">
+        <div className="w-full lg:w-[62%] flex flex-col items-center lg:items-end text-center lg:text-right">
           
           {/* Título Principal */}
           <h2 
@@ -45,8 +50,8 @@ const CadaPasoCirugia = () => {
             PARA TODO LO DEMÁS, EXISTE LA CIRUGÍA PLÁSTICA
           </h3>
 
-          {/* Párrafo descriptivo */}
-          <p className="text-[#7c7570] text-[13.5px] md:text-[15px] font-light leading-relaxed max-w-[600px] mb-8 md:mb-10 drop-shadow-sm">
+          {/* Párrafo descriptivo (Un poco más grande) */}
+          <p className="text-[#7c7570] text-[15px] md:text-[17px] font-light leading-relaxed max-w-[650px] mb-8 md:mb-10 drop-shadow-sm">
             La cirugía plástica, sea facial o corporal es un universo en el cual el
             centro es el paciente, no existen dos resultados iguales, cada caso
             es único y se refleja en el plan pre - operatorio y se define según
@@ -54,45 +59,25 @@ const CadaPasoCirugia = () => {
             resultado y lo que nos diferencia.
           </p>
 
-          {/* Contenedor del Comparador ANTES / DESPUÉS y Puntitos */}
-          <div className="w-full max-w-[560px] flex flex-col items-center">
+          {/* Contenedor de la Imagen más horizontal y Puntitos */}
+          <div className="w-full max-w-[680px] flex flex-col items-center">
             
-            {/* Tarjeta Dividida */}
-            <div className="w-full h-[230px] sm:h-[270px] md:h-[290px] rounded-[1.4rem] overflow-hidden shadow-lg flex relative bg-white/40 backdrop-blur-sm border border-white/30">
-              
-              {/* Mitad Izquierda: ANTES */}
-              <div className="relative w-1/2 h-full">
+            {/* Tarjeta más ancha/horizontal con transición */}
+            <div className="w-full h-[250px] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30">
+              {casos.map((imgUrl, index) => (
                 <img 
-                  src={casos[currentSlide].antes} 
-                  alt="Antes de cirugía" 
-                  className="w-full h-full object-cover"
-                  onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#d8d4d0] object-cover' }}
+                  key={index}
+                  src={imgUrl} 
+                  alt={`Caso Antes y Después ${index + 1}`} 
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                    index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+                  onError={(e) => { 
+                    e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; 
+                    e.target.className = 'absolute inset-0 w-full h-full bg-[#d8d4d0] object-cover'; 
+                  }}
                 />
-                <div className="absolute inset-x-0 bottom-4 text-center">
-                  <span className="text-white text-[14px] md:text-[16px] font-normal tracking-wider uppercase drop-shadow-md">
-                    ANTES
-                  </span>
-                </div>
-              </div>
-
-              {/* Línea divisoria blanca central */}
-              <div className="w-[2px] h-full bg-white z-10 shadow-[0_0_5px_rgba(0,0,0,0.3)]"></div>
-
-              {/* Mitad Derecha: DESPUÉS */}
-              <div className="relative w-1/2 h-full">
-                <img 
-                  src={casos[currentSlide].despues} 
-                  alt="Después de cirugía" 
-                  className="w-full h-full object-cover"
-                  onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#ccc7c2] object-cover' }}
-                />
-                <div className="absolute inset-x-0 bottom-4 text-center">
-                  <span className="text-white text-[14px] md:text-[16px] font-normal tracking-wider uppercase drop-shadow-md">
-                    DESPUÉS
-                  </span>
-                </div>
-              </div>
-
+              ))}
             </div>
 
             {/* Puntitos del Carrusel (4 puntos) */}

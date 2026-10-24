@@ -11,18 +11,17 @@ const CirugiaPlastica = () => {
     <main className="w-full bg-[#f4f2ef] font-principal flex flex-col min-h-screen">
       
       {/* =========================================
-          1. HERO CIRUGÍA PLÁSTICA
+          1. HERO CIRUGÍA PLÁSTICA - SIN EFECTO NEGRO
           ========================================= */}
       <section className="relative w-full">
         <div className="relative w-full h-[90vh] md:h-[90vh] min-h-[750px] md:min-h-[800px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden flex flex-col items-center justify-center pt-24 pb-12 md:pt-32 md:pb-16 shadow-2xl">
           
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792615585/Gemini_Generated_Image_sqs2lsqs2lsqs2ls.jpg')` }}
+            style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1792812486/xq3w1mdqzdzmvihaspov.jpg')` }}
           ></div>
 
-          <div className="absolute inset-0 bg-[#053d57]/50 z-10 pointer-events-none mix-blend-multiply"></div>
-          <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none"></div>
+          {/* Se eliminaron las capas de color oscuro para que la imagen se vea natural */}
 
           <div className="relative z-20 flex flex-col items-center text-center px-6 w-full max-w-[1000px] mt-10 md:mt-0">
             <h1 

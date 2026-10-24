@@ -5,7 +5,8 @@ const TiposLaser = () => {
     {
       id: 1,
       title: "LÁSER FRACCIONADO",
-      subtitle: "• Picosegundos\nErbio",
+      // Le agregué el "•" a Erbio como pediste
+      subtitle: "• Picosegundos\n• Erbio",
       img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531271/l%C3%A1ser_fracionado.png"
     },
     {
@@ -40,8 +41,8 @@ const TiposLaser = () => {
       {/* =========================================
           TEXTO INTRODUCTORIO (ARRIBA Y FUERA DE LA FOTO)
           ========================================= */}
-      <div className="w-full max-w-[1000px] text-center px-6 md:px-12 pt-16 pb-8 md:pt-24 md:pb-12 mx-auto">
-        <p className="text-[#88807a] text-base md:text-lg font-light leading-relaxed">
+      <div className="w-full max-w-[1200px] text-center px-6 md:px-12 pt-16 pb-8 md:pt-24 md:pb-12 mx-auto">
+        <p className="text-[#88807a] text-lg md:text-xl lg:text-2xl font-light leading-relaxed">
           Nuestra unidad Dermoláser utiliza la mejor tecnología en dermatología láser.<br className="hidden md:block" />
           Está a cargo de nuestro staff de dermatólogas y especialistas en láser, brindamos<br className="hidden md:block" />
           protocolos personalizados según cada necesidad.
@@ -52,18 +53,16 @@ const TiposLaser = () => {
           CONTENEDOR DE LA FOTO DE FONDO Y LA LISTA
           ========================================= */}
       <div 
-        // Agregamos min-h-[600px] md:min-h-[750px] lg:min-h-[850px] para que la foto no se recorte y se vea COMPLETA
         className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[850px] py-12 md:py-20 flex items-center justify-center bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531261/02_-_l%C3%A1ser_tipos.png')" }}
       >
         
-        {/* Capa de protección opcional para celular por si el texto se cruza con partes oscuras */}
         <div className="absolute inset-0 bg-white/50 md:bg-transparent pointer-events-none z-0"></div>
 
         {/* Contenedor Principal (Grid) */}
         <div className="relative z-10 w-full max-w-[1100px] px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           
-          {/* COLUMNA IZQUIERDA: Vacía para dejar ver a la modelo/máquina de la foto de fondo */}
+          {/* COLUMNA IZQUIERDA: Vacía para dejar ver a la modelo/máquina */}
           <div className="hidden md:block"></div>
 
           {/* COLUMNA DERECHA: Título y Lista */}
@@ -95,11 +94,12 @@ const TiposLaser = () => {
                   
                   {/* Textos del Item */}
                   <div className="flex flex-col">
-                    <h4 className="text-[#c59e93] text-sm md:text-base font-medium tracking-wide uppercase whitespace-pre-line leading-tight transition-colors duration-300 group-hover:text-[#a88277]">
+                    {/* Hice el título más grande (text-base md:text-lg lg:text-xl) */}
+                    <h4 className="text-[#c59e93] text-base md:text-lg lg:text-xl font-medium tracking-wide uppercase whitespace-pre-line leading-tight transition-colors duration-300 group-hover:text-[#a88277]">
                       {tipo.title}
                     </h4>
                     {tipo.subtitle && (
-                      <p className="text-[#88807a] text-xs md:text-sm font-semibold md:font-light whitespace-pre-line mt-0.5 leading-snug">
+                      <p className="text-[#88807a] text-sm md:text-base font-semibold md:font-light whitespace-pre-line mt-0.5 leading-snug">
                         {tipo.subtitle}
                       </p>
                     )}

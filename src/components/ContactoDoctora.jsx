@@ -2,32 +2,28 @@ import React from 'react';
 
 const ContactoDoctora = () => {
   return (
-    <section className="w-full bg-[#fafafa] font-principal overflow-hidden relative">
+    <section 
+      className="w-full font-principal overflow-hidden relative bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1792810329/jwlbnofvb3ot0smmutuc.jpg')" }}
+    >
       
-      {/* Círculos decorativos de fondo */}
-      <div className="absolute top-1/2 left-1/2 md:left-[30%] transform -translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full border-[40px] border-[#f0f3f5] z-0 opacity-70"></div>
-      <div className="absolute top-1/2 left-1/2 md:left-[30%] transform -translate-y-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full border-[40px] border-[#f0f3f5] z-0 opacity-40"></div>
-
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-10 flex flex-col-reverse md:flex-row items-center pt-16 md:pt-24 pb-0">
+      {/* Amplié el max-w a 1350px para dar más margen y poder empujar a la derecha */}
+      <div className="relative z-10 w-full max-w-[1350px] mx-auto px-6 lg:px-10 flex flex-col-reverse md:flex-row items-center pt-16 md:pt-24 pb-0">
         
         {/* =========================================
-            COLUMNA IZQUIERDA: Foto de la Doctora
+            COLUMNA IZQUIERDA: Vacía
             ========================================= */}
         <div className="w-full md:w-1/2 flex justify-center md:justify-start items-end mt-10 md:mt-0">
-          <img 
-            src="/doctora-derma.png" // Reemplaza con la foto de la doctora sin fondo
-            alt="Doctora Dermatóloga" 
-            className="w-full max-w-[350px] lg:max-w-[450px] object-contain drop-shadow-xl"
-          />
         </div>
 
         {/* =========================================
             COLUMNA DERECHA: Textos y Contacto
             ========================================= */}
-        <div className="w-full md:w-1/2 flex flex-col items-center md:items-end text-center md:text-right pb-10 md:pb-24">
+        {/* Usamos md:translate-x-8 lg:translate-x-16 para empujarlo físicamente más a la derecha */}
+        <div className="w-full md:w-1/2 flex flex-col items-center md:items-end text-center md:text-right pb-12 md:pb-32 md:translate-x-8 lg:translate-x-16">
           
           <h2 
-            className="text-3xl md:text-4xl lg:text-5xl text-[#053d57] leading-[1.2] mb-6 max-w-[550px]"
+            className="text-white text-[2rem] sm:text-4xl md:text-[2.8rem] lg:text-[3.2rem] leading-[1.1] mb-6 md:mb-8 drop-shadow-md tracking-wide"
             style={{ fontFamily: 'Alta, serif' }}
           >
             CADA PIEL TIENE SU<br />
@@ -36,18 +32,25 @@ const ContactoDoctora = () => {
             DE LA MEJOR MANERA
           </h2>
 
-          <p className="text-[#88807a] text-[15px] md:text-base font-light leading-relaxed mb-10 max-w-[480px]">
-            Nuestra área de dermatología te brinda atención personalizada, experiencia y tratamientos seguros, siempre con empatía y acompañamiento en tu proceso.
+          {/* Párrafo con texto MÁS GRANDE */}
+          <p className="text-white text-[16px] md:text-[18px] lg:text-[21px] font-light leading-relaxed mb-10 max-w-[500px] drop-shadow-sm">
+            Nuestra área de dermatología<br className="hidden md:block" />
+            te brinda atención<br className="hidden md:block" />
+            personalizada, experiencia y<br className="hidden md:block" />
+            tratamientos seguros, siempre<br className="hidden md:block" />
+            con empatía y<br className="hidden md:block" />
+            acompañamiento en tu<br className="hidden md:block" />
+            proceso.
           </p>
 
-          {/* Botón de WhatsApp con Ícono de Teléfono */}
+          {/* Botón de WhatsApp (Solo el ícono, sin bordes circulares) */}
           <a 
             href="https://wa.me/51994060977" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-[#dcc4bc] hover:bg-[#ceb5ac] text-white rounded-full py-3.5 px-8 flex items-center justify-center gap-4 shadow-md transition-all group mb-6 w-fit"
+            className="bg-[#dcc4bc] hover:bg-[#ceb5ac] text-white rounded-full py-3 px-6 md:px-8 flex items-center justify-center gap-3 shadow-md transition-all group mb-8 w-fit"
           >
-            <div className="w-6 h-6 flex items-center justify-center">
+            <div className="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center">
               <img 
                 src="/iconotelefonoblanco.svg" 
                 alt="Teléfono WhatsApp" 
@@ -55,23 +58,27 @@ const ContactoDoctora = () => {
                 onError={(e) => { e.target.style.display = 'none'; }}
               />
             </div>
-            <span className="text-xl md:text-2xl font-normal tracking-wide">+51 994 060 977</span>
+            <span className="text-[1.3rem] md:text-[1.6rem] font-light tracking-wide">
+              +51 994 060 977
+            </span>
           </a>
 
-          {/* Redes Sociales con Íconos Personalizados */}
-          <div className="flex items-center gap-4 text-[#88807a]">
-            <span className="text-[14px] font-light">Siguenos en:</span>
-            <div className="flex gap-3">
+          {/* Redes Sociales solo con sus íconos de color originales */}
+          <div className="flex items-center gap-4 text-white drop-shadow-sm">
+            <span className="text-[16px] md:text-[18px] font-light tracking-wide">
+              Síguenos en:
+            </span>
+            <div className="flex gap-3 md:gap-4">
               {/* Facebook */}
-              <a href="#" className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <a href="#" className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center hover:scale-110 transition-transform duration-300">
                 <img src="/fcolor.svg" alt="Facebook" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
               </a>
               {/* Instagram */}
-              <a href="#" className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <a href="#" className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center hover:scale-110 transition-transform duration-300">
                 <img src="/igcolor.svg" alt="Instagram" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
               </a>
               {/* TikTok */}
-              <a href="#" className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <a href="#" className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center hover:scale-110 transition-transform duration-300">
                 <img src="/tiktokcolor.svg" alt="TikTok" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
               </a>
             </div>

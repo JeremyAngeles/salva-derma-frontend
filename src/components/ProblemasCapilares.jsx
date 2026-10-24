@@ -11,20 +11,27 @@ const ProblemasCapilares = () => {
 
   return (
     <section 
-      // La imagen de Cloudinary ahora cubre TODA la sección de fondo
+      // La imagen de Cloudinary cubre toda la sección de fondo
       className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[850px] py-16 md:py-28 font-principal flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
       style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531283/03_-_cabello.png')" }}
     >
       
-      {/* Capa de protección sutil para que el texto blanco resalte bien, especialmente en celular */}
+      {/* Capa de protección sutil */}
       <div className="absolute inset-0 bg-black/30 md:bg-black/10 pointer-events-none z-0"></div>
 
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      {/* 
+          CAMBIO 1: Ampliamos el max-width a 1350px para que los bordes 
+          estén más cerca de los extremos de la pantalla.
+      */}
+      <div className="relative z-10 w-full max-w-[1350px] mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
 
-        {/* Mitad Izquierda: Contenido escalado al nuevo tamaño gigante */}
-        <div className="flex flex-col text-white bg-[#7ba9b7]/60 md:bg-transparent p-8 md:p-0 rounded-[2rem] backdrop-blur-md md:backdrop-blur-none shadow-lg md:shadow-none">
+        {/* 
+            CAMBIO 2: Agregamos -translate-x-8 xl:-translate-x-12 para empujar 
+            físicamente todo el bloque más a la izquierda en pantallas grandes.
+        */}
+        <div className="flex flex-col items-start text-left text-white bg-[#7ba9b7]/60 md:bg-transparent p-8 md:p-0 rounded-[2rem] backdrop-blur-md md:backdrop-blur-none shadow-lg md:shadow-none lg:-translate-x-8 xl:-translate-x-12">
           
-          {/* Ícono de Problemas Capilares (Más grande) */}
+          {/* Ícono de Problemas Capilares */}
           <div className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center mb-6 md:mb-8">
             <img 
               src="/problemas-capilares.svg" 
@@ -43,7 +50,7 @@ const ProblemasCapilares = () => {
           </h2>
 
           {/* Párrafo */}
-          <p className="font-light text-base md:text-lg leading-relaxed mb-8 md:mb-10 max-w-[550px] drop-shadow-sm">
+          <p className="font-light text-base md:text-lg leading-relaxed mb-8 md:mb-10 max-w-[500px] drop-shadow-sm">
             Tratamos distintos tipos de alopecias con tratamiento médico y la combinación de nuestras mesoterapias (dutasteride, exosomas y otros), plasma rico en plaquetas. Además, también utilizamos tecnologías como micropunción, Nanopore y láser.
           </p>
 

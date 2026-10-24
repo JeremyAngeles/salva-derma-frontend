@@ -2,8 +2,8 @@ import React from 'react';
 import Footer from '../components/Footer';
 import TratamientosEstetica from '../components/TratamientosEstetica';
 import ProcedimientosEstetica from '../components/ProcedimientosEstetica';
-import CasosExitoEstetica from '../components/CasosExitoEstetica'; // <-- Importamos Casos de Éxito Estética
-import ContactoDoctora from '../components/ContactoDoctora';       // <-- Reutilizamos Contacto Doctora
+import CasosExitoEstetica from '../components/CasosExitoEstetica'; 
+import ContactoStaff from '../components/ContactoStaff'; // <-- Importamos el nuevo componente
 
 const DermatologiaEstetica = () => {
   return (
@@ -36,12 +36,17 @@ const DermatologiaEstetica = () => {
       {/* =========================================
           2. TEXTO INTRODUCTORIO
           ========================================= */}
-      <section className="w-full py-16 md:py-24 bg-[#fbfbfb] flex justify-center items-center px-6">
-        <p className="text-[#88807a] text-center text-lg md:text-xl lg:text-[1.35rem] font-light leading-relaxed max-w-[1000px]">
-          Combina el conocimiento y ciencia de nuestros dermatólogos junto a la<br className="hidden md:block" />
-          tecnología y tratamientos avanzados para la mejora de la calidad de piel (líneas de<br className="hidden md:block" />
-          expresión, flacidez, ojeras, textura poros y pigmentaciones etc).
-        </p>
+      <section className="w-full py-16 md:py-24 bg-[#fbfbfb] flex flex-col justify-center items-center px-6">
+        <div className="max-w-[1200px] w-full flex flex-col items-center">
+          <h2 className="text-[#053d57] text-2xl md:text-3xl lg:text-[2.2rem] font-semibold mb-6 md:mb-8 text-center tracking-wide">
+            ¿QUÉ HACEMOS EN DERMATOLOGÍA ESTÉTICA?
+          </h2>
+          <p className="text-[#88807a] text-center text-xl md:text-2xl lg:text-[1.65rem] font-light leading-relaxed max-w-[1100px]">
+            Combina el conocimiento y ciencia de nuestros dermatólogos junto a la<br className="hidden md:block" />
+            tecnología y tratamientos avanzados para la mejora de la calidad de piel (líneas de<br className="hidden md:block" />
+            expresión, flacidez, ojeras, textura poros y pigmentaciones etc).
+          </p>
+        </div>
       </section>
 
       {/* =========================================
@@ -55,14 +60,14 @@ const DermatologiaEstetica = () => {
       <ProcedimientosEstetica />
 
       {/* =========================================
-          5. CASOS DE ÉXITO ESTÉTICA (Nuevo)
+          5. CASOS DE ÉXITO ESTÉTICA
           ========================================= */}
       <CasosExitoEstetica />
 
       {/* =========================================
-          6. CONTACTO DOCTORA (Reutilizado)
+          6. CONTACTO STAFF (El nuevo componente)
           ========================================= */}
-      <ContactoDoctora />
+      <ContactoStaff />
 
       {/* =========================================
           7. FOOTER

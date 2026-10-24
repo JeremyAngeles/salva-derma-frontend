@@ -48,11 +48,11 @@ const TratamientosEstetica = () => {
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-10 flex justify-center md:justify-end">
         
         {/* Contenedor del Título y Tarjetas */}
-        <div className="w-full md:w-[65%] lg:w-[55%] flex flex-col justify-center">
+        <div className="w-full md:w-[65%] lg:w-[55%] flex flex-col justify-center items-center">
           
-          {/* Título */}
+          {/* Título: Ahora centrado sobre las tarjetas */}
           <h2 
-            className="text-4xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-10 text-center md:text-left drop-shadow-md"
+            className="w-full text-4xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-10 text-center drop-shadow-md"
             style={{ fontFamily: 'Alta, serif' }}
           >
             TRATAMIENTOS<br />
@@ -60,11 +60,11 @@ const TratamientosEstetica = () => {
           </h2>
 
           {/* Contenedor de Tarjetas */}
-          <div className="flex flex-col gap-5 md:gap-6">
+          <div className="w-full flex flex-col gap-5 md:gap-6">
             {tratamientos.map((trat) => (
               <div 
                 key={trat.id} 
-                className="flex flex-col sm:flex-row items-center sm:items-stretch gap-5 bg-white/10 backdrop-blur-md border border-white/40 rounded-[2rem] p-4 shadow-lg hover:bg-white/20 transition-all duration-300"
+                className="flex flex-col sm:flex-row items-center sm:items-stretch gap-5 bg-white/10 backdrop-blur-md border border-white/40 rounded-[2rem] p-4 shadow-lg hover:bg-white/20 transition-all duration-300 w-full"
               >
                 {/* Imagen Cuadrada de la Tarjeta */}
                 <div className="w-full sm:w-[130px] sm:h-[130px] flex-shrink-0">
@@ -78,13 +78,13 @@ const TratamientosEstetica = () => {
 
                 {/* Contenido (Textos y Viñetas) */}
                 <div className="flex flex-col justify-center w-full py-1">
-                  <h3 className="text-white font-bold text-sm md:text-[15px] tracking-wide uppercase mb-2.5 sm:mb-3 drop-shadow-sm">
+                  <h3 className="text-white font-bold text-sm md:text-[15px] tracking-wide uppercase mb-2.5 sm:mb-3 drop-shadow-sm text-left">
                     {trat.title}
                   </h3>
                   
                   <ul className="flex flex-col gap-2">
                     {trat.items.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-white text-[13px] md:text-[14px] font-light leading-snug">
+                      <li key={idx} className="flex items-start gap-2 text-white text-[13px] md:text-[14px] font-light leading-snug text-left">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white flex-shrink-0 shadow-sm"></span>
                         <span className="drop-shadow-sm">{item}</span>
                       </li>
