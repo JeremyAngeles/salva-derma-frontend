@@ -8,7 +8,7 @@ const StaffMedicos = () => {
       specialty: "CIRUJANO PLÁSTICO RECONSTRUCTIVO",
       cmp: "68988",
       rne: "42156",
-      image: "/doc-hector.jpg"
+      image: "https://res.cloudinary.com/da47iihxz/image/upload/v1792799320/pllvqijatj6w1nnre8l8.jpg"
     },
     {
       id: 2,
@@ -16,7 +16,7 @@ const StaffMedicos = () => {
       specialty: "DERMATÓLOGA",
       cmp: "66762",
       rne: "39444",
-      image: "/doc-yuvidtza.jpg"
+      image: "https://res.cloudinary.com/da47iihxz/image/upload/v1792799319/zz1wxr8esflzppw2xjvr.jpg"
     },
     {
       id: 3,
@@ -24,7 +24,7 @@ const StaffMedicos = () => {
       specialty: "DERMATÓLOGA",
       cmp: "81188",
       rne: "48318",
-      image: "/doc-karen.jpg"
+      image: "https://res.cloudinary.com/da47iihxz/image/upload/v1792799320/qzzwduu1qfhez2dghstl.jpg"
     },
     {
       id: 4,
@@ -32,17 +32,17 @@ const StaffMedicos = () => {
       specialty: "DERMATÓLOGA",
       cmp: "86231",
       rne: "052416",
-      image: null, 
-      bgColor: "bg-[#593433]"
+      image: "https://res.cloudinary.com/da47iihxz/image/upload/v1792799320/pzzcgqjmajr0lfuwmef5.jpg"
     }
   ];
 
   return (
-    <section className="relative w-full py-16 md:py-24 bg-[#eef0f2] overflow-hidden font-principal flex justify-center">
+    <section className="relative w-full py-16 md:py-24 overflow-hidden font-principal flex justify-center">
       
+      {/* FONDO 100% NATURAL: Sin opacidades ni filtros de mezcla */}
       <div 
-        className="absolute inset-0 w-full h-full opacity-20 bg-cover bg-center bg-no-repeat mix-blend-multiply"
-        style={{ backgroundImage: "url('/bg-staff.jpg')" }}
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1792799317/grk1dtqk6y8wvhajklnf.jpg')" }}
       ></div>
 
       <div className="relative z-10 w-full max-w-[1200px] px-4 sm:px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
@@ -50,7 +50,6 @@ const StaffMedicos = () => {
         {/* COLUMNA IZQUIERDA: Textos */}
         <div className="lg:col-span-5 flex flex-col justify-center text-center lg:text-left items-center lg:items-start">
           
-          {/* AQUÍ EL CAMBIO IMPORTANTÍSIMO: font-alta */}
           <h2 className="text-3xl sm:text-5xl lg:text-[2.8rem] text-[#053d57] font-alta leading-[1.1] tracking-wide">
             <span className="font-light">CONOCE A NUESTRO</span><br />
             <span className="font-normal">STAFF DE MÉDICOS</span><br />
@@ -83,7 +82,6 @@ const StaffMedicos = () => {
               className="flex items-center justify-between bg-white bg-opacity-40 backdrop-blur-md rounded-full py-2 px-4 sm:py-2.5 sm:px-6 md:px-8 shadow-sm border border-white border-opacity-60"
             >
               <div className="flex flex-col flex-1 pr-2 overflow-hidden">
-                {/* Los nombres de los doctores también pueden usar font-alta si lo deseas, aquí lo dejé normal, si quieres q tengan la fuente cambia font-semibold por font-alta */}
                 <h3 className="text-[#5c5652] font-semibold text-[11px] sm:text-[13px] md:text-[14px] leading-[1.15] break-words">
                   {doc.name}
                 </h3>
@@ -96,11 +94,12 @@ const StaffMedicos = () => {
               </div>
 
               <div className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden shadow-inner ml-1 sm:ml-2">
-                {doc.image ? (
-                  <img src={doc.image} alt="Doctor" className="w-full h-full object-cover" />
-                ) : (
-                  <div className={`w-full h-full ${doc.bgColor}`}></div>
-                )}
+                <img 
+                  src={doc.image} 
+                  alt="Doctor" 
+                  className="w-full h-full object-cover" 
+                  onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#593433]' }}
+                />
               </div>
             </div>
           ))}

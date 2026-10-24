@@ -2,10 +2,29 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 const SkinLounge = () => {
+  // =========================================
+  // 1. Carrusel de Imágenes (Izquierda)
+  // =========================================
   const [currentImage, setCurrentImage] = useState(0);
-  const totalCarouselImages = 4;
+  
+  const images = [
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1792799855/zdeq0dpeah0wot2ulxio.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1792799853/p1iujgny4hssrjvh84qa.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1792799855/dstxalaqohfwxatpobxq.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1792799852/ft1p2iioo393pbzzvqp7.jpg'
+  ];
 
-  // 1. Estado y Referencia para el carrusel de testimonios (solo móvil)
+  // Efecto para que el carrusel cambie de foto cada 5 segundos
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  // =========================================
+  // 2. Carrusel de Testimonios (Solo Móvil)
+  // =========================================
   const testimonialRef = useRef(null);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
@@ -24,7 +43,6 @@ const SkinLounge = () => {
     }
   ];
 
-  // 2. Efecto para que los testimonios pasen cada 3 segundos (SOLO EN CELULAR)
   useEffect(() => {
     const timer = setInterval(() => {
       if (window.innerWidth < 768 && testimonialRef.current) {
@@ -37,7 +55,7 @@ const SkinLounge = () => {
           behavior: 'smooth'
         });
       }
-    }, 3000); // 3000 ms = 3 segundos
+    }, 3000);
 
     return () => clearInterval(timer);
   }, [currentTestimonial, testimonials.length]);
@@ -45,13 +63,11 @@ const SkinLounge = () => {
   return (
     <section className="relative w-full py-20 md:py-28 overflow-hidden font-principal flex justify-center min-h-[850px] items-center">
       
-      {/* Fondo a pantalla completa usando Cloudinary */}
+      {/* Fondo a pantalla completa (SIN SOMBRAS NI FILTROS OSCUROS) */}
       <div 
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792529036/SKIN_LOUNGE_fondo.png')" }}
       >
-        <div className="absolute inset-0 bg-[#3b2a22] bg-opacity-40 mix-blend-multiply"></div>
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
       </div>
 
       {/* Contenedor Principal en Cuadrícula (Grid) */}
@@ -62,7 +78,7 @@ const SkinLounge = () => {
             ========================================= */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
           
-          {/* Cabecera integrada y centrada en celular */}
+          {/* Cabecera */}
           <div className="mb-8 flex flex-col items-center lg:items-start" style={{ fontFamily: 'Alta, serif' }}>
             <h3 className="text-white text-lg md:text-xl tracking-[0.25em] font-light mb-[-5px]">
               FACIAL
@@ -70,30 +86,38 @@ const SkinLounge = () => {
             <h2 className="text-white text-[3.5rem] md:text-[4.5rem] leading-[1.1] mb-1 drop-shadow-md">
               SKIN LOUNGE
             </h2>
-            <p className="text-white text-base md:text-lg font-light tracking-wide">
+            <p className="text-white text-base md:text-lg font-light tracking-wide drop-shadow-sm">
               Experiencias en limpiezas faciales EXCLUSIVAS
             </p>
           </div>
 
-          {/* Tarjeta de Imagen Vertical */}
-          <div className="relative w-[280px] md:w-[320px] h-[420px] md:h-[480px] rounded-[2rem] overflow-hidden border-[3px] border-white border-opacity-30 shadow-2xl mx-auto lg:mx-0">
-            <img 
-              src="/sl-carrusel.jpg" 
-              alt="Skin Lounge Procedimiento" 
-              className="w-full h-full object-cover"
-            />
+          {/* Tarjeta de Imagen Vertical (Carrusel Animado) */}
+          <div className="relative w-[280px] md:w-[320px] h-[420px] md:h-[480px] rounded-[2rem] overflow-hidden border-[3px] border-white border-opacity-30 shadow-2xl mx-auto lg:mx-0 bg-black/10">
+            
+            {/* Imágenes con transición suave (Fade) */}
+            {images.map((img, index) => (
+              <img 
+                key={index}
+                src={img} 
+                alt={`Skin Lounge Procedimiento ${index + 1}`} 
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                  index === currentImage ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              />
+            ))}
+
             {/* Gradiente inferior para resaltar los puntitos */}
-            <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/80 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none"></div>
             
             {/* Puntitos del carrusel centrados abajo */}
-            <div className="absolute bottom-5 w-full flex justify-center gap-2.5">
-              {Array.from({ length: totalCarouselImages }).map((_, index) => (
+            <div className="absolute bottom-5 w-full flex justify-center gap-2.5 z-30">
+              {images.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImage(index)}
-                  className={`rounded-full transition-all ${
+                  className={`rounded-full transition-all duration-300 ${
                     index === currentImage 
-                      ? 'w-2.5 h-2.5 bg-white' 
+                      ? 'w-2.5 h-2.5 bg-white scale-125' 
                       : 'w-2.5 h-2.5 bg-white bg-opacity-40 hover:bg-opacity-80'
                   }`}
                   aria-label={`Ver imagen ${index + 1}`}
@@ -143,7 +167,7 @@ const SkinLounge = () => {
                         </svg>
                       ))}
                     </div>
-                    <p className="text-white text-[13px] md:text-[14px] font-light leading-snug md:leading-relaxed">
+                    <p className="text-white text-[13px] md:text-[14px] font-light leading-snug md:leading-relaxed drop-shadow-sm">
                       {testimonio.text}
                     </p>
                   </div>
@@ -166,7 +190,7 @@ const SkinLounge = () => {
           </div>
 
           {/* Redes Sociales con íconos personalizados */}
-          <div className="flex flex-col sm:flex-row justify-center lg:justify-end items-center gap-3 lg:gap-4 mt-2 text-white">
+          <div className="flex flex-col sm:flex-row justify-center lg:justify-end items-center gap-3 lg:gap-4 mt-2 text-white drop-shadow-sm">
             <span className="font-light text-[15px] lg:text-[17px] tracking-wide text-center sm:text-left lg:whitespace-nowrap">
               Mira nuestra experiencia en redes:
             </span>

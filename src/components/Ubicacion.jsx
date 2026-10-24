@@ -7,8 +7,7 @@ const Ubicacion = () => {
       style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792529043/contacto.png')" }}
     >
       
-      {/* Capa de suavizado opcional por si el fondo compite con el texto */}
-      <div className="absolute inset-0 bg-white/40 pointer-events-none z-0"></div>
+      {/* SE ELIMINÓ EL FILTRO/CAPA BLANCA (bg-white/40) PARA QUE EL FONDO SE VEA NATURAL */}
 
       <div className="relative z-10 w-full flex flex-col items-center">
         {/* Título y Subtítulo */}
