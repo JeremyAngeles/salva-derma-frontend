@@ -18,8 +18,8 @@ const Ubicacion = () => {
           >
             TODOS LOS CAMINOS CONDUCEN A SALVAR
           </h2>
-          {/* Subtítulo más grande, con toque de negrita y salto de línea exacto */}
-          <p className="text-[#7c7570] text-lg md:text-[22px] font-medium leading-relaxed">
+          {/* Subtítulo con interlineado más junto (leading-[1.2]) */}
+          <p className="text-[#7c7570] text-lg md:text-[22px] font-medium leading-[1.2]">
             Ubicados estratégicamente en el corazón de la ciudad, a 10 minutos del <br />
             centro empresarial de San Isidro, contamos con estacionamiento externo.
           </p>
@@ -30,7 +30,7 @@ const Ubicacion = () => {
           
           {/* COLUMNA IZQUIERDA: Mapa de Google Maps with hover animation (Ocupa 7 columnas) */}
           <div className="lg:col-span-7 bg-white p-3 rounded-[2.5rem] shadow-xl border border-gray-200 group overflow-hidden">
-            {/* Altura del mapa incrementada (h-[620px] en PC) para que sea más alto arriba y abajo */}
+            {/* Altura del mapa incrementada */}
             <div className="w-full h-[450px] md:h-[550px] lg:h-[620px] rounded-[2rem] overflow-hidden relative">
               <iframe 
                 title="Ubicacion Salvar Dermatoplastica"
@@ -103,7 +103,7 @@ const Ubicacion = () => {
 
             <hr className="border-gray-300 my-1" />
 
-            {/* Reservas al (Botón grande rosado con ícono limpio a la izquierda) */}
+            {/* Reservas al */}
             <div className="flex flex-col gap-3">
               <h4 className="text-[#c59e93] font-semibold text-lg">Reservas al:</h4>
               <a 
@@ -112,7 +112,7 @@ const Ubicacion = () => {
                 rel="noopener noreferrer"
                 className="relative bg-[#dcc4bc] hover:bg-[#ceb5ac] text-white rounded-full py-4 px-6 md:px-8 flex items-center shadow-md transition-all duration-300 group"
               >
-                {/* Ícono de teléfono totalmente limpio y anclado al extremo izquierdo */}
+                {/* Ícono de teléfono */}
                 <div className="absolute left-6 md:left-8 w-7 h-7 md:w-8 md:h-8 flex items-center justify-center pointer-events-none">
                   <img 
                     src="/iconotelefonoblanco.svg" 
@@ -122,14 +122,14 @@ const Ubicacion = () => {
                   />
                 </div>
                 
-                {/* Número centrado en el botón */}
+                {/* Número */}
                 <span className="w-full text-center text-xl md:text-2xl font-semibold tracking-wide">
                   +51 994 060 977
                 </span>
               </a>
             </div>
 
-            {/* Redes sociales inferiores */}
+            {/* Redes sociales */}
             <div className="flex items-center gap-4 mt-2">
               <span className="text-[#6b625c] text-sm md:text-base">Síguenos en:</span>
               <div className="flex gap-3">
