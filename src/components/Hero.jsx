@@ -198,9 +198,9 @@ const Hero = () => {
             </h1>
           </div>
 
-          {/* SLIDE 2: Cirugías (+1000) */}
+          {/* SLIDE 2: Cirugías (+1000) (Empujado mucho más abajo con mt-20 md:mt-32) */}
           <div
-            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full ${
+            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full mt-20 md:mt-32 ${
               currentSlide === 1 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'
             }`}
           >
@@ -215,20 +215,20 @@ const Hero = () => {
             </h2>
           </div>
 
-          {/* SLIDE 3: Dermatología */}
+          {/* SLIDE 3: Dermatología (Más grande y un poco más arriba) */}
           <div
-            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full ${
+            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full -mt-4 md:-mt-6 ${
               currentSlide === 2 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'
             }`}
           >
             <h2
-              className="text-white text-[3.2rem] md:text-[5rem] lg:text-[6rem] leading-[1.05] tracking-wide mb-4 drop-shadow-lg"
+              className="text-white text-[3.2rem] md:text-[5rem] lg:text-[6rem] leading-[1.05] tracking-wide mb-2 md:mb-3 drop-shadow-lg text-center"
               style={{ fontFamily: 'Alta, serif' }}
             >
               DERMATOLOGÍA<br />
               CLÍNICA Y ESTÉTICA
             </h2>
-            <p className="text-white text-[1.1rem] md:text-[1.4rem] font-light tracking-wide drop-shadow-md">
+            <p className="text-white text-[1.4rem] md:text-[1.9rem] font-light tracking-wide drop-shadow-md text-center">
               Conoce más de nuestra unidad Dermoláser.
             </p>
           </div>
@@ -257,35 +257,56 @@ const Hero = () => {
       </div>
 
       {/* 4. Tarjeta Flotante Blanca Inferior */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[90%] md:w-auto bg-white rounded-[2rem] md:rounded-[3rem] py-6 px-8 md:px-20 flex flex-col md:flex-row items-center justify-center shadow-2xl gap-8 md:gap-20 z-40">
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[90%] md:w-[750px] lg:w-[850px] bg-white rounded-[2rem] md:rounded-[3rem] py-6 px-6 md:px-0 flex flex-col md:flex-row items-center justify-center shadow-2xl z-40">
         
-        <div className="flex items-center gap-4 md:gap-6">
+        {/* Bloque 1: Pacientes */}
+        <div className="flex items-center justify-center md:justify-end gap-3 md:gap-4 flex-1 pr-0 md:pr-10">
           <span
-            className="text-5xl md:text-[3.5rem] font-bold text-gray-500 tracking-tighter"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="text-[3rem] md:text-[4.5rem] font-bold text-[#7b7a7a] tracking-tight leading-none"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             +1000
           </span>
-          <div className="flex flex-col text-left">
-            <span className="text-xl md:text-2xl font-semibold text-gray-600 leading-none mb-1">Pacientes</span>
-            <span className="text-sm md:text-base font-light text-gray-400 leading-tight">
+          <div className="flex flex-col text-left justify-center mt-1">
+            <span 
+              className="text-[1.2rem] md:text-[1.5rem] font-bold text-[#7b7a7a] leading-none mb-0.5"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
+              Pacientes
+            </span>
+            <span 
+              className="text-[0.9rem] md:text-[1rem] font-light text-[#9b9b9b] leading-[1.1]"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
               confían en<br />nosotros
             </span>
           </div>
         </div>
 
-        <div className="hidden md:block w-[1px] h-20 bg-gray-300"></div>
+        {/* Línea divisoria perfectamente centrada (intocable) */}
+        <div className="hidden md:block w-[1.5px] h-20 bg-[#a6a6a6] shrink-0"></div>
 
-        <div className="flex items-center gap-4 md:gap-6">
+        {/* Bloque 2: Experiencia (Contenido interno movido más a la derecha con pl-20) */}
+        <div className="flex items-center justify-center md:justify-start gap-3 md:gap-4 flex-1 mt-6 md:mt-0 pl-0 md:pl-20">
           <span
-            className="text-5xl md:text-[3.5rem] font-bold text-gray-500 tracking-tighter"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="text-[3rem] md:text-[4.5rem] font-bold text-[#7b7a7a] tracking-tight leading-none"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             +6
           </span>
-          <div className="flex flex-col text-left">
-            <span className="text-xl md:text-2xl font-semibold text-gray-600 leading-none mb-1">Años</span>
-            <span className="text-sm md:text-base font-light text-gray-400 leading-tight">de experiencia</span>
+          <div className="flex flex-col text-left justify-center mt-1">
+            <span 
+              className="text-[1.2rem] md:text-[1.5rem] font-bold text-[#7b7a7a] leading-none mb-0.5"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
+              Años
+            </span>
+            <span 
+              className="text-[0.9rem] md:text-[1rem] font-light text-[#9b9b9b] leading-[1.1]"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
+              de experiencia
+            </span>
           </div>
         </div>
         

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const MejorVersion = () => {
   const [currentImage, setCurrentImage] = useState(0);
 
-  // Array con las 4 imágenes que me pasaste
+  // Array con las 4 imágenes
   const images = [
     'https://res.cloudinary.com/da47iihxz/image/upload/v1792799600/oi9kvjsmby3ih66rcebj.jpg',
     'https://res.cloudinary.com/da47iihxz/image/upload/v1792799600/juuoywkqnp452mjixddi.jpg',
@@ -21,24 +21,24 @@ const MejorVersion = () => {
   }, [images.length]);
 
   return (
-    <section className="relative w-full py-20 md:py-28 bg-[#f9f9f9] overflow-hidden font-principal flex justify-center">
+    <section className="relative w-full py-20 md:py-32 bg-[#f9f9f9] overflow-hidden font-principal">
       
-      {/* Contenedor principal alineado */}
-      <div className="relative z-10 w-full max-w-[1200px] pl-6 lg:pl-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      {/* Contenedor general */}
+      <div className="w-full pl-6 lg:pl-12 pr-0 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
         
         {/* =========================================
-            COLUMNA IZQUIERDA: Textos y Botón
+            COLUMNA IZQUIERDA: Textos y Botón con interlineado un poco más junto
             ========================================= */}
-        <div className="flex flex-col justify-center h-full max-w-[440px] pr-6 lg:pr-0">
+        <div className="lg:col-span-5 flex flex-col justify-center h-full max-w-[540px] mx-auto lg:mx-0 lg:ml-36 xl:ml-52">
           
-          <p className="text-[#88807a] text-[15px] md:text-[16px] font-light leading-relaxed mb-4">
+          <p className="text-[#88807a] text-[17px] md:text-[19px] font-light leading-[1.2] mb-5">
             Clínica con especialistas CERTIFICADOS<br />
             en dermatología, cirugía plástica, láser,<br />
             estética y expertos en faciales.
           </p>
 
           <h2 
-            className="text-4xl md:text-5xl lg:text-[3.2rem] text-[#053d57] leading-[0.95] tracking-wide mb-4"
+            className="text-4xl md:text-5xl lg:text-[3.8rem] text-[#053d57] leading-[0.95] tracking-wide mb-5"
             style={{ fontFamily: 'Alta, serif' }}
           >
             <span className="font-light whitespace-nowrap">TU MEJOR VERSIÓN,</span><br />
@@ -46,7 +46,7 @@ const MejorVersion = () => {
             <span className="font-normal">LLEGAR</span>
           </h2>
           
-          <p className="text-[#88807a] text-[15px] md:text-[16px] font-light leading-relaxed mb-8">
+          <p className="text-[#88807a] text-[17px] md:text-[19px] font-light leading-[1.2] mb-10">
             Nuestros servicios son realizados por<br />
             especialistas altamente capacitados fuera<br />
             y dentro del país, y priorizamos el manejo<br />
@@ -57,7 +57,7 @@ const MejorVersion = () => {
           <div>
             <Link 
               to="/reservar-cita" 
-              className="inline-block bg-gradient-to-r from-[#cdb3ae] to-[#e4d1cd] text-white px-10 py-3.5 rounded-full font-medium text-lg shadow-sm hover:shadow-md transition-all"
+              className="inline-block bg-gradient-to-r from-[#cdb3ae] to-[#e4d1cd] text-white px-12 py-4 rounded-full font-medium text-xl shadow-sm hover:shadow-md transition-all"
             >
               Reserva tu consulta
             </Link>
@@ -65,15 +65,15 @@ const MejorVersion = () => {
         </div>
 
         {/* =========================================
-            COLUMNA DERECHA: Imagen superpuesta al fondo celeste (CARRUSEL)
+            COLUMNA DERECHA: Carrusel, figura celeste alta y bolitas abajo
             ========================================= */}
-        <div className="relative w-full h-[450px] md:h-[650px]">
+        <div className="lg:col-span-7 relative w-full h-[520px] md:h-[700px] lg:h-[760px]">
           
           {/* 1. FIGURA CELESTE DE FONDO */}
-          <div className="absolute right-0 top-0 w-[70%] md:w-[65%] h-full bg-[#7caebc] rounded-l-[2.5rem] md:rounded-l-[3.5rem] z-0"></div>
+          <div className="absolute right-0 -top-10 -bottom-10 w-[72%] md:w-[66%] bg-[#7caebc] rounded-l-[3.5rem] md:rounded-l-[4.5rem] z-0"></div>
 
-          {/* 2. IMÁGENES PRINCIPALES (Con animación de fundido cruzado) */}
-          <div className="absolute left-0 top-[10%] w-[90%] md:w-[92%] h-[80%] rounded-l-[2.5rem] md:rounded-l-[3.5rem] overflow-hidden shadow-2xl z-10 bg-[#f9f9f9]">
+          {/* 2. IMÁGENES PRINCIPALES DEL CARRUSEL */}
+          <div className="absolute right-0 top-0 w-[84%] md:w-[80%] h-full rounded-l-[3.5rem] md:rounded-l-[4.5rem] overflow-hidden shadow-2xl z-10 bg-[#f9f9f9]">
             {images.map((img, index) => (
               <img 
                 key={index}
@@ -87,15 +87,15 @@ const MejorVersion = () => {
             ))}
           </div>
 
-          {/* 3. PUNTOS DEL CARRUSEL (Clickeables) */}
-          <div className="absolute bottom-0 right-0 w-[70%] md:w-[65%] h-[10%] flex justify-center items-center gap-3 md:gap-4 z-20">
+          {/* 3. PUNTOS DEL CARRUSEL */}
+          <div className="absolute -bottom-16 right-0 w-[72%] md:w-[66%] h-[90px] flex justify-center pl-8 items-center gap-3 md:gap-4 z-20">
             {images.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentImage(index)}
                 className={`rounded-full transition-all duration-300 ${
                   index === currentImage 
-                    ? 'w-3 h-3 md:w-3.5 md:h-3.5 bg-white scale-110' 
+                    ? 'w-3.5 h-3.5 md:w-4 md:h-4 bg-white scale-110 shadow-md' 
                     : 'w-3 h-3 md:w-3.5 md:h-3.5 bg-transparent border-[1.5px] border-white hover:bg-white/30'
                 }`}
                 aria-label={`Ver imagen ${index + 1} de la clínica`}

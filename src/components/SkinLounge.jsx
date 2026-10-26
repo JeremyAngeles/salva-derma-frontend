@@ -61,38 +61,38 @@ const SkinLounge = () => {
   }, [currentTestimonial, testimonials.length]);
 
   return (
-    <section className="relative w-full py-20 md:py-28 overflow-hidden font-principal flex justify-center min-h-[850px] items-center">
+    <section className="relative w-full max-w-[1900px] mx-auto min-h-[900px] lg:min-h-0 lg:h-[870px] overflow-hidden font-principal flex items-center justify-center">
       
-      {/* Fondo a pantalla completa (SIN SOMBRAS NI FILTROS OSCUROS) */}
+      {/* Fondo ajustado para mostrar la foto entera al 100% sin recortes ni zoom */}
       <div 
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792529036/SKIN_LOUNGE_fondo.png')" }}
+        className="absolute inset-0 w-full h-full bg-cover lg:bg-[length:100%_100%] bg-no-repeat bg-center"
+        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793054488/yi9a85ywmpdstl6a2vjx.jpg')" }}
       >
       </div>
 
-      {/* Contenedor Principal en Cuadrícula (Grid) */}
-      <div className="relative z-10 w-full max-w-[1100px] px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-center">
+      {/* Contenedor Principal */}
+      <div className="relative z-10 w-full max-w-[1500px] px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-center py-10 lg:py-0">
         
         {/* =========================================
-            COLUMNA IZQUIERDA: Textos + Tarjeta Vertical
+            COLUMNA IZQUIERDA: Textos + Tarjeta Vertical a la izquierda
             ========================================= */}
-        <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+        <div className="flex flex-col items-center lg:items-start text-center lg:text-left lg:-ml-12 xl:-ml-20">
           
-          {/* Cabecera */}
+          {/* Cabecera Textos Ajustados */}
           <div className="mb-8 flex flex-col items-center lg:items-start" style={{ fontFamily: 'Alta, serif' }}>
-            <h3 className="text-white text-lg md:text-xl tracking-[0.25em] font-light mb-[-5px]">
+            <h3 className="text-white text-xl lg:text-[1.5rem] tracking-[0.3em] font-light mb-[-5px]">
               FACIAL
             </h3>
-            <h2 className="text-white text-[3.5rem] md:text-[4.5rem] leading-[1.1] mb-1 drop-shadow-md">
+            <h2 className="text-white text-[4rem] md:text-[5rem] lg:text-[5.5rem] leading-[1.05] mb-2 drop-shadow-md">
               SKIN LOUNGE
             </h2>
-            <p className="text-white text-base md:text-lg font-light tracking-wide drop-shadow-sm">
+            <p className="text-white text-lg md:text-xl lg:text-[22px] font-light tracking-wide drop-shadow-sm">
               Experiencias en limpiezas faciales EXCLUSIVAS
             </p>
           </div>
 
-          {/* Tarjeta de Imagen Vertical (Carrusel Animado) */}
-          <div className="relative w-[280px] md:w-[320px] h-[420px] md:h-[480px] rounded-[2rem] overflow-hidden border-[3px] border-white border-opacity-30 shadow-2xl mx-auto lg:mx-0 bg-black/10">
+          {/* Tarjeta de Imagen Vertical (Carrusel Animado CON BORDE MÁS GRUESO) */}
+          <div className="relative w-[300px] md:w-[360px] lg:w-[380px] h-[460px] md:h-[540px] lg:h-[570px] rounded-[2rem] overflow-hidden border-[6px] md:border-[8px] border-white border-opacity-40 shadow-2xl mx-auto lg:mx-0 bg-black/10">
             
             {/* Imágenes con transición suave (Fade) */}
             {images.map((img, index) => (
@@ -103,22 +103,23 @@ const SkinLounge = () => {
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
                   index === currentImage ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 }`}
+                onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute inset-0 w-full h-full object-cover bg-black/50' }}
               />
             ))}
 
             {/* Gradiente inferior para resaltar los puntitos */}
-            <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none"></div>
             
             {/* Puntitos del carrusel centrados abajo */}
-            <div className="absolute bottom-5 w-full flex justify-center gap-2.5 z-30">
+            <div className="absolute bottom-6 w-full flex justify-center gap-2.5 z-30">
               {images.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImage(index)}
                   className={`rounded-full transition-all duration-300 ${
                     index === currentImage 
-                      ? 'w-2.5 h-2.5 bg-white scale-125' 
-                      : 'w-2.5 h-2.5 bg-white bg-opacity-40 hover:bg-opacity-80'
+                      ? 'w-3 h-3 bg-white scale-125' 
+                      : 'w-3 h-3 bg-white bg-opacity-40 hover:bg-opacity-80'
                   }`}
                   aria-label={`Ver imagen ${index + 1}`}
                 ></button>
@@ -128,38 +129,39 @@ const SkinLounge = () => {
         </div>
 
         {/* =========================================
-            COLUMNA DERECHA: Testimonios y Botones
+            COLUMNA DERECHA: Testimonios y Botones empujados a la derecha
             ========================================= */}
-        <div className="flex flex-col gap-6 w-full max-w-[420px] mx-auto lg:ml-auto mt-10 lg:mt-0">
+        <div className="flex flex-col gap-6 w-full max-w-[520px] mx-auto lg:ml-auto lg:-mr-12 xl:-mr-20 mt-10 lg:mt-0">
           
           {/* Carrusel en celular y Lista normal en PC */}
           <div 
             ref={testimonialRef}
-            className="flex md:flex-col overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide pb-4 md:pb-0 gap-4 md:gap-5"
+            className="flex md:flex-col overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide pb-4 md:pb-0 gap-5 md:gap-6"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {testimonials.map((testimonio) => (
               <div key={testimonio.id} className="w-full flex-shrink-0 md:flex-shrink md:w-auto snap-center">
                 
-                <div className="group bg-white/10 backdrop-blur-sm border border-white/40 rounded-[1.2rem] p-4 md:p-5 flex gap-4 shadow-lg hover:bg-white/20 transition-all duration-300 cursor-default h-full">
+                {/* Tarjeta de Reseña */}
+                <div className="group bg-white/10 backdrop-blur-sm border-2 border-white/40 rounded-[1.5rem] p-5 md:p-6 lg:p-7 flex gap-5 shadow-lg hover:bg-white/20 transition-all duration-300 cursor-default h-full">
                   
                   {/* Ícono de Usuario (Avatar) */}
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-[1.5px] border-white flex items-center justify-center bg-transparent">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.2}>
+                  <div className="flex-shrink-0 mt-1">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border-[1.5px] border-white flex items-center justify-center bg-transparent">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     </div>
                   </div>
                   
                   {/* Contenido (Estrellas + Texto) */}
-                  <div className="flex flex-col gap-1.5">
-                    <div className="flex gap-1">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-1.5">
                       {[...Array(5)].map((_, i) => (
                         <svg 
                           key={i} 
                           xmlns="http://www.w3.org/2000/svg" 
-                          className="w-3.5 h-3.5 md:w-4 md:h-4 text-white transition-all duration-300 group-hover:text-yellow-400 group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.9)]" 
+                          className="w-4 h-4 md:w-5 md:h-5 text-white transition-all duration-300 group-hover:text-yellow-400 group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.9)]" 
                           viewBox="0 0 20 20" 
                           fill="currentColor"
                         >
@@ -167,7 +169,7 @@ const SkinLounge = () => {
                         </svg>
                       ))}
                     </div>
-                    <p className="text-white text-[13px] md:text-[14px] font-light leading-snug md:leading-relaxed drop-shadow-sm">
+                    <p className="text-white text-[14px] md:text-[15px] lg:text-[16px] font-light leading-snug md:leading-relaxed drop-shadow-sm">
                       {testimonio.text}
                     </p>
                   </div>
@@ -177,10 +179,10 @@ const SkinLounge = () => {
           </div>
 
           {/* Botón de Acción */}
-          <div className="flex justify-center lg:justify-end mt-2">
+          <div className="flex justify-center lg:justify-end mt-4">
             <Link 
               to="/skinlounge" 
-              className="inline-flex items-center justify-center w-auto gap-2 bg-[#7ba9b7] text-white px-7 lg:px-8 py-3 rounded-full font-medium text-[15px] shadow-lg hover:bg-[#6894a1] transition-colors whitespace-nowrap"
+              className="inline-flex items-center justify-center w-auto gap-2 bg-[#7ba9b7] text-white px-7 lg:px-8 py-3.5 rounded-full font-medium text-[16px] shadow-lg hover:bg-[#6894a1] transition-colors whitespace-nowrap"
             >
               Tratamientos Skin Lounge
               <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -191,7 +193,7 @@ const SkinLounge = () => {
 
           {/* Redes Sociales con íconos personalizados */}
           <div className="flex flex-col sm:flex-row justify-center lg:justify-end items-center gap-3 lg:gap-4 mt-2 text-white drop-shadow-sm">
-            <span className="font-light text-[15px] lg:text-[17px] tracking-wide text-center sm:text-left lg:whitespace-nowrap">
+            <span className="font-light text-[17px] md:text-[19px] lg:text-[21px] tracking-wide text-center sm:text-left lg:whitespace-nowrap">
               Mira nuestra experiencia en redes:
             </span>
             <div className="flex gap-2.5 lg:gap-3">

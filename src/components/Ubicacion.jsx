@@ -11,15 +11,17 @@ const Ubicacion = () => {
 
       <div className="relative z-10 w-full flex flex-col items-center">
         {/* Título y Subtítulo */}
-        <div className="text-center max-w-3xl px-6 mb-16">
+        <div className="text-center max-w-4xl px-6 mb-16">
           <h2 
-            className="text-3xl md:text-5xl text-[#053d57] font-light tracking-wide mb-4 drop-shadow-sm"
+            className="text-3xl md:text-5xl text-[#053d57] font-light tracking-wide mb-5 drop-shadow-sm"
             style={{ fontFamily: 'Alta, serif' }}
           >
             TODOS LOS CAMINOS CONDUCEN A SALVAR
           </h2>
-          <p className="text-[#7c7570] text-sm md:text-base font-light leading-relaxed">
-            Ubicados estratégicamente en el corazón de la ciudad, a 10 minutos del centro empresarial de San Isidro, contamos con estacionamiento externo.
+          {/* Subtítulo más grande, con toque de negrita y salto de línea exacto */}
+          <p className="text-[#7c7570] text-lg md:text-[22px] font-medium leading-relaxed">
+            Ubicados estratégicamente en el corazón de la ciudad, a 10 minutos del <br />
+            centro empresarial de San Isidro, contamos con estacionamiento externo.
           </p>
         </div>
 
@@ -28,7 +30,8 @@ const Ubicacion = () => {
           
           {/* COLUMNA IZQUIERDA: Mapa de Google Maps with hover animation (Ocupa 7 columnas) */}
           <div className="lg:col-span-7 bg-white p-3 rounded-[2.5rem] shadow-xl border border-gray-200 group overflow-hidden">
-            <div className="w-full h-[400px] md:h-[450px] rounded-[2rem] overflow-hidden relative">
+            {/* Altura del mapa incrementada (h-[620px] en PC) para que sea más alto arriba y abajo */}
+            <div className="w-full h-[450px] md:h-[550px] lg:h-[620px] rounded-[2rem] overflow-hidden relative">
               <iframe 
                 title="Ubicacion Salvar Dermatoplastica"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.859871587634!2d-77.03456!3d-12.08643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c512345679%3A0x123456789abcdef!2sAv.%20Ignacio%20Merino%202475%2C%20Lince%2015073!5e0!3m2!1ses!2spe!4v1650000000000!5m2!1ses!2spe" 

@@ -23,7 +23,7 @@ const CuidamosPiel = () => {
         </>
       ),
       // Imagen de Dermatología actualizada
-      image: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792529032/dermatologiia.jpg",
+      image: "https://res.cloudinary.com/da47iihxz/image/upload/v1793054310/ikmz1a4llpwmufjaghqn.jpg",
       treatments: [
         "Acné",
         "Rosácea/Telangiectasias",

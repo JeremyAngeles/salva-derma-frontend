@@ -12,16 +12,15 @@ const ServicesSplit = () => {
   ];
 
   const [mainCirugia, setMainCirugia] = useState(casosCirugia[0]);
-  const [fadeCirugia, setFadeCirugia] = useState(false);
+  const [animandoCirugia, setAnimandoCirugia] = useState(false);
 
-  // Función para cambiar foto con animación suave
   const handleChangeCirugia = (caso) => {
-    if (caso.id === mainCirugia.id) return;
-    setFadeCirugia(true); // Inicia desvanecimiento
+    if (caso.id === mainCirugia.id || animandoCirugia) return;
+    setAnimandoCirugia(true);
     setTimeout(() => {
-      setMainCirugia(caso); // Cambia la foto
-      setFadeCirugia(false); // Vuelve a aparecer
-    }, 300); // 300ms de transición
+      setMainCirugia(caso);
+      setAnimandoCirugia(false);
+    }, 250);
   };
 
   const thumbsCirugia = casosCirugia.filter(caso => caso.id !== mainCirugia.id);
@@ -32,21 +31,20 @@ const ServicesSplit = () => {
   const casosDerma = [
     { id: 1, full: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528927/1-derma.png', thumb: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528899/1-mini-derma.png' },
     { id: 2, full: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528927/2-derma.png', thumb: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528899/2-mini-derma.png' },
-    { id: 3, full: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528928/3-derma.png', thumb: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528900/3-mini-derma.png' },
+    { id: 3, full: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528928/3-derma.png', thumb: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792529000/3-mini-derma.png' },
     { id: 4, full: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528928/4-derma.png', thumb: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528898/4-mini-derma.png' }
   ];
 
   const [mainDerma, setMainDerma] = useState(casosDerma[0]);
-  const [fadeDerma, setFadeDerma] = useState(false);
+  const [animandoDerma, setAnimandoDerma] = useState(false);
 
-  // Función para cambiar foto con animación suave
   const handleChangeDerma = (caso) => {
-    if (caso.id === mainDerma.id) return;
-    setFadeDerma(true);
+    if (caso.id === mainDerma.id || animandoDerma) return;
+    setAnimandoDerma(true);
     setTimeout(() => {
       setMainDerma(caso);
-      setFadeDerma(false);
-    }, 300);
+      setAnimandoDerma(false);
+    }, 250);
   };
 
   const thumbsDerma = casosDerma.filter(caso => caso.id !== mainDerma.id);
@@ -58,15 +56,14 @@ const ServicesSplit = () => {
           LADO IZQUIERDO: CIRUGÍA PLÁSTICA
           ========================================= */}
       <div 
-        className="relative flex-1 px-4 md:px-6 lg:px-10 pb-12 md:pb-16 pt-0 flex flex-col items-center bg-cover bg-center"
+        className="relative flex-1 px-4 md:px-6 lg:px-10 pb-4 md:pb-6 pt-0 flex flex-col items-center bg-cover bg-center"
         style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1792797966/ymccrdcmzsfryyqlbzjw.png')" }}
       >
-        
-        <div className="relative z-10 w-full max-w-[600px] mx-auto flex flex-row gap-4 md:gap-6 lg:gap-8 items-start justify-center">
+        <div className="relative z-10 w-full max-w-[600px] mx-auto flex flex-row gap-4 md:gap-6 lg:gap-8 items-stretch justify-center">
           
-          {/* COLUMNA 1: Ícono + Miniaturas */}
-          <div className="flex flex-col items-center w-[90px] md:w-[130px] shrink-0">
-            <div className="w-[80px] h-[80px] md:w-[110px] md:h-[110px] lg:w-[130px] lg:h-[130px] -mt-[40px] md:-mt-[55px] lg:-mt-[65px] mb-4 md:mb-6 z-20 flex items-center justify-center drop-shadow-lg">
+          {/* COLUMNA 1: Ícono arriba + Miniaturas alineadas abajo con la foto grande */}
+          <div className="flex flex-col justify-between w-[90px] md:w-[130px] shrink-0">
+            <div className="w-[80px] h-[80px] md:w-[110px] md:h-[110px] lg:w-[130px] lg:h-[130px] -mt-[40px] md:-mt-[55px] lg:-mt-[65px] z-20 flex items-center justify-center drop-shadow-lg self-center">
               <img 
                 src="/cirugia-icono.svg" 
                 alt="Ícono Cirugía Plástica" 
@@ -78,7 +75,7 @@ const ServicesSplit = () => {
               {thumbsCirugia.map((thumb) => (
                 <div 
                   key={thumb.id}
-                  className="w-full aspect-square bg-gray-300 rounded-[0.6rem] md:rounded-[0.8rem] overflow-hidden cursor-pointer border-2 border-transparent hover:border-white transition-all duration-300 transform hover:scale-105"
+                  className="w-full aspect-square bg-gray-300 rounded-[0.6rem] md:rounded-[0.8rem] overflow-hidden cursor-pointer border-2 border-transparent hover:border-white transition-all duration-300 transform hover:scale-105 shadow-sm"
                   onClick={() => handleChangeCirugia(thumb)}
                 >
                   <img 
@@ -91,23 +88,24 @@ const ServicesSplit = () => {
             </div>
           </div>
 
-          {/* COLUMNA 2: Caja grande interactiva */}
-          <div className="flex-1 flex flex-col bg-white/20 p-2 md:p-3 rounded-[1.2rem] md:rounded-[1.8rem] backdrop-blur-md shadow-lg border border-white/10 -mt-4 md:-mt-8 z-10">
-            <div className="rounded-[1rem] md:rounded-[1.2rem] overflow-hidden w-full h-full relative bg-gray-100/50 aspect-[3/4]">
+          {/* COLUMNA 2: Caja grande interactiva más vertical hacia arriba */}
+          <div className="flex-1 flex flex-col bg-white/20 p-2 md:p-3 rounded-[1.2rem] md:rounded-[1.8rem] backdrop-blur-md shadow-lg border border-white/10 -mt-6 md:-mt-10 z-10">
+            <div className="rounded-[1rem] md:rounded-[1.2rem] overflow-hidden w-full h-full relative bg-black/40 aspect-[3/4.8]">
               <img 
                 src={mainCirugia.full} 
                 alt={`Cirugía Caso ${mainCirugia.id}`} 
-                // Aquí aplicamos la animación suave de opacidad
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out ${fadeCirugia ? 'opacity-0' : 'opacity-100'}`} 
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-300 ease-out ${
+                  animandoCirugia ? 'opacity-0 scale-95 blur-[2px]' : 'opacity-100 scale-100 blur-0'
+                }`} 
               />
             </div>
           </div>
 
         </div>
 
-        {/* Título Modificado: tracking-tight para separar un poquitito más */}
+        {/* Título pegado a la caja */}
         <h2 
-          className="relative z-10 text-white text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] tracking-tight text-center mt-8 md:mt-12 drop-shadow-md" 
+          className="relative z-10 text-white text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] tracking-tight text-center mt-1 md:mt-2 drop-shadow-md" 
           style={{ fontFamily: 'Alta, serif' }}
         >
           CIRUGÍA PLÁSTICA
@@ -118,27 +116,27 @@ const ServicesSplit = () => {
           LADO DERECHO: DERMATOLOGÍA
           ========================================= */}
       <div 
-        className="relative flex-1 px-4 md:px-6 lg:px-10 pb-12 md:pb-16 pt-0 flex flex-col items-center mt-20 lg:mt-0 bg-cover bg-center"
+        className="relative flex-1 px-4 md:px-6 lg:px-10 pb-4 md:pb-6 pt-0 flex flex-col items-center mt-16 lg:mt-0 bg-cover bg-center"
         style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1792797965/kry2jr97ugxxj7o1tie1.png')" }}
       >
-        
-        <div className="relative z-10 w-full max-w-[600px] mx-auto flex flex-row gap-4 md:gap-6 lg:gap-8 items-start justify-center">
+        <div className="relative z-10 w-full max-w-[600px] mx-auto flex flex-row gap-4 md:gap-6 lg:gap-8 items-stretch justify-center">
           
-          {/* COLUMNA 1: Caja grande interactiva */}
-          <div className="flex-1 flex flex-col bg-white/20 p-2 md:p-3 rounded-[1.2rem] md:rounded-[1.8rem] backdrop-blur-md shadow-lg border border-white/10 -mt-4 md:-mt-8 z-10">
-            <div className="rounded-[1rem] md:rounded-[1.2rem] overflow-hidden w-full h-full relative bg-gray-100/50 aspect-[3/4]">
+          {/* COLUMNA 1: Caja grande interactiva más vertical hacia arriba */}
+          <div className="flex-1 flex flex-col bg-white/20 p-2 md:p-3 rounded-[1.2rem] md:rounded-[1.8rem] backdrop-blur-md shadow-lg border border-white/10 -mt-6 md:-mt-10 z-10">
+            <div className="rounded-[1rem] md:rounded-[1.2rem] overflow-hidden w-full h-full relative bg-black/40 aspect-[3/4.8]">
               <img 
                 src={mainDerma.full} 
                 alt={`Dermatología Caso ${mainDerma.id}`} 
-                // Animación suave de opacidad
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out ${fadeDerma ? 'opacity-0' : 'opacity-100'}`} 
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-300 ease-out ${
+                  animandoDerma ? 'opacity-0 scale-95 blur-[2px]' : 'opacity-100 scale-100 blur-0'
+                }`} 
               />
             </div>
           </div>
 
-          {/* COLUMNA 2: Ícono + Miniaturas */}
-          <div className="flex flex-col items-center w-[90px] md:w-[130px] shrink-0">
-            <div className="w-[80px] h-[80px] md:w-[110px] md:h-[110px] lg:w-[130px] lg:h-[130px] -mt-[40px] md:-mt-[55px] lg:-mt-[65px] mb-4 md:mb-6 z-20 flex items-center justify-center drop-shadow-lg">
+          {/* COLUMNA 2: Ícono arriba + Miniaturas alineadas abajo con la foto grande */}
+          <div className="flex flex-col justify-between w-[90px] md:w-[130px] shrink-0">
+            <div className="w-[80px] h-[80px] md:w-[110px] md:h-[110px] lg:w-[130px] lg:h-[130px] -mt-[40px] md:-mt-[55px] lg:-mt-[65px] z-20 flex items-center justify-center drop-shadow-lg self-center">
               <img 
                 src="/derma-icono.svg" 
                 alt="Ícono Dermatología" 
@@ -150,7 +148,7 @@ const ServicesSplit = () => {
               {thumbsDerma.map((thumb) => (
                 <div 
                   key={thumb.id}
-                  className="w-full aspect-square bg-gray-300 rounded-[0.6rem] md:rounded-[0.8rem] overflow-hidden cursor-pointer border-2 border-transparent hover:border-white transition-all duration-300 transform hover:scale-105"
+                  className="w-full aspect-square bg-gray-300 rounded-[0.6rem] md:rounded-[0.8rem] overflow-hidden cursor-pointer border-2 border-transparent hover:border-white transition-all duration-300 transform hover:scale-105 shadow-sm"
                   onClick={() => handleChangeDerma(thumb)}
                 >
                   <img 
@@ -165,9 +163,9 @@ const ServicesSplit = () => {
           
         </div>
 
-        {/* Título Modificado: tracking-tight para separar un poquitito más */}
+        {/* Título pegado a la caja */}
         <h2 
-          className="relative z-10 text-white text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] tracking-tight text-center mt-8 md:mt-12 drop-shadow-md" 
+          className="relative z-10 text-white text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] tracking-tight text-center mt-1 md:mt-2 drop-shadow-md" 
           style={{ fontFamily: 'Alta, serif' }}
         >
           DERMATOLOGÍA

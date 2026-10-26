@@ -37,37 +37,35 @@ const StaffMedicos = () => {
   ];
 
   return (
-    <section className="relative w-full py-16 md:py-24 overflow-hidden font-principal flex justify-center">
+    <section className="relative w-full py-16 md:py-0 md:h-auto md:aspect-[1900/720] overflow-hidden font-principal flex items-center justify-center">
       
-      {/* FONDO 100% NATURAL: Sin opacidades ni filtros de mezcla */}
+      {/* FONDO A LA MEDIDA EXACTA 1900x720 */}
       <div 
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793036912/eteeqxzm4bnldolvvnbz.png')" }}
+        className="absolute inset-0 w-full h-full bg-[length:100%_100%] bg-no-repeat bg-center"
+        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793051009/rnfblmcyrwf4yvhfd4in.jpg')" }}
       ></div>
 
-      <div className="relative z-10 w-full max-w-[1200px] px-4 sm:px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+      <div className="relative z-10 w-full max-w-[1440px] px-6 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-4 items-center">
         
-        {/* COLUMNA IZQUIERDA: Textos */}
-        <div className="lg:col-span-5 flex flex-col justify-center text-center lg:text-left items-center lg:items-start">
+        {/* COLUMNA IZQUIERDA: Textos más arriba */}
+        <div className="lg:col-span-4 flex flex-col justify-center text-center lg:text-left items-center lg:items-start pl-0 -mt-8 lg:-mt-16">
           
-          {/* Título modificado: Se cambió tracking-wide por tracking-normal para juntar más las letras */}
-          <h2 className="text-3xl sm:text-5xl lg:text-[2.8rem] text-[#053d57] font-alta leading-[1.1] tracking-normal">
+          <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] text-[#053d57] font-alta leading-[1.1] tracking-normal">
             <span className="font-light">CONOCE A NUESTRO</span><br />
             <span className="font-normal">STAFF DE MÉDICOS</span><br />
             <span className="font-normal">ESPECIALISTAS</span>
           </h2>
           
-          <div className="w-24 md:w-32 h-[3px] bg-[#cda99c] my-4 md:my-6"></div>
+          <div className="w-24 md:w-32 h-[3px] bg-[#cda99c] my-4 md:my-5"></div>
           
-          <p className="text-[#6b6662] text-[14px] md:text-[18px] font-light leading-[1.6] max-w-[360px] hidden lg:block">
-            Cada especialista aporta su experiencia<br/>
-            y conocimientos para ofrecer un<br/>
-            abordaje integral, y <strong className="font-medium text-[#5c5652]">BAJO</strong><br/>
-            <strong className="font-medium text-[#5c5652]">ESTÁNDARES DE CALIDAD</strong> que ofrece<br/>
-            nuestra clínica. Priorizando las<br/>
-            necesidades de cada paciente y<br/>
-            acompañándolo en cada etapa de su<br/>
-            atención.
+          <p className="text-[#6b6662] text-[13px] md:text-[18.5px] font-light leading-[1.25] max-w-[390px] hidden lg:block">
+            Cada especialista aporta su experiencia y<br/>
+            conocimientos para ofrecer un abordaje<br/>
+            integral, y <strong className="font-medium text-[#5c5652]">BAJO ESTÁNDARES DE</strong><br/>
+            <strong className="font-medium text-[#5c5652]">CALIDAD</strong> que ofrece nuestra clínica.<br/>
+            Priorizando las necesidades de cada<br/>
+            paciente y acompañándolo en cada<br/>
+            etapa de su atención.
           </p>
           
           <p className="text-[#6b6662] text-[14px] font-light leading-relaxed max-w-md lg:hidden">
@@ -75,27 +73,26 @@ const StaffMedicos = () => {
           </p>
         </div>
 
-        {/* COLUMNA DERECHA: Tarjetas de Doctores */}
-        <div className="lg:col-span-7 flex flex-col gap-3 sm:gap-4 w-full max-w-2xl mx-auto">
+        {/* COLUMNA DERECHA: Tarjetas con fondo blanco transparente y contorno blanco sutil estilo glassmorphism */}
+        <div className="lg:col-span-8 flex flex-col gap-2 sm:gap-2.5 w-full max-w-2xl ml-auto mr-0 pr-0 lg:pr-4 translate-x-0 lg:translate-x-6">
           {doctors.map((doc) => (
             <div 
               key={doc.id} 
-              className="flex items-center justify-between bg-white bg-opacity-40 backdrop-blur-md rounded-full py-2 px-4 sm:py-2.5 sm:px-6 md:px-8 shadow-sm border border-white border-opacity-60"
+              className="flex items-center justify-between bg-white/[0.22] backdrop-blur-md rounded-2xl sm:rounded-3xl py-3 pl-8 pr-3 sm:py-3.5 sm:pl-9 sm:pr-3.5 shadow-sm border border-white/50"
             >
-              <div className="flex flex-col flex-1 pr-2 overflow-hidden">
-                <h3 className="text-[#5c5652] font-semibold text-[11px] sm:text-[13px] md:text-[14px] leading-[1.15] break-words">
+              <div className="flex flex-col flex-1 pr-4 overflow-hidden">
+                <h3 className="text-[#5c5652] font-semibold text-[15px] sm:text-[18px] leading-[1.2] break-words drop-shadow-sm">
                   {doc.name}
                 </h3>
-                {/* Especialidad modificada: Se cambió tracking-widest por tracking-normal para juntar letras */}
-                <p className="text-[#88807a] text-[9px] sm:text-[10px] md:text-[11px] font-light mt-1 tracking-normal uppercase truncate">
+                <p className="text-[#88807a] text-[12px] sm:text-[14px] font-light mt-1 tracking-normal uppercase truncate">
                   {doc.specialty}
                 </p>
-                <p className="text-[#6c6662] text-[11px] sm:text-[13px] md:text-[14px] mt-1.5 sm:mt-3">
-                  CMP {doc.cmp} <span className="mx-1 sm:mx-1.5 text-[#a8a19c]">|</span> RNE {doc.rne}
+                <p className="text-[#6c6662] text-[14px] sm:text-[16px] mt-1 font-medium">
+                  CMP {doc.cmp} <span className="mx-1.5 text-[#a8a19c]">|</span> RNE {doc.rne}
                 </p>
               </div>
 
-              <div className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden shadow-inner ml-1 sm:ml-2">
+              <div className="flex-shrink-0 w-20 h-20 sm:w-22 sm:h-22 md:w-24 md:h-24 rounded-full overflow-hidden shadow-md border border-white/60">
                 <img 
                   src={doc.image} 
                   alt="Doctor" 
