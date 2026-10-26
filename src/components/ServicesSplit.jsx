@@ -105,8 +105,9 @@ const ServicesSplit = () => {
 
         </div>
 
+        {/* Título Modificado: tracking-tight para separar un poquitito más */}
         <h2 
-          className="relative z-10 text-white text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] tracking-widest text-center mt-8 md:mt-12 drop-shadow-md" 
+          className="relative z-10 text-white text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] tracking-tight text-center mt-8 md:mt-12 drop-shadow-md" 
           style={{ fontFamily: 'Alta, serif' }}
         >
           CIRUGÍA PLÁSTICA
@@ -164,8 +165,9 @@ const ServicesSplit = () => {
           
         </div>
 
+        {/* Título Modificado: tracking-tight para separar un poquitito más */}
         <h2 
-          className="relative z-10 text-white text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] tracking-widest text-center mt-8 md:mt-12 drop-shadow-md" 
+          className="relative z-10 text-white text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] tracking-tight text-center mt-8 md:mt-12 drop-shadow-md" 
           style={{ fontFamily: 'Alta, serif' }}
         >
           DERMATOLOGÍA

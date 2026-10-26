@@ -106,10 +106,8 @@ const MitadCaso = ({ data }) => (
       style={{ backgroundImage: `url('${data.fondo}')` }}
     ></div>
     
-    {/* mt-4 md:mt-16 para subir ligeramente todo el bloque (antes era mt-6 md:mt-24) */}
     <div className="relative z-10 flex flex-col items-center w-full px-4 mt-4 md:mt-16">
       <h2
-        // mb-6 md:mb-8 (antes era mb-10 md:mb-16) para acercar el card al título
         className="text-white text-[2.4rem] md:text-[3.2rem] lg:text-[4.2rem] leading-none tracking-wide mb-6 md:mb-8 drop-shadow-lg text-center"
         style={{ fontFamily: 'Alta, serif' }}
       >
@@ -121,9 +119,9 @@ const MitadCaso = ({ data }) => (
 );
 
 const Hero = () => {
-  // Fondos de las slides 1-3. La slide 4 (index 3) se dibuja con su propio diseño dividido.
+  // Fondos de las slides 1-3.
   const images = [
-    'https://res.cloudinary.com/da47iihxz/image/upload/v1792797855/wnc6nndtw6shqbvkiz7j.jpg', // Inicio (Logo Salvar)
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1793047594/bozlcxwdrpag7blq02i7.jpg', // Inicio (Logo Salvar)
     'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/cirujia.png', // +1000 Cirugías
     'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/derma.png', // Dermatología
     null, // Casos Antes y Después (diseño dividido)
@@ -144,8 +142,10 @@ const Hero = () => {
 
   return (
     <section className="relative w-full mb-32 md:mb-40 font-principal">
+      
       {/* 1. Contenedor de la Imagen */}
       <div className="relative w-full h-[90vh] md:h-[90vh] min-h-[750px] md:min-h-[800px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden flex flex-col justify-center items-center">
+        
         {/* Fondos slides 1-3 */}
         {images.map((img, index) =>
           img ? (
@@ -169,18 +169,15 @@ const Hero = () => {
           <MitadCaso data={CASOS.dermatologia} />
         </div>
 
-        {/* Overlay oscuro (se quita en la slide 4 porque ya trae su propio diseño) */}
-        <div
-          className={`absolute inset-0 bg-black transition-opacity duration-1000 pointer-events-none z-10 ${
-            currentSlide === 3 ? 'opacity-0' : 'opacity-30'
-          }`}
-        ></div>
-
         {/* 2. Centro (Textos dinámicos según el slide) */}
         <div className="relative z-20 text-center text-white px-4 pb-12 md:pb-20 w-full flex flex-col items-center pointer-events-none">
-          {/* SLIDE 1: Inicio (Logo) */}
+          
+          {/* =========================================
+              SLIDE 1: Inicio (BAJADO MUCHO MÁS)
+              Se incrementó a mt-32 md:mt-[18rem] para forzarlo hacia abajo
+              ========================================= */}
           <div
-            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full ${
+            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full mt-32 md:mt-[18rem] ${
               currentSlide === 0 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'
             }`}
           >
@@ -189,12 +186,13 @@ const Hero = () => {
               alt="Salvar Dermatoplástica"
               className="w-auto h-20 md:h-32 lg:h-40 object-contain mb-8 md:mb-12 drop-shadow-2xl"
             />
+            {/* Título usando Montserrat */}
             <h1
               className="text-2xl md:text-4xl font-light max-w-2xl mx-auto leading-relaxed drop-shadow-lg"
-              style={{ fontFamily: 'Alta, serif' }}
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               Todo lo que buscas para tu piel,<br />
-              <strong className="font-semibold tracking-wider" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+              <strong className="font-semibold tracking-wider">
                 EN UN SOLO LUGAR
               </strong>
             </h1>
@@ -235,7 +233,7 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* SLIDE 4: sin texto aquí, todo va en el diseño dividido de arriba */}
+          {/* SLIDE 4: sin texto aquí */}
           <div
             className={`transition-all duration-700 absolute w-full h-[200px] ${
               currentSlide === 3 ? 'opacity-100 relative' : 'opacity-0 pointer-events-none'

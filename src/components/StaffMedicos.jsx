@@ -42,7 +42,7 @@ const StaffMedicos = () => {
       {/* FONDO 100% NATURAL: Sin opacidades ni filtros de mezcla */}
       <div 
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1792799317/grk1dtqk6y8wvhajklnf.jpg')" }}
+        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793036912/eteeqxzm4bnldolvvnbz.png')" }}
       ></div>
 
       <div className="relative z-10 w-full max-w-[1200px] px-4 sm:px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
@@ -50,7 +50,8 @@ const StaffMedicos = () => {
         {/* COLUMNA IZQUIERDA: Textos */}
         <div className="lg:col-span-5 flex flex-col justify-center text-center lg:text-left items-center lg:items-start">
           
-          <h2 className="text-3xl sm:text-5xl lg:text-[2.8rem] text-[#053d57] font-alta leading-[1.1] tracking-wide">
+          {/* Título modificado: Se cambió tracking-wide por tracking-normal para juntar más las letras */}
+          <h2 className="text-3xl sm:text-5xl lg:text-[2.8rem] text-[#053d57] font-alta leading-[1.1] tracking-normal">
             <span className="font-light">CONOCE A NUESTRO</span><br />
             <span className="font-normal">STAFF DE MÉDICOS</span><br />
             <span className="font-normal">ESPECIALISTAS</span>
@@ -85,7 +86,8 @@ const StaffMedicos = () => {
                 <h3 className="text-[#5c5652] font-semibold text-[11px] sm:text-[13px] md:text-[14px] leading-[1.15] break-words">
                   {doc.name}
                 </h3>
-                <p className="text-[#88807a] text-[9px] sm:text-[10px] md:text-[11px] font-light mt-1 tracking-widest uppercase truncate">
+                {/* Especialidad modificada: Se cambió tracking-widest por tracking-normal para juntar letras */}
+                <p className="text-[#88807a] text-[9px] sm:text-[10px] md:text-[11px] font-light mt-1 tracking-normal uppercase truncate">
                   {doc.specialty}
                 </p>
                 <p className="text-[#6c6662] text-[11px] sm:text-[13px] md:text-[14px] mt-1.5 sm:mt-3">
