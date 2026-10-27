@@ -9,15 +9,12 @@ const SkinLounge = () => {
   return (
     <main className="w-full font-principal bg-[#faf9f8] flex flex-col min-h-screen">
       
-      {/* =========================================
-          1. HERO (Skin Lounge)
-          ========================================= */}
       <section className="relative w-full mb-32 md:mb-48 lg:mb-64">
         
         <div className="absolute top-0 left-0 w-full h-[95vh] min-h-[850px] md:min-h-[900px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden z-0 shadow-sm">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792692283/01_-_portadaxx.png')` }} 
+            style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1793140334/rab92jteniivuytnoweg.jpg')` }} 
           ></div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black/60 pointer-events-none"></div>
         </div>
@@ -43,12 +40,8 @@ const SkinLounge = () => {
 
           <div className="w-full max-w-[1250px] mx-auto flex items-end relative">
             <div className="w-full md:w-[60%] lg:w-[50%] text-left pr-4">
-              <p className="text-white/95 text-[15px] md:text-[16px] lg:text-[17px] font-light leading-relaxed drop-shadow-md">
-                Experiencias Skin Lounge by Salvar son<br />
-                faciales premium dermatológicos creados por<br />
-                especialistas en dermatología y cirugía<br />
-                plástica, se enfocan en tu bienestar y la de tu<br />
-                piel con momentos de relajación y calma.
+              <p className="text-white text-[15px] md:text-[16px] lg:text-[17px] font-medium leading-snug drop-shadow-md max-w-[480px]">
+                Experiencias Skin Lounge by Salvar son faciales premium dermatológicos creados por especialistas en dermatología y cirugía plástica, se enfocan en tu bienestar y la de tu piel con momentos de relajación y calma.
               </p>
             </div>
           </div>
@@ -69,29 +62,14 @@ const SkinLounge = () => {
         </div>
       </section>
 
-      {/* =========================================
-          2. TRATAMIENTOS SKIN LOUNGE
-          ========================================= */}
       <TratamientosSkinLounge />
 
-      {/* =========================================
-          3. BANNER SALVAR HYDROLIPS
-          ========================================= */}
       <SalvarHydrolips />
 
-      {/* =========================================
-          4. EL ESPACIO PARA TI Y TU PIEL
-          ========================================= */}
       <EspacioSkinLounge />
 
-      {/* =========================================
-          5. MÁS ALLÁ DE UN FACIAL
-          ========================================= */}
       <MasAllaSkinLounge />
 
-      {/* =========================================
-          6. FOOTER
-          ========================================= */}
       <div className="mt-auto">
         <Footer />
       </div>

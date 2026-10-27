@@ -9,22 +9,22 @@ const Tratamientos = () => {
     { 
       id: 1, 
       titulo: "BIOESTIMULADOR\nDE COLÁGENO", 
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792690139/BIOESTIMULADOR.png" 
+      img: "https://res.cloudinary.com/da47iihxz/image/upload/v1793137827/asqlvhrsnzauoctxgkbk.png" 
     },
     { 
       id: 2, 
       titulo: "TOXINA\nBOTULINICA", 
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792690139/TOXINA.png" 
+      img: "https://res.cloudinary.com/da47iihxz/image/upload/v1793137827/zssxtamidapqopm1tu5n.png" 
     },
     { 
       id: 3, 
       titulo: "ÁCIDO\nHIALURONICO", 
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792690139/%C3%81CIDO_H.png" 
+      img: "https://res.cloudinary.com/da47iihxz/image/upload/v1793137827/fwa2aryebzj3edvwbj97.png" 
     },
     { 
       id: 4, 
       titulo: "PLASMA RICO\nEN PLAQUETAS", 
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792690139/PLASMA.png" 
+      img: "https://res.cloudinary.com/da47iihxz/image/upload/v1793137827/zb4suanrpktk5h6mqhul.png" 
     },
   ];
 
@@ -56,12 +56,10 @@ const Tratamientos = () => {
           </div>
           
           <div className="w-full md:w-auto flex flex-col items-start md:pb-4">
-            <p className="text-[#88807a] text-[14px] md:text-[15px] lg:text-[16px] font-light leading-relaxed mb-5 max-w-[480px]">
-              Nuestros tratamientos estéticos son<br className="hidden sm:block"/>
-              realizados por especialistas en dermatología<br className="hidden sm:block"/>
-              y cirugía plástica, buscando mejorar la<br className="hidden sm:block"/>
-              calidad de piel mediante procedimientos<br className="hidden sm:block"/>
-              seguros y efectivos.
+            
+            {/* PÁRRAFO AJUSTADO: Se cambió leading-relaxed a leading-snug y se quitaron los <br/> para juntar las líneas */}
+            <p className="text-[#88807a] text-[14px] md:text-[15px] lg:text-[18px] font-light leading-snug tracking-tight mb-5 max-w-[320px] md:max-w-[420px]">
+              Nuestros tratamientos estéticos son realizados por especialistas en dermatología y cirugía plástica, buscando mejorar la calidad de piel mediante procedimientos seguros y efectivos.
             </p>
             
             {/* ETIQUETA CORREGIDA: Se agregó whitespace-nowrap y w-max para que NUNCA baje a otra línea */}

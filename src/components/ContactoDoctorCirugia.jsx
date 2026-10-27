@@ -7,7 +7,7 @@ const ContactoDoctorCirugia = () => {
         className="relative font-principal bg-cover bg-center bg-no-repeat mb-[-1px] flex flex-col justify-center shrink-0"
         style={{ 
           backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793124405/gcomgmzvzilazcr5mspi.jpg')",
-          width: '1900px', 
+          width: '1905px', 
           height: '990px',
           minWidth: '1900px',
           minHeight: '990px'

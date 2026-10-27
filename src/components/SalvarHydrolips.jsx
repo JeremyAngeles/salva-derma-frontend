@@ -39,11 +39,9 @@ const SalvarHydrolips = () => {
             </div>
           </h2>
 
-          {/* Párrafo Descriptivo */}
-          <p className="text-white/95 text-[13px] md:text-[14px] lg:text-[15.5px] font-light leading-relaxed max-w-[450px] drop-shadow-md">
-            Hidratación profunda no invasiva de labios, enfocado<br className="hidden sm:block"/>
-            en dar luminosidad a esos labios deshidratados o con<br className="hidden sm:block"/>
-            esas descamación incómoda.
+          {/* Párrafo Descriptivo (Más junto con leading-snug) */}
+          <p className="text-white/95 text-[13px] md:text-[14px] lg:text-[15.5px] font-light leading-snug max-w-[450px] drop-shadow-md">
+            Hidratación profunda no invasiva de labios, enfocado en dar luminosidad a esos labios deshidratados o con esas descamación incómoda.
           </p>
 
         </div>

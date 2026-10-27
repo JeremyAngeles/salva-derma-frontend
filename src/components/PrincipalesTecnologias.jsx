@@ -50,7 +50,7 @@ const PrincipalesTecnologias = () => {
       {/* Imagen de la clínica de fondo */}
       <div 
         className="absolute inset-0 bg-cover bg-center md:bg-[position:70%_center] lg:bg-right"
-        style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792690603/estetica_largo_fondo_equipos.jpg')" }} 
+        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793138012/agkrsfcoc26mouptya3z.jpg')" }} 
       ></div>
       
       {/* Degradado oscuro solo en la parte izquierda para que el texto resalte */}
@@ -95,11 +95,13 @@ const PrincipalesTecnologias = () => {
                 
                 {/* Textos del Equipo */}
                 <div className="flex flex-col justify-center">
-                  <h4 className="text-[#d1b3ab] font-semibold text-[14px] md:text-[15px] lg:text-[16px] tracking-wide whitespace-pre-line leading-tight drop-shadow-md uppercase transition-colors duration-300 group-hover:text-white">
+                  {/* Título en BLANCO, más GRANDE y leading-none para pegarlo hacia abajo */}
+                  <h4 className="text-white font-semibold text-[16px] md:text-[18px] lg:text-[20px] tracking-wide whitespace-pre-line leading-none drop-shadow-md uppercase">
                     {tech.titulo}
                   </h4>
                   {tech.desc && (
-                    <p className="text-white/90 font-light text-[13px] md:text-[14px] mt-1 leading-relaxed drop-shadow-sm max-w-[420px]">
+                    /* Descripción con mt-0.5 y leading-snug para estar bien pegadita al título */
+                    <p className="text-white/90 font-light text-[13px] md:text-[14px] mt-0.5 leading-snug drop-shadow-sm max-w-[420px]">
                       {tech.desc}
                     </p>
                   )}

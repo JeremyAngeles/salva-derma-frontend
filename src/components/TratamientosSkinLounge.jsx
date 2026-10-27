@@ -41,9 +41,9 @@ const TratamientosSkinLounge = () => {
             By SALVAR
           </h3>
           
-          {/* Subtítulo más grande y extenso con la flechita "v" */}
+          {/* Subtítulo ajustado con la flechita "v" - Más grande y más gordito (font-medium) */}
           <div className="flex items-center gap-2 text-[#88807a]">
-            <p className="text-[14px] md:text-[15px] lg:text-[16px] font-light">
+            <p className="text-[15px] md:text-[16px] lg:text-[17px] font-medium">
               Un espacio para engreírte y cuidar de ti que va más allá de un facial.
             </p>
             {/* Icono de flechita (Chevron down) */}
@@ -72,12 +72,13 @@ const TratamientosSkinLounge = () => {
                 }`}
               >
                 <h4 
-                  className="text-[20px] md:text-[24px] lg:text-[26px] text-[#053d57] mb-3 md:mb-4 tracking-wide"
+                  className="text-[20px] md:text-[24px] lg:text-[36px] text-[#053d57] mb-3 md:mb-4 tracking-wide"
                   style={{ fontFamily: 'Alta, serif' }}
                 >
                   {trat.titulo}
                 </h4>
-                <p className="text-[#88807a] text-[13px] md:text-[14px] lg:text-[15px] font-light leading-relaxed pr-2 md:pr-6">
+                {/* Descripción ajustada: font-medium para hacerla "más redondita/negrita" y leading-snug para juntar las oraciones */}
+                <p className="text-[#88807a] text-[13px] md:text-[14px] lg:text-[15px] font-medium leading-snug pr-2 md:pr-6">
                   {trat.descripcion}
                 </p>
               </div>

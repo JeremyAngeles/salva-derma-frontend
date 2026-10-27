@@ -10,7 +10,7 @@ const EspacioSkinLounge = () => {
     {
       id: 2,
       texto: "AROMATERAPIA / MASAJES",
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792693587/Bodeg%C3%B3n_de_spa_con_velas_y_aceites.png"
+      img: "https://res.cloudinary.com/da47iihxz/image/upload/v1793140851/pqkltndyvcdajnhaiaxv.png"
     },
     {
       id: 3,
@@ -20,8 +20,8 @@ const EspacioSkinLounge = () => {
   ];
 
   return (
-    // Agregamos un margen superior negativo (-mt-12 md:-mt-20) para que suba y se acople mejor a la sección de arriba
-    <section className="w-full bg-[#faf9f8] -mt-12 md:-mt-20 pt-8 md:pt-12 pb-16 md:pb-20 font-principal px-6 lg:px-12 relative z-20">
+    // Agregamos un margen superior negativo mayor (-mt-24 md:-mt-32) para subir más toda la sección
+    <section className="w-full bg-[#faf9f8] -mt-24 md:-mt-32 pt-8 md:pt-12 pb-16 md:pb-20 font-principal px-6 lg:px-12 relative z-20">
       <div className="max-w-[1250px] mx-auto">
         
         {/* =========================================
@@ -76,8 +76,8 @@ const EspacioSkinLounge = () => {
             </svg>
           </div>
           
-          {/* Párrafo */}
-          <p className="text-[#88807a] text-[14px] md:text-[15px] lg:text-[16px] font-light leading-relaxed">
+          {/* Párrafo ajustado: font-medium (negrita/redondito), tamaño aumentado (text-[16px] md:text-[17px] lg:text-[18px]) y leading-snug para juntarlo */}
+          <p className="text-[#88807a] text-[16px] md:text-[17px] lg:text-[18px] font-medium leading-snug">
             Nuestra experiencia de faciales incluyen un ambiente especial acompañado de aromaterapia, catering<br className="hidden md:block"/>
             (bebidas, dulces y salados) masaje de hombros y los mejores productos premium dermatológicos.
           </p>
