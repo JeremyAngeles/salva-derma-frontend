@@ -2,7 +2,7 @@ import React from 'react';
 import PatologiasPiel from '../components/PatologiasPiel';
 import ProblemasCapilares from '../components/ProblemasCapilares';
 import CasosExitoAlopecia from '../components/CasosExitoAlopecia'; // <-- Importamos Casos de Éxito Alopecia
-import ContactoDoctora from '../components/ContactoDoctora';       // <-- Importamos Contacto Doctora
+import ContactoDoctora from '../components/ContactoDoctora';      // <-- Importamos Contacto Doctora
 import Footer from '../components/Footer';
 
 const DermatologiaClinica = () => {
@@ -15,24 +15,25 @@ const DermatologiaClinica = () => {
       <section className="relative w-full">
         <div className="relative w-full h-[90vh] md:h-[90vh] min-h-[750px] md:min-h-[800px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden flex flex-col items-center justify-between pt-24 pb-12 md:pt-32 md:pb-16">
           
+          {/* FOTO ORIGINAL: Sin zoom forzado (100% ancho y alto) y sin filtros encima */}
           <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531282/01_-_PORTADA_CLINICA.png')` }} 
+            className="absolute inset-0 bg-cover lg:bg-[length:100%_100%] bg-center bg-no-repeat"
+            style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1793083115/jtzlt3mixvivaaq8bnxi.jpg')` }} 
           ></div>
 
-          <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none"></div>
-
           <div className="relative z-20 flex flex-col items-center text-center mt-10 md:mt-16">
-            <span className="text-white text-xl md:text-2xl lg:text-3xl font-light tracking-[0.15em] mb-2 drop-shadow-md">
+            {/* Texto DERMATOLOGÍA con letras más juntas */}
+            <span className="text-white text-2xl md:text-3xl lg:text-4xl font-light tracking-wider mb-1 md:mb-2 drop-shadow-md">
               DERMATOLOGÍA
             </span>
             
+            {/* Textos CLÍNICA Y TRICOLOGÍA más juntos */}
             <h1 
-              className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[1.05] tracking-wide drop-shadow-lg flex flex-col"
+              className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[0.9] tracking-wide drop-shadow-lg flex flex-col"
               style={{ fontFamily: 'Alta, serif' }}
             >
               <span>CLÍNICA Y</span>
-              <span>TRICOLOGÍA</span>
+              <span className="-mt-2 md:-mt-3">TRICOLOGÍA</span>
             </h1>
           </div>
 

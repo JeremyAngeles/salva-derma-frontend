@@ -5,10 +5,10 @@ const CasosExitoAlopecia = () => {
 
   // Las 4 fotos que enviaste, que ya traen el "Antes y Después" unificados
   const casos = [
-    { id: 1, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696198/antes_y_despu%C3%A9s_clinica_1.jpg' },
-    { id: 2, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696200/antes_y_despu%C3%A9s_clinica_2.jpg' },
-    { id: 3, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696201/antes_y_despu%C3%A9s_clinica_3.jpg' },
-    { id: 4, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696198/antes_y_despu%C3%A9s_clinica_4.jpg' }
+    { id: 1, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793086352/etlg0xgopotwvei2pbni.png' },
+    { id: 2, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793086361/v43wu60bwgrn9zvxatah.png' },
+    { id: 3, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793086354/itgcrgwtt4e0xrcfkkve.png' },
+    { id: 4, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793086367/qeby8xeztxheirwjt7hg.png' }
   ];
 
   // Efecto para cambiar la foto automáticamente cada 5 segundos
@@ -25,7 +25,7 @@ const CasosExitoAlopecia = () => {
       {/* Franja gris de fondo que cruza la pantalla detrás de las fotos */}
       <div className="absolute top-[55%] md:top-[60%] left-0 w-full h-[250px] sm:h-[350px] bg-[#e6e6e6] transform -translate-y-1/2 -z-10"></div>
 
-      <div className="relative z-10 w-full max-w-[1000px] mx-auto px-6 flex flex-col items-center text-center">
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 flex flex-col items-center text-center">
         
         {/* Título Principal */}
         <h2
@@ -38,20 +38,30 @@ const CasosExitoAlopecia = () => {
         </h2>
 
         {/* Subtítulo */}
-        <p className="text-[#88807a] text-[14px] md:text-base font-light leading-relaxed mb-12 max-w-[700px]">
+        <p className="text-[#88807a] text-[14px] md:text-base font-semibold md:font-medium leading-relaxed mb-12 max-w-[700px]">
           Nuestro staff de dermatólogos capacitados en tricología te<br className="hidden md:block" />
           presentan algunos de nuestros casos de éxito.
         </p>
 
-        {/* Contenedor de la Foto Única */}
-        <div className="w-full max-w-[850px] rounded-[2rem] overflow-hidden shadow-lg bg-white relative transition-all duration-500">
-          <div className="w-full h-[300px] sm:h-[400px] md:h-[450px] relative">
+        {/* Contenedor de la Foto Única (Medida exacta: 850 x 420) */}
+        <div className="w-full max-w-[850px] rounded-[2rem] overflow-hidden shadow-2xl bg-white relative transition-all duration-500 border border-gray-100">
+          <div className="w-full h-[320px] md:h-[420px] relative flex items-center justify-center bg-gray-50">
             <img
               src={casos[currentCase].img}
               alt={`Caso de éxito ${currentCase + 1}`}
               className="w-full h-full object-cover transition-opacity duration-500"
               onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#d9d9d9]' }}
             />
+
+            {/* Etiquetas ANTES y DESPUÉS en la parte inferior sobre la imagen */}
+            <div className="absolute bottom-0 left-0 w-full py-3 px-6 bg-gradient-to-t from-black/60 via-black/30 to-transparent flex justify-between items-center pointer-events-none">
+              <span className="w-1/2 text-center text-white text-base md:text-lg font-medium tracking-[0.2em] drop-shadow-md">
+                ANTES
+              </span>
+              <span className="w-1/2 text-center text-white text-base md:text-lg font-medium tracking-[0.2em] drop-shadow-md">
+                DESPUÉS
+              </span>
+            </div>
           </div>
         </div>
 

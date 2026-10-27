@@ -79,7 +79,7 @@ const ProcedimientosEstetica = () => {
             {procedimientos.map((proc) => (
               <div key={proc.id} className="flex items-center gap-5 md:gap-6 group">
                 
-                {/* Imagen Circular (Un poco más grande) */}
+                {/* Imagen Circular */}
                 <div className="w-16 h-16 md:w-[95px] md:h-[95px] flex-shrink-0 rounded-full overflow-hidden shadow-md border-[3px] border-white bg-white transition-transform duration-300 group-hover:scale-105">
                   <img 
                     src={proc.img} 
@@ -89,13 +89,13 @@ const ProcedimientosEstetica = () => {
                   />
                 </div>
 
-                {/* Textos del Item (Un poco más grandes) */}
+                {/* Textos del Item (Título y Descripción mucho más juntos) */}
                 <div className="flex flex-col justify-center">
-                  <h3 className="text-[#c59e93] font-medium text-base md:text-lg tracking-widest uppercase mb-1 drop-shadow-sm transition-colors duration-300 group-hover:text-[#a88277]">
+                  <h3 className="text-[#c59e93] font-medium text-base md:text-lg tracking-widest uppercase mb-0 drop-shadow-sm transition-colors duration-300 group-hover:text-[#a88277]">
                     {proc.title}
                   </h3>
                   {proc.desc && (
-                    <p className="text-[#88807a] text-[14px] md:text-[16px] font-semibold md:font-light leading-relaxed max-w-[450px]">
+                    <p className="text-[#88807a] text-[14px] md:text-[16px] font-semibold md:font-light leading-snug max-w-[450px]">
                       {proc.desc}
                     </p>
                   )}
@@ -121,7 +121,7 @@ const ProcedimientosEstetica = () => {
                 />
               ))}
 
-              {/* Botoncitos para controlar el carrusel (Opcional, abajo centrados) */}
+              {/* Botoncitos para controlar el carrusel */}
               <div className="absolute bottom-6 left-0 w-full flex justify-center gap-2.5 z-20">
                 {imagenesDerecha.map((_, idx) => (
                   <button

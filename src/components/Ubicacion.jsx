@@ -11,12 +11,14 @@ const Ubicacion = () => {
 
       <div className="relative z-10 w-full flex flex-col items-center">
         {/* Título y Subtítulo */}
-        <div className="text-center max-w-4xl px-6 mb-16">
+        <div className="text-center max-w-4xl px-6 mb-16 flex flex-col items-center">
+          {/* Título dividido en 2 líneas exactamente */}
           <h2 
-            className="text-3xl md:text-5xl text-[#053d57] font-light tracking-wide mb-5 drop-shadow-sm"
+            className="text-3xl md:text-5xl text-[#053d57] font-light tracking-wide leading-[1.1] mb-5 drop-shadow-sm"
             style={{ fontFamily: 'Alta, serif' }}
           >
-            TODOS LOS CAMINOS CONDUCEN A SALVAR
+            TODOS LOS CAMINOS<br />
+            CONDUCEN A SALVAR
           </h2>
           {/* Subtítulo con interlineado más junto (leading-[1.2]) */}
           <p className="text-[#7c7570] text-lg md:text-[22px] font-medium leading-[1.2]">

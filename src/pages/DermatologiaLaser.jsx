@@ -17,7 +17,7 @@ const DermatologiaLaser = () => {
           
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/derma-laser.png')` }}
+            style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1793068053/eouss5sgj6ksujh6cfoc.jpg')` }}
           ></div>
 
           <div className="absolute inset-0 bg-black bg-opacity-30 z-10"></div>
@@ -29,10 +29,10 @@ const DermatologiaLaser = () => {
               </span>
               
               <h1 
-                className="text-white text-[4rem] sm:text-[5.5rem] md:text-[7.5rem] lg:text-[9.5rem] leading-none tracking-widest drop-shadow-md"
+                className="text-white text-[4rem] sm:text-[5.5rem] md:text-[7.5rem] lg:text-[9.5rem] leading-none tracking-normal drop-shadow-md"
                 style={{ fontFamily: 'Alta, serif' }}
-              >
-                DERMOLÁSER
+                >
+                  DERMOLÁSER
               </h1>
               
               <div className="w-full flex justify-end mt-[-5px] md:mt-[-15px] pr-2 md:pr-4">

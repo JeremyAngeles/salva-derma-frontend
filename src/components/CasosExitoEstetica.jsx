@@ -20,11 +20,7 @@ const CasosExitoEstetica = () => {
   return (
     <section className="w-full bg-white font-principal pt-6 pb-10 md:pt-[140px] md:pb-[95px]">
       
-      {/* 
-          FRANJA DE FONDO: 
-          - Se eliminó el bg-[#8c8c8c] y el backgroundBlendMode para quitar el efecto negro.
-          - Se aumentó la altura mínima (md:min-h-[580px]).
-      */}
+      {/* FRANJA DE FONDO */}
       <div
         className="w-full bg-cover bg-center md:min-h-[580px] flex items-center"
         style={{ 
@@ -34,7 +30,7 @@ const CasosExitoEstetica = () => {
         {/* Contenedor interno centrado */}
         <div className="w-full max-w-[1100px] mx-auto px-6 md:px-0 flex flex-col md:flex-row items-center md:items-center justify-between gap-10 py-12 md:py-0">
 
-          {/* FOTO VERTICAL: sobresale arriba y abajo de la franja */}
+          {/* FOTO VERTICAL */}
           <div className="relative z-20 w-full max-w-[340px] h-[560px] md:h-[680px] md:-my-[50px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-lg">
             <img
               src={casos[currentCase].img}
@@ -47,24 +43,25 @@ const CasosExitoEstetica = () => {
             />
           </div>
 
-          {/* TEXTOS alineados a la derecha y estructurados exactamente como la imagen */}
+          {/* TEXTOS */}
           <div className="relative z-10 flex flex-col items-center md:items-end text-center md:text-right text-white md:ml-auto">
             
+            {/* Título con líneas más juntas (leading-[1.05]) */}
             <h2
-              className="text-[28px] md:text-[42px] lg:text-[46px] leading-[1.15] tracking-[0.05em] font-light mb-6 drop-shadow-md"
+              className="text-[28px] md:text-[42px] lg:text-[46px] leading-[1.05] tracking-[0.05em] font-light mb-5 drop-shadow-md"
               style={{ fontFamily: 'Alta, serif' }}
             >
               QUERERTE ES ACEPTARTE<br />
               COMO ERES, PERO<br />
               TAMBIÉN ES CONSTRUIRTE<br />
-              COMO QUIERES.
+              OMO QUIERES.
             </h2>
 
             {/* Línea divisoria */}
-            <div className="w-[150px] md:w-[220px] h-[3px] bg-[#cfaaa6] mb-8"></div>
+            <div className="w-[150px] md:w-[220px] h-[3px] bg-[#cfaaa6] mb-6"></div>
 
-            {/* Párrafo con saltos de línea exactos para PC */}
-            <p className="text-white text-[16px] md:text-[19px] lg:text-[21px] font-light leading-relaxed max-w-[620px] drop-shadow-md">
+            {/* Párrafo con líneas más juntas (leading-[1.35]) */}
+            <p className="text-white text-[16px] md:text-[19px] lg:text-[21px] font-light leading-[1.35] max-w-[620px] drop-shadow-md">
               Nuestros tratamientos en dermatología estética<br className="hidden md:block" />
               buscan calidad y belleza, sin olvidar que la piel<br className="hidden md:block" />
               es un órgano complejo que tiene distintas capas<br className="hidden md:block" />

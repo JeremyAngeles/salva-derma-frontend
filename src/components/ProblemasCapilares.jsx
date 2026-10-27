@@ -13,52 +13,52 @@ const ProblemasCapilares = () => {
     <section 
       // La imagen de Cloudinary cubre toda la sección de fondo
       className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[850px] py-16 md:py-28 font-principal flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
-      style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531283/03_-_cabello.png')" }}
+      style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793083402/fssguvc8ef5bwqnf4by0.jpg')" }}
     >
       
       {/* Capa de protección sutil */}
       <div className="absolute inset-0 bg-black/30 md:bg-black/10 pointer-events-none z-0"></div>
 
-      {/* 
-          CAMBIO 1: Ampliamos el max-width a 1350px para que los bordes 
-          estén más cerca de los extremos de la pantalla.
-      */}
-      <div className="relative z-10 w-full max-w-[1350px] mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="relative z-10 w-full px-6 md:px-0 md:pl-[13.3vw] grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
 
-        {/* 
-            CAMBIO 2: Agregamos -translate-x-8 xl:-translate-x-12 para empujar 
-            físicamente todo el bloque más a la izquierda en pantallas grandes.
-        */}
-        <div className="flex flex-col items-start text-left text-white bg-[#7ba9b7]/60 md:bg-transparent p-8 md:p-0 rounded-[2rem] backdrop-blur-md md:backdrop-blur-none shadow-lg md:shadow-none lg:-translate-x-8 xl:-translate-x-12">
+        <div className="flex flex-col items-start text-left text-white bg-[#7ba9b7]/60 md:bg-transparent p-8 md:p-0 rounded-[2rem] backdrop-blur-md md:backdrop-blur-none shadow-lg md:shadow-none">
           
-          {/* Ícono de Problemas Capilares */}
-          <div className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center mb-6 md:mb-8">
+          {/* Ícono: círculo de ~86px, separado ~38px del título */}
+          <div className="w-14 h-14 md:w-[clamp(64px,6.9vw,100px)] md:h-[clamp(64px,6.9vw,100px)] flex items-center justify-center mb-4 md:mb-[clamp(24px,3vw,44px)]">
             <img 
               src="/problemas-capilares.svg" 
               alt="Icono Problemas Capilares" 
-              className="w-full h-full object-contain drop-shadow-md"
+              className="w-full h-full object-contain"
               onError={(e) => { e.target.style.display = 'none'; }}
             />
           </div>
 
-          {/* Título Principal */}
+          {/* Título Principal (en UNA SOLA FILA) */}
           <h2 
-            className="text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.05] mb-6 md:mb-8 drop-shadow-md"
+            className="text-3xl md:text-[clamp(32px,3.4vw,52px)] leading-none font-light tracking-[0.02em] mb-4 md:mb-[clamp(20px,2.4vw,34px)] whitespace-nowrap"
             style={{ fontFamily: 'Alta, serif' }}
           >
-            PROBLEMAS<br className="hidden lg:block" /> CAPILARES
+            PROBLEMAS CAPILARES
           </h2>
 
           {/* Párrafo */}
-          <p className="font-light text-base md:text-lg leading-relaxed mb-8 md:mb-10 max-w-[500px] drop-shadow-sm">
-            Tratamos distintos tipos de alopecias con tratamiento médico y la combinación de nuestras mesoterapias (dutasteride, exosomas y otros), plasma rico en plaquetas. Además, también utilizamos tecnologías como micropunción, Nanopore y láser.
+          <p className="font-light text-base md:text-[clamp(15px,1.45vw,21px)] leading-[1.22] mb-10 md:mb-[clamp(56px,8vw,115px)]">
+            Tratamos distintos tipos de alopecias con<br className="hidden md:block" />
+            tratamiento médico y la combinación de<br className="hidden md:block" />
+            nuestras mesoterapias (dutasteride, exosomas<br className="hidden md:block" />
+            y otros), plasma rico en plaquetas. Además,<br className="hidden md:block" />
+            también utilizamos tecnologías como<br className="hidden md:block" />
+            micropunción, Nanopore y láser.
           </p>
 
           {/* Lista */}
-          <ul className="flex flex-col gap-4">
+          <ul className="flex flex-col gap-2 md:gap-[clamp(8px,0.85vw,12px)]">
             {problemas.map((item, index) => (
-              <li key={index} className="flex items-start gap-4 font-medium md:font-light text-base md:text-lg leading-snug drop-shadow-sm">
-                <span className="mt-2.5 w-2 h-2 rounded-full bg-white flex-shrink-0 shadow-sm"></span>
+              <li 
+                key={index} 
+                className="flex items-center gap-3 md:gap-[clamp(10px,1.1vw,16px)] font-light text-[15px] md:text-[clamp(15px,1.45vw,21px)] leading-tight"
+              >
+                <span className="w-1 h-1 md:w-[3px] md:h-[3px] rounded-full bg-white flex-shrink-0"></span>
                 {item}
               </li>
             ))}
@@ -66,7 +66,7 @@ const ProblemasCapilares = () => {
 
         </div>
 
-        {/* Mitad Derecha: Completamente vacía para dejar lucir el fondo */}
+        {/* Mitad Derecha: vacía para dejar lucir el fondo */}
         <div className="hidden md:block"></div>
 
       </div>

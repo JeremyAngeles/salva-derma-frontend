@@ -13,10 +13,8 @@ const PatologiasPiel = () => {
 
   return (
     <section 
-      // Agregamos margen superior (mt-16 md:mt-24) para separarlo del hero
-      // Aumentamos min-h y paddings para que la sección sea notablemente más grande
-      className="relative w-full mt-16 md:mt-24 min-h-[600px] md:min-h-[750px] lg:min-h-[850px] py-16 md:py-28 font-principal flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
-      style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792614076/Primer_plano_de_piel_con_ros%C3%A1cea_en_cl%C3%ADnica.png')" }}
+      className="relative w-full -mt-10 md:-mt-1 min-h-[600px] md:min-h-[750px] lg:min-h-[850px] pt-24 pb-16 md:pt-36 md:pb-28 font-principal flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
+      style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793083400/cyqfycnv6uyynrgx7o41.jpg')" }}
     >
       
       {/* Capa de protección muy sutil solo para celular por legibilidad, invisible en PC */}
@@ -27,7 +25,7 @@ const PatologiasPiel = () => {
         {/* Mitad Izquierda: Completamente vacía para dejar lucir el fondo gigante */}
         <div className="hidden md:block"></div>
 
-        {/* Mitad Derecha: Contenido SIN MARCO (Escalado para que combine con el nuevo tamaño) */}
+        {/* Mitad Derecha: Contenido SIN MARCO */}
         <div className="flex flex-col py-6">
           
           {/* Título Principal */}
@@ -40,9 +38,9 @@ const PatologiasPiel = () => {
           </h2>
 
           {/* Subtítulo con Ícono Personalizado */}
-          <div className="flex flex-col items-start gap-5 mb-10">
+          <div className="flex flex-col items-start gap-4 mb-8">
             
-            {/* Ícono de Enfermedades de la piel (Más grande) */}
+            {/* Ícono de Enfermedades de la piel */}
             <div className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center">
               <img 
                 src="/enfermedades-de-la-piel.svg" 
@@ -52,16 +50,22 @@ const PatologiasPiel = () => {
               />
             </div>
             
-            <h3 className="text-[#c59e93] text-xl md:text-2xl font-medium tracking-[0.15em] uppercase">
-              Enfermedades de la piel
+            {/* ENFERMEDADES DE LA PIEL */}
+            <h3 
+              className="text-[#c59e93] text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide uppercase"
+              style={{ fontFamily: 'Alta, serif' }}
+            >
+              ENFERMEDADES DE LA PIEL
             </h3>
           </div>
 
           {/* Lista de Patologías */}
-          <ul className="flex flex-col gap-4">
+          <ul className="flex flex-col gap-2 md:gap-2.5">
             {patologias.map((item, index) => (
-              <li key={index} className="flex items-start gap-4 text-[#504a46] font-medium md:font-light text-base md:text-lg leading-snug">
-                <span className="mt-2.5 w-2 h-2 rounded-full bg-[#c59e93] flex-shrink-0"></span>
+              // AUMENTAMOS LA LETRA A text-lg md:text-xl
+              <li key={index} className="flex items-start gap-3 md:gap-4 text-[#504a46] font-medium md:font-light text-lg md:text-xl leading-tight">
+                {/* MANTENEMOS LOS PUNTOS CHIQUITOS y centramos su altura con mt-2.5 */}
+                <span className="mt-2.5 w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[#504a46] flex-shrink-0"></span>
                 {item}
               </li>
             ))}
