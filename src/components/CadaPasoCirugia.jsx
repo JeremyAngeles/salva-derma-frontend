@@ -5,10 +5,10 @@ const CadaPasoCirugia = () => {
 
   // Las 4 imágenes completas de Antes y Después
   const casos = [
-    'https://res.cloudinary.com/da47iihxz/image/upload/v1792813684/b0ty46jvnqhlt1pyksvi.jpg',
-    'https://res.cloudinary.com/da47iihxz/image/upload/v1792813683/pg5tczoxsiodki2upaye.jpg',
-    'https://res.cloudinary.com/da47iihxz/image/upload/v1792813683/aprh49gczng5wqsq3tan.jpg',
-    'https://res.cloudinary.com/da47iihxz/image/upload/v1792813683/mqlna8o8zv4lcaykxfum.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1793123758/pkvt5vdbhpfjg1ewl4fi.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1793123760/bvdxvdnxvvi1gof8rk9i.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1793123759/rxbhqzrkkzprofqnexif.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1793123759/ebl5bpkcvqh32etudong.jpg',
   ];
 
   // Efecto para que cambien automáticamente cada 5 segundos
@@ -22,7 +22,7 @@ const CadaPasoCirugia = () => {
   return (
     <section 
       className="relative w-full py-16 md:py-24 font-principal overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792617218/03_-_antes_y_despues_casos_2.jpg')` }}
+      style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1793123581/ftcssw1an8q8mnb9cy7b.jpg')` }}
     >
       
       {/* Capa sutil de protección para legibilidad */}
@@ -35,7 +35,7 @@ const CadaPasoCirugia = () => {
           
           {/* Título Principal */}
           <h2 
-            className="text-[#053d57] text-[2.4rem] sm:text-[3rem] md:text-[3.6rem] xl:text-[4rem] leading-[1.08] tracking-wide mb-3 drop-shadow-sm"
+            className="text-[#053d57] text-[2rem] sm:text-[2.5rem] md:text-[3.2rem] xl:text-[3.6rem] leading-[1.08] tracking-wide mb-0 drop-shadow-sm"
             style={{ fontFamily: 'Alta, serif' }}
           >
             CADA PASO TE ACERCA<br />
@@ -44,14 +44,14 @@ const CadaPasoCirugia = () => {
 
           {/* Subtítulo en fuente Alta */}
           <h3 
-            className="text-[#7c7570] text-[15px] sm:text-[18px] md:text-[21px] tracking-wider uppercase mb-6 font-light drop-shadow-sm"
+            className="text-[#7c7570] text-[15px] sm:text-[18px] md:text-[21px] tracking-wider uppercase mb-1 md:mb-1.5 font-light drop-shadow-sm"
             style={{ fontFamily: 'Alta, serif' }}
           >
             PARA TODO LO DEMÁS, EXISTE LA CIRUGÍA PLÁSTICA
           </h3>
 
-          {/* Párrafo descriptivo (Un poco más grande) */}
-          <p className="text-[#7c7570] text-[15px] md:text-[17px] font-light leading-relaxed max-w-[650px] mb-8 md:mb-10 drop-shadow-sm">
+          {/* Párrafo descriptivo con margen superior para separarlo */}
+          <p className="text-[#7c7570] text-[15px] md:text-[17px] font-light leading-snug tracking-tight max-w-[650px] mt-4 md:mt-6 mb-8 md:mb-10 drop-shadow-sm">
             La cirugía plástica, sea facial o corporal es un universo en el cual el
             centro es el paciente, no existen dos resultados iguales, cada caso
             es único y se refleja en el plan pre - operatorio y se define según
@@ -59,11 +59,11 @@ const CadaPasoCirugia = () => {
             resultado y lo que nos diferencia.
           </p>
 
-          {/* Contenedor de la Imagen más horizontal y Puntitos */}
+          {/* Contenedor de la Imagen y Puntitos */}
           <div className="w-full max-w-[680px] flex flex-col items-center">
             
-            {/* Tarjeta más ancha/horizontal con transición */}
-            <div className="w-full h-[250px] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30">
+            {/* Tarjeta de imagen con carrusel y las etiquetas ANTES / DESPUÉS dentro */}
+            <div className="w-full h-[250px] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30 group">
               {casos.map((imgUrl, index) => (
                 <img 
                   key={index}
@@ -78,10 +78,21 @@ const CadaPasoCirugia = () => {
                   }}
                 />
               ))}
+
+              {/* Etiquetas ANTES y DESPUÉS flotando dentro de la imagen en la parte inferior */}
+              <div className="absolute inset-x-0 bottom-4 z-20 flex justify-between px-12 sm:px-20 md:px-28 pointer-events-none">
+                {/* Margen ligeramente menor para mover ANTES un poco a la izquierda */}
+                <span className="text-white text-[13px] md:text-[15px] font-bold tracking-widest uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] ml-3 sm:ml-6 md:ml-8">
+                  ANTES
+                </span>
+                <span className="text-white text-[13px] md:text-[15px] font-bold tracking-widest uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+                  DESPUÉS
+                </span>
+              </div>
             </div>
 
             {/* Puntitos del Carrusel (4 puntos) */}
-            <div className="flex items-center justify-center gap-3 mt-6">
+            <div className="flex items-center justify-center gap-3 mt-4">
               {casos.map((_, index) => (
                 <button
                   key={index}

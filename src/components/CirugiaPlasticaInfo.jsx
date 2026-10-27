@@ -2,31 +2,36 @@ import React from 'react';
 
 const CirugiaPlasticaInfo = () => {
   return (
-    <section className="w-full bg-[#fcfbf9] py-16 md:py-24 font-principal">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-16 lg:gap-10">
+    <section className="w-full bg-[#fcfbf9] pt-8 pb-16 md:pt-12 md:pb-24 font-principal overflow-hidden">
+      {/* Contenedor más ancho (1350px) y gap más grande (lg:gap-32) para separar las columnas */}
+      <div className="max-w-[1350px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-32">
         
         {/* =========================================
             COLUMNA IZQUIERDA: Textos
             ========================================= */}
-        <div className="w-full lg:w-[45%] flex flex-col text-center lg:text-left">
+        {/* Forzado hacia la izquierda con -translate-x */}
+        <div className="w-full lg:w-[45%] flex flex-col text-center lg:text-left items-center lg:items-start lg:-translate-x-8 xl:-translate-x-16">
+          
+          {/* Título forzado a 2 filas exactas bloqueando el salto de línea automático */}
           <h2 
-            className="text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] text-[#053d57] leading-[1.1] mb-6 tracking-wide"
+            className="text-[1.6rem] min-[400px]:text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] lg:text-[3.2rem] xl:text-[3.5rem] text-[#053d57] leading-[1.1] mb-2 md:mb-3 tracking-wide"
             style={{ fontFamily: 'Alta, serif' }}
           >
-            SI LO PUEDES SOÑAR, LO<br className="hidden lg:block"/>
-            PUEDES LOGRAR
+            <span className="whitespace-nowrap">SI LO PUEDES SOÑAR, LO</span><br />
+            <span className="whitespace-nowrap">PUEDES LOGRAR</span>
           </h2>
-          <p className="text-[#88807a] text-[15px] md:text-[16.5px] font-light leading-relaxed max-w-[500px] mx-auto lg:mx-0">
-            No todos los días vamos a poder salvarle la vida a
-            alguien, pero cada día tenemos la oportunidad de
-            influir en la vida de alguien.
+          
+          {/* Párrafo subido y con las oraciones más juntas */}
+          <p className="text-[#88807a] text-[15px] md:text-[16.5px] font-light leading-[1.15] max-w-[500px]">
+            No todos los días vamos a poder salvarle la vida a alguien, pero cada día tenemos la oportunidad de influir en la vida de alguien.
           </p>
         </div>
 
         {/* =========================================
             COLUMNA DERECHA: Íconos y separadores
             ========================================= */}
-        <div className="w-full lg:w-[55%] flex flex-row items-center justify-between lg:pl-10">
+        {/* Forzado hacia la derecha con translate-x */}
+        <div className="w-full lg:w-[50%] flex flex-row items-center justify-between lg:translate-x-8 xl:translate-x-12">
           
           {/* Ítem 1: SEGURIDAD */}
           <div className="flex flex-col items-center flex-1">

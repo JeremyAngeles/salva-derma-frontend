@@ -18,10 +18,10 @@ const CirugiaPlastica = () => {
           
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1792812486/xq3w1mdqzdzmvihaspov.jpg')` }}
+            style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1793122629/gfyomltdbyqthfev2j6h.jpg')` }}
           ></div>
 
-          {/* Se eliminaron las capas de color oscuro para que la imagen se vea natural */}
+          {/* Sin capas de color oscuro ni filtros para que la imagen se vea natural al 100% */}
 
           <div className="relative z-20 flex flex-col items-center text-center px-6 w-full max-w-[1000px] mt-10 md:mt-0">
             <h1 
@@ -32,7 +32,8 @@ const CirugiaPlastica = () => {
             </h1>
             
             <div className="max-w-[850px]">
-              <p className="text-white text-[15px] md:text-[17px] lg:text-[19px] font-light leading-relaxed drop-shadow-md">
+              {/* Se cambió leading-relaxed por leading-[1.1] para juntar las líneas */}
+              <p className="text-white text-[15px] md:text-[17px] lg:text-[19px] font-light leading-[1.1] drop-shadow-md">
                 Cirugia plastica estetica facial y corporal, con especialidad en laser para<br className="hidden md:block" />
                 manejo post quirúrgico de cicatrices, y cirugía reconstructiva de lesiones<br className="hidden md:block" />
                 colgajos, injertos, cirugía de retiro de cáncer de piel y manejo de quemaduras
