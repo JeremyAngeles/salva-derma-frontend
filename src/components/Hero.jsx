@@ -1,25 +1,22 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 
-// Fondos y fotos de la 4ta slide (Casos Antes y Después)
 const CASOS = {
   cirugia: {
     titulo: 'CIRUGÍA PLÁSTICA',
-    fondo: 'https://res.cloudinary.com/da47iihxz/image/upload/v1792800901/etaranfqn592fwr9comy.jpg',
-    antes: 'https://res.cloudinary.com/da47iihxz/image/upload/v1792800644/civuwjoarnlsbdzmiuge.jpg',
-    despues: 'https://res.cloudinary.com/da47iihxz/image/upload/v1792800644/brzx7jkec0vvrk9zdi4y.jpg',
-  },
-  dermatologia: {
-    titulo: 'DERMATOLOGÍA',
     fondo: 'https://res.cloudinary.com/da47iihxz/image/upload/v1792800901/rzeqvroxrafsxqewyh23.jpg',
     antes: 'https://res.cloudinary.com/da47iihxz/image/upload/v1792800644/crnuepv4uxagetnkb2gh.png',
     despues: 'https://res.cloudinary.com/da47iihxz/image/upload/v1792800644/wsw0cigusl908ompmtct.png',
   },
+  dermatologia: {
+    titulo: 'DERMATOLOGÍA',
+    fondo: 'https://res.cloudinary.com/da47iihxz/image/upload/v1792800901/etaranfqn592fwr9comy.jpg',
+    antes: 'https://res.cloudinary.com/da47iihxz/image/upload/v1792800644/civuwjoarnlsbdzmiuge.jpg',
+    despues: 'https://res.cloudinary.com/da47iihxz/image/upload/v1792800644/brzx7jkec0vvrk9zdi4y.jpg',
+  },
 };
 
-// Tarjeta Antes / Después con deslizador (arrastra la barra para comparar)
 const CardAntesDespues = ({ antes, despues }) => {
-  const [pos, setPos] = useState(50); // % visible de la foto "Antes"
+  const [pos, setPos] = useState(50); 
   const contenedor = useRef(null);
   const arrastrando = useRef(false);
 
@@ -43,25 +40,21 @@ const CardAntesDespues = ({ antes, despues }) => {
   };
 
   return (
-    <div className="w-full max-w-[360px] md:max-w-[480px] p-2 md:p-3 rounded-[1.75rem] md:rounded-[2.25rem] bg-white/25 backdrop-blur-sm border border-white/40 shadow-xl mx-auto">
+    <div className="w-full max-w-[360px] md:max-w-[480px] p-2 md:p-3 rounded-[1.75rem] md:rounded-[2.25rem] bg-white/25 backdrop-blur-sm border border-white/40 shadow-xl mx-auto z-10 relative">
       <div
         ref={contenedor}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
-        // touch-none evita que la pantalla haga scroll al arrastrar en celulares
         className="relative w-full aspect-[4/4] md:aspect-[4/4.5] rounded-[1.25rem] md:rounded-[1.75rem] overflow-hidden bg-white select-none cursor-ew-resize touch-none"
       >
-        {/* Después (fondo completo, queda por debajo) */}
         <img 
           src={despues} 
           alt="Después" 
           draggable={false} 
           className="absolute inset-0 w-full h-full object-cover pointer-events-none" 
         />
-
-        {/* Antes (se recorta desde la derecha hacia la izquierda según el % de "pos") */}
         <img
           src={antes}
           alt="Antes"
@@ -69,19 +62,21 @@ const CardAntesDespues = ({ antes, despues }) => {
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} 
         />
-
-        {/* Degradado inferior para leer las etiquetas */}
         <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
 
-        {/* Etiquetas */}
-        <span className="absolute bottom-4 left-5 text-white text-lg md:text-xl font-medium drop-shadow-md pointer-events-none tracking-wide">
-          Antes
+        <span 
+          className="absolute bottom-4 left-5 text-white text-[1.4rem] md:text-[1.8rem] drop-shadow-md pointer-events-none tracking-widest uppercase transition-opacity duration-300"
+          style={{ fontFamily: 'Alta, serif', opacity: pos < 35 ? 0 : 1 }}
+        >
+          ANTES
         </span>
-        <span className="absolute bottom-4 right-5 text-white text-lg md:text-xl font-medium drop-shadow-md pointer-events-none tracking-wide">
-          Después
+        <span 
+          className="absolute bottom-4 right-5 text-white text-[1.4rem] md:text-[1.8rem] drop-shadow-md pointer-events-none tracking-widest uppercase transition-opacity duration-300"
+          style={{ fontFamily: 'Alta, serif', opacity: pos > 65 ? 0 : 1 }}
+        >
+          DESPUÉS
         </span>
 
-        {/* Barra y botón deslizante */}
         <div
           className="absolute top-0 bottom-0 w-[3px] bg-white shadow-md pointer-events-none"
           style={{ left: `${pos}%`, transform: 'translateX(-50%)' }}
@@ -98,7 +93,6 @@ const CardAntesDespues = ({ antes, despues }) => {
   );
 };
 
-// Mitad de la slide 4 (fondo + título + tarjeta)
 const MitadCaso = ({ data }) => (
   <div className="relative w-full md:w-1/2 h-1/2 md:h-full flex flex-col items-center justify-start md:justify-center pt-8 md:pt-16 md:pb-24">
     <div
@@ -108,7 +102,7 @@ const MitadCaso = ({ data }) => (
     
     <div className="relative z-10 flex flex-col items-center w-full px-4 mt-4 md:mt-16">
       <h2
-        className="text-white text-[2.4rem] md:text-[3.2rem] lg:text-[4.2rem] leading-none tracking-wide mb-6 md:mb-8 drop-shadow-lg text-center"
+        className="text-white text-[2.4rem] md:text-[3.2rem] lg:text-[4.2rem] leading-none tracking-wide mb-3 md:mb-5 drop-shadow-lg text-center transform translate-y-2 md:translate-y-4"
         style={{ fontFamily: 'Alta, serif' }}
       >
         {data.titulo}
@@ -119,34 +113,27 @@ const MitadCaso = ({ data }) => (
 );
 
 const Hero = () => {
-  // Fondos de las slides 1-3.
   const images = [
-    'https://res.cloudinary.com/da47iihxz/image/upload/v1793047594/bozlcxwdrpag7blq02i7.jpg', // Inicio (Logo Salvar)
-    'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/cirujia.png', // +1000 Cirugías
-    'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/derma.png', // Dermatología
-    null, // Casos Antes y Después (diseño dividido)
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1793047594/bozlcxwdrpag7blq02i7.jpg',
+    'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/cirujia.png',
+    'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/derma.png',
+    null,
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    // Slide 4 dura 30s, las demás 5s
     const delay = currentSlide === 3 ? 30000 : 5000;
-
     const timer = setTimeout(() => {
       setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     }, delay);
-
     return () => clearTimeout(timer);
   }, [currentSlide, images.length]);
 
   return (
     <section className="relative w-full mb-32 md:mb-40 font-principal">
-      
-      {/* 1. Contenedor de la Imagen */}
       <div className="relative w-full h-[90vh] md:h-[90vh] min-h-[750px] md:min-h-[800px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden flex flex-col justify-center items-center">
         
-        {/* Fondos slides 1-3 */}
         {images.map((img, index) =>
           img ? (
             <div
@@ -159,7 +146,6 @@ const Hero = () => {
           ) : null
         )}
 
-        {/* SLIDE 4: Diseño dividido Cirugía Plástica | Dermatología */}
         <div
           className={`absolute inset-0 flex flex-col md:flex-row transition-opacity duration-1000 ease-in-out ${
             currentSlide === 3 ? 'opacity-100 z-[15]' : 'opacity-0 -z-10 pointer-events-none'
@@ -169,13 +155,7 @@ const Hero = () => {
           <MitadCaso data={CASOS.dermatologia} />
         </div>
 
-        {/* 2. Centro (Textos dinámicos según el slide) */}
         <div className="relative z-20 text-center text-white px-4 pb-12 md:pb-20 w-full flex flex-col items-center pointer-events-none">
-          
-          {/* =========================================
-              SLIDE 1: Inicio (BAJADO MUCHO MÁS)
-              Se incrementó a mt-32 md:mt-[18rem] para forzarlo hacia abajo
-              ========================================= */}
           <div
             className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full mt-32 md:mt-[18rem] ${
               currentSlide === 0 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'
@@ -186,7 +166,6 @@ const Hero = () => {
               alt="Salvar Dermatoplástica"
               className="w-auto h-20 md:h-32 lg:h-40 object-contain mb-8 md:mb-12 drop-shadow-2xl"
             />
-            {/* Título usando Montserrat */}
             <h1
               className="text-2xl md:text-4xl font-light max-w-2xl mx-auto leading-relaxed drop-shadow-lg"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
@@ -198,7 +177,6 @@ const Hero = () => {
             </h1>
           </div>
 
-          {/* SLIDE 2: Cirugías (+1000) (Empujado mucho más abajo con mt-20 md:mt-32) */}
           <div
             className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full mt-20 md:mt-32 ${
               currentSlide === 1 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'
@@ -215,7 +193,6 @@ const Hero = () => {
             </h2>
           </div>
 
-          {/* SLIDE 3: Dermatología (Más grande y un poco más arriba) */}
           <div
             className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full -mt-4 md:-mt-6 ${
               currentSlide === 2 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'
@@ -232,16 +209,8 @@ const Hero = () => {
               Conoce más de nuestra unidad Dermoláser.
             </p>
           </div>
-
-          {/* SLIDE 4: sin texto aquí */}
-          <div
-            className={`transition-all duration-700 absolute w-full h-[200px] ${
-              currentSlide === 3 ? 'opacity-100 relative' : 'opacity-0 pointer-events-none'
-            }`}
-          ></div>
         </div>
 
-        {/* 3. Puntitos del Carrusel */}
         <div className="absolute bottom-24 md:bottom-32 right-8 md:right-16 flex gap-3 z-30">
           {images.map((_, index) => (
             <button
@@ -256,10 +225,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* 4. Tarjeta Flotante Blanca Inferior */}
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[90%] md:w-[750px] lg:w-[850px] bg-white rounded-[2rem] md:rounded-[3rem] py-6 px-6 md:px-0 flex flex-col md:flex-row items-center justify-center shadow-2xl z-40">
-        
-        {/* Bloque 1: Pacientes */}
         <div className="flex items-center justify-center md:justify-end gap-3 md:gap-4 flex-1 pr-0 md:pr-10">
           <span
             className="text-[3rem] md:text-[4.5rem] font-bold text-[#7b7a7a] tracking-tight leading-none"
@@ -283,10 +249,8 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Línea divisoria perfectamente centrada (intocable) */}
         <div className="hidden md:block w-[1.5px] h-20 bg-[#a6a6a6] shrink-0"></div>
 
-        {/* Bloque 2: Experiencia (Contenido interno movido más a la derecha con pl-20) */}
         <div className="flex items-center justify-center md:justify-start gap-3 md:gap-4 flex-1 mt-6 md:mt-0 pl-0 md:pl-20">
           <span
             className="text-[3rem] md:text-[4.5rem] font-bold text-[#7b7a7a] tracking-tight leading-none"
@@ -309,7 +273,6 @@ const Hero = () => {
             </span>
           </div>
         </div>
-        
       </div>
     </section>
   );

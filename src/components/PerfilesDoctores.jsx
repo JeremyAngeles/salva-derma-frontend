@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-/* Padding exterior del texto para alinearlo con el contenedor de 1250px del resto de la web */
 const PAD_TEXTO_IZQ = 'md:pl-[max(1.5rem,calc((100vw-1250px)/2+1.5rem))] md:pr-12 lg:pr-16';
 const PAD_TEXTO_DER = 'md:pl-12 lg:pl-16 md:pr-[max(1.5rem,calc((100vw-1250px)/2+1.5rem))]';
 
-/* Aumenté el gap a gap-6 md:gap-7 para separar notoriamente cada bloque de información */
 const INFO = 'flex flex-col gap-6 md:gap-7 text-[#88807a] text-sm md:text-base leading-tight';
 
-/* mb-1.5 para separar el título del contenido que le sigue */
 const Titulo = ({ children }) => (
   <h5 className="font-semibold text-[#053d57] leading-tight mb-1.5">{children}</h5>
 );
@@ -20,7 +18,6 @@ const Lista = ({ items, space = 'space-y-1' }) => (
   </ul>
 );
 
-/* Foto vertical (3/4) */
 const FotoVertical = ({ src, alt, lado }) => {
   const esDerecha = lado === 'derecha';
   return (
@@ -61,13 +58,24 @@ const Cabecera = ({ cargo, nombre, cmp }) => (
 const Separador = () => <div className="w-full max-w-[1000px] mx-auto h-px bg-[#e6e2de]"></div>;
 
 const PerfilesDoctores = () => {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      const id = hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+  }, [hash]);
+
   return (
     <section className="w-full bg-[#fcfbf9] py-16 md:py-24 font-principal overflow-hidden flex flex-col gap-20 md:gap-28">
 
-      {/* =========================================
-          PERFIL 1: DR. HÉCTOR (Foto Derecha)
-          ========================================= */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 items-center">
+      <div id="dr-hector" className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 items-center scroll-mt-24">
         <div className={`flex flex-col order-2 md:order-1 px-6 ${PAD_TEXTO_IZQ}`}>
           <Cabecera
             cargo="CIRUJANO PLÁSTICO Y RECONSTRUCTIVO"
@@ -135,10 +143,7 @@ const PerfilesDoctores = () => {
 
       <Separador />
 
-      {/* =========================================
-          PERFIL 2: DRA. YUVIDTZA (Foto Izquierda)
-          ========================================= */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 items-center">
+      <div id="dra-yuvidtza" className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 items-center scroll-mt-24">
         <FotoVertical
           lado="izquierda"
           src="https://res.cloudinary.com/da47iihxz/image/upload/v1792811936/iwyzlo6jlf6ztgjfz5gc.jpg"
@@ -217,10 +222,7 @@ const PerfilesDoctores = () => {
 
       <Separador />
 
-      {/* =========================================
-          PERFIL 3: DRA. KAREN (Foto Derecha)
-          ========================================= */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 items-center">
+      <div id="dra-karen" className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 items-center scroll-mt-24">
         <div className={`flex flex-col order-2 md:order-1 px-6 ${PAD_TEXTO_IZQ}`}>
           <Cabecera
             cargo="DERMATÓLOGA CLÍNICA ESPECIALISTA EN LÁSER - TRICOLOGÍA - ESTÉTICA"
@@ -290,10 +292,7 @@ const PerfilesDoctores = () => {
 
       <Separador />
 
-      {/* =========================================
-          PERFIL 4: DRA. EDITH (Foto Izquierda)
-          ========================================= */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 items-center">
+      <div id="dra-edith" className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 items-center scroll-mt-24">
         <FotoVertical
           lado="izquierda"
           src="https://res.cloudinary.com/da47iihxz/image/upload/v1792811927/hc4ug0j0wheyfq8z7nf9.jpg"

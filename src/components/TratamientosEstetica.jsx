@@ -42,17 +42,11 @@ const TratamientosEstetica = () => {
       className="relative w-full py-20 md:py-28 font-principal bg-cover bg-center bg-no-repeat min-h-[850px] flex items-center overflow-hidden"
       style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793087593/a90tdsuvgg48vd4y6e0d.jpg')" }} 
     >
-      
-      {/* Overlay sutil */}
       <div className="absolute inset-0 bg-black/10 md:bg-gradient-to-r md:from-transparent md:to-[#86685f]/60"></div>
 
-      {/* Contenedor Principal */}
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-10 flex justify-center md:justify-end">
-        
-        {/* Contenedor del Título y Tarjetas */}
-        <div className="w-full md:w-[65%] lg:w-[55%] flex flex-col justify-center items-center">
-          
-          {/* Título Principal con las oraciones súper juntas (leading-[0.65]) */}
+      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 lg:px-12 flex justify-end">
+        {/* Se usa ml-auto para forzarlo totalmente a la derecha */}
+        <div className="w-full max-w-[600px] flex flex-col justify-center items-center ml-auto">
           <h2 
             className="w-full text-4xl md:text-5xl lg:text-6xl text-white leading-[0.65] mb-4 md:mb-5 text-center drop-shadow-md"
             style={{ fontFamily: 'Alta, serif' }}
@@ -61,14 +55,12 @@ const TratamientosEstetica = () => {
             D. ESTÉTICA
           </h2>
 
-          {/* Contenedor de Tarjetas */}
           <div className="w-full flex flex-col gap-5 md:gap-6">
             {tratamientos.map((trat) => (
               <div 
                 key={trat.id} 
                 className="flex flex-col sm:flex-row items-center sm:items-stretch gap-5 bg-white/10 backdrop-blur-md border border-white/40 rounded-[2rem] p-4 md:p-5 shadow-lg hover:bg-white/20 transition-all duration-300 w-full"
               >
-                {/* Imagen Cuadrada de la Tarjeta */}
                 <div className="w-full sm:w-[140px] sm:h-[140px] flex-shrink-0">
                   <img 
                     src={trat.img} 
@@ -78,7 +70,6 @@ const TratamientosEstetica = () => {
                   />
                 </div>
 
-                {/* Contenido (Textos y Viñetas con letra más grande) */}
                 <div className="flex flex-col justify-center w-full py-1">
                   <h3 className="text-white font-bold text-base md:text-[22px] tracking-wide uppercase mb-2.5 sm:mb-3 drop-shadow-sm text-left leading-tight">
                     {trat.title1}<br />
@@ -97,7 +88,6 @@ const TratamientosEstetica = () => {
               </div>
             ))}
           </div>
-
         </div>
       </div>
     </section>

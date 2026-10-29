@@ -53,15 +53,25 @@ const CasosExitoAlopecia = () => {
               onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#d9d9d9]' }}
             />
 
-            {/* Etiquetas ANTES y DESPUÉS en la parte inferior sobre la imagen */}
-            <div className="absolute bottom-0 left-0 w-full py-3 px-6 bg-gradient-to-t from-black/60 via-black/30 to-transparent flex justify-between items-center pointer-events-none">
-              <span className="w-1/2 text-center text-white text-base md:text-lg font-medium tracking-[0.2em] drop-shadow-md">
+            {/* Etiquetas ANTES y DESPUÉS con la tipografía Alta y misma posición */}
+            <div className="absolute bottom-4 md:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none">
+              <span 
+                className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                style={{ fontFamily: 'Alta, serif' }}
+              >
                 ANTES
               </span>
-              <span className="w-1/2 text-center text-white text-base md:text-lg font-medium tracking-[0.2em] drop-shadow-md">
+            </div>
+
+            <div className="absolute bottom-4 md:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none">
+              <span 
+                className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                style={{ fontFamily: 'Alta, serif' }}
+              >
                 DESPUÉS
               </span>
             </div>
+
           </div>
         </div>
 

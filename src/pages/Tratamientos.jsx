@@ -13,12 +13,12 @@ const Tratamientos = () => {
     },
     { 
       id: 2, 
-      titulo: "TOXINA\nBOTULINICA", 
+      titulo: "TOXINA\nBOTULÍNICA", 
       img: "https://res.cloudinary.com/da47iihxz/image/upload/v1793137827/zssxtamidapqopm1tu5n.png" 
     },
     { 
       id: 3, 
-      titulo: "ÁCIDO\nHIALURONICO", 
+      titulo: "ÁCIDO\nHIALURÓNICO", 
       img: "https://res.cloudinary.com/da47iihxz/image/upload/v1793137827/fwa2aryebzj3edvwbj97.png" 
     },
     { 

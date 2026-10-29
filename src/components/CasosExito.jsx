@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const CasosExito = () => {
   const [currentCase, setCurrentCase] = useState(0);
 
-  // Las 8 fotos que ya traen el "Antes y Después" unificados
   const casos = [
     { id: 1, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793082266/errzembqrosryvi4oexv.png' },
     { id: 2, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793082637/cmfv74npcqr7gtgucim1.png' },
@@ -15,12 +14,11 @@ const CasosExito = () => {
     { id: 8, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793082628/q6paz1utzz2s50piug2z.png' },
   ];
 
-  // Efecto para cambiar la foto automáticamente cada 5 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentCase((prev) => (prev + 1) % casos.length);
     }, 5000);
-    return () => clearInterval(interval); // Limpiamos el intervalo si se desmonta
+    return () => clearInterval(interval);
   }, [casos.length]);
 
   return (
@@ -29,12 +27,10 @@ const CasosExito = () => {
       style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531259/04_-_FONDO_antes_despues.png')" }}
     >
       
-      {/* Capa de protección por si el texto se cruza con las letras de fondo en celulares */}
       <div className="absolute inset-0 bg-white/60 md:bg-white/40 pointer-events-none z-0"></div>
 
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 md:px-6 flex flex-col items-center text-center">
         
-        {/* Título Principal */}
         <h2
           className="text-2xl md:text-4xl lg:text-[2.6rem] text-[#053d57] leading-[1.2] mb-5 max-w-[900px] uppercase tracking-wide drop-shadow-sm md:drop-shadow-none"
           style={{ fontFamily: 'Alta, serif' }}
@@ -44,16 +40,13 @@ const CasosExito = () => {
           EN TU PIEL, IMPACTA EN TUS EMOCIONES.
         </h2>
 
-        {/* Subtítulo (Cambiamos leading-relaxed por leading-[1.15] para juntarlo más) */}
         <p className="text-[#88807a] text-[13px] md:text-[17px] font-semibold md:font-light leading-[1.15] mb-10 max-w-[750px] drop-shadow-sm md:drop-shadow-none bg-white/50 md:bg-transparent p-2 md:p-0 rounded-lg">
           Te dejamos algunos de nuestros casos de éxito, siempre realizado con nuestros<br className="hidden md:block" />
           protocolos combinados. Nuestra clave es combinar más de 1 tecnología.
         </p>
 
-        {/* Contenedor de la Foto Única (Medida exacta solicitada: 850 x 420) */}
         <div className="w-full max-w-[850px] rounded-[2rem] overflow-hidden shadow-2xl bg-white relative z-20 transition-all duration-500 border border-gray-100">
           
-          {/* Altura de 420px en pantallas medianas/grandes, un poco menos en celulares para que no se deforme */}
           <div className="w-full h-[320px] md:h-[420px] relative flex items-center justify-center bg-gray-50">
             <img
               src={casos[currentCase].img}
@@ -62,34 +55,28 @@ const CasosExito = () => {
               onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#ebdcd5]' }}
             />
             
-            {/* =========================================
-                TEXTOS "ANTES" Y "DESPUÉS" SOBRE LA FOTO
-                ========================================= */}
-            {/* Texto ANTES (Mitad Izquierda) - Pegado al borde inferior */}
-            <div className="absolute bottom-0 pb-1 md:pb-2 left-0 w-1/2 flex justify-center pointer-events-none">
+            {/* ANTES y DESPUÉS subidos un poco más y con texto ligeramente más grande */}
+            <div className="absolute bottom-4 md:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none">
               <span 
-                className="text-white text-lg md:text-2xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                 style={{ fontFamily: 'Alta, serif' }}
               >
                 ANTES
               </span>
             </div>
 
-            {/* Texto DESPUÉS (Mitad Derecha) - Pegado al borde inferior */}
-            <div className="absolute bottom-0 pb-1 md:pb-2 right-0 w-1/2 flex justify-center pointer-events-none">
+            <div className="absolute bottom-4 md:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none">
               <span 
-                className="text-white text-lg md:text-2xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                 style={{ fontFamily: 'Alta, serif' }}
               >
                 DESPUÉS
               </span>
             </div>
-            {/* ========================================= */}
 
           </div>
         </div>
 
-        {/* Puntitos indicadores (Clickeables) */}
         <div className="flex gap-3 mt-10 relative z-20 bg-white/50 md:bg-transparent p-2 md:p-0 rounded-full">
           {casos.map((_, index) => (
             <button

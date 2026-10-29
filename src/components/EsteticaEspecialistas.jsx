@@ -69,8 +69,11 @@ const EsteticaEspecialistas = () => {
                     className="w-full h-full object-cover"
                     onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#d8d4d0] object-cover' }}
                   />
-                  <div className="absolute inset-x-0 bottom-6 flex justify-center">
-                    <span className="text-white font-bold tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-[14px] md:text-[16px] uppercase">
+                  <div className="absolute bottom-4 md:bottom-6 left-0 w-full flex justify-center pointer-events-none">
+                    <span 
+                      className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase"
+                      style={{ fontFamily: 'Alta, serif' }}
+                    >
                       ANTES
                     </span>
                   </div>
@@ -85,8 +88,11 @@ const EsteticaEspecialistas = () => {
                     className="w-full h-full object-cover"
                     onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#d8d4d0] object-cover' }}
                   />
-                  <div className="absolute inset-x-0 bottom-6 flex justify-center">
-                    <span className="text-white font-bold tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-[14px] md:text-[16px] uppercase">
+                  <div className="absolute bottom-4 md:bottom-6 left-0 w-full flex justify-center pointer-events-none">
+                    <span 
+                      className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase"
+                      style={{ fontFamily: 'Alta, serif' }}
+                    >
                       DESPUÉS
                     </span>
                   </div>

@@ -79,13 +79,21 @@ const CadaPasoCirugia = () => {
                 />
               ))}
 
-              {/* Etiquetas ANTES y DESPUÉS flotando dentro de la imagen en la parte inferior */}
-              <div className="absolute inset-x-0 bottom-4 z-20 flex justify-between px-12 sm:px-20 md:px-28 pointer-events-none">
-                {/* Margen ligeramente menor para mover ANTES un poco a la izquierda */}
-                <span className="text-white text-[13px] md:text-[15px] font-bold tracking-widest uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] ml-3 sm:ml-6 md:ml-8">
+              {/* Etiquetas ANTES y DESPUÉS con la tipografía Alta y posición idéntica a los demás componentes */}
+              <div className="absolute bottom-4 md:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none z-20">
+                <span 
+                  className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  style={{ fontFamily: 'Alta, serif' }}
+                >
                   ANTES
                 </span>
-                <span className="text-white text-[13px] md:text-[15px] font-bold tracking-widest uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+              </div>
+
+              <div className="absolute bottom-4 md:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none z-20">
+                <span 
+                  className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  style={{ fontFamily: 'Alta, serif' }}
+                >
                   DESPUÉS
                 </span>
               </div>

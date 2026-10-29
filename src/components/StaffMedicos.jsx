@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const StaffMedicos = () => {
   const doctors = [
     {
       id: 1,
+      slug: "dr-hector",
       name: (<>DR. HÉCTOR FRANCISCO<br/>VARGAS CASTILLO</>),
       specialty: "CIRUJANO PLÁSTICO RECONSTRUCTIVO",
       cmp: "68988",
@@ -12,6 +14,7 @@ const StaffMedicos = () => {
     },
     {
       id: 2,
+      slug: "dra-yuvidtza",
       name: (<>DRA. YUVIDTZA ANDREA<br/>ISABEL SALAZAR CARRILLO</>),
       specialty: "DERMATÓLOGA",
       cmp: "66762",
@@ -20,6 +23,7 @@ const StaffMedicos = () => {
     },
     {
       id: 3,
+      slug: "dra-karen",
       name: (<>DRA. KAREN YOHANNA<br/>ANGELES CHUMBIRIZA</>),
       specialty: "DERMATÓLOGA",
       cmp: "81188",
@@ -28,6 +32,7 @@ const StaffMedicos = () => {
     },
     {
       id: 4,
+      slug: "dra-edith",
       name: (<>DRA. EDITH SANDRA<br/>LLANCAY MEDINA</>),
       specialty: "DERMATÓLOGA",
       cmp: "86231",
@@ -39,7 +44,6 @@ const StaffMedicos = () => {
   return (
     <section className="relative w-full py-16 md:py-0 md:h-auto md:aspect-[1900/720] overflow-hidden font-principal flex items-center justify-center">
       
-      {/* FONDO A LA MEDIDA EXACTA 1900x720 */}
       <div 
         className="absolute inset-0 w-full h-full bg-[length:100%_100%] bg-no-repeat bg-center"
         style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793051009/rnfblmcyrwf4yvhfd4in.jpg')" }}
@@ -47,7 +51,6 @@ const StaffMedicos = () => {
 
       <div className="relative z-10 w-full max-w-[1440px] px-6 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-4 items-center">
         
-        {/* COLUMNA IZQUIERDA: Textos más arriba */}
         <div className="lg:col-span-4 flex flex-col justify-center text-center lg:text-left items-center lg:items-start pl-0 -mt-8 lg:-mt-16">
           
           <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] text-[#053d57] font-alta leading-[1.1] tracking-normal">
@@ -73,12 +76,12 @@ const StaffMedicos = () => {
           </p>
         </div>
 
-        {/* COLUMNA DERECHA: Tarjetas con fondo blanco transparente y contorno blanco sutil estilo glassmorphism */}
         <div className="lg:col-span-8 flex flex-col gap-2 sm:gap-2.5 w-full max-w-2xl ml-auto mr-0 pr-0 lg:pr-4 translate-x-0 lg:translate-x-6">
           {doctors.map((doc) => (
-            <div 
+            <Link 
               key={doc.id} 
-              className="flex items-center justify-between bg-white/[0.22] backdrop-blur-md rounded-2xl sm:rounded-3xl py-3 pl-8 pr-3 sm:py-3.5 sm:pl-9 sm:pr-3.5 shadow-sm border border-white/50"
+              to={`/nosotros#${doc.slug}`}
+              className="flex items-center justify-between bg-white/[0.22] hover:bg-white/[0.35] backdrop-blur-md rounded-2xl sm:rounded-3xl py-3 pl-8 pr-3 sm:py-3.5 sm:pl-9 sm:pr-3.5 shadow-sm border border-white/50 cursor-pointer transition-all duration-300 hover:scale-[1.01]"
             >
               <div className="flex flex-col flex-1 pr-4 overflow-hidden">
                 <h3 className="text-[#5c5652] font-semibold text-[15px] sm:text-[18px] leading-[1.2] break-words drop-shadow-sm">
@@ -100,7 +103,7 @@ const StaffMedicos = () => {
                   onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#593433]' }}
                 />
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
