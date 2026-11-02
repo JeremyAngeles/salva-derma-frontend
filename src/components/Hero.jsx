@@ -96,7 +96,7 @@ const CardAntesDespues = ({ antes, despues }) => {
 const MitadCaso = ({ data }) => (
   <div className="relative w-1/2 h-full flex flex-col items-center justify-center pt-4 sm:pt-8 lg:pt-16 pb-6 sm:pb-12 lg:pb-24">
     <div
-      className="absolute inset-0 bg-[length:100%_100%] lg:bg-cover bg-center bg-no-repeat"
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url('${data.fondo}')` }}
     ></div>
     
@@ -114,7 +114,7 @@ const MitadCaso = ({ data }) => (
 
 const Hero = () => {
   const images = [
-    'https://res.cloudinary.com/da47iihxz/image/upload/v1793641184/lufgwz4var9owbviheny.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1793047594/bozlcxwdrpag7blq02i7.jpg',
     'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/cirujia.png',
     'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/derma.png',
     null,
@@ -132,13 +132,13 @@ const Hero = () => {
 
   return (
     <section className="relative w-full mb-20 sm:mb-28 lg:mb-40 font-principal">
-      <div className="relative w-full h-[68vw] sm:h-[60vw] md:h-[56vw] lg:h-[90vh] lg:min-h-[800px] rounded-b-[1.75rem] sm:rounded-b-[3rem] lg:rounded-b-[5rem] overflow-hidden flex flex-col justify-center items-center">
+      <div className="relative w-full h-[80vh] sm:h-[75vh] md:h-[70vh] lg:h-[90vh] min-h-[650px] lg:min-h-[800px] rounded-b-[1.75rem] sm:rounded-b-[3rem] lg:rounded-b-[5rem] overflow-hidden flex flex-col justify-center items-center">
         
         {images.map((img, index) =>
           img ? (
             <div
               key={index}
-              className={`absolute inset-0 bg-[length:100%_100%] lg:bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out ${
+              className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out ${
                 index === currentSlide ? 'opacity-100 z-0' : 'opacity-0 -z-10'
               }`}
               style={{ backgroundImage: `url('${img}')` }}
@@ -278,4 +278,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;  
+export default Hero;
