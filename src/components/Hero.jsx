@@ -114,7 +114,7 @@ const MitadCaso = ({ data }) => (
 
 const Hero = () => {
   const images = [
-    'https://res.cloudinary.com/da47iihxz/image/upload/v1793047594/bozlcxwdrpag7blq02i7.jpg',
+    'https://res.cloudinary.com/da47iihxz/image/upload/v1793641184/lufgwz4var9owbviheny.jpg',
     'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/cirujia.png',
     'https://res.cloudinary.com/cgfzvuli/image/upload/v1792528706/derma.png',
     null,
@@ -278,4 +278,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Hero;  
