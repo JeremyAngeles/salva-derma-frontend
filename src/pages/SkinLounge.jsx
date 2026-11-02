@@ -8,8 +8,67 @@ import MasAllaSkinLounge from '../components/MasAllaSkinLounge';
 const SkinLounge = () => {
   return (
     <main className="w-full font-principal bg-[#faf9f8] flex flex-col min-h-screen">
-      
-      <section className="relative w-full mb-32 md:mb-48 lg:mb-64">
+
+      {/* =====================================================
+          HERO CELULAR Y TABLET (todo en vw)
+          ===================================================== */}
+      <section className="lg:hidden relative w-full mb-[86vw]">
+
+        {/* Fondo con esquinas redondeadas abajo */}
+        <div className="relative w-full aspect-[365/640] rounded-b-[11vw] overflow-hidden shadow-sm">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1793342222/djirolwpg2ffrlvcgbto.png')` }}
+          ></div>
+
+          {/* Título y subtítulo */}
+          <div className="absolute top-[20vw] left-0 w-full flex flex-col items-center text-center z-10">
+            <h1
+              className="text-white text-[12.5vw] leading-[1] drop-shadow-lg flex flex-col items-center"
+              style={{ fontFamily: 'Alta, serif' }}
+            >
+              <span>FACIAL</span>
+              <span className="whitespace-nowrap">SKIN LOUNGE</span>
+            </h1>
+
+            <div className="flex items-center gap-[2.2vw] mt-[2.4vw] text-white text-[3.3vw] font-light tracking-[0.12em] uppercase drop-shadow-md whitespace-nowrap">
+              <span>GLOW UP</span>
+              <span className="w-[1vw] h-[1vw] rounded-full bg-white"></span>
+              <span>PURE BALANCE</span>
+              <span className="w-[1vw] h-[1vw] rounded-full bg-white"></span>
+              <span>ELITE</span>
+            </div>
+          </div>
+
+          {/* Párrafo (4 filas fijas) */}
+          <p className="absolute top-[117vw] left-0 w-full z-10 text-center text-white text-[2.4vw] font-medium leading-[1.3] drop-shadow-md">
+            <span className="block whitespace-nowrap">Experiencias Skin Lounge by Salvar son  faciales premium</span>
+            <span className="block whitespace-nowrap">dermatológicos creados por especialistas en dermatología y</span>
+            <span className="block whitespace-nowrap">cirugía plástica,  se enfocan en tu bienestar y la de tu piel con</span>
+            <span className="block whitespace-nowrap">momentos de relajación y calma.</span>
+          </p>
+        </div>
+
+        {/* Card del video (sale del hero hacia el blanco) */}
+        <div className="absolute top-[139vw] left-[6vw] w-[88vw] h-[118vw] z-30 rounded-[7vw] border-[1.6vw] border-white/40 shadow-2xl overflow-hidden group cursor-pointer">
+          <img
+            src="/skinlounge-video.jpg"
+            alt="Procedimiento Skin Lounge"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#222]' }}
+          />
+          <div className="absolute top-[4vw] right-[4vw] w-[8vw] h-[8vw] rounded-full border-[0.4vw] border-white bg-black/20 backdrop-blur-sm flex items-center justify-center shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-[3.4vw] h-[3.4vw] text-white ml-[0.4vw]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================
+          HERO PC (sin cambios)
+          ===================================================== */}
+      <section className="hidden lg:block relative w-full mb-32 md:mb-48 lg:mb-64">
         
         <div className="absolute top-0 left-0 w-full h-[95vh] min-h-[850px] md:min-h-[900px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden z-0 shadow-sm">
           <div

@@ -8,16 +8,13 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);             
   const dropdownRef = useRef(null);
 
-  // DETECCIÓN SEGURA: Verifica si estamos en la página de Tratamientos
   const isTratamientosPage = location.pathname.toLowerCase().includes('tratamiento');
 
-  // Detecta si la ruta es activa (para subrayar en el menú)
   const isActive = (path) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.toLowerCase().startsWith(path.toLowerCase());
   };
 
-  // Cierra el menú desplegable si se hace clic fuera de él
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -28,7 +25,6 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Detecta el scroll 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -41,58 +37,65 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Cierra los menús al cambiar de página
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsDermaOpen(false);
   }, [location.pathname]);
 
+  // BLOQUEA EL SCROLL DEL FONDO CUANDO EL MENÚ ESTÁ ABIERTO
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   /* =========================================================================
-     CONFIGURACIÓN DE CLASES Y REDONDEO
+     CONFIGURACIÓN DE CLASES Y REDONDEO (MÓVIL Y PC)
      ========================================================================= */
   
-  // 1. Clases para el Navbar Principal (Incluye el redondeo inferior cuando hay fondo)
-  const navClasses = isTratamientosPage 
-    ? 'shadow-lg text-white bg-cover bg-center bg-no-repeat rounded-b-[2rem] md:rounded-b-[3rem] pb-6 md:pb-8' // TRATAMIENTOS: Siempre fondo rosa y redondeado
-    : (isScrolled || isMobileMenuOpen 
-        ? 'bg-white shadow-md text-[#053d57] rounded-b-none pb-4' // OTRAS AL BAJAR: Blanco, azul, sin redondeo extra (o ponle redondeo si prefieres)
-        : 'bg-transparent text-white rounded-b-none pb-4');       // OTRAS ARRIBA: Transparente
+  // NAV a z-[999] para que esté por encima de TODO
+  let navClasses = 'fixed top-0 left-0 w-full z-[999] px-4 md:px-10 pt-3 md:pt-4 flex justify-between items-center gap-2 md:gap-4 font-principal transition-all duration-300 ';
+  let navStyle = {};
 
-  // 2. Fondo (Imagen) del Navbar Principal
-  const navStyle = isTratamientosPage 
-    ? { backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792689387/01_-_franja_1.png')" }
-    : {};
+  if (isTratamientosPage) {
+    navClasses += 'shadow-lg text-white bg-cover bg-center bg-no-repeat rounded-b-[1.5rem] md:rounded-b-[3rem] pb-3 md:pb-8';
+    navStyle.backgroundImage = "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792689387/01_-_franja_1.png')";
+  } else {
+    if (isScrolled || isMobileMenuOpen) {
+      navClasses += ' lg:bg-white lg:bg-none lg:text-[#053d57] lg:shadow-md lg:pb-4 ';
+      navClasses += " max-lg:text-white max-lg:shadow-lg max-lg:bg-cover max-lg:bg-center max-lg:bg-no-repeat max-lg:pb-3 max-lg:bg-[url('https://res.cloudinary.com/da47iihxz/image/upload/v1793296508/jl3mbg00eblxtrzudlit.png')]";
+    } else {
+      navClasses += 'bg-transparent text-white pb-3 md:pb-4';
+    }
+  }
 
-  // 3. Clases para el contenedor del Menú Central
   const menuClasses = isTratamientosPage
     ? 'bg-white/20 shadow-sm border border-white/30 text-white' 
     : (isScrolled 
         ? 'bg-[#f4f2ef] shadow-sm text-[#053d57]' 
         : 'bg-white/20 shadow-md text-white');
 
-  // 4. Color de la línea de subrayado
   const underlineClass = (!isTratamientosPage && isScrolled) ? 'bg-[#053d57]' : 'bg-white';
 
   return (
     <>
       <nav 
-        className={`fixed top-0 left-0 w-full z-50 px-6 md:px-10 pt-4 flex justify-between items-center gap-4 font-principal transition-all duration-300 ${navClasses}`}
+        className={navClasses}
         style={navStyle}
       >
-        {/* =========================================
-            LOGO
-            ========================================= */}
         <Link to="/" className="flex-shrink-0 z-50">
           <img
             src="/logo-salva.png"
             alt="Salvar Dermatoplástica"
-            className="h-10 md:h-12 w-auto object-contain transition-all duration-300"
+            className="h-7 sm:h-8 md:h-12 w-auto object-contain transition-all duration-300"
           />
         </Link>
 
-        {/* =========================================
-            MENÚ CENTRAL (Escritorio)
-            ========================================= */}
         <div className={`hidden lg:flex flex-1 items-center justify-between backdrop-blur-md rounded-full px-12 py-2.5 text-sm md:text-base mx-4 xl:mx-8 transition-colors duration-300 ${menuClasses}`}>
           
           <Link to="/" className="relative pb-1 transition-colors hover:opacity-80">
@@ -105,7 +108,6 @@ const Navbar = () => {
             {isActive('/nosotros') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${underlineClass}`}></span>}
           </Link>
 
-          {/* Menú Desplegable Dermatología */}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsDermaOpen(!isDermaOpen)}
@@ -118,7 +120,6 @@ const Navbar = () => {
               {isActive('/dermatologia') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${underlineClass}`}></span>}
             </button>
 
-            {/* Submenú Dermatología */}
             {isDermaOpen && (
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-5 w-56 bg-white text-[#053d57] rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-100 font-normal">
                 <Link to="/dermatologia/laser" className="px-5 py-4 hover:bg-[#f4f2ef] transition-colors text-sm border-b border-gray-100">
@@ -150,39 +151,41 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Botón de Reservas (Escritorio) */}
-        <Link
-          to="/reservar-cita"
-          className={`hidden lg:block flex-shrink-0 px-8 py-3 rounded-full font-medium shadow-md transition-all text-base ${
-            isTratamientosPage ? 'bg-[#7ba9b7] text-white hover:bg-[#6a95a3]' : 'bg-[#c59e93] text-white hover:bg-[#b38b80]'
-          }`}
-        >
-          Reservas
-        </Link>
+        <div className="flex items-center gap-2 sm:gap-3 z-[1000]">
+          
+          <Link
+            to="/reservar-cita"
+            className={`flex-shrink-0 px-4 py-1.5 md:px-8 md:py-3 rounded-full font-medium shadow-md transition-all text-[13.5px] md:text-base ${
+              isTratamientosPage 
+                ? 'bg-[#7ba9b7] text-white hover:bg-[#6a95a3]' 
+                : 'bg-[#7ba9b7] lg:bg-[#c59e93] text-white hover:bg-[#6a95a3] lg:hover:bg-[#b38b80]'
+            }`}
+          >
+            Reservas
+          </Link>
 
-        {/* =========================================
-            BOTÓN HAMBURGUESA (Celulares)
-            ========================================= */}
-        <button 
-          className="lg:hidden p-2 z-50 transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            {isMobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
+          <button 
+            className="lg:hidden p-1.5 transition-colors bg-white/20 backdrop-blur-sm rounded-full border border-white/30 shadow-sm flex items-center justify-center"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+          
+        </div>
       </nav>
 
       {/* =========================================
-          MENÚ DESPLEGABLE CELULAR
+          MENÚ DESPLEGABLE CELULAR (z-[998] para estar debajo del Navbar pero encima del resto)
           ========================================= */}
       {isMobileMenuOpen && (
         <div 
-          className={`fixed inset-0 z-40 flex flex-col pt-24 px-6 overflow-y-auto font-principal lg:hidden ${
+          className={`fixed inset-0 z-[998] flex flex-col pt-24 px-6 overflow-y-auto font-principal lg:hidden ${
             isTratamientosPage ? 'bg-cover bg-center text-white' : 'bg-white text-[#053d57]'
           }`}
           style={isTratamientosPage ? { backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792689387/01_-_franja_1.png')" } : {}}
@@ -215,13 +218,13 @@ const Navbar = () => {
       )}
 
       {/* =========================================
-          BOTÓN WHATSAPP FLOTANTE
+          BOTÓN WHATSAPP FLOTANTE (z-[90] para que NO tape el menú)
           ========================================= */}
       <a
         href="https://wa.me/51994060977"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-3.5 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-[90] bg-[#25D366] text-white p-3.5 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center"
         aria-label="Contactar por WhatsApp"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">

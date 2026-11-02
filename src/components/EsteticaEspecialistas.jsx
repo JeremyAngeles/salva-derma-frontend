@@ -34,44 +34,54 @@ const EsteticaEspecialistas = () => {
   }, [casos.length]);
 
   return (
-    <section className="relative w-full bg-white pt-16 md:pt-24 pb-20 font-principal">
+    <section className="relative w-full bg-white pt-[8vw] md:pt-[6vw] lg:pt-24 pb-[10vw] lg:pb-20 font-principal">
       
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center relative z-10">
+      <div className="max-w-[1400px] mx-auto px-[3vw] lg:px-12 text-center relative z-10">
         <h2 
-          className="text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] lg:text-[3.6rem] xl:text-[4.2rem] text-[#053d57] leading-none mb-4 whitespace-nowrap"
+          className="text-[5.0vw] lg:text-[3.6rem] xl:text-[4.2rem] text-[#053d57] leading-none mb-[2.5vw] lg:mb-4 whitespace-nowrap"
           style={{ fontFamily: 'Alta, serif' }}
         >
           ESTÉTICA DE LA MANO DE ESPECIALISTAS
         </h2>
-        <p className="text-[#88807a] text-[14px] md:text-[15px] lg:text-[16px] font-medium leading-snug max-w-[700px] mx-auto mb-12 md:mb-16">
-          Resaltamos la belleza respetando la naturalidad de cada rostro, siempre bajo<br className="hidden md:block"/>
+
+        {/* Subtítulo CELULAR Y TABLET (3 filas fijas) */}
+        <p className="lg:hidden text-[#88807a] text-[3.2vw] font-medium leading-snug mx-auto mb-[5vw]">
+          <span className="block whitespace-nowrap">Resaltamos la belleza respetando la naturalidad de</span>
+          <span className="block whitespace-nowrap">cada rostro, siempre bajo tratamientos seguros y con</span>
+          <span className="block whitespace-nowrap">nuestros especialistas altamente capacitados</span>
+        </p>
+
+        {/* Subtítulo PC (sin cambios) */}
+        <p className="hidden lg:block text-[#88807a] text-[16px] font-medium leading-snug max-w-[700px] mx-auto mb-16">
+          Resaltamos la belleza respetando la naturalidad de cada rostro, siempre bajo<br />
           tratamientos seguros y con nuestros especialistas altamente capacitados
         </p>
       </div>
 
-      <div className="relative w-full mb-10">
-        <div className="absolute inset-x-0 top-[20%] md:top-[25%] bottom-[20%] md:bottom-[25%] bg-[#d3d3d3] z-0"></div>
+      <div className="relative w-full mb-[6vw] lg:mb-10">
+        {/* Franja gris */}
+        <div className="absolute inset-x-0 top-[18%] bottom-[19%] lg:top-[25%] lg:bottom-[25%] bg-[#d3d3d3] z-0"></div>
 
-        <div className="relative z-10 max-w-[1000px] mx-auto px-6 lg:px-12">
-          <div className="w-full rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-lg flex flex-col sm:flex-row bg-[#e8e4e1] relative">
+        <div className="relative z-10 max-w-[1000px] mx-auto px-[3.2vw] lg:px-12">
+          <div className="w-[99%] lg:w-full mx-auto rounded-[3vw] lg:rounded-[2rem] overflow-hidden shadow-lg flex flex-row bg-[#e8e4e1] relative">
             
             {casos.map((caso, index) => (
               <div 
                 key={caso.id}
-                className={`absolute inset-0 w-full h-full flex flex-col sm:flex-row transition-opacity duration-1000 ease-in-out ${
+                className={`absolute inset-0 w-full h-full flex flex-row transition-opacity duration-1000 ease-in-out ${
                   index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 }`}
               >
-                <div className="relative w-full sm:w-1/2 h-[300px] md:h-[400px] lg:h-[450px]">
+                <div className="relative w-1/2 h-[38vw] lg:h-[450px]">
                   <img 
                     src={caso.antes} 
                     alt={`Antes del tratamiento ${index + 1}`} 
                     className="w-full h-full object-cover"
                     onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#d8d4d0] object-cover' }}
                   />
-                  <div className="absolute bottom-4 md:bottom-6 left-0 w-full flex justify-center pointer-events-none">
+                  <div className="absolute bottom-[2.4vw] lg:bottom-6 left-0 w-full flex justify-center pointer-events-none">
                     <span 
-                      className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase"
+                      className="text-white text-[2.8vw] lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase"
                       style={{ fontFamily: 'Alta, serif' }}
                     >
                       ANTES
@@ -79,18 +89,18 @@ const EsteticaEspecialistas = () => {
                   </div>
                 </div>
                 
-                <div className="hidden sm:block w-1 h-full bg-white absolute left-1/2 transform -translate-x-1/2 z-20"></div>
+                <div className="block w-[0.4vw] lg:w-1 h-full bg-white absolute left-1/2 transform -translate-x-1/2 z-20"></div>
 
-                <div className="relative w-full sm:w-1/2 h-[300px] md:h-[400px] lg:h-[450px]">
+                <div className="relative w-1/2 h-[38vw] lg:h-[450px]">
                   <img 
                     src={caso.despues} 
                     alt={`Después del tratamiento ${index + 1}`} 
                     className="w-full h-full object-cover"
                     onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#d8d4d0] object-cover' }}
                   />
-                  <div className="absolute bottom-4 md:bottom-6 left-0 w-full flex justify-center pointer-events-none">
+                  <div className="absolute bottom-[2.4vw] lg:bottom-6 left-0 w-full flex justify-center pointer-events-none">
                     <span 
-                      className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase"
+                      className="text-white text-[2.8vw] lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase"
                       style={{ fontFamily: 'Alta, serif' }}
                     >
                       DESPUÉS
@@ -100,33 +110,37 @@ const EsteticaEspecialistas = () => {
               </div>
             ))}
 
-            <div className="w-full h-[600px] sm:h-[400px] lg:h-[450px] pointer-events-none"></div>
+            <div className="w-full h-[38vw] lg:h-[450px] pointer-events-none"></div>
 
           </div>
         </div>
       </div>
 
-      <div className="flex justify-center items-center gap-3 mb-16 md:mb-20">
+      {/* Puntos */}
+      <div className="flex justify-center items-center gap-[2.4vw] lg:gap-3 mb-[8vw] lg:mb-20">
         {casos.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
             aria-label={`Ver caso ${index + 1}`}
-            className={`w-3.5 h-3.5 rounded-full transition-colors duration-300 ${
-              currentSlide === index ? 'bg-[#d1b3ab]' : 'border border-[#88807a] hover:bg-[#d1b3ab]/50'
+            className={`w-[3.2vw] h-[3.2vw] lg:w-3.5 lg:h-3.5 rounded-full transition-colors duration-300 ${
+              currentSlide === index
+                ? 'bg-[#d1b3ab]'
+                : 'border border-[#053d57] lg:border-[#88807a] hover:bg-[#d1b3ab]/50'
             }`}
           />
         ))}
       </div>
 
       <div className="flex flex-col items-center">
+        {/* Botón teléfono */}
         <a 
           href="https://wa.me/51994060977" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="inline-flex items-center gap-3 bg-[#d1b3ab] text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full hover:bg-[#c59e93] transition-colors mb-8 shadow-md"
+          className="inline-flex items-center gap-[2vw] lg:gap-3 bg-[#d1b3ab] bg-gradient-to-r from-[#d1b3ab] to-[#efe0dc] lg:bg-none text-white px-[5.5vw] lg:px-10 py-[1.8vw] lg:py-4 rounded-full hover:bg-[#c59e93] transition-colors mb-[5vw] lg:mb-8 shadow-md"
         >
-          <div className="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center">
+          <div className="w-[6vw] h-[6vw] lg:w-7 lg:h-7 flex items-center justify-center">
             <img 
               src="/iconotelefonoblanco.svg" 
               alt="Teléfono" 
@@ -134,22 +148,23 @@ const EsteticaEspecialistas = () => {
               onError={(e) => { e.target.style.display = 'none'; }}
             />
           </div>
-          <span className="text-[22px] md:text-[26px] tracking-widest font-light mt-0.5">+51 994 060 977</span>
+          <span className="text-[5vw] lg:text-[26px] tracking-widest font-light mt-0.5">+51 994 060 977</span>
         </a>
 
-        <div className="flex items-center gap-4">
-          <span className="text-[#88807a] font-light text-[14px] md:text-[15px]">Síguenos en:</span>
+        {/* Redes */}
+        <div className="flex items-center gap-[2.5vw] lg:gap-4">
+          <span className="text-[#88807a] font-light text-[2.6vw] lg:text-[15px]">Síguenos en:</span>
           
-          <div className="flex gap-3">
-            <a href="#" className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+          <div className="flex gap-[1.8vw] lg:gap-3">
+            <a href="#" className="w-[4.6vw] h-[4.6vw] lg:w-8 lg:h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
               <img src="/fcolor.svg" alt="Facebook" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
             </a>
             
-            <a href="#" className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+            <a href="#" className="w-[4.6vw] h-[4.6vw] lg:w-8 lg:h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
               <img src="/igcolor.svg" alt="Instagram" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
             </a>
             
-            <a href="#" className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+            <a href="#" className="w-[4.6vw] h-[4.6vw] lg:w-8 lg:h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
               <img src="/tiktokcolor.svg" alt="TikTok" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
             </a>
           </div>

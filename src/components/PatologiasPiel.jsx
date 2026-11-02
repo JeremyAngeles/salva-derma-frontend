@@ -1,5 +1,11 @@
 import React from 'react';
 
+const BG_MOVIL =
+  'https://res.cloudinary.com/da47iihxz/image/upload/v1793303347/oomyvtmp3llxpwtckodg.png';
+
+const BG_PC =
+  'https://res.cloudinary.com/da47iihxz/image/upload/v1793083400/cyqfycnv6uyynrgx7o41.jpg';
+
 const PatologiasPiel = () => {
   const patologias = [
     "Psoriasis",
@@ -12,65 +18,84 @@ const PatologiasPiel = () => {
   ];
 
   return (
-    <section 
-      className="relative w-full -mt-10 md:-mt-1 min-h-[600px] md:min-h-[750px] lg:min-h-[850px] pt-24 pb-16 md:pt-36 md:pb-28 font-principal flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
-      style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793083400/cyqfycnv6uyynrgx7o41.jpg')" }}
+    <section
+      className="relative w-full -mt-10 md:-mt-1 min-h-[640px] sm:min-h-[820px] md:min-h-[950px] lg:min-h-[850px] pt-14 pb-10 sm:pt-20 sm:pb-14 lg:pt-36 lg:pb-28 font-principal flex flex-col justify-start lg:justify-center overflow-hidden"
     >
-      
-      {/* Capa de protección muy sutil solo para celular por legibilidad, invisible en PC */}
-      <div className="absolute inset-0 bg-white/30 md:bg-transparent pointer-events-none z-0"></div>
 
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        
-        {/* Mitad Izquierda: Completamente vacía para dejar lucir el fondo gigante */}
-        <div className="hidden md:block"></div>
+      {/* FONDO CELULAR Y TABLET (solo < lg) */}
+      <div
+        className="lg:hidden absolute inset-0 z-0 bg-cover bg-no-repeat bg-[position:75%_center]"
+        style={{ backgroundImage: `url('${BG_MOVIL}')` }}
+      ></div>
 
-        {/* Mitad Derecha: Contenido SIN MARCO */}
-        <div className="flex flex-col py-6">
-          
-          {/* Título Principal */}
-          <h2 
-            className="text-5xl md:text-6xl lg:text-[4.5rem] text-[#053d57] leading-[1.05] mb-10"
-            style={{ fontFamily: 'Alta, serif' }}
-          >
-            PATOLOGÍAS<br/>
-            QUE TRATAMOS
-          </h2>
+      {/* FONDO PC (solo lg en adelante, igual que el original) */}
+      <div
+        className="hidden lg:block absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url('${BG_PC}')` }}
+      ></div>
 
-          {/* Subtítulo con Ícono Personalizado */}
-          <div className="flex flex-col items-start gap-4 mb-8">
-            
-            {/* Ícono de Enfermedades de la piel */}
-            <div className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center">
-              <img 
-                src="/enfermedades-de-la-piel.svg" 
-                alt="Icono Enfermedades de la piel" 
-                className="w-full h-full object-contain"
-                onError={(e) => { e.target.style.display = 'none'; }}
-              />
-            </div>
-            
-            {/* ENFERMEDADES DE LA PIEL */}
-            <h3 
-              className="text-[#c59e93] text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide uppercase"
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-8 lg:px-10 flex flex-col">
+
+        {/* TÍTULO: centrado arriba (solo celular y tablet) */}
+        <h2
+          className="lg:hidden text-center text-[2.2rem] min-[400px]:text-[2.6rem] sm:text-[3.8rem] md:text-[4.8rem] text-[#053d57] leading-[1.05] mb-10 sm:mb-16 md:mb-24"
+          style={{ fontFamily: 'Alta, serif' }}
+        >
+          PATOLOGÍAS<br />
+          QUE TRATAMOS
+        </h2>
+
+        {/* Grilla: la columna derecha empieza más a la derecha (~58%) */}
+        <div className="grid grid-cols-[1.9fr_1fr] lg:grid-cols-2 gap-2 sm:gap-6 lg:gap-8 items-center">
+          {/* Mitad izquierda: vacía para dejar ver la foto */}
+          <div></div>
+
+          {/* Mitad derecha: el texto baja de línea si no cabe */}
+          <div className="flex flex-col py-2 lg:py-6 min-w-0">
+
+            {/* Título (solo PC) */}
+            <h2
+              className="hidden lg:block lg:text-[4.5rem] text-[#053d57] leading-[1.05] mb-10"
               style={{ fontFamily: 'Alta, serif' }}
             >
-              ENFERMEDADES DE LA PIEL
-            </h3>
-          </div>
+              PATOLOGÍAS<br />
+              QUE TRATAMOS
+            </h2>
 
-          {/* Lista de Patologías */}
-          <ul className="flex flex-col gap-2 md:gap-2.5">
-            {patologias.map((item, index) => (
-              // AUMENTAMOS LA LETRA A text-lg md:text-xl
-              <li key={index} className="flex items-start gap-3 md:gap-4 text-[#504a46] font-medium md:font-light text-lg md:text-xl leading-tight">
-                {/* MANTENEMOS LOS PUNTOS CHIQUITOS y centramos su altura con mt-2.5 */}
-                <span className="mt-2.5 w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[#504a46] flex-shrink-0"></span>
-                {item}
-              </li>
-            ))}
-          </ul>
-          
+            {/* Ícono + subtítulo */}
+            <div className="flex flex-col items-start gap-2 sm:gap-4 mb-4 sm:mb-8">
+
+              <div className="w-11 h-11 min-[400px]:w-12 min-[400px]:h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 flex items-center justify-center">
+                <img
+                  src="/enfermedades-de-la-piel.svg"
+                  alt="Icono Enfermedades de la piel"
+                  className="w-full h-full object-contain"
+                  onError={(e) => { e.target.style.display = 'none'; }}
+                />
+              </div>
+
+              <h3
+                className="text-[#c59e93] text-[1.05rem] min-[400px]:text-[1.2rem] sm:text-3xl lg:text-4xl font-normal tracking-wide uppercase leading-tight"
+                style={{ fontFamily: 'Alta, serif' }}
+              >
+                ENFERMEDADES<br className="lg:hidden" /> DE LA PIEL
+              </h3>
+            </div>
+
+            {/* Lista de patologías */}
+            <ul className="flex flex-col gap-1 sm:gap-2 lg:gap-2.5">
+              {patologias.map((item, index) => (
+                <li
+                  key={index}
+                  className="flex items-start gap-2 sm:gap-3 lg:gap-4 text-[#504a46] font-light text-[12.5px] min-[400px]:text-[13.5px] sm:text-xl leading-tight"
+                >
+                  <span className="mt-[7px] sm:mt-2.5 w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full bg-[#504a46] flex-shrink-0"></span>
+                  <span className="min-w-0">{item}</span>
+                </li>
+              ))}
+            </ul>
+
+          </div>
         </div>
 
       </div>

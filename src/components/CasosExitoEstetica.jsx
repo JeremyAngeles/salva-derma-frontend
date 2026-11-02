@@ -54,7 +54,7 @@ const CasosExitoEstetica = () => {
               QUERERTE ES ACEPTARTE<br />
               COMO ERES, PERO<br />
               TAMBIÉN ES CONSTRUIRTE<br />
-              OMO QUIERES.
+              COMO QUIERES.
             </h2>
 
             {/* Línea divisoria */}

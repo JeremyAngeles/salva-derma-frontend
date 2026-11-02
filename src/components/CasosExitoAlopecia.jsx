@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const CasosExitoAlopecia = () => {
   const [currentCase, setCurrentCase] = useState(0);
 
-  // Las 4 fotos que enviaste, que ya traen el "Antes y Después" unificados
   const casos = [
     { id: 1, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793086352/etlg0xgopotwvei2pbni.png' },
     { id: 2, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793086361/v43wu60bwgrn9zvxatah.png' },
@@ -11,7 +10,6 @@ const CasosExitoAlopecia = () => {
     { id: 4, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793086367/qeby8xeztxheirwjt7hg.png' }
   ];
 
-  // Efecto para cambiar la foto automáticamente cada 5 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentCase((prev) => (prev + 1) % casos.length);
@@ -20,63 +18,70 @@ const CasosExitoAlopecia = () => {
   }, [casos.length]);
 
   return (
-    <section className="relative w-full py-20 md:py-28 bg-[#fafafa] font-principal flex flex-col items-center z-0">
-      
-      {/* Franja gris de fondo que cruza la pantalla detrás de las fotos */}
-      <div className="absolute top-[55%] md:top-[60%] left-0 w-full h-[250px] sm:h-[350px] bg-[#e6e6e6] transform -translate-y-1/2 -z-10"></div>
+    <section className="relative w-full py-14 sm:py-20 lg:py-28 bg-[#fafafa] font-principal flex flex-col items-center z-0 overflow-hidden lg:overflow-visible">
 
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 flex flex-col items-center text-center">
-        
-        {/* Título Principal */}
+      {/* Franja gris de PC (igual que antes) */}
+      <div className="hidden lg:block absolute top-[60%] left-0 w-full h-[350px] bg-[#e6e6e6] transform -translate-y-1/2 -z-10"></div>
+
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
+
+        {/* Título: 3 filas en celular/tablet, igual que antes en PC */}
         <h2
-          className="text-2xl md:text-3xl lg:text-[2.2rem] text-[#053d57] leading-[1.3] mb-5 max-w-[900px] tracking-wide uppercase"
+          className="text-[4.0vw] sm:text-[3.6vw] lg:text-[2.2rem] text-[#053d57] leading-[1.3] mb-3 sm:mb-5 max-w-[900px] tracking-wide uppercase whitespace-nowrap lg:whitespace-normal"
           style={{ fontFamily: 'Alta, serif' }}
         >
-          LA ALOPECIA SÍ SE PUEDE TRATAR. NO CON MITOS,<br className="hidden md:block" />
-          NO CON PROMESAS, CON DERMATOLOGÍA Y<br className="hidden md:block" />
+          LA ALOPECIA SÍ SE PUEDE TRATAR. NO CON MITOS,<br />
+          NO CON PROMESAS, CON DERMATOLOGÍA Y<br />
           PROTOCOLOS CLÍNICOS REALES.
         </h2>
 
         {/* Subtítulo */}
-        <p className="text-[#88807a] text-[14px] md:text-base font-semibold md:font-medium leading-relaxed mb-12 max-w-[700px]">
-          Nuestro staff de dermatólogos capacitados en tricología te<br className="hidden md:block" />
+        <p className="text-[#88807a] text-[clamp(11px,2.6vw,20px)] lg:text-base font-medium leading-relaxed mb-6 sm:mb-10 lg:mb-12 max-w-[700px]">
+          Nuestro staff de dermatólogos capacitados en tricología te<br />
           presentan algunos de nuestros casos de éxito.
         </p>
 
-        {/* Contenedor de la Foto Única (Medida exacta: 850 x 420) */}
-        <div className="w-full max-w-[850px] rounded-[2rem] overflow-hidden shadow-2xl bg-white relative transition-all duration-500 border border-gray-100">
-          <div className="w-full h-[320px] md:h-[420px] relative flex items-center justify-center bg-gray-50">
-            <img
-              src={casos[currentCase].img}
-              alt={`Caso de éxito ${currentCase + 1}`}
-              className="w-full h-full object-cover transition-opacity duration-500"
-              onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#d9d9d9]' }}
-            />
+        {/* Card + franja gris (celular/tablet) */}
+        <div className="relative w-full max-w-[850px]">
 
-            {/* Etiquetas ANTES y DESPUÉS con la tipografía Alta y misma posición */}
-            <div className="absolute bottom-4 md:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none">
-              <span 
-                className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                style={{ fontFamily: 'Alta, serif' }}
-              >
-                ANTES
-              </span>
+          {/* Franja gris detrás del card: ancho de pantalla, centrada en el card (solo celular/tablet) */}
+          <div className="lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-[62%] bg-[#e6e6e6] -z-10"></div>
+
+          {/* Contenedor de la foto */}
+          <div className="w-full rounded-[1.2rem] sm:rounded-[2rem] overflow-hidden shadow-2xl bg-white relative transition-all duration-500 border border-gray-100">
+            <div className="w-full lg:h-[420px] relative flex items-center justify-center bg-gray-50">
+              <img
+                src={casos[currentCase].img}
+                alt={`Caso de éxito ${currentCase + 1}`}
+                className="block w-full h-auto lg:h-full lg:object-cover transition-opacity duration-500"
+                onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full min-h-[240px] lg:h-full object-cover bg-[#d9d9d9]' }}
+              />
+
+              {/* Etiquetas ANTES y DESPUÉS */}
+              <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none">
+                <span
+                  className="text-white text-[clamp(13px,3vw,26px)] lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  style={{ fontFamily: 'Alta, serif' }}
+                >
+                  ANTES
+                </span>
+              </div>
+
+              <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none">
+                <span
+                  className="text-white text-[clamp(13px,3vw,26px)] lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  style={{ fontFamily: 'Alta, serif' }}
+                >
+                  DESPUÉS
+                </span>
+              </div>
+
             </div>
-
-            <div className="absolute bottom-4 md:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none">
-              <span 
-                className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                style={{ fontFamily: 'Alta, serif' }}
-              >
-                DESPUÉS
-              </span>
-            </div>
-
           </div>
         </div>
 
-        {/* Puntitos indicadores (Clickeables) */}
-        <div className="flex gap-3 mt-10">
+        {/* Puntitos */}
+        <div className="flex gap-3 mt-7 sm:mt-10">
           {casos.map((_, index) => (
             <button
               key={index}
