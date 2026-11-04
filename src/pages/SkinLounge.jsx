@@ -14,11 +14,11 @@ const SkinLounge = () => {
           ===================================================== */}
       <section className="lg:hidden relative w-full mb-[86vw]">
 
-        {/* Fondo con esquinas redondeadas abajo */}
+        {/* Fondo con esquinas redondeadas abajo y nueva imagen para celular */}
         <div className="relative w-full aspect-[365/640] rounded-b-[11vw] overflow-hidden shadow-sm">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1793342222/djirolwpg2ffrlvcgbto.png')` }}
+            style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1793755077/dbpfshz1ermsulkvduif.png')` }}
           ></div>
 
           {/* Título y subtítulo */}

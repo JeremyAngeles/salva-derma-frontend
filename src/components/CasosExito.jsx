@@ -17,6 +17,33 @@ const CasosExito = () => {
     { id: 8, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793082628/q6paz1utzz2s50piug2z.png' },
   ];
 
+  // Lógica para deslizar con el dedo (Swipe)
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setCurrentCase((prev) => (prev === casos.length - 1 ? 0 : prev + 1));
+    }
+    if (isRightSwipe) {
+      setCurrentCase((prev) => (prev === 0 ? casos.length - 1 : prev - 1));
+    }
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentCase((prev) => (prev + 1) % casos.length);
@@ -27,31 +54,25 @@ const CasosExito = () => {
   return (
     <section className="relative w-full py-16 md:py-28 font-principal overflow-hidden flex flex-col items-center">
 
-      {/* FONDO: cubre toda la sección */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
         style={{ backgroundImage: `url('${BG_IMG}')` }}
       ></div>
 
-      {/* Velo suave: casi transparente en celular/tablet (se ve el fondo), igual que antes en PC */}
       <div className="absolute inset-0 bg-white/10 lg:bg-white/40 pointer-events-none z-0"></div>
 
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 md:px-6 flex flex-col items-center text-center">
 
-        {/* TÍTULO: 4 filas en celular/tablet (más grande), 3 filas en PC (igual que antes) */}
         <h2
           className="text-[1.1rem] min-[380px]:text-[1.25rem] min-[400px]:text-[1.35rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[2.6rem] text-[#053d57] leading-[1.25] lg:leading-[1.2] mb-5 w-full max-w-[900px] uppercase tracking-normal lg:tracking-wide drop-shadow-sm lg:drop-shadow-none"
           style={{ fontFamily: 'Alta, serif' }}
         >
-          {/* Celular y tablet: 4 filas */}
           <span className="lg:hidden whitespace-nowrap">
             PORQUE NUESTRA UNIDAD<br />
             DERMOLASER VA MÁS ALLÁ DE LA<br />
             ESTÉTICA, ES SALUD.. IMPACTA EN TU<br />
             PIEL, IMPACTA EN TUS EMOCIONES.
           </span>
-
-          {/* PC: 3 filas (sin cambios) */}
           <span className="hidden lg:inline">
             PORQUE NUESTRA UNIDAD DERMOLASER VA<br />
             MÁS ALLÁ DE LA ESTÉTICA, ES SALUD.. IMPACTA<br />
@@ -64,20 +85,37 @@ const CasosExito = () => {
           protocolos combinados. Nuestra clave es combinar más de 1 tecnología.
         </p>
 
-        {/* CARD DE FOTOS */}
-        <div className="w-full max-w-[850px] rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden shadow-2xl bg-white relative z-20 transition-all duration-500 border border-gray-100">
-
-          {/* Celular/tablet: el alto se adapta a la foto (se ve completa). PC: 420px fijo */}
+        {/* CARD DE FOTOS CON EVENTOS TÁCTILES */}
+        <div 
+          className="w-full max-w-[850px] rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden shadow-2xl bg-white relative z-20 transition-all duration-500 border border-gray-100 touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <div className="w-full relative flex items-center justify-center bg-gray-50 lg:h-[420px]">
+            
+            {/* Imagen base invisible para dar altura estructural en móvil */}
             <img
-              src={casos[currentCase].img}
-              alt={`Caso de éxito ${currentCase + 1}`}
-              className="block w-full h-auto lg:h-full lg:object-cover transition-opacity duration-500"
-              onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full min-h-[240px] lg:h-full object-cover bg-[#ebdcd5]' }}
+              src={casos[0].img}
+              alt="layout"
+              className="block w-full h-auto lg:h-full lg:object-cover invisible pointer-events-none"
             />
 
-            {/* ANTES y DESPUÉS */}
-            <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none">
+            {/* Mapeo de todas las imágenes para la transición fluida (fade) */}
+            {casos.map((caso, index) => (
+              <img
+                key={caso.id}
+                src={caso.img}
+                alt={`Caso de éxito ${index + 1}`}
+                className={`absolute top-0 left-0 w-full h-full lg:object-cover transition-opacity duration-1000 ease-in-out ${
+                  currentCase === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+                onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute top-0 left-0 w-full h-full object-cover bg-[#ebdcd5]'; }}
+              />
+            ))}
+
+            {/* Textos Flotantes de ANTES y DESPUÉS */}
+            <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none z-20">
               <span
                 className="text-white text-base sm:text-2xl lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                 style={{ fontFamily: 'Alta, serif' }}
@@ -86,7 +124,7 @@ const CasosExito = () => {
               </span>
             </div>
 
-            <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none">
+            <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none z-20">
               <span
                 className="text-white text-base sm:text-2xl lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                 style={{ fontFamily: 'Alta, serif' }}
@@ -98,7 +136,7 @@ const CasosExito = () => {
           </div>
         </div>
 
-        {/* Puntitos */}
+        {/* Puntitos indicadores */}
         <div className="flex gap-3 mt-8 md:mt-10 relative z-20 bg-white/50 md:bg-transparent p-2 md:p-0 rounded-full">
           {casos.map((_, index) => (
             <button

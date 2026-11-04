@@ -112,35 +112,7 @@ const MejorVersion = () => {
       {/* =========================================
           BLOQUE INFERIOR: Solo visible en Celular/Tablet
           ========================================= */}
-      <div className="flex lg:hidden flex-col items-center justify-center text-center w-full px-6 mt-20 sm:mt-24">
-        
-        {/* Título adaptado a 2 filas, como en la imagen */}
-        <h2 
-          className="text-[1.8rem] min-[390px]:text-[1.9rem] sm:text-[2.2rem] text-[#053d57] leading-[1.1] tracking-wide mb-4 flex flex-col items-center justify-center w-full"
-          style={{ fontFamily: 'Alta, serif' }}
-        >
-          <span className="font-light whitespace-nowrap">CONOCE A NUESTRO STAFF</span>
-          <span className="font-light whitespace-nowrap">DE MÉDICOS ESPECIALISTAS</span>
-        </h2>
 
-        {/* Línea divisoria para móvil */}
-        <div className="w-28 sm:w-32 h-[2.5px] bg-[#cda99c] mb-6 rounded-full"></div>
-
-        {/* Párrafo distribuido en 4 líneas usando flex-col para mantener el formato de la imagen */}
-        <div className="flex flex-col items-center justify-center text-[#88807a] text-[10px] min-[375px]:text-[12px] sm:text-[14px] md:text-[15px] font-light leading-[1.6] w-full mb-8">
-          <span className="whitespace-nowrap">Cada especialista aporta su experiencia y conocimientos para</span>
-          <span className="whitespace-nowrap">ofrecer un abordaje integral, y BAJO ESTÁNDARES DE CALIDAD</span>
-          <span className="whitespace-nowrap">que ofrece nuestra clínica. Priorizando las necesidades de cada</span>
-          <span className="whitespace-nowrap">paciente y acompañándolo en cada etapa de su atención.</span>
-        </div>
-
-        <Link 
-          to="/reservar-cita" 
-          className="inline-block bg-gradient-to-r from-[#cdb3ae] to-[#e4d1cd] text-white px-10 py-3.5 sm:px-12 sm:py-4 rounded-full font-medium text-[1.1rem] sm:text-[1.2rem] shadow-sm hover:shadow-md transition-all"
-        >
-          Reserva tu consulta
-        </Link>
-      </div>
 
     </section>
   );

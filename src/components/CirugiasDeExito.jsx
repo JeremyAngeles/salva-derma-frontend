@@ -62,7 +62,7 @@ const CirugiasDeExito = () => {
   };
 
   const siguienteFoto = (e) => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     if (modalType) {
       const total = galeriaCirugias[modalType].fotos.length;
       setCurrentImageIndex((prev) => (prev + 1) % total);
@@ -70,10 +70,37 @@ const CirugiasDeExito = () => {
   };
 
   const anteriorFoto = (e) => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     if (modalType) {
       const total = galeriaCirugias[modalType].fotos.length;
       setCurrentImageIndex((prev) => (prev - 1 + total) % total);
+    }
+  };
+
+  // --- LÓGICA DE SWIPE (Solo para celular) ---
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      siguienteFoto();
+    }
+    if (isRightSwipe) {
+      anteriorFoto();
     }
   };
 
@@ -81,9 +108,9 @@ const CirugiasDeExito = () => {
     <section className="w-full bg-[#fcfbf9] py-16 md:py-24 font-principal relative">
       <div className="max-w-[1150px] mx-auto px-6 lg:px-8">
         
-        {/* Título Principal */}
+        {/* Título Principal (Más chico y más abajo en celular) */}
         <h2 
-          className="text-[#053d57] text-[2.5rem] sm:text-[3.2rem] md:text-[4.0rem] text-center mb-12 md:mb-14 tracking-wide leading-none font-light"
+          className="text-[#053d57] text-[2.1rem] sm:text-[3.2rem] md:text-[4.0rem] text-center mt-10 md:mt-0 mb-12 md:mb-14 tracking-wide leading-none font-light"
           style={{ fontFamily: 'Alta, serif' }}
         >
           CIRUGÍAS DE ÉXITO
@@ -303,8 +330,12 @@ const CirugiasDeExito = () => {
               &#10094;
             </button>
 
+            {/* SE AGREGARON LOS EVENTOS DE SWIPE AQUÍ */}
             <div 
               onClick={(e) => e.stopPropagation()} 
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
               className="relative w-full max-w-[750px] bg-white rounded-[2rem] overflow-hidden shadow-2xl p-6 md:p-8 flex flex-col items-center transform transition-all duration-300 scale-100 animate-scaleUp border border-[#e6e2de]"
             >
               <button 
@@ -322,7 +353,7 @@ const CirugiasDeExito = () => {
                 {galeriaCirugias[modalType].titulo}
               </h3>
 
-              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] rounded-[1.2rem] overflow-hidden bg-[#fcfbf9] flex items-center justify-center">
+              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] rounded-[1.2rem] overflow-hidden bg-[#fcfbf9] flex items-center justify-center touch-pan-y">
                 {galeriaCirugias[modalType].fotos.map((imgUrl, idx) => (
                   <img 
                     key={idx}

@@ -33,10 +33,38 @@ const EsteticaEspecialistas = () => {
     return () => clearInterval(timer);
   }, [casos.length]);
 
+  // --- LÓGICA DE SWIPE (Deslizar con el dedo) ---
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setCurrentSlide((prev) => (prev + 1) % casos.length); // Siguiente
+    }
+    if (isRightSwipe) {
+      setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length); // Anterior
+    }
+  };
+
   return (
-    <section className="relative w-full bg-white pt-[8vw] md:pt-[6vw] lg:pt-24 pb-[10vw] lg:pb-20 font-principal">
+    <section className="relative w-full bg-white pt-[8vw] md:pt-[6vw] lg:pt-24 pb-[10vw] lg:pb-20 font-principal overflow-hidden">
       
-      <div className="max-w-[1400px] mx-auto px-[3vw] lg:px-12 text-center relative z-10">
+      {/* Contenedor de títulos con animación */}
+      <div className="max-w-[1400px] mx-auto px-[3vw] lg:px-12 text-center relative z-10 opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
         <h2 
           className="text-[5.0vw] lg:text-[3.6rem] xl:text-[4.2rem] text-[#053d57] leading-none mb-[2.5vw] lg:mb-4 whitespace-nowrap"
           style={{ fontFamily: 'Alta, serif' }}
@@ -58,7 +86,14 @@ const EsteticaEspecialistas = () => {
         </p>
       </div>
 
-      <div className="relative w-full mb-[6vw] lg:mb-10">
+      {/* Carrusel con Swipe y Animación */}
+      <div 
+        className="relative w-full mb-[6vw] lg:mb-10 opacity-0 animate-fade-up touch-pan-y"
+        style={{ animationDelay: '0.4s' }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {/* Franja gris */}
         <div className="absolute inset-x-0 top-[18%] bottom-[19%] lg:top-[25%] lg:bottom-[25%] bg-[#d3d3d3] z-0"></div>
 
@@ -132,7 +167,8 @@ const EsteticaEspecialistas = () => {
         ))}
       </div>
 
-      <div className="flex flex-col items-center">
+      {/* Botón y redes con animación */}
+      <div className="flex flex-col items-center opacity-0 animate-fade-up" style={{ animationDelay: '0.6s' }}>
         {/* Botón teléfono */}
         <a 
           href="https://wa.me/51994060977" 
@@ -170,6 +206,23 @@ const EsteticaEspecialistas = () => {
           </div>
         </div>
       </div>
+
+      {/* Estilos de animación */}
+      <style>{`
+        @keyframes fadeUp {
+          0% {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-up {
+          animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}</style>
 
     </section>
   );

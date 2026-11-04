@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const EspacioSkinLounge = () => {
-  const caracteristicas = [
+  // Estado para controlar el orden de los elementos (índices: 0 = izquierda, 1 = centro, 2 = derecha)
+  const [orden, setOrden] = useState([0, 1, 2]);
+
+  const listaCaracteristicas = [
     {
       id: 1,
       texto: "EXPERIENCIA DE LIMPIEZAS\nDERMATOLOGICAS PREMIUM",
@@ -19,49 +22,70 @@ const EspacioSkinLounge = () => {
     }
   ];
 
+  // Función para rotar o mover al centro el card presionado
+  const manejarClickCard = (clickedIndexInOrden) => {
+    const nuevoOrden = [...orden];
+    // Si hacen clic en el de la izquierda (posición 0 en el orden actual)
+    if (clickedIndexInOrden === 0) {
+      const temp = nuevoOrden[0];
+      nuevoOrden[0] = nuevoOrden[1];
+      nuevoOrden[1] = temp;
+    } 
+    // Si hacen clic en el de la derecha (posición 2 en el orden actual)
+    else if (clickedIndexInOrden === 2) {
+      const temp = nuevoOrden[2];
+      nuevoOrden[2] = nuevoOrden[1];
+      nuevoOrden[1] = temp;
+    }
+    setOrden(nuevoOrden);
+  };
+
   return (
     <>
       {/* =====================================================
-          CELULAR Y TABLET (todo en vw, igualito al diseño)
+          CELULAR Y TABLET (con animación interactiva por click)
           ===================================================== */}
-      <section className="lg:hidden w-full bg-[#faf9f8] pt-[3vw] pb-[10vw] font-principal relative z-20">
+      <section className="lg:hidden w-full bg-[#faf9f8] pt-[3vw] pb-[10vw] font-principal relative z-20 overflow-hidden">
 
-        {/* Título */}
+        {/* Título con animación de entrada */}
         <h2
-          className="text-center text-[6.3vw] text-[#053d57] tracking-wide leading-none whitespace-nowrap"
-          style={{ fontFamily: 'Alta, serif' }}
+          className="text-center text-[6.3vw] text-[#053d57] tracking-wide leading-none whitespace-nowrap opacity-0 animate-fade-up"
+          style={{ fontFamily: 'Alta, serif', animationDelay: '0.1s' }}
         >
           EL ESPACIO PARA TI Y TU PIEL
         </h2>
 
-        {/* Cards en fila: el del centro más grande */}
+        {/* Cards interactivos en fila */}
         <div className="flex items-center justify-center gap-[2.4vw] px-[1.6vw] mt-[6vw]">
-          {caracteristicas.map((item, index) => {
-            const esCentro = index === 1;
+          {orden.map((itemIndex, positionIndex) => {
+            const item = listaCaracteristicas[itemIndex];
+            const esCentro = positionIndex === 1;
+
             return (
               <div
                 key={item.id}
-                className={`relative flex-shrink-0 overflow-hidden shadow-sm ${
+                onClick={() => manejarClickCard(positionIndex)}
+                className={`relative flex-shrink-0 overflow-hidden shadow-md cursor-pointer transition-all duration-700 ease-in-out ${
                   esCentro
-                    ? 'w-[41.5vw] h-[59vw] rounded-[5vw] z-10'
-                    : 'w-[25.6vw] h-[28vw] rounded-[4vw]'
+                    ? 'w-[41.5vw] h-[59vw] rounded-[5vw] z-10 scale-100 shadow-xl'
+                    : 'w-[25.6vw] h-[28vw] rounded-[4vw] scale-95 opacity-85 hover:opacity-100'
                 }`}
               >
                 <img
                   src={item.img}
                   alt={item.texto.replace('\n', ' ')}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-in-out"
                   onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#dcc4bc]' }}
                 />
 
                 {/* Degradado inferior */}
-                <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/60 via-black/15 to-transparent pointer-events-none"></div>
+                <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none"></div>
 
                 {/* Texto */}
-                <div className={`absolute left-0 w-full text-center ${esCentro ? 'bottom-[3.4vw]' : 'bottom-[2vw]'}`}>
+                <div className={`absolute left-0 w-full text-center px-1 ${esCentro ? 'bottom-[3.4vw]' : 'bottom-[2vw]'}`}>
                   <p
-                    className={`text-white font-medium tracking-wide leading-[1.25] drop-shadow-md ${
-                      esCentro ? 'text-[1.9vw]' : 'text-[1.35vw]'
+                    className={`text-white font-medium tracking-wide leading-[1.2] drop-shadow-md ${
+                      esCentro ? 'text-[1.8vw]' : 'text-[1.2vw]'
                     }`}
                   >
                     {item.texto.split('\n').map((linea, i) => (
@@ -75,7 +99,7 @@ const EspacioSkinLounge = () => {
         </div>
 
         {/* Texto inferior con "+" */}
-        <div className="flex items-start gap-[1.6vw] mt-[11vw] pl-[4vw] pr-[4vw]">
+        <div className="flex items-start gap-[1.6vw] mt-[11vw] pl-[4vw] pr-[4vw] opacity-0 animate-fade-up" style={{ animationDelay: '0.3s' }}>
           <div className="flex-shrink-0 mt-[0.6vw]">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-[3.6vw] h-[3.6vw] text-[#c9aea5]" viewBox="0 0 24 24" fill="currentColor">
               <path d="M19 11h-6V5a1 1 0 00-2 0v6H5a1 1 0 000 2h6v6a1 1 0 002 0v-6h6a1 1 0 000-2z" />
@@ -92,7 +116,7 @@ const EspacioSkinLounge = () => {
       </section>
 
       {/* =====================================================
-          PC (sin cambios)
+          PC (sin cambios, estático)
           ===================================================== */}
       <section className="hidden lg:block w-full bg-[#faf9f8] -mt-24 md:-mt-32 pt-8 md:pt-12 pb-16 md:pb-20 font-principal px-6 lg:px-12 relative z-20">
         <div className="max-w-[1250px] mx-auto">
@@ -105,7 +129,7 @@ const EspacioSkinLounge = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {caracteristicas.map((item) => (
+            {listaCaracteristicas.map((item) => (
               <div 
                 key={item.id} 
                 className="relative w-full h-[350px] md:h-[400px] lg:h-[420px] rounded-[2rem] overflow-hidden shadow-sm group"
@@ -143,6 +167,23 @@ const EspacioSkinLounge = () => {
 
         </div>
       </section>
+
+      {/* Estilos para la animación fade-up */}
+      <style>{`
+        @keyframes fadeUp {
+          0% {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-up {
+          animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}</style>
     </>
   );
 };

@@ -2,21 +2,23 @@ import React from 'react';
 import Footer from '../components/Footer';
 import PerfilesDoctores from '../components/PerfilesDoctores';
 
-const HERO_IMG =
+const HERO_IMG_PC =
   'https://res.cloudinary.com/da47iihxz/image/upload/v1793119690/ulzdc8ptvikgxede5sql.jpg';
+const HERO_IMG_MOBILE =
+  'https://res.cloudinary.com/da47iihxz/image/upload/v1793751486/rmdebo0j14cc7hwlgtbi.png';
 
 const Nosotros = () => {
   return (
     <main className="w-full font-principal bg-[#fcfbf9] flex flex-col min-h-screen">
 
-            {/* =========================================
+      {/* =========================================
           1A. HERO MÓVIL + TABLET (< lg)
           ========================================= */}
       <section className="lg:hidden relative w-full h-[620px] sm:h-[760px] md:h-[880px] rounded-b-[2.5rem] md:rounded-b-[3.5rem] overflow-hidden">
         {/* Foto: cubre todo el ancho sin deformarse */}
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${HERO_IMG}')` }}
+          style={{ backgroundImage: `url('${HERO_IMG_MOBILE}')` }}
         ></div>
 
         {/* Degradado para que el texto se lea bien */}
@@ -53,7 +55,7 @@ const Nosotros = () => {
         >
           <div
             className="absolute inset-0 bg-cover bg-center md:bg-top"
-            style={{ backgroundImage: `url('${HERO_IMG}')` }}
+            style={{ backgroundImage: `url('${HERO_IMG_PC}')` }}
           ></div>
 
           <div className="absolute bottom-[70px] md:bottom-[80px] z-40 text-center px-6 w-full max-w-[850px]">
@@ -76,8 +78,6 @@ const Nosotros = () => {
 
       {/* =========================================
           2. TARJETAS DE MISIÓN Y VISIÓN
-          Móvil/tablet: 2 columnas lado a lado
-          PC (lg): igual que antes
           ========================================= */}
       <section className="w-full bg-[#fcfbf9] pb-12 lg:pb-32 px-4 sm:px-8 lg:px-6">
         <div className="max-w-[1050px] mx-auto grid grid-cols-2 gap-3 sm:gap-6 lg:flex lg:flex-row lg:justify-center lg:gap-16 -mt-[45px] sm:-mt-[65px] lg:-mt-[100px] relative z-30">

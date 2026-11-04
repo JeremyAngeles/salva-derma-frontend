@@ -2,75 +2,79 @@ import React from 'react';
 
 const ContactoStaff = () => {
   return (
-    <section className="w-full font-principal overflow-hidden relative">
+    <section className="w-full font-principal overflow-hidden relative mt-[-2px]">
       
       {/* =========================================
           VISTA CELULAR Y TABLET (< lg)
           ========================================= */}
       <div 
-        className="lg:hidden relative w-full aspect-[629/655] bg-cover bg-center bg-no-repeat overflow-hidden bg-[#f7f6f4]"
-        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793344703/nvyyumpdz1qk3xkqf36s.png')" }}
+        className="lg:hidden relative w-full aspect-[629/880] bg-cover bg-center bg-no-repeat overflow-hidden flex flex-col justify-between pt-8 pb-3 px-6"
+        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793751615/toppj3zf2tzbvyrofdrh.png')" }}
       >
-        <div className="absolute top-[16.5vw] right-[6.8vw] flex flex-col items-end text-right">
+        {/* Capa de protección sutil */}
+        <div className="absolute inset-0 bg-black/15 pointer-events-none z-0"></div>
 
-          {/* Título (5 filas fijas) */}
+        {/* TÍTULO Y PÁRRAFO SUPERIOR (En blanco, más arriba y a la derecha) */}
+        <div className="relative z-10 flex flex-col items-end text-right w-full mt-2 pr-2">
+          
           <h2 
-            className="text-[#053d57] text-[4.3vw] leading-[1.12] tracking-wide"
+            className="text-white text-[1.1rem] sm:text-[1.4rem] leading-[1.15] tracking-wide drop-shadow-md mb-3"
             style={{ fontFamily: 'Alta, serif' }}
           >
-            <span className="block whitespace-nowrap">SALVAR DERMATOPLÁSTICA</span>
-            <span className="block whitespace-nowrap">ESPECIALISTAS EN</span>
-            <span className="block whitespace-nowrap">DERMATOLOGÍA CLÍNICA,</span>
-            <span className="block whitespace-nowrap">ESTÉTICA, LÁSER Y</span>
-            <span className="block whitespace-nowrap">TRICOLOGIA</span>
+            <span className="block">SALVAR DERMATOPLÁSTICA</span>
+            <span className="block">ESPECIALISTAS EN</span>
+            <span className="block">DERMATOLOGÍA CLÍNICA,</span>
+            <span className="block">ESTÉTICA, LÁSER Y</span>
+            <span className="block">TRICOLOGIA</span>
           </h2>
 
-          {/* Párrafo (5 filas fijas) */}
-          <p className="text-[#88807a] text-[2.75vw] font-medium leading-[1.3] mt-[2.2vw]">
-            <span className="block whitespace-nowrap">Agenda tu evaluación con</span>
-            <span className="block whitespace-nowrap">nuestro staff altamente</span>
-            <span className="block whitespace-nowrap">capacitado dentro y fuera del</span>
-            <span className="block whitespace-nowrap">país. Para mayor información y</span>
-            <span className="block whitespace-nowrap">citas, ¡contáctanos!</span>
+          <p className="text-white text-[10.5px] sm:text-[13px] font-medium leading-[1.3] drop-shadow-md max-w-[260px]">
+            Agenda tu evaluación con nuestro staff altamente capacitado dentro y fuera del país. Para mayor información y citas, ¡contáctanos!
           </p>
+
         </div>
 
-        {/* Botón de WhatsApp */}
-        <a 
-          href="https://wa.me/51994060977" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="absolute top-[67.5vw] right-[6.8vw] w-[49.5vw] h-[11vw] bg-gradient-to-r from-[#d1b3ab] to-[#efe0dc] text-white rounded-full flex items-center gap-[2vw] pl-[1.8vw] shadow-md active:scale-95 transition-transform"
-        >
-          <div className="w-[6.4vw] h-[6.4vw] flex items-center justify-center flex-shrink-0">
-            <img 
-              src="/iconotelefonoblanco.svg" 
-              alt="Teléfono WhatsApp" 
-              className="w-full h-full object-contain"
-              onError={(e) => { e.target.style.display = 'none'; }}
-            />
-          </div>
-          <span className="text-[4.3vw] font-light tracking-wide whitespace-nowrap leading-none">
-            +51 994 060 977
-          </span>
-        </a>
+        {/* BOTÓN WHATSAPP Y REDES SOCIALES (Mucho más abajo en la parte inferior) */}
+        <div className="relative z-10 flex flex-col items-center w-full mb-1">
+          
+          {/* Botón de WhatsApp centrado */}
+          <a 
+            href="https://wa.me/51994060977" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="w-[240px] sm:w-[280px] h-[44px] bg-[#d9c4bc] text-white rounded-full flex items-center justify-center gap-2.5 shadow-lg active:scale-95 transition-transform mb-2.5"
+          >
+            <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
+              <img 
+                src="/iconotelefonoblanco.svg" 
+                alt="Teléfono WhatsApp" 
+                className="w-full h-full object-contain"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            </div>
+            <span className="text-[1rem] sm:text-[1.15rem] font-light tracking-wide whitespace-nowrap leading-none">
+              +51 994 060 977
+            </span>
+          </a>
 
-        {/* Redes Sociales */}
-        <div className="absolute top-[82vw] right-[6.8vw] flex items-center gap-[3.6vw]">
-          <span className="text-[#88807a] text-[2.4vw] font-light tracking-wide whitespace-nowrap">
-            Síguenos en:
-          </span>
-          <div className="flex gap-[1.6vw]">
-            <a href="#" className="w-[4.9vw] h-[4.9vw] flex items-center justify-center">
-              <img src="/fcolor.svg" alt="Facebook" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-            </a>
-            <a href="#" className="w-[4.9vw] h-[4.9vw] flex items-center justify-center">
-              <img src="/igcolor.svg" alt="Instagram" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-            </a>
-            <a href="#" className="w-[4.9vw] h-[4.9vw] flex items-center justify-center">
-              <img src="/tiktokcolor.svg" alt="TikTok" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-            </a>
+          {/* Redes Sociales centradas */}
+          <div className="flex items-center gap-2.5 text-white drop-shadow-md">
+            <span className="text-[11px] sm:text-[13px] font-light tracking-wide">
+              Síguenos en:
+            </span>
+            <div className="flex gap-2">
+              <a href="#" className="w-5 h-5 flex items-center justify-center">
+                <img src="/fcolor.svg" alt="Facebook" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
+              </a>
+              <a href="#" className="w-5 h-5 flex items-center justify-center">
+                <img src="/igcolor.svg" alt="Instagram" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
+              </a>
+              <a href="#" className="w-5 h-5 flex items-center justify-center">
+                <img src="/tiktokcolor.svg" alt="TikTok" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
+              </a>
+            </div>
           </div>
+
         </div>
       </div>
 

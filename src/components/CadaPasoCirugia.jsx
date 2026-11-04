@@ -19,6 +19,33 @@ const CadaPasoCirugia = () => {
     return () => clearInterval(timer);
   }, [casos.length]);
 
+  // --- LÓGICA DE SWIPE (Deslizar a los lados para cambiar fotos en celular) ---
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setCurrentSlide((prev) => (prev + 1) % casos.length); // Siguiente
+    }
+    if (isRightSwipe) {
+      setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length); // Anterior
+    }
+  };
+
   return (
     <>
       {/* =========================================
@@ -30,8 +57,8 @@ const CadaPasoCirugia = () => {
       >
         <div className="relative z-10 w-full max-w-[720px] mx-auto flex flex-col">
           
-          {/* Bloque superior derecho: Pegado más a la derecha */}
-          <div className="w-full pl-4 pr-2 min-[390px]:pr-3 sm:pr-6 ml-auto flex flex-col items-end text-right pt-2 sm:pt-6">
+          {/* Bloque superior derecho: Pegado más a la derecha y animado */}
+          <div className="w-full pl-4 pr-2 min-[390px]:pr-3 sm:pr-6 ml-auto flex flex-col items-end text-right pt-2 sm:pt-6 opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
             
             {/* Título forzado exactamente a 3 filas */}
             <h2 
@@ -66,10 +93,15 @@ const CadaPasoCirugia = () => {
 
           </div>
 
-          {/* Bloque inferior: Card con la misma medida/proporción 2:1 (680x340) de PC */}
-          <div className="w-full max-w-[680px] mx-auto mt-10 min-[390px]:mt-12 sm:mt-16 px-4 sm:px-6 flex flex-col items-center">
+          {/* Bloque inferior: Card animado y con Swipe */}
+          <div className="w-full max-w-[680px] mx-auto mt-10 min-[390px]:mt-12 sm:mt-16 px-4 sm:px-6 flex flex-col items-center opacity-0 animate-fade-up" style={{ animationDelay: '0.4s' }}>
             
-            <div className="w-full aspect-[2/1] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30 group">
+            <div 
+              className="w-full aspect-[2/1] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30 group touch-pan-y"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               {casos.map((imgUrl, index) => (
                 <img 
                   key={index}
@@ -105,7 +137,7 @@ const CadaPasoCirugia = () => {
               </div>
             </div>
 
-            {/* Puntitos del Carrusel (4 puntos) */}
+            {/* Puntitos del Carrusel */}
             <div className="flex items-center justify-center gap-3 mt-4">
               {casos.map((_, index) => (
                 <button
@@ -127,7 +159,7 @@ const CadaPasoCirugia = () => {
       </section>
 
       {/* =========================================
-          VISTA PC (lg:) - INTACTA SIN CAMBIOS
+          VISTA PC (lg:) - ANIMADA
           ========================================= */}
       <section 
         className="hidden lg:block relative w-full py-16 md:py-24 font-principal overflow-hidden bg-cover bg-center bg-no-repeat"
@@ -142,36 +174,35 @@ const CadaPasoCirugia = () => {
           
           <div className="w-full lg:w-[62%] flex flex-col items-center lg:items-end text-center lg:text-right">
             
-            {/* Título Principal */}
-            <h2 
-              className="text-[#053d57] text-[2rem] sm:text-[2.5rem] md:text-[3.2rem] xl:text-[3.6rem] leading-[1.08] tracking-wide mb-0 drop-shadow-sm"
-              style={{ fontFamily: 'Alta, serif' }}
-            >
-              CADA PASO TE ACERCA<br />
-              MÁS A TU SUEÑO
-            </h2>
+            {/* Textos con animación fade-up */}
+            <div className="opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              <h2 
+                className="text-[#053d57] text-[2rem] sm:text-[2.5rem] md:text-[3.2rem] xl:text-[3.6rem] leading-[1.08] tracking-wide mb-0 drop-shadow-sm"
+                style={{ fontFamily: 'Alta, serif' }}
+              >
+                CADA PASO TE ACERCA<br />
+                MÁS A TU SUEÑO
+              </h2>
 
-            {/* Subtítulo en fuente Alta */}
-            <h3 
-              className="text-[#7c7570] text-[15px] sm:text-[18px] md:text-[21px] tracking-wider uppercase mb-1 md:mb-1.5 font-light drop-shadow-sm"
-              style={{ fontFamily: 'Alta, serif' }}
-            >
-              PARA TODO LO DEMÁS, EXISTE LA CIRUGÍA PLÁSTICA
-            </h3>
+              <h3 
+                className="text-[#7c7570] text-[15px] sm:text-[18px] md:text-[21px] tracking-wider uppercase mb-1 md:mb-1.5 font-light drop-shadow-sm"
+                style={{ fontFamily: 'Alta, serif' }}
+              >
+                PARA TODO LO DEMÁS, EXISTE LA CIRUGÍA PLÁSTICA
+              </h3>
 
-            {/* Párrafo descriptivo con margen superior para separarlo */}
-            <p className="text-[#7c7570] text-[15px] md:text-[17px] font-light leading-snug tracking-tight max-w-[650px] mt-4 md:mt-6 mb-8 md:mb-10 drop-shadow-sm">
-              La cirugía plástica, sea facial o corporal es un universo en el cual el
-              centro es el paciente, no existen dos resultados iguales, cada caso
-              es único y se refleja en el plan pre - operatorio y se define según
-              las características de cada paciente, ese es el secreto de un buen
-              resultado y lo que nos diferencia.
-            </p>
+              <p className="text-[#7c7570] text-[15px] md:text-[17px] font-light leading-snug tracking-tight max-w-[650px] mt-4 md:mt-6 mb-8 md:mb-10 drop-shadow-sm">
+                La cirugía plástica, sea facial o corporal es un universo en el cual el
+                centro es el paciente, no existen dos resultados iguales, cada caso
+                es único y se refleja en el plan pre - operatorio y se define según
+                las características de cada paciente, ese es el secreto de un buen
+                resultado y lo que nos diferencia.
+              </p>
+            </div>
 
-            {/* Contenedor de la Imagen y Puntitos */}
-            <div className="w-full max-w-[680px] flex flex-col items-center">
+            {/* Contenedor de la Imagen y Puntitos con animación */}
+            <div className="w-full max-w-[680px] flex flex-col items-center opacity-0 animate-fade-up" style={{ animationDelay: '0.4s' }}>
               
-              {/* Tarjeta de imagen con carrusel y las etiquetas ANTES / DESPUÉS dentro */}
               <div className="w-full h-[250px] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30 group">
                 {casos.map((imgUrl, index) => (
                   <img 
@@ -188,7 +219,6 @@ const CadaPasoCirugia = () => {
                   />
                 ))}
 
-                {/* Etiquetas ANTES y DESPUÉS con la tipografía Alta y posición idéntica a los demás componentes */}
                 <div className="absolute bottom-4 md:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none z-20">
                   <span 
                     className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
@@ -208,7 +238,6 @@ const CadaPasoCirugia = () => {
                 </div>
               </div>
 
-              {/* Puntitos del Carrusel (4 puntos) */}
               <div className="flex items-center justify-center gap-3 mt-4">
                 {casos.map((_, index) => (
                   <button
@@ -230,6 +259,23 @@ const CadaPasoCirugia = () => {
 
         </div>
       </section>
+
+      {/* ESTILOS DE ANIMACIÓN */}
+      <style>{`
+        @keyframes fadeUp {
+          0% {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-up {
+          animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}</style>
     </>
   );
 };

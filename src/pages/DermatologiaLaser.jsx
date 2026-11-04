@@ -4,8 +4,10 @@ import TratamientosLaserList from '../components/TratamientosLaserList';
 import CasosExito from '../components/CasosExito';
 import Footer from '../components/Footer';
 
-const HERO_IMG =
+const HERO_IMG_PC =
   'https://res.cloudinary.com/da47iihxz/image/upload/v1793068053/eouss5sgj6ksujh6cfoc.jpg';
+const HERO_IMG_MOBILE =
+  'https://res.cloudinary.com/da47iihxz/image/upload/v1793751609/miehpg4zfflinicphh28.png';
 
 const DermatologiaLaser = () => {
   return (
@@ -17,7 +19,7 @@ const DermatologiaLaser = () => {
       <section className="lg:hidden relative w-full rounded-b-[2.5rem] md:rounded-b-[4rem] overflow-hidden">
         {/* La imagen se ve entera y sin deformarse */}
         <img
-          src={HERO_IMG}
+          src={HERO_IMG_MOBILE}
           alt="Unidad Dermoláser"
           className="block w-full h-auto min-h-[680px] sm:min-h-[820px] md:min-h-[900px] object-cover object-center"
         />
@@ -66,7 +68,7 @@ const DermatologiaLaser = () => {
 
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${HERO_IMG}')` }}
+            style={{ backgroundImage: `url('${HERO_IMG_PC}')` }}
           ></div>
 
           <div className="absolute inset-0 bg-black bg-opacity-30 z-10"></div>

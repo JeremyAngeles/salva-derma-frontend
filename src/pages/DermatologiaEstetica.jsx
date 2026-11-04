@@ -5,8 +5,10 @@ import ProcedimientosEstetica from '../components/ProcedimientosEstetica';
 import CasosExitoEstetica from '../components/CasosExitoEstetica';
 import ContactoStaff from '../components/ContactoStaff';
 
-const HERO_IMG =
+const HERO_IMG_PC =
   'https://res.cloudinary.com/da47iihxz/image/upload/v1793087259/zngdkk3fka8qa8kp1wod.jpg';
+const HERO_IMG_MOBILE =
+  'https://res.cloudinary.com/da47iihxz/image/upload/v1793751614/ulpfkkjvpc8l5wkrajq6.png';
 
 const DermatologiaEstetica = () => {
   return (
@@ -16,10 +18,10 @@ const DermatologiaEstetica = () => {
           1A. HERO MÓVIL + TABLET (< lg)
           ========================================= */}
       <section className="lg:hidden relative w-full h-[680px] sm:h-[820px] md:h-[900px] rounded-b-[2.5rem] md:rounded-b-[4rem] overflow-hidden">
-        {/* Fondo exclusivo para móvil y tablet */}
+        {/* Fondo exclusivo para móvil y tablet (actualizado) */}
         <div 
           className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('https://res.cloudinary.com/da47iihxz/image/upload/v1793308382/navvenqzzenj2m8te5zl.png')` }}
+          style={{ backgroundImage: `url('${HERO_IMG_MOBILE}')` }}
         ></div>
 
         {/* Título: desplazado más abajo (top-[68%]) y con textos más grandes */}
@@ -47,7 +49,7 @@ const DermatologiaEstetica = () => {
 
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('${HERO_IMG}')` }}
+            style={{ backgroundImage: `url('${HERO_IMG_PC}')` }}
           ></div>
 
           <div className="relative z-20 flex flex-col items-center text-center px-4 w-full mt-10 md:mt-20">

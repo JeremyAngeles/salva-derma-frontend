@@ -43,6 +43,33 @@ const TratamientosLaserList = () => {
 
   const [currentImg, setCurrentImg] = useState(0);
 
+  // Lógica para deslizar con el dedo (Swipe)
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setCurrentImg((prev) => (prev === imagenesCarrusel.length - 1 ? 0 : prev + 1));
+    }
+    if (isRightSwipe) {
+      setCurrentImg((prev) => (prev === 0 ? imagenesCarrusel.length - 1 : prev - 1));
+    }
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImg((prev) => (prev === imagenesCarrusel.length - 1 ? 0 : prev + 1));
@@ -124,7 +151,13 @@ const TratamientosLaserList = () => {
 
           <div className="w-full flex rounded-[2.2rem] bg-[#e3cbc5] border border-white/30 p-4 md:p-[18px] shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
 
-            <div className="relative w-full rounded-[1.6rem] overflow-hidden ring-1 ring-[#c9a79f]/40 bg-white/20">
+            {/* Contenedor del carrusel con eventos táctiles agregados */}
+            <div 
+              className="relative w-full rounded-[1.6rem] overflow-hidden ring-1 ring-[#c9a79f]/40 bg-white/20 touch-pan-y"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               {imagenesCarrusel.map((img, index) => (
                 <img
                   key={index}
