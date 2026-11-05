@@ -103,11 +103,11 @@ const CasosExitoAlopecia = () => {
                 />
               ))}
 
-              {/* Etiquetas ANTES y DESPUÉS */}
+              {/* Etiquetas ANTES y DESPUÉS en Montserrat, con letras más juntas */}
               <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none z-20">
                 <span
-                  className="text-white text-[clamp(13px,3vw,26px)] lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                  style={{ fontFamily: 'Alta, serif' }}
+                  className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   ANTES
                 </span>
@@ -115,8 +115,8 @@ const CasosExitoAlopecia = () => {
 
               <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none z-20">
                 <span
-                  className="text-white text-[clamp(13px,3vw,26px)] lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                  style={{ fontFamily: 'Alta, serif' }}
+                  className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   DESPUÉS
                 </span>

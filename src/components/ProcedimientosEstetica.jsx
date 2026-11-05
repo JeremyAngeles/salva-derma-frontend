@@ -34,7 +34,6 @@ const ProcedimientosEstetica = () => {
     }
   ];
 
-  // Imágenes del carrusel dinámico para la parte derecha (o abajo en móvil)
   const imagenesDerecha = [
     "https://res.cloudinary.com/da47iihxz/image/upload/v1792811183/k1awdsojbvhkyvnoclnl.jpg",
     "https://res.cloudinary.com/da47iihxz/image/upload/v1792811183/mwkhqvkehpbrhk8ssgdk.jpg",
@@ -44,7 +43,6 @@ const ProcedimientosEstetica = () => {
 
   const [currentImg, setCurrentImg] = useState(0);
 
-  // Lógica para deslizar el carrusel con el dedo en celular/tablet
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
 
@@ -71,7 +69,6 @@ const ProcedimientosEstetica = () => {
     }
   };
 
-  // Efecto para que pasen cada 5 segundos
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImg((prev) => (prev + 1) % imagenesDerecha.length);
@@ -84,7 +81,6 @@ const ProcedimientosEstetica = () => {
       className="relative w-full py-12 sm:py-16 lg:py-28 font-principal overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531302/03_fondo_blanco.png')" }}
     >
-      {/* Capa de protección para legibilidad */}
       <div className="absolute inset-0 bg-white/50 lg:bg-white/20 pointer-events-none z-0"></div>
 
       {/* =========================================
@@ -92,7 +88,6 @@ const ProcedimientosEstetica = () => {
           ========================================= */}
       <div className="relative z-10 w-full lg:hidden flex flex-col items-center">
         
-        {/* Título Principal */}
         <h2 
           className="text-[2.2rem] min-[390px]:text-[2.5rem] sm:text-[3.5rem] text-[#053d57] text-center mb-8 sm:mb-12 tracking-wide px-4"
           style={{ fontFamily: 'Alta, serif' }}
@@ -100,14 +95,12 @@ const ProcedimientosEstetica = () => {
           PROCEDIMIENTOS
         </h2>
 
-        {/* LISTA DE PROCEDIMIENTOS (Centrada, más grande y una debajo de otra) */}
         <div className="flex flex-col gap-5 sm:gap-8 w-fit mx-auto px-4">
           {procedimientos.map((proc) => (
             <div 
               key={proc.id} 
               className="flex items-center gap-5 sm:gap-8 group py-1"
             >
-              {/* Imagen Circular (Igual a TiposLaser) */}
               <div className="w-16 h-16 min-[400px]:w-[4.5rem] min-[400px]:h-[4.5rem] sm:w-[5.5rem] sm:h-[5.5rem] flex-shrink-0 rounded-full overflow-hidden shadow-md border-2 border-white bg-white">
                 <img 
                   src={proc.img} 
@@ -117,14 +110,16 @@ const ProcedimientosEstetica = () => {
                 />
               </div>
 
-              {/* Textos del Item */}
               <div className="flex flex-col justify-center text-left">
-                {/* Títulos más grandes */}
                 <h3 className="text-[#c59e93] text-[15px] min-[400px]:text-[17px] sm:text-[22px] font-medium tracking-wide uppercase leading-[1.2] mb-0.5">
                   {proc.title}
                 </h3>
                 {proc.desc && (
-                  <p className="text-[#88807a] text-[13px] min-[400px]:text-[14px] sm:text-[17px] font-light leading-[1.3] lg:leading-tight max-w-[240px] sm:max-w-[420px]">
+                  /* MODIFICADO: text-gray-700 (plomo oscuro) para celular */
+                  <p 
+                    className="text-gray-700 text-[13px] min-[400px]:text-[14px] sm:text-[17px] font-normal leading-[1.3] lg:leading-tight max-w-[240px] sm:max-w-[420px]"
+                    style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+                  >
                     {proc.desc}
                   </p>
                 )}
@@ -133,7 +128,7 @@ const ProcedimientosEstetica = () => {
           ))}
         </div>
 
-        {/* CARRUSEL ABAJO (Centrado con bordes redondeados y función deslizar) */}
+        {/* CARRUSEL ABAJO CELULAR */}
         <div className="w-full max-w-[420px] sm:max-w-[550px] px-5 mt-10 sm:mt-14">
           <div 
             className="relative w-full h-[400px] sm:h-[500px] rounded-[2rem] border-[6px] sm:border-[8px] border-white shadow-xl overflow-hidden bg-white touch-pan-y"
@@ -141,8 +136,6 @@ const ProcedimientosEstetica = () => {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            
-            {/* Imágenes del carrusel */}
             {imagenesDerecha.map((img, index) => (
               <img 
                 key={index}
@@ -154,8 +147,6 @@ const ProcedimientosEstetica = () => {
                 onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute inset-0 w-full h-full object-cover bg-gray-200' }}
               />
             ))}
-
-            {/* Puntitos indicadores en la parte inferior */}
             <div className="absolute bottom-4 sm:bottom-6 left-0 w-full flex justify-center gap-2.5 z-20">
               {imagenesDerecha.map((_, idx) => (
                 <button
@@ -168,14 +159,12 @@ const ProcedimientosEstetica = () => {
                 />
               ))}
             </div>
-
           </div>
         </div>
-
       </div>
 
       {/* =========================================
-          VISTA PC (lg:) - INTACTA SIN CAMBIOS
+          VISTA PC (lg:)
           ========================================= */}
       <div className="hidden lg:block relative z-10 w-full max-w-[1300px] mx-auto px-6 lg:px-10">
         
@@ -188,12 +177,10 @@ const ProcedimientosEstetica = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
           
-          {/* COLUMNA IZQUIERDA: Lista de Procedimientos */}
           <div className="flex flex-col gap-6 md:gap-8 bg-white/50 md:bg-transparent p-6 md:p-0 rounded-[2rem] backdrop-blur-sm md:backdrop-blur-none shadow-sm md:shadow-none">
             {procedimientos.map((proc) => (
               <div key={proc.id} className="flex items-center gap-5 md:gap-6 group">
                 
-                {/* Imagen Circular */}
                 <div className="w-16 h-16 md:w-[95px] md:h-[95px] flex-shrink-0 rounded-full overflow-hidden shadow-md border-[3px] border-white bg-white transition-transform duration-300 group-hover:scale-105">
                   <img 
                     src={proc.img} 
@@ -203,13 +190,16 @@ const ProcedimientosEstetica = () => {
                   />
                 </div>
 
-                {/* Textos del Item */}
                 <div className="flex flex-col justify-center">
                   <h3 className="text-[#c59e93] font-medium text-base md:text-lg tracking-widest uppercase mb-0 drop-shadow-sm transition-colors duration-300 group-hover:text-[#a88277]">
                     {proc.title}
                   </h3>
                   {proc.desc && (
-                    <p className="text-[#88807a] text-[14px] md:text-[16px] font-semibold md:font-light leading-snug max-w-[450px]">
+                    /* MODIFICADO: text-gray-700 (plomo oscuro) para PC */
+                    <p 
+                      className="text-gray-700 text-[14px] md:text-[16px] font-normal leading-snug max-w-[450px]"
+                      style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+                    >
                       {proc.desc}
                     </p>
                   )}
@@ -218,11 +208,8 @@ const ProcedimientosEstetica = () => {
             ))}
           </div>
 
-          {/* COLUMNA DERECHA: Carrusel de Imagen/Video con Borde Blanco */}
           <div className="w-full flex justify-center lg:justify-end mt-8 lg:mt-0 relative">
             <div className="relative w-full max-w-[450px] lg:max-w-[500px] h-[450px] md:h-[550px] lg:h-[650px] rounded-[2.5rem] border-[8px] md:border-[12px] border-white shadow-2xl overflow-hidden bg-white">
-              
-              {/* Imágenes del carrusel */}
               {imagenesDerecha.map((img, index) => (
                 <img 
                   key={index}
@@ -234,8 +221,6 @@ const ProcedimientosEstetica = () => {
                   onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute inset-0 w-full h-full object-cover bg-gray-200' }}
                 />
               ))}
-
-              {/* Botoncitos para controlar el carrusel */}
               <div className="absolute bottom-6 left-0 w-full flex justify-center gap-2.5 z-20">
                 {imagenesDerecha.map((_, idx) => (
                   <button
@@ -248,7 +233,6 @@ const ProcedimientosEstetica = () => {
                   />
                 ))}
               </div>
-
             </div>
           </div>
 

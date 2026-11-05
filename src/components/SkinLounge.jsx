@@ -86,7 +86,10 @@ const SkinLounge = () => {
             <h2 className="text-white text-[4rem] md:text-[5rem] lg:text-[5.5rem] leading-[1.05] mb-2 drop-shadow-md">
               SKIN LOUNGE
             </h2>
-            <p className="text-white text-lg md:text-xl lg:text-[22px] font-light tracking-wide drop-shadow-sm">
+            <p 
+              className="text-white text-base md:text-xl lg:text-[22px] font-light tracking-wide drop-shadow-sm whitespace-nowrap"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
               Experiencias en limpiezas faciales EXCLUSIVAS
             </p>
           </div>

@@ -28,7 +28,6 @@ const Tratamientos = () => {
     },
   ];
 
-  // Redondeo exacto según el diseño: Esquinas exteriores muy redondas, interiores casi rectas
   const getRoundedClass = (index) => {
     switch(index) {
       case 0: return "rounded-tl-[2.5rem] md:rounded-tl-[4.5rem] rounded-tr-sm rounded-bl-sm rounded-br-sm";
@@ -43,27 +42,30 @@ const Tratamientos = () => {
     <main className="w-full font-principal bg-[#faf9f8] flex flex-col min-h-screen pt-28 md:pt-36">
       
       {/* 1. CABECERA (Títulos y Textos) */}
-      <section className="max-w-[1250px] mx-auto px-6 lg:px-12 w-full mb-10 md:mb-14">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-10">
+      <section className="max-w-[1250px] mx-auto px-5 lg:px-12 w-full mb-10 md:mb-14">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end text-center md:text-left gap-6 md:gap-10">
           
-          <div className="w-full md:w-auto">
+          {/* Contenedor del Título centrado y con ancho controlado para móvil */}
+          <div className="w-full md:w-auto flex flex-col items-center md:items-start">
             <h1 
-              className="text-[3.5rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] xl:text-[7rem] text-[#053d57] leading-[1.05] tracking-wide drop-shadow-sm" 
+              className="text-[2.8rem] min-[380px]:text-[3.2rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] xl:text-[7rem] text-[#053d57] leading-[0.95] tracking-wide drop-shadow-sm text-center md:text-left max-w-[450px] md:max-w-none mx-auto" 
               style={{ fontFamily: 'Alta, serif' }}
             >
               TRATAMIENTOS<br />ESTÉTICOS
             </h1>
           </div>
           
-          <div className="w-full md:w-auto flex flex-col items-start md:pb-4">
+          {/* Contenedor del Párrafo y Botón centrados en móvil */}
+          <div className="w-full md:w-auto flex flex-col items-center md:items-start mt-1 md:mt-0 md:pb-3">
             
-            {/* PÁRRAFO AJUSTADO: Se cambió leading-relaxed a leading-snug y se quitaron los <br/> para juntar las líneas */}
-            <p className="text-[#88807a] text-[14px] md:text-[15px] lg:text-[18px] font-light leading-snug tracking-tight mb-5 max-w-[320px] md:max-w-[420px]">
+            <p 
+              className="text-[#88807a] text-[15px] sm:text-[16px] md:text-[15px] lg:text-[18px] font-normal leading-snug tracking-tight mb-5 md:mb-6 max-w-[340px] sm:max-w-[400px] md:max-w-[420px] text-center md:text-left"
+              style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+            >
               Nuestros tratamientos estéticos son realizados por especialistas en dermatología y cirugía plástica, buscando mejorar la calidad de piel mediante procedimientos seguros y efectivos.
             </p>
             
-            {/* ETIQUETA CORREGIDA: Se agregó whitespace-nowrap y w-max para que NUNCA baje a otra línea */}
-            <span className="bg-[#d1b3ab] text-white px-6 md:px-8 py-2 md:py-2.5 rounded-full text-[13px] md:text-[15px] tracking-wide shadow-sm font-medium whitespace-nowrap w-max">
+            <span className="bg-[#d1b3ab] text-white px-7 md:px-8 py-2.5 rounded-full text-[14px] md:text-[15px] tracking-wide shadow-sm font-medium whitespace-nowrap w-max mx-auto md:mx-0">
               Realza la belleza y equilibrio de tu piel
             </span>
           </div>
@@ -71,7 +73,7 @@ const Tratamientos = () => {
         </div>
       </section>
 
-      {/* 2. CUADRÍCULA DE FOTOS (GRID) - SIN BORDE BLANCO, MÁS GRANDE Y HORIZONTAL */}
+      {/* 2. CUADRÍCULA DE FOTOS (GRID) */}
       <section className="max-w-[1250px] mx-auto px-6 lg:px-12 w-full mb-16 md:mb-24">
         <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
           {tratamientosGrid.map((trat, index) => (

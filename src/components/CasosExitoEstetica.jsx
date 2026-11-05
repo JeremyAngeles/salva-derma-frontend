@@ -116,7 +116,12 @@ const CasosExitoEstetica = () => {
                 COMO QUIERES.
               </h2>
               <div className="w-[150px] h-[3px] bg-[#cfaaa6] mb-6"></div>
-              <p className="text-white text-[16px] font-light leading-[1.35] max-w-[620px] drop-shadow-md">
+              
+              {/* MODIFICADO: Párrafo en CELULAR con letra redondita */}
+              <p 
+                className="text-white text-[16px] font-normal leading-[1.35] max-w-[620px] drop-shadow-md"
+                style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+              >
                 Nuestros tratamientos en dermatología estética
                 buscan calidad y belleza, sin olvidar que la piel
                 es un órgano complejo que tiene distintas capas
@@ -192,8 +197,11 @@ const CasosExitoEstetica = () => {
               {/* Línea divisoria */}
               <div className="w-[220px] h-[3px] bg-[#cfaaa6] mb-6"></div>
 
-              {/* Párrafo con líneas más juntas (leading-[1.35]) */}
-              <p className="text-white text-[19px] lg:text-[21px] font-light leading-[1.35] max-w-[620px] drop-shadow-md">
+              {/* MODIFICADO: Párrafo en PC con letra redondita */}
+              <p 
+                className="text-white text-[19px] lg:text-[21px] font-normal leading-[1.35] max-w-[620px] drop-shadow-md"
+                style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+              >
                 Nuestros tratamientos en dermatología estética<br className="block" />
                 buscan calidad y belleza, sin olvidar que la piel<br className="block" />
                 es un órgano complejo que tiene distintas capas<br className="block" />

@@ -5,7 +5,7 @@ const TiposLaser = () => {
     {
       id: 1,
       title: "LÁSER FRACCIONADO",
-      subtitle: "• Picosegundos\nErbio",
+      subtitle: "• Picosegundos\n •Erbio",
       img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531271/l%C3%A1ser_fracionado.png"
     },
     {

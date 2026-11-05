@@ -12,8 +12,11 @@ const SalvarHydrolips = () => {
 >
   <div className="relative z-10 w-full px-[6.4vw] pt-[4vw]">
 
-    {/* Texto superior (2 filas fijas) */}
-    <p className="text-white/95 text-[3.3vw] font-light leading-[1.3] tracking-wide drop-shadow-md mb-[5.5vw]">
+    {/* Texto superior (Letra más redondita y con cuerpo) */}
+    <p 
+      className="text-white/95 text-[3.3vw] font-normal leading-[1.3] tracking-wide drop-shadow-md mb-[5.5vw]"
+      style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+    >
       <span className="block whitespace-nowrap">Pregunta también por</span>
       <span className="block whitespace-nowrap">nuestro</span>
     </p>
@@ -32,8 +35,11 @@ const SalvarHydrolips = () => {
       <div className="absolute -right-[0.8vw] top-1/2 -translate-y-1/2 w-[1.6vw] h-[1.6vw] bg-white rounded-full"></div>
     </div>
 
-    {/* Párrafo (4 filas fijas) */}
-    <p className="text-white/95 text-[3.3vw] font-light leading-[1.25] drop-shadow-md">
+    {/* Párrafo inferior (Letra más redondita y con cuerpo) */}
+    <p 
+      className="text-white/95 text-[3.3vw] font-normal leading-[1.25] drop-shadow-md"
+      style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+    >
       <span className="block whitespace-nowrap">Hidratación profunda no invasiva de</span>
       <span className="block whitespace-nowrap">labios, enfocado en dar</span>
       <span className="block whitespace-nowrap">luminosidad a esos labios</span>

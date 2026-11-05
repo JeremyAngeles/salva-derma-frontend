@@ -203,7 +203,8 @@ const Navbar = () => {
           </div>
 
           <Link to="/cirugia" className={`py-4 border-b text-lg ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>Cirugía Plástica</Link>
-          <Link to="/tratamientos" className={`py-4 border-b text-lg font-semibold ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>T. Estéticos</Link>
+          {/* Quitada la clase font-semibold de aquí para que sea normal igual que los demás */}
+          <Link to="/tratamientos" className={`py-4 border-b text-lg ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>T. Estéticos</Link>
           <Link to="/skinlounge" className={`py-4 border-b text-lg ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>SkinLounge</Link>
 
           <Link

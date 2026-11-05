@@ -54,14 +54,16 @@ const StaffMedicos = () => {
         
         <div className="lg:col-span-4 flex flex-col justify-center text-center lg:text-left items-center lg:items-start pl-0 lg:-mt-16 w-full">
           
-          {/* Título adaptado: 2 filas en celular, 3 filas en PC */}
-          <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[2.6rem] text-[#053d57] leading-[1.15] lg:leading-[1.1] tracking-wide lg:tracking-normal drop-shadow-sm lg:drop-shadow-none text-center lg:text-left" style={{ fontFamily: 'Alta, serif' }}>
-            <span className="font-light">CONOCE A NUESTRO </span>
-            <span className="font-light lg:hidden">STAFF DE</span>
+          {/* Título adaptado: un poco más chico en móvil para asegurar 2 filas */}
+          <h2 className="text-[1.5rem] sm:text-[2rem] lg:text-[2.6rem] text-[#053d57] leading-[1.15] lg:leading-[1.1] tracking-wide lg:tracking-normal drop-shadow-sm lg:drop-shadow-none text-center lg:text-left" style={{ fontFamily: 'Alta, serif' }}>
+            {/* Versión Celular (2 filas exactas) */}
+            <span className="font-light block lg:hidden">CONOCE A NUESTRO STAFF DE</span>
+            <span className="font-normal block lg:hidden">MÉDICOS ESPECIALISTAS</span>
+
+            {/* Versión PC (Su estructura original de 3 filas) */}
+            <span className="font-light hidden lg:inline">CONOCE A NUESTRO </span>
             <br className="hidden lg:block" />
             <span className="font-normal hidden lg:inline">STAFF DE MÉDICOS</span>
-            <br className="lg:hidden" />
-            <span className="font-normal lg:hidden">MÉDICOS ESPECIALISTAS</span>
             <br className="hidden lg:block" />
             <span className="font-normal hidden lg:inline">ESPECIALISTAS</span>
           </h2>
@@ -79,7 +81,7 @@ const StaffMedicos = () => {
             etapa de su atención.
           </p>
           
-          {/* Párrafo en Móvil/Tablet (Oculto en PC) - FORZADO EXACTAMENTE A 4 FILAS */}
+          {/* Párrafo en Móvil/Tablet (Oculto en PC) */}
           <div className="flex flex-col items-center justify-center text-[#6b6662] text-[10px] min-[375px]:text-[11px] sm:text-[13px] md:text-[15px] font-light leading-[1.6] w-full lg:hidden drop-shadow-sm">
             <span className="whitespace-nowrap">Cada especialista aporta su experiencia y conocimientos para</span>
             <span className="whitespace-nowrap">ofrecer un abordaje integral, y BAJO ESTÁNDARES DE CALIDAD</span>

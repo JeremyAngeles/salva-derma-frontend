@@ -32,7 +32,7 @@ const Ubicacion = () => {
           {/* =========================================
               DIRECCIÓN (Arriba del mapa SOLO en Celular y Tablet)
               ========================================= */}
-          <div className="lg:hidden flex items-center justify-center gap-4 w-full mb-2">
+          <div className="lg:hidden flex items-center justify-center gap-3 w-full mb-2">
             <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center">
               <img 
                 src="/iconolugarcolor.svg" 
@@ -42,9 +42,8 @@ const Ubicacion = () => {
               />
             </div>
             <div>
-              <p className="text-[#6b625c] text-base md:text-lg font-normal leading-snug text-left">
-                Av. Ignacio Merino 2475<br />
-                Lince
+              <p className="text-[#6b625c] text-sm sm:text-base font-normal whitespace-nowrap">
+                Av. Ignacio Merino 2475, Lince
               </p>
             </div>
           </div>
@@ -67,8 +66,8 @@ const Ubicacion = () => {
           <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left gap-6 w-full px-2 sm:px-0">
             
             {/* Dirección (SOLO visible en PC dentro de la columna derecha) */}
-            <div className="hidden lg:flex items-start gap-4">
-              <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center">
+            <div className="hidden lg:flex items-center gap-3">
+              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
                 <img 
                   src="/iconolugarcolor.svg" 
                   alt="Ubicación de Salvar" 
@@ -77,9 +76,8 @@ const Ubicacion = () => {
                 />
               </div>
               <div>
-                <p className="text-[#6b625c] text-base md:text-lg font-normal leading-snug text-left">
-                  Av. Ignacio Merino 2475<br />
-                  Lince
+                <p className="text-[#6b625c] text-base md:text-lg font-normal whitespace-nowrap">
+                  Av. Ignacio Merino 2475, Lince
                 </p>
               </div>
             </div>
@@ -132,25 +130,23 @@ const Ubicacion = () => {
               </div>
             </div>
 
-            {/* Reservas al */}
+            {/* Reservas al (Número y icono grandes y proporcionados) */}
             <div className="flex flex-col items-center lg:items-start gap-2.5 w-full max-w-[420px] lg:max-w-none">
               <h4 className="text-[#c59e93] font-semibold text-base sm:text-lg">Reservas al:</h4>
               <a 
                 href="https://wa.me/51994060977" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative bg-gradient-to-r from-[#dcc4bc] to-[#ceb5ac] hover:opacity-95 text-white rounded-full py-3.5 sm:py-4 px-6 md:px-8 flex items-center shadow-md transition-all duration-300 group w-full justify-center"
+                className="inline-flex items-center gap-4 bg-gradient-to-r from-[#dcc4bc] to-[#ceb5ac] hover:opacity-95 text-white rounded-full py-3.5 px-8 shadow-md transition-all duration-300 w-auto"
               >
-                <div className="absolute left-6 w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center pointer-events-none">
-                  <img 
-                    src="/iconotelefonoblanco.svg" 
-                    alt="Teléfono" 
-                    className="w-full h-full object-contain"
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                  />
-                </div>
+                <img 
+                  src="/iconotelefonoblanco.svg" 
+                  alt="Teléfono" 
+                  className="w-10 h-10 sm:w-11 sm:h-11 object-contain flex-shrink-0"
+                  onError={(e) => { e.target.style.display = 'none'; }}
+                />
                 
-                <span className="text-lg sm:text-xl md:text-2xl font-semibold tracking-wide">
+                <span className="text-2xl sm:text-3xl font-light tracking-wide">
                   +51 994 060 977
                 </span>
               </a>

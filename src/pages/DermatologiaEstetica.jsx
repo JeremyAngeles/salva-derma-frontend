@@ -72,12 +72,15 @@ const DermatologiaEstetica = () => {
       {/* =========================================
           2. TEXTO INTRODUCTORIO
           ========================================= */}
-      <section className="w-full py-16 md:py-24 bg-[#fbfbfb] flex flex-col justify-center items-center px-2 min-[375px]:px-4">
+      <section className="w-full py-16 md:py-24 bg-[#fbfbfb] flex flex-col justify-center items-center px-2 min-[375px]:px-4 overflow-x-hidden">
         <div className="max-w-[1200px] w-full flex flex-col items-center">
           
-          <h2 className="text-[#053d57] text-[1.15rem] min-[375px]:text-[1.3rem] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.2rem] font-semibold mb-5 md:mb-8 text-center tracking-wide w-full px-2">
-            ¿QUÉ HACEMOS EN DERMATOLOGÍA ESTÉTICA?
-          </h2>
+          {/* Título forzado en 1 sola fila con responsive text */}
+          <div className="w-full flex justify-center mb-5 md:mb-8 px-2">
+            <h2 className="text-[#053d57] text-[3.2vw] min-[400px]:text-[3.5vw] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.2rem] font-semibold text-center tracking-wide whitespace-nowrap">
+              ¿QUÉ HACEMOS EN DERMATOLOGÍA ESTÉTICA?
+            </h2>
+          </div>
           
           {/* Párrafo forzado a exactamente 4 filas como en la referencia */}
           <div className="flex flex-col items-center text-[#88807a] text-[10px] min-[375px]:text-[11px] min-[400px]:text-[12px] sm:text-[16px] md:text-[20px] lg:text-[1.65rem] font-light leading-[1.6] md:leading-[1.5] text-center w-full">

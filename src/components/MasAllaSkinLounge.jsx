@@ -78,20 +78,20 @@ const MasAllaSkinLounge = () => {
             <span className="block whitespace-nowrap">¡escríbenos!</span>
           </p>
 
-          {/* Botón teléfono */}
+          {/* Botón teléfono con iconotelefonoblanco.svg grande en celular */}
           <a
             href="https://wa.me/51994060977"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-[2vw] bg-gradient-to-r from-[#d1b3ab] to-[#efe0dc] text-white w-[44.8vw] h-[8.3vw] rounded-full shadow-md mt-[2.6vw]"
+            className="inline-flex items-center justify-center gap-[2vw] bg-gradient-to-r from-[#d1b3ab] to-[#efe0dc] text-white w-auto px-[5vw] py-[2vw] rounded-full shadow-md mt-[2.6vw]"
           >
             <img
               src="/iconotelefonoblanco.svg"
               alt="Teléfono WhatsApp"
-              className="w-[0vw] h-[0vw] object-contain hidden"
+              className="w-[5vw] h-[5vw] object-contain flex-shrink-0"
               onError={(e) => { e.target.style.display = 'none'; }}
             />
-            <span className="text-[4vw] tracking-wide font-light">+51 994 060 977</span>
+            <span className="text-[4.2vw] tracking-wide font-light">+51 994 060 977</span>
           </a>
 
           {/* Redes */}
@@ -114,7 +114,7 @@ const MasAllaSkinLounge = () => {
       </section>
 
       {/* =====================================================
-          PC (sin cambios)
+          PC
           ===================================================== */}
       <div className="hidden lg:flex w-full justify-center bg-[#faf9f8] overflow-hidden">
         <section 
@@ -190,21 +190,20 @@ const MasAllaSkinLounge = () => {
                 Si quieres conocer cada paso de nuestros faciales SKIN LOUNGE y más detalles, ¡escríbenos!
               </p>
 
+              {/* Botón teléfono con iconotelefonoblanco.svg grande en PC */}
               <a 
                 href="https://wa.me/51994060977" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="inline-flex items-center gap-3 bg-[#d1b3ab] text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-[#c59e93] transition-colors mb-8 shadow-md"
+                className="inline-flex items-center gap-4 bg-[#d1b3ab] text-white px-8 py-3.5 rounded-full hover:bg-[#c59e93] transition-colors mb-8 shadow-md"
               >
-                <div className="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center">
-                  <img 
-                    src="/iconotelefonoblanco.svg" 
-                    alt="Teléfono WhatsApp" 
-                    className="w-full h-full object-contain"
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                  />
-                </div>
-                <span className="text-[20px] md:text-[24px] tracking-widest font-light mt-0.5">+51 994 060 977</span>
+                <img 
+                  src="/iconotelefonoblanco.svg" 
+                  alt="Teléfono WhatsApp" 
+                  className="w-8 h-8 md:w-9 md:h-9 object-contain flex-shrink-0"
+                  onError={(e) => { e.target.style.display = 'none'; }}
+                />
+                <span className="text-[22px] md:text-[26px] tracking-wide font-light">+51 994 060 977</span>
               </a>
 
               <div className="flex items-center justify-center md:justify-end gap-4">

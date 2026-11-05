@@ -117,11 +117,11 @@ const CadaPasoCirugia = () => {
                 />
               ))}
 
-              {/* Etiquetas ANTES y DESPUÉS idénticas a PC */}
+              {/* Etiquetas ANTES y DESPUÉS en Montserrat, con letras más juntas */}
               <div className="absolute bottom-3 sm:bottom-5 left-0 w-1/2 flex justify-center pointer-events-none z-20">
                 <span 
-                  className="text-white text-lg min-[390px]:text-xl sm:text-2xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                  style={{ fontFamily: 'Alta, serif' }}
+                  className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   ANTES
                 </span>
@@ -129,8 +129,8 @@ const CadaPasoCirugia = () => {
 
               <div className="absolute bottom-3 sm:bottom-5 right-0 w-1/2 flex justify-center pointer-events-none z-20">
                 <span 
-                  className="text-white text-lg min-[390px]:text-xl sm:text-2xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                  style={{ fontFamily: 'Alta, serif' }}
+                  className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   DESPUÉS
                 </span>
@@ -219,10 +219,11 @@ const CadaPasoCirugia = () => {
                   />
                 ))}
 
+                {/* Etiquetas ANTES y DESPUÉS en Montserrat, con letras más juntas */}
                 <div className="absolute bottom-4 md:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none z-20">
                   <span 
-                    className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                    style={{ fontFamily: 'Alta, serif' }}
+                    className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     ANTES
                   </span>
@@ -230,8 +231,8 @@ const CadaPasoCirugia = () => {
 
                 <div className="absolute bottom-4 md:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none z-20">
                   <span 
-                    className="text-white text-xl md:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                    style={{ fontFamily: 'Alta, serif' }}
+                    className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     DESPUÉS
                   </span>

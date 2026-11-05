@@ -116,8 +116,8 @@ const EsteticaEspecialistas = () => {
                   />
                   <div className="absolute bottom-[2.4vw] lg:bottom-6 left-0 w-full flex justify-center pointer-events-none">
                     <span 
-                      className="text-white text-[2.8vw] lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase"
-                      style={{ fontFamily: 'Alta, serif' }}
+                      className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
                       ANTES
                     </span>
@@ -135,8 +135,8 @@ const EsteticaEspecialistas = () => {
                   />
                   <div className="absolute bottom-[2.4vw] lg:bottom-6 left-0 w-full flex justify-center pointer-events-none">
                     <span 
-                      className="text-white text-[2.8vw] lg:text-3xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase"
-                      style={{ fontFamily: 'Alta, serif' }}
+                      className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
                       DESPUÉS
                     </span>
@@ -169,22 +169,22 @@ const EsteticaEspecialistas = () => {
 
       {/* Botón y redes con animación */}
       <div className="flex flex-col items-center opacity-0 animate-fade-up" style={{ animationDelay: '0.6s' }}>
-        {/* Botón teléfono */}
+        {/* Botón teléfono con icono limpio y grande */}
         <a 
           href="https://wa.me/51994060977" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="inline-flex items-center gap-[2vw] lg:gap-3 bg-[#d1b3ab] bg-gradient-to-r from-[#d1b3ab] to-[#efe0dc] lg:bg-none text-white px-[5.5vw] lg:px-10 py-[1.8vw] lg:py-4 rounded-full hover:bg-[#c59e93] transition-colors mb-[5vw] lg:mb-8 shadow-md"
+          className="inline-flex items-center gap-4 bg-gradient-to-r from-[#d1b3ab] to-[#efe0dc] text-white px-7 py-3.5 rounded-full hover:bg-[#c59e93] transition-colors mb-[5vw] lg:mb-8 shadow-md w-auto"
         >
-          <div className="w-[6vw] h-[6vw] lg:w-7 lg:h-7 flex items-center justify-center">
-            <img 
-              src="/iconotelefonoblanco.svg" 
-              alt="Teléfono" 
-              className="w-full h-full object-contain"
-              onError={(e) => { e.target.style.display = 'none'; }}
-            />
-          </div>
-          <span className="text-[5vw] lg:text-[26px] tracking-widest font-light mt-0.5">+51 994 060 977</span>
+          <img 
+            src="/iconotelefonoblanco.svg" 
+            alt="Teléfono" 
+            className="w-8 h-8 sm:w-10 sm:h-10 object-contain flex-shrink-0"
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
+          <span className="text-[5vw] sm:text-2xl lg:text-[26px] tracking-wide font-light">
+            +51 994 060 977
+          </span>
         </a>
 
         {/* Redes */}
