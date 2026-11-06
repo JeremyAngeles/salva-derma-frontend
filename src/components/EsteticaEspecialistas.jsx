@@ -6,23 +6,23 @@ const EsteticaEspecialistas = () => {
   const casos = [
     {
       id: 1,
-      antes: "https://res.cloudinary.com/da47iihxz/image/upload/v1793139681/rjg5egyek8fk4eamqecq.png",
-      despues: "https://res.cloudinary.com/da47iihxz/image/upload/v1793139691/w4tpg2iitlmu7wloey6q.png"
+      imagen: "https://res.cloudinary.com/da47iihxz/image/upload/v1793943999/w2qqjwgbmg2cuwejnupa.jpg"
     },
     {
       id: 2,
-      antes: "https://res.cloudinary.com/da47iihxz/image/upload/v1793139691/g3wguky1cilh2jw7aiwv.png",
-      despues: "https://res.cloudinary.com/da47iihxz/image/upload/v1793139690/nodbk5p5ymdxwezzoerw.png"
+      imagen: "https://res.cloudinary.com/da47iihxz/image/upload/v1793943998/zyivflasey1symhvrikv.jpg"
     },
     {
       id: 3,
-      antes: "https://res.cloudinary.com/da47iihxz/image/upload/v1793139690/lanvpqo7ccrh2fsowxwl.png",
-      despues: "https://res.cloudinary.com/da47iihxz/image/upload/v1793139689/ry1l2gmnsf6gls56kuew.png"
+      imagen: "https://res.cloudinary.com/da47iihxz/image/upload/v1793943999/rvnqvn8yxqfyfyhyakax.jpg"
     },
     {
       id: 4,
-      antes: "https://res.cloudinary.com/da47iihxz/image/upload/v1793139689/i5cqfyzbwfbpcd3uqlxc.png",
-      despues: "https://res.cloudinary.com/da47iihxz/image/upload/v1793139681/uwst36igldkhuxvqtmaf.png"
+      imagen: "https://res.cloudinary.com/da47iihxz/image/upload/v1793943999/g66arb6xomroiaoumjqx.jpg"
+    },
+    {
+      id: 5,
+      imagen: "https://res.cloudinary.com/da47iihxz/image/upload/v1793943998/vlzxwwgzswagjflrtiim.jpg"
     }
   ];
 
@@ -103,37 +103,26 @@ const EsteticaEspecialistas = () => {
             {casos.map((caso, index) => (
               <div 
                 key={caso.id}
-                className={`absolute inset-0 w-full h-full flex flex-row transition-opacity duration-1000 ease-in-out ${
+                className={`absolute inset-0 w-full h-full flex transition-opacity duration-1000 ease-in-out ${
                   index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 }`}
               >
-                <div className="relative w-1/2 h-[38vw] lg:h-[450px]">
+                <div className="relative w-full h-[38vw] lg:h-[450px]">
                   <img 
-                    src={caso.antes} 
-                    alt={`Antes del tratamiento ${index + 1}`} 
+                    src={caso.imagen} 
+                    alt={`Caso ${index + 1}`} 
                     className="w-full h-full object-cover"
                     onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#d8d4d0] object-cover' }}
                   />
-                  <div className="absolute bottom-[2.4vw] lg:bottom-6 left-0 w-full flex justify-center pointer-events-none">
+                  
+                  {/* Textos ANTES y DESPUÉS centrados en cada mitad */}
+                  <div className="absolute bottom-[2.4vw] lg:bottom-6 left-0 w-full grid grid-cols-2 text-center pointer-events-none z-20">
                     <span 
                       className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
                       ANTES
                     </span>
-                  </div>
-                </div>
-                
-                <div className="block w-[0.4vw] lg:w-1 h-full bg-white absolute left-1/2 transform -translate-x-1/2 z-20"></div>
-
-                <div className="relative w-1/2 h-[38vw] lg:h-[450px]">
-                  <img 
-                    src={caso.despues} 
-                    alt={`Después del tratamiento ${index + 1}`} 
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full bg-[#d8d4d0] object-cover' }}
-                  />
-                  <div className="absolute bottom-[2.4vw] lg:bottom-6 left-0 w-full flex justify-center pointer-events-none">
                     <span 
                       className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}
@@ -141,6 +130,7 @@ const EsteticaEspecialistas = () => {
                       DESPUÉS
                     </span>
                   </div>
+
                 </div>
               </div>
             ))}
@@ -169,7 +159,6 @@ const EsteticaEspecialistas = () => {
 
       {/* Botón y redes con animación */}
       <div className="flex flex-col items-center opacity-0 animate-fade-up" style={{ animationDelay: '0.6s' }}>
-        {/* Botón teléfono con icono limpio y grande */}
         <a 
           href="https://wa.me/51994060977" 
           target="_blank" 

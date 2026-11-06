@@ -49,15 +49,17 @@ const SkinLounge = () => {
           </p>
         </div>
 
-        {/* Card del video (sale del hero hacia el blanco) */}
+        {/* Card del video (sale del hero hacia el blanco) con etiqueta <video> */}
         <div className="absolute top-[139vw] left-[6vw] w-[88vw] h-[118vw] z-30 rounded-[7vw] border-[1.6vw] border-white/40 shadow-2xl overflow-hidden group cursor-pointer">
-          <img
-            src="/skinlounge-video.jpg"
-            alt="Procedimiento Skin Lounge"
+          <video
+            src="https://res.cloudinary.com/da47iihxz/video/upload/v1793947209/pls6fpru0mn8rxi1k2gg.mp4"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#222]' }}
+            autoPlay
+            loop
+            muted
+            playsInline
           />
-          <div className="absolute top-[4vw] right-[4vw] w-[8vw] h-[8vw] rounded-full border-[0.4vw] border-white bg-black/20 backdrop-blur-sm flex items-center justify-center shadow-sm">
+          <div className="absolute top-[4vw] right-[4vw] w-[8vw] h-[8vw] rounded-full border-[0.4vw] border-white bg-black/20 backdrop-blur-sm flex items-center justify-center shadow-sm pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-[3.4vw] h-[3.4vw] text-white ml-[0.4vw]" viewBox="0 0 24 24" fill="currentColor">
               <path d="M8 5v14l11-7z" />
             </svg>
@@ -66,7 +68,7 @@ const SkinLounge = () => {
       </section>
 
       {/* =====================================================
-          HERO PC (sin cambios)
+          HERO PC (sin cambios de estructura, solo <video>)
           ===================================================== */}
       <section className="hidden lg:block relative w-full mb-32 md:mb-48 lg:mb-64">
         
@@ -106,14 +108,17 @@ const SkinLounge = () => {
           </div>
         </div>
 
+        {/* Card del video en PC con etiqueta <video> */}
         <div className="absolute bottom-[-120px] md:bottom-[-160px] lg:bottom-[-250px] right-6 md:right-16 lg:right-[10%] xl:right-[15%] z-30 w-[260px] md:w-[320px] lg:w-[380px] h-[450px] md:h-[580px] lg:h-[650px] rounded-[2rem] border-[4px] md:border-[6px] border-white/40 shadow-2xl overflow-hidden group cursor-pointer">
-          <img 
-            src="/skinlounge-video.jpg" 
-            alt="Procedimiento Skin Lounge" 
+          <video 
+            src="https://res.cloudinary.com/da47iihxz/video/upload/v1793947209/pls6fpru0mn8rxi1k2gg.mp4"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#222]' }}
+            autoPlay
+            loop
+            muted
+            playsInline
           />
-          <div className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 md:w-12 md:h-12 rounded-full border-[1.5px] border-white bg-black/20 backdrop-blur-sm flex items-center justify-center transition-colors group-hover:bg-white/40 shadow-sm">
+          <div className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 md:w-12 md:h-12 rounded-full border-[1.5px] border-white bg-black/20 backdrop-blur-sm flex items-center justify-center transition-colors group-hover:bg-white/40 shadow-sm pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 md:w-5 md:h-5 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M8 5v14l11-7z" />
             </svg>
