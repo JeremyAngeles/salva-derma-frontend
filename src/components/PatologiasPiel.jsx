@@ -1,245 +1,92 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-const ProcedimientosEstetica = () => {
-  const procedimientos = [
-    {
-      id: 1,
-      title: "LÁSER",
-      desc: "De rejuvenecimiento fraccionado, láser 4D con efecto lifting/tensado, láser despigmentante y láser para zona de ojeras.",
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531324/1xd.png" 
-    },
-    {
-      id: 2,
-      title: "MICROPUNCIONES / NANOPORE",
-      desc: "",
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531325/2xd.png" 
-    },
-    {
-      id: 3,
-      title: "PEELINGS",
-      desc: "",
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531326/3xd.png" 
-    },
-    {
-      id: 4,
-      title: "MESOTERAPIA",
-      desc: "Despigmentantes, hidratantes, exosomas y PDRN de salmón.",
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531327/4xd.png" 
-    },
-    {
-      id: 5,
-      title: "INYECTABLES",
-      desc: "Botox, Ácido hialurónico, Bioestimuladores de colágeno, etc.",
-      img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531328/5xd.png" 
-    }
-  ];
+const patologias = [
+  'Psoriasis',
+  'Dermatitis atópica o de otro tipo',
+  'Dermatitis seborreica',
+  'Cáncer de piel',
+  'Tiñas',
+  'Biopsia de piel para diagnóstico de cáncer de piel',
+  'Otras condiciones dermatológicas',
+];
 
-  const imagenesDerecha = [
-    "https://res.cloudinary.com/da47iihxz/image/upload/v1792811183/k1awdsojbvhkyvnoclnl.jpg",
-    "https://res.cloudinary.com/da47iihxz/image/upload/v1792811183/mwkhqvkehpbrhk8ssgdk.jpg",
-    "https://res.cloudinary.com/da47iihxz/image/upload/v1792811184/w7gbjzpniifjqcclyfe0.jpg",
-    "https://res.cloudinary.com/da47iihxz/image/upload/v1792811182/r5rux6vuzjejuacwei0o.jpg"
-  ];
+const BG_DESKTOP =
+  'https://res.cloudinary.com/da47iihxz/image/upload/v1793083400/cyqfycnv6uyynrgx7o41.jpg';
+const BG_MOVIL =
+  'https://res.cloudinary.com/cgfzvuli/image/upload/v1794003423/Dise%C3%B1o_sin_t%C3%ADtulo_33.png';
 
-  const [currentImg, setCurrentImg] = useState(0);
-
-  const [touchStartX, setTouchStartX] = useState(null);
-  const [touchEndX, setTouchEndX] = useState(null);
-
-  const handleTouchStart = (e) => {
-    setTouchEndX(null);
-    setTouchStartX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
-    const distance = touchStartX - touchEndX;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      setCurrentImg((prev) => (prev + 1) % imagenesDerecha.length);
-    }
-    if (isRightSwipe) {
-      setCurrentImg((prev) => (prev === 0 ? imagenesDerecha.length - 1 : prev - 1));
-    }
-  };
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImg((prev) => (prev + 1) % imagenesDerecha.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [imagenesDerecha.length]);
-
+const PatologiasPiel = () => {
   return (
-    <section 
-      className="relative w-full py-12 sm:py-16 lg:py-28 font-principal overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531302/03_fondo_blanco.png')" }}
-    >
-      <div className="absolute inset-0 bg-white/50 lg:bg-white/20 pointer-events-none z-0"></div>
+    <section className="relative w-full aspect-[674/767] lg:aspect-auto lg:min-h-[100vh] flex flex-col lg:justify-center bg-[#f7f7f5] font-principal overflow-hidden">
+      {/* Fondo celular y tablet */}
+      <div
+        className="lg:hidden absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url('${BG_MOVIL}')` }}
+      ></div>
 
-      {/* =========================================
-          VISTA CELULAR Y TABLET (< lg)
-          ========================================= */}
-      <div className="relative z-10 w-full lg:hidden flex flex-col items-center">
-        
-        <h2 
-          className="text-[2.2rem] min-[390px]:text-[2.5rem] sm:text-[3.5rem] text-[#053d57] text-center mb-8 sm:mb-12 tracking-wide px-4"
+      {/* Fondo escritorio */}
+      <div
+        className="hidden lg:block absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url('${BG_DESKTOP}')` }}
+      ></div>
+
+      <div className="relative z-10 w-full flex flex-col pt-[3.5vw] lg:pt-24 lg:pb-24">
+        {/* Título CELULAR / TABLET: centrado arriba */}
+        <h2
+          className="lg:hidden text-center text-[8.3vw] leading-[1.12] text-[#053d57] uppercase mb-[14.1vw]"
           style={{ fontFamily: 'Alta, serif' }}
         >
-          PROCEDIMIENTOS
+          PATOLOGÍAS
+          <br />
+          QUE TRATAMOS
         </h2>
 
-        <div className="flex flex-col gap-5 sm:gap-8 w-fit mx-auto px-4">
-          {procedimientos.map((proc) => (
-            <div 
-              key={proc.id} 
-              className="flex items-center gap-5 sm:gap-8 group py-1"
-            >
-              <div className="w-16 h-16 min-[400px]:w-[4.5rem] min-[400px]:h-[4.5rem] sm:w-[5.5rem] sm:h-[5.5rem] flex-shrink-0 rounded-full overflow-hidden shadow-md border-2 border-white bg-white">
-                <img 
-                  src={proc.img} 
-                  alt={proc.title} 
-                  className="w-full h-full object-cover"
-                  onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#dcc4bc]' }}
-                />
-              </div>
-
-              <div className="flex flex-col justify-center text-left">
-                <h3 className="text-[#c59e93] text-[15px] min-[400px]:text-[17px] sm:text-[22px] font-medium tracking-wide uppercase leading-[1.2] mb-0.5">
-                  {proc.title}
-                </h3>
-                {proc.desc && (
-                  /* MODIFICADO: text-[#504a46] para celular y fuente redondita */
-                  <p 
-                    className="text-[#7b7571] text-[13px] min-[400px]:text-[14px] sm:text-[17px] font-normal leading-[1.3] lg:leading-tight max-w-[240px] sm:max-w-[420px]"
-                    style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
-                  >
-                    {proc.desc}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* CARRUSEL ABAJO CELULAR */}
-        <div className="w-full max-w-[420px] sm:max-w-[550px] px-5 mt-10 sm:mt-14">
-          <div 
-            className="relative w-full h-[400px] sm:h-[500px] rounded-[2rem] border-[6px] sm:border-[8px] border-white shadow-xl overflow-hidden bg-white touch-pan-y"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+        {/* Bloque de contenido: mitad derecha en celular/tablet */}
+        <div className="ml-[57%] w-[41%] lg:ml-[45%] lg:w-[50%] flex flex-col items-start">
+          {/* Título ESCRITORIO */}
+          <h2
+            className="hidden lg:block lg:text-[5.2rem] leading-[1.05] text-[#053d57] lg:mb-16 uppercase"
+            style={{ fontFamily: 'Alta, serif' }}
           >
-            {imagenesDerecha.map((img, index) => (
-              <img 
+            PATOLOGÍAS
+            <br />
+            QUE TRATAMOS
+          </h2>
+
+          {/* Icono: sin fondo ni contorno */}
+          <img
+            src="/enfermedades-de-la-piel.svg"
+            alt="Icono Enfermedades de la piel"
+            className="w-[11vw] h-[11vw] lg:w-[5.5rem] lg:h-[5.5rem] object-contain mb-[3.5vw] lg:mb-14"
+          />
+
+          {/* Subtítulo + lista: desplazados a la derecha en celular/tablet */}
+          <div className="ml-[3vw] w-[calc(100%-2vw)] lg:ml-0 lg:w-full">
+          {/* Subtítulo */}
+          <h3
+            className="text-[#c59e93] text-[5vw] leading-[1.2] lg:text-[2.4rem] font-light tracking-[0.02em] uppercase mb-[3.5vw] lg:mb-8"
+            style={{ fontFamily: 'Alta, serif' }}
+          >
+            ENFERMEDADES DE LA PIEL
+          </h3>
+
+          {/* Lista */}
+          <ul className="flex flex-col gap-0 lg:gap-3">
+            {patologias.map((item, index) => (
+              <li
                 key={index}
-                src={img} 
-                alt={`Procedimiento Estético ${index + 1}`} 
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-                  index === currentImg ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                }`}
-                onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute inset-0 w-full h-full object-cover bg-gray-200' }}
-              />
+                className="flex items-start text-[#7d7570] text-[2.75vw] leading-[1.15] lg:text-[1.05rem] lg:leading-relaxed font-medium"
+              >
+                <span className="mr-[0.8vw] lg:mr-3">•</span>
+                <span>{item}</span>
+              </li>
             ))}
-            <div className="absolute bottom-4 sm:bottom-6 left-0 w-full flex justify-center gap-2.5 z-20">
-              {imagenesDerecha.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentImg(idx)}
-                  className={`rounded-full transition-all duration-300 ${
-                    currentImg === idx ? 'bg-white w-2.5 h-2.5 scale-125' : 'bg-white/50 w-2.5 h-2.5 hover:bg-white/80'
-                  }`}
-                  aria-label={`Ver imagen ${idx + 1}`}
-                />
-              ))}
-            </div>
+          </ul>
           </div>
-        </div>
-      </div>
-
-      {/* =========================================
-          VISTA PC (lg:)
-          ========================================= */}
-      <div className="hidden lg:block relative z-10 w-full max-w-[1300px] mx-auto px-6 lg:px-10">
-        
-        <h2 
-          className="text-[2.8rem] md:text-5xl lg:text-[4.5rem] text-[#053d57] text-center mb-16 md:mb-20 tracking-wide drop-shadow-sm"
-          style={{ fontFamily: 'Alta, serif' }}
-        >
-          PROCEDIMIENTOS
-        </h2>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
-          
-          <div className="flex flex-col gap-6 md:gap-8 bg-white/50 md:bg-transparent p-6 md:p-0 rounded-[2rem] backdrop-blur-sm md:backdrop-blur-none shadow-sm md:shadow-none">
-            {procedimientos.map((proc) => (
-              <div key={proc.id} className="flex items-center gap-5 md:gap-6 group">
-                
-                <div className="w-16 h-16 md:w-[95px] md:h-[95px] flex-shrink-0 rounded-full overflow-hidden shadow-md border-[3px] border-white bg-white transition-transform duration-300 group-hover:scale-105">
-                  <img 
-                    src={proc.img} 
-                    alt={proc.title} 
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#dcc4bc]' }}
-                  />
-                </div>
-
-                <div className="flex flex-col justify-center">
-                  <h3 className="text-[#c59e93] font-medium text-base md:text-lg tracking-widest uppercase mb-0 drop-shadow-sm transition-colors duration-300 group-hover:text-[#a88277]">
-                    {proc.title}
-                  </h3>
-                  {proc.desc && (
-                    /* MODIFICADO: text-[#504a46] para PC y fuente redondita */
-                    <p 
-                      className="text-[#7b7571] text-[14px] md:text-[16px] font-normal leading-snug max-w-[450px]"
-                      style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
-                    >
-                      {proc.desc}
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="w-full flex justify-center lg:justify-end mt-8 lg:mt-0 relative">
-            <div className="relative w-full max-w-[450px] lg:max-w-[500px] h-[450px] md:h-[550px] lg:h-[650px] rounded-[2.5rem] border-[8px] md:border-[12px] border-white shadow-2xl overflow-hidden bg-white">
-              {imagenesDerecha.map((img, index) => (
-                <img 
-                  key={index}
-                  src={img} 
-                  alt={`Procedimiento Estético ${index + 1}`} 
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-                    index === currentImg ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                  }`}
-                  onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute inset-0 w-full h-full object-cover bg-gray-200' }}
-                />
-              ))}
-              <div className="absolute bottom-6 left-0 w-full flex justify-center gap-2.5 z-20">
-                {imagenesDerecha.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentImg(idx)}
-                    className={`rounded-full transition-all duration-300 ${
-                      currentImg === idx ? 'bg-white w-2.5 h-2.5 scale-125' : 'bg-white/50 w-2.5 h-2.5 hover:bg-white/80'
-                    }`}
-                    aria-label={`Ver imagen ${idx + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
   );
 };
 
-export default ProcedimientosEstetica;
+export default PatologiasPiel;
