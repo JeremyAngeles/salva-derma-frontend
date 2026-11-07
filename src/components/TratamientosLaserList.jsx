@@ -10,7 +10,7 @@ const TratamientosLaserList = () => {
       descripcion: "De acné, queloides, por accidentes, cortes\ny postquirúrgicas."
     },
     {
-      titulo: "ENFERMEDADES INFLAMATORIAS Y ROJECES :",
+      titulo: "ENFERMEDADES INFLAMATORIAS Y ROJECES:",
       descripcion: "Acné, rosácea y telangiectasias."
     },
     {

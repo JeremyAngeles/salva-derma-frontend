@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
+/* ============================================================
+   🎛️ TAMAÑO DEL TÍTULO EN CELULAR
+   Cambia este número para hacerlo más grande o más pequeño.
+   - Más grande = letras más grandes (ej: 4.8)
+   - Más pequeño = letras más chicas (ej: 4.2)
+   Si ves que alguna fila se corta por los lados, bájalo un poquito.
+   Solo afecta celular (tablet y PC no cambian).
+   ============================================================ */
+const TITULO_CELULAR = 4.6;
+
 const BG_IMG =
   'https://res.cloudinary.com/cgfzvuli/image/upload/v1792531259/04_-_FONDO_antes_despues.png';
 
@@ -61,26 +71,20 @@ const CasosExito = () => {
 
       <div className="absolute inset-0 bg-white/10 lg:bg-white/40 pointer-events-none z-0"></div>
 
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 md:px-6 flex flex-col items-center text-center">
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-2 sm:px-4 md:px-6 flex flex-col items-center text-center">
 
+        {/* TÍTULO: 3 filas exactas con whitespace-nowrap. Tamaño en celular se cambia arriba en TITULO_CELULAR */}
         <h2
-          className="text-[1.1rem] min-[380px]:text-[1.25rem] min-[400px]:text-[1.35rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[2.6rem] text-[#053d57] leading-[1.25] lg:leading-[1.2] mb-5 w-full max-w-[900px] uppercase tracking-normal lg:tracking-wide drop-shadow-sm lg:drop-shadow-none"
-          style={{ fontFamily: 'Alta, serif' }}
+          className="text-[length:var(--tit)] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.6rem] text-[#053d57] leading-[1.05] lg:leading-[1.1] mb-5 w-full uppercase tracking-tighter drop-shadow-sm lg:drop-shadow-none flex flex-col items-center"
+          style={{ fontFamily: 'Alta, serif', '--tit': `${TITULO_CELULAR}vw` }}
         >
-          <span className="lg:hidden whitespace-nowrap">
-            PORQUE NUESTRA UNIDAD<br />
-            DERMOLASER VA MÁS ALLÁ DE LA<br />
-            ESTÉTICA, ES SALUD.. IMPACTA EN TU<br />
-            PIEL, IMPACTA EN TUS EMOCIONES.
-          </span>
-          <span className="hidden lg:inline">
-            PORQUE NUESTRA UNIDAD DERMOLASER VA<br />
-            MÁS ALLÁ DE LA ESTÉTICA, ES SALUD.. IMPACTA<br />
-            EN TU PIEL, IMPACTA EN TUS EMOCIONES.
-          </span>
+          <span className="block whitespace-nowrap">PORQUE NUESTRA UNIDAD DERMOLÁSER VA</span>
+          <span className="block whitespace-nowrap">MÁS ALLÁ DE LA ESTÉTICA, ES SALUD... IMPACTA</span>
+          <span className="block whitespace-nowrap">EN TU PIEL, IMPACTA EN TUS EMOCIONES.</span>
         </h2>
 
-        <p className="text-[#88807a] text-[13px] md:text-[17px] font-semibold md:font-light leading-[1.15] mb-10 max-w-[750px] drop-shadow-sm md:drop-shadow-none bg-white/50 md:bg-transparent p-2 md:p-0 rounded-lg">
+        {/* Párrafo: en celular ya sin caja redonda y con letra más delgada (igual que PC) */}
+        <p className="text-[#88807a] text-[13px] md:text-[17px] font-normal md:font-light leading-[1.15] mb-10 max-w-[750px] drop-shadow-sm md:drop-shadow-none">
           Te dejamos algunos de nuestros casos de éxito, siempre realizado con nuestros<br className="hidden md:block" />
           protocolos combinados. Nuestra clave es combinar más de 1 tecnología.
         </p>

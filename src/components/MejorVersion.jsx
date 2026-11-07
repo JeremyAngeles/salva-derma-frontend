@@ -27,38 +27,39 @@ const MejorVersion = () => {
       <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
         
         {/* =========================================
-            COLUMNA IZQUIERDA: Textos y Botón (PC)
+            COLUMNA IZQUIERDA: Textos y Botón
+            (en celular aparece ARRIBA de la foto, igual que en PC)
             ========================================= */}
         <div className="lg:col-span-5 flex flex-col justify-center h-full max-w-[540px] mx-auto lg:mx-0 lg:pl-12 lg:ml-36 xl:ml-52 w-full">
           
-          {/* Párrafo siempre visible (Centrado en móvil, Izquierda en PC) */}
-          <p className="text-[#88807a] text-[13px] min-[375px]:text-[14px] md:text-[19px] font-light leading-[1.4] md:leading-[1.2] mb-4 md:mb-5 text-center lg:text-left px-6 lg:px-0 max-w-[400px] lg:max-w-none mx-auto lg:mx-0">
+          {/* Párrafo corto */}
+          <p className="text-[#88807a] text-[13px] min-[375px]:text-[14px] md:text-[19px] font-light leading-[1.4] md:leading-[1.2] mb-4 md:mb-5 text-left px-6 lg:px-0 max-w-none">
             Clínica con especialistas CERTIFICADOS en dermatología, cirugía plástica, láser, estética y expertos en faciales.
           </p>
 
-          {/* Contenedor OCULTO en celulares, VISIBLE en PC */}
-          <div className="hidden lg:block">
+          {/* Título + párrafo + botón (ahora visible en celular y PC) */}
+          <div className="block px-6 lg:px-0">
             <h2 
-              className="text-4xl md:text-5xl lg:text-[3.8rem] text-[#053d57] leading-[0.95] tracking-wide mb-5"
+              className="text-[2.1rem] min-[390px]:text-[2.5rem] sm:text-5xl lg:text-[3.8rem] text-[#053d57] leading-[0.95] tracking-wide mb-4 lg:mb-5"
               style={{ fontFamily: 'Alta, serif' }}
             >
-              <span className="font-light whitespace-nowrap">TU MEJOR VERSIÓN,</span><br />
+              <span className="font-light lg:whitespace-nowrap">TU MEJOR VERSIÓN,</span><br />
               <span className="font-light">ESTÁ AÚN POR</span><br />
               <span className="font-normal">LLEGAR</span>
             </h2>
             
-            <p className="text-[#88807a] text-[17px] md:text-[19px] font-light leading-[1.2] mb-10">
-              Nuestros servicios son realizados por<br />
-              especialistas altamente capacitados fuera<br />
-              y dentro del país, y priorizamos el manejo<br />
-              conjunto de ambas especialidades según<br />
+            <p className="text-[#88807a] text-[14px] min-[390px]:text-[15px] sm:text-[17px] md:text-[19px] font-light leading-[1.25] lg:leading-[1.2] mb-6 lg:mb-10 max-w-[340px] sm:max-w-none">
+              Nuestros servicios son realizados por<br className="hidden lg:block" />{' '}
+              especialistas altamente capacitados fuera<br className="hidden lg:block" />{' '}
+              y dentro del país, y priorizamos el manejo<br className="hidden lg:block" />{' '}
+              conjunto de ambas especialidades según<br className="hidden lg:block" />{' '}
               la necesidad del caso.
             </p>
 
             <div>
               <Link 
                 to="/reservar-cita" 
-                className="inline-block bg-gradient-to-r from-[#cdb3ae] to-[#e4d1cd] text-white px-12 py-4 rounded-full font-medium text-xl shadow-sm hover:shadow-md transition-all"
+                className="inline-block bg-gradient-to-r from-[#cdb3ae] to-[#e4d1cd] text-white px-8 py-3 lg:px-12 lg:py-4 rounded-full font-medium text-base lg:text-xl shadow-sm hover:shadow-md transition-all"
               >
                 Reserva tu consulta
               </Link>
@@ -69,7 +70,7 @@ const MejorVersion = () => {
         {/* =========================================
             COLUMNA DERECHA: Carrusel estirado en móvil
             ========================================= */}
-        <div className="lg:col-span-7 relative w-full h-[460px] min-[390px]:h-[520px] sm:h-[600px] lg:h-[760px]">
+        <div className="lg:col-span-7 relative w-full h-[460px] min-[390px]:h-[520px] sm:h-[600px] lg:h-[760px] mt-6 lg:mt-0">
           
           {/* FIGURA CELESTE DE FONDO */}
           <div className="absolute right-0 -top-6 -bottom-10 lg:-top-10 lg:-bottom-10 w-[85%] lg:w-[66%] bg-[#7caebc] rounded-l-[2.5rem] lg:rounded-l-[4.5rem] z-0"></div>
@@ -108,11 +109,6 @@ const MejorVersion = () => {
         </div>
 
       </div>
-
-      {/* =========================================
-          BLOQUE INFERIOR: Solo visible en Celular/Tablet
-          ========================================= */}
-
 
     </section>
   );

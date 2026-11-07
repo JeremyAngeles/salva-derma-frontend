@@ -1,5 +1,30 @@
 import { useState, useEffect, useRef } from 'react';
 
+/* ============================================================
+   🎛️ PANEL PARA BAJAR/SUBIR LOS TEXTOS EN CELULAR
+   Solo cambia estos 3 números (en píxeles). Solo afecta celular.
+   - Número MÁS GRANDE  = el texto BAJA
+   - Número MÁS PEQUEÑO = el texto SUBE
+   Súbelo o bájalo de 20 en 20 hasta que te guste.
+   ============================================================ */
+const BAJAR_CELULAR = {
+  foto1: 170, // Logo + "Todo lo que buscas para tu piel"
+  foto2: 140, // "Hemos realizado +1000 CIRUGÍAS"
+  foto3: 120, // "DERMATOLOGÍA CLÍNICA Y ESTÉTICA" + "Conoce más..."
+};
+
+/* ============================================================
+   🎛️ PANEL PARA JUNTAR/SEPARAR LAS FILAS EN CELULAR
+   - Número MÁS PEQUEÑO = filas MÁS JUNTAS
+   - Número MÁS GRANDE  = filas MÁS SEPARADAS
+   Puedes usar negativos (ej: -10) para juntar todavía más.
+   ============================================================ */
+const ESPACIO_FILAS_CELULAR = {
+  foto2_entreFilas: 2,   // px entre "Hemos realizado" y "+1000 CIRUGÍAS"
+  foto3_titulo: 1,      // espacio entre "DERMATOLOGÍA" y "CLÍNICA Y ESTÉTICA" (0.7 = muy junto, 1 = normal)
+  foto3_entreFilas: 1,   // px entre el título y "Conoce más de nuestra unidad..."
+};
+
 const CASOS = {
   cirugia: {
     titulo: 'CIRUGÍA PLÁSTICA',
@@ -65,13 +90,13 @@ const CardAntesDespues = ({ antes, despues }) => {
         <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
 
         <span 
-          className="absolute bottom-1.5 sm:bottom-3 lg:bottom-4 left-3 sm:left-4 lg:left-5 text-white text-[0.85rem] sm:text-[1rem] lg:text-[1.8rem] drop-shadow-md pointer-events-none tracking-widest transition-opacity duration-300 capitalize"
+          className="absolute bottom-1.5 sm:bottom-3 lg:bottom-4 left-3 sm:left-4 lg:left-5 text-white text-[0.85rem] sm:text-[1rem] lg:text-[1.8rem] drop-shadow-md pointer-events-none tracking-wide transition-opacity duration-300 capitalize"
           style={{ opacity: pos < 35 ? 0 : 1 }}
         >
           Antes
         </span>
         <span 
-          className="absolute bottom-1.5 sm:bottom-3 lg:bottom-4 right-3 sm:right-4 lg:right-5 text-white text-[0.85rem] sm:text-[1rem] lg:text-[1.8rem] drop-shadow-md pointer-events-none tracking-widest transition-opacity duration-300 capitalize"
+          className="absolute bottom-1.5 sm:bottom-3 lg:bottom-4 right-3 sm:right-4 lg:right-5 text-white text-[0.85rem] sm:text-[1rem] lg:text-[1.8rem] drop-shadow-md pointer-events-none tracking-wide transition-opacity duration-300 capitalize"
           style={{ opacity: pos > 65 ? 0 : 1 }}
         >
           Después
@@ -102,7 +127,7 @@ const MitadCasoPC = ({ data }) => (
     
     <div className="relative z-10 flex flex-col items-center w-full px-4 mt-16">
       <h2
-        className="text-white text-[4.2rem] leading-none tracking-wide mb-5 drop-shadow-lg text-center transform translate-y-4 uppercase"
+        className="text-white text-[4.2rem] leading-[0.85] tracking-wide mb-5 drop-shadow-lg text-center transform translate-y-4 uppercase"
         style={{ fontFamily: 'Alta, serif' }}
       >
         {data.titulo}
@@ -121,7 +146,7 @@ const MitadCasoMobile = ({ data, isTop }) => (
     
     <div className={`relative z-10 flex flex-col items-center w-full px-2 ${isTop ? 'mt-14 sm:mt-20' : '-mt-2'}`}>
       <h2
-        className="text-white text-[1.7rem] sm:text-[2.2rem] leading-none tracking-wide mb-2 drop-shadow-lg text-center transform -translate-y-1 uppercase"
+        className="text-white text-[1.7rem] sm:text-[2.2rem] leading-[0.85] tracking-wide mb-2 drop-shadow-lg text-center transform -translate-y-1 uppercase"
         style={{ fontFamily: 'Alta, serif' }}
       >
         {data.titulo}
@@ -246,9 +271,10 @@ const Hero = () => {
         {/* Textos del Carrusel */}
         <div className="relative z-20 text-center text-white px-4 pb-6 sm:pb-12 lg:pb-20 w-full flex flex-col items-center pointer-events-none">
           
-          {/* FOTO 1: Logo (bajado en móvil cambiando mt-14 a mt-24 min-[390px]:mt-28) */}
+          {/* FOTO 1: Logo (se ajusta en BAJAR_CELULAR.foto1 arriba del archivo) */}
           <div
-            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full mt-24 min-[390px]:mt-28 sm:mt-32 md:mt-36 lg:mt-[18rem] ${
+            style={{ '--bajar': `${BAJAR_CELULAR.foto1}px` }}
+            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full top-[var(--bajar)] sm:top-0 sm:mt-32 md:mt-36 lg:mt-[18rem] ${
               currentSlide === 0 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'
             }`}
           >
@@ -268,37 +294,39 @@ const Hero = () => {
             </h1>
           </div>
 
-          {/* FOTO 2: +1000 CIRUGÍAS (bajado, en 1 sola fila con whitespace-nowrap y letra más pequeña en móvil) */}
+          {/* FOTO 2: +1000 CIRUGÍAS (se ajusta en BAJAR_CELULAR.foto2 arriba del archivo) */}
           <div
-            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full mt-20 min-[390px]:mt-24 sm:mt-28 md:mt-24 lg:mt-32 ${
+            style={{ '--bajar': `${BAJAR_CELULAR.foto2}px`, '--sep': `${ESPACIO_FILAS_CELULAR.foto2_entreFilas}px` }}
+            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full top-[var(--bajar)] sm:top-0 sm:mt-28 md:mt-24 lg:mt-32 ${
               currentSlide === 1 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'
             }`}
           >
-            <h3 className="text-white text-[1.4rem] sm:text-[1.6rem] md:text-[1.4rem] lg:text-[1.8rem] font-light tracking-wide mb-2 sm:mb-2 lg:mb-4 drop-shadow-md">
+            <h3 className="text-white text-[1.4rem] sm:text-[1.6rem] md:text-[1.4rem] lg:text-[1.8rem] font-light tracking-wide leading-none mb-[var(--sep)] sm:leading-normal sm:mb-2 lg:mb-4 drop-shadow-md">
               Hemos realizado
             </h3>
             <h2
-              className="text-white text-[2.6rem] min-[390px]:text-[3rem] sm:text-[4.5rem] md:text-[4.2rem] lg:text-[6.5rem] leading-none tracking-wide drop-shadow-lg whitespace-nowrap"
+              className="text-white text-[2.6rem] min-[390px]:text-[3rem] sm:text-[4.5rem] md:text-[4.2rem] lg:text-[6.5rem] leading-[0.85] tracking-wide drop-shadow-lg whitespace-nowrap"
               style={{ fontFamily: 'Alta, serif' }}
             >
               +1000 CIRUGÍAS
             </h2>
           </div>
 
-          {/* FOTO 3: Dermatología (Exacto en 2 filas con flex-col para forzar el salto) */}
+          {/* FOTO 3: Dermatología (se ajusta en BAJAR_CELULAR.foto3 arriba del archivo) */}
           <div
-            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full mt-2 sm:mt-4 lg:-mt-6 ${
+            style={{ '--bajar': `${BAJAR_CELULAR.foto3}px`, '--sep': `${ESPACIO_FILAS_CELULAR.foto3_entreFilas}px`, '--lh': ESPACIO_FILAS_CELULAR.foto3_titulo }}
+            className={`transition-all duration-700 absolute flex flex-col items-center justify-center transform -translate-y-1/2 w-full top-[var(--bajar)] sm:top-0 sm:mt-4 lg:-mt-6 ${
               currentSlide === 2 ? 'opacity-100 translate-y-0 relative' : 'opacity-0 scale-95 pointer-events-none'
             }`}
           >
             <h2
-              className="flex flex-col items-center text-white text-[2.2rem] min-[390px]:text-[2.5rem] sm:text-[3.8rem] md:text-[3.8rem] lg:text-[6rem] leading-[1.05] tracking-wide mb-2 sm:mb-2 lg:mb-3 drop-shadow-lg text-center"
+              className="flex flex-col items-center text-white text-[2.2rem] min-[390px]:text-[2.5rem] sm:text-[3.8rem] md:text-[3.8rem] lg:text-[6rem] leading-[var(--lh)] sm:leading-[0.85] tracking-wide mb-[var(--sep)] sm:mb-2 lg:mb-3 drop-shadow-lg text-center"
               style={{ fontFamily: 'Alta, serif' }}
             >
               <span className="whitespace-nowrap">DERMATOLOGÍA</span>
               <span className="whitespace-nowrap">CLÍNICA Y ESTÉTICA</span>
             </h2>
-            <p className="text-white text-[1.2rem] sm:text-[1.4rem] md:text-[1.4rem] lg:text-[1.9rem] font-light tracking-wide drop-shadow-md text-center">
+            <p className="text-white text-[1.2rem] sm:text-[1.4rem] md:text-[1.4rem] lg:text-[1.9rem] font-light tracking-wide leading-none sm:leading-normal drop-shadow-md text-center">
               Conoce más de nuestra unidad Dermoláser.
             </p>
           </div>

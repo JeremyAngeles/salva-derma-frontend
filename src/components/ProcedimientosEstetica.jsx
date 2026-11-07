@@ -115,10 +115,10 @@ const ProcedimientosEstetica = () => {
                   {proc.title}
                 </h3>
                 {proc.desc && (
-                  /* MODIFICADO: text-gray-700 (plomo oscuro) para celular */
+                  /* MODIFICADO: text-[#7d7d7d] y fuente Montserrat para celular */
                   <p 
-                    className="text-gray-700 text-[13px] min-[400px]:text-[14px] sm:text-[17px] font-normal leading-[1.3] lg:leading-tight max-w-[240px] sm:max-w-[420px]"
-                    style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+                    className="text-[#7d7d7d] text-[13px] min-[400px]:text-[14px] sm:text-[17px] font-normal leading-[1.3] lg:leading-tight max-w-[240px] sm:max-w-[420px]"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     {proc.desc}
                   </p>
@@ -195,10 +195,10 @@ const ProcedimientosEstetica = () => {
                     {proc.title}
                   </h3>
                   {proc.desc && (
-                    /* MODIFICADO: text-gray-700 (plomo oscuro) para PC */
+                    /* MODIFICADO: text-[#7d7d7d] y fuente Montserrat para PC */
                     <p 
-                      className="text-gray-700 text-[14px] md:text-[16px] font-normal leading-snug max-w-[450px]"
-                      style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+                      className="text-[#7d7d7d] text-[14px] md:text-[16px] font-normal leading-snug max-w-[450px]"
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
                       {proc.desc}
                     </p>

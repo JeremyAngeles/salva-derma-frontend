@@ -5,7 +5,7 @@ const TiposLaser = () => {
     {
       id: 1,
       title: "LÁSER FRACCIONADO",
-      subtitle: "• Picosegundos\n •Erbio",
+      subtitle: "• Picosegundos\n• Erbio",
       img: "https://res.cloudinary.com/cgfzvuli/image/upload/v1792531271/l%C3%A1ser_fracionado.png"
     },
     {
@@ -76,7 +76,7 @@ const TiposLaser = () => {
               {/* Celular/Tablet: 1 sola fila */}
               <span className="lg:hidden whitespace-nowrap">TIPOS DE LÁSER</span>
               {/* PC: 2 filas como estaba originalmente */}
-              <span className="hidden lg:block">TIPOS DE<br />LÁSER</span>
+              <span className="hidden lg:block">TIPOS DE LÁSER</span>
             </h2>
 
             {/* Lista: se aumentó el gap en móvil/tablet para compensar el tamaño */}

@@ -107,7 +107,7 @@ const CasosExitoEstetica = () => {
             {/* TEXTOS */}
             <div className="relative z-10 flex flex-col items-center text-center text-white">
               <h2
-                className="text-[28px] leading-[1.05] tracking-[0.05em] font-light mb-5 drop-shadow-md"
+                className="text-[28px] leading-[0.9] tracking-tighter font-light mb-5 drop-shadow-md"
                 style={{ fontFamily: 'Alta, serif' }}
               >
                 QUERERTE ES ACEPTARTE<br />
@@ -117,10 +117,10 @@ const CasosExitoEstetica = () => {
               </h2>
               <div className="w-[150px] h-[3px] bg-[#cfaaa6] mb-6"></div>
               
-              {/* MODIFICADO: Párrafo en CELULAR con letra redondita */}
+              {/* ✅ Párrafo en Montserrat (celular). Tamaño 15px porque Montserrat es más ancha que Nunito */}
               <p 
-                className="text-white text-[16px] font-normal leading-[1.35] max-w-[620px] drop-shadow-md"
-                style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+                className="text-white text-[15px] font-normal leading-[1.35] max-w-[620px] drop-shadow-md"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
                 Nuestros tratamientos en dermatología estética
                 buscan calidad y belleza, sin olvidar que la piel
@@ -183,9 +183,8 @@ const CasosExitoEstetica = () => {
             {/* TEXTOS */}
             <div className="relative z-10 flex flex-col items-end text-right text-white ml-auto">
               
-              {/* Título con líneas más juntas (leading-[1.05]) */}
               <h2
-                className="text-[42px] lg:text-[46px] leading-[1.05] tracking-[0.05em] font-light mb-5 drop-shadow-md"
+                className="text-[42px] lg:text-[46px] leading-[0.9] tracking-tighter font-light mb-5 drop-shadow-md"
                 style={{ fontFamily: 'Alta, serif' }}
               >
                 QUERERTE ES ACEPTARTE<br />
@@ -197,10 +196,10 @@ const CasosExitoEstetica = () => {
               {/* Línea divisoria */}
               <div className="w-[220px] h-[3px] bg-[#cfaaa6] mb-6"></div>
 
-              {/* MODIFICADO: Párrafo en PC con letra redondita */}
+              {/* ✅ Párrafo en Montserrat (PC). Un poco más pequeño y más ancho para que mantenga las 6 filas */}
               <p 
-                className="text-white text-[19px] lg:text-[21px] font-normal leading-[1.35] max-w-[620px] drop-shadow-md"
-                style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+                className="text-white text-[16px] lg:text-[17px] font-normal leading-[1.35] max-w-[720px] drop-shadow-md"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
                 Nuestros tratamientos en dermatología estética<br className="block" />
                 buscan calidad y belleza, sin olvidar que la piel<br className="block" />

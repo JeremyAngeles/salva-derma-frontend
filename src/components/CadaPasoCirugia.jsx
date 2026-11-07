@@ -60,9 +60,9 @@ const CadaPasoCirugia = () => {
           {/* Bloque superior derecho: Pegado más a la derecha y animado */}
           <div className="w-full pl-4 pr-2 min-[390px]:pr-3 sm:pr-6 ml-auto flex flex-col items-end text-right pt-2 sm:pt-6 opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
             
-            {/* Título forzado exactamente a 3 filas */}
+            {/* TÍTULO MODIFICADO: Letras juntas (tracking-tighter) y filas pegadas (leading-[0.85]) */}
             <h2 
-              className="flex flex-col items-end text-right text-[#053d57] text-[1.35rem] min-[375px]:text-[1.5rem] min-[410px]:text-[1.68rem] sm:text-[2.4rem] leading-[1.06] tracking-wide mb-2 sm:mb-3"
+              className="flex flex-col items-end text-right text-[#053d57] text-[1.45rem] min-[375px]:text-[1.6rem] min-[410px]:text-[1.8rem] sm:text-[2.6rem] leading-[0.85] tracking-tighter mb-3 sm:mb-4"
               style={{ fontFamily: 'Alta, serif' }}
             >
               <span className="whitespace-nowrap">CADA PASO TE</span>
@@ -176,8 +176,9 @@ const CadaPasoCirugia = () => {
             
             {/* Textos con animación fade-up */}
             <div className="opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              {/* TÍTULO MODIFICADO: Letras juntas (tracking-tighter) y filas pegadas (leading-[0.85]) */}
               <h2 
-                className="text-[#053d57] text-[2rem] sm:text-[2.5rem] md:text-[3.2rem] xl:text-[3.6rem] leading-[1.08] tracking-wide mb-0 drop-shadow-sm"
+                className="text-[#053d57] text-[2.2rem] sm:text-[2.8rem] md:text-[3.4rem] xl:text-[3.8rem] leading-[0.85] tracking-tighter mb-2 drop-shadow-sm"
                 style={{ fontFamily: 'Alta, serif' }}
               >
                 CADA PASO TE ACERCA<br />

@@ -80,7 +80,8 @@ const SkinLounge = () => {
           
           {/* Cabecera Textos Ajustados */}
           <div className="mb-8 flex flex-col items-center lg:items-start" style={{ fontFamily: 'Alta, serif' }}>
-            <h3 className="text-white text-xl lg:text-[1.5rem] tracking-[0.3em] font-light mb-[-5px]">
+            {/* Aquí reduje el tracking a [0.1em] para juntar las letras, manteniendo el tamaño grande */}
+            <h3 className="text-white text-[1.8rem] lg:text-[2.2rem] tracking-[0.1em] font-light mb-[-5px]">
               FACIAL
             </h3>
             <h2 className="text-white text-[4rem] md:text-[5rem] lg:text-[5.5rem] leading-[1.05] mb-2 drop-shadow-md">

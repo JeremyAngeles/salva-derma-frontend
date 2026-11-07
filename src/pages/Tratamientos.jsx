@@ -58,9 +58,10 @@ const Tratamientos = () => {
           {/* Contenedor del Párrafo y Botón centrados en móvil */}
           <div className="w-full md:w-auto flex flex-col items-center md:items-start mt-1 md:mt-0 md:pb-3">
             
+            {/* MODIFICADO: Párrafo con la tipografía Montserrat */}
             <p 
               className="text-[#88807a] text-[15px] sm:text-[16px] md:text-[15px] lg:text-[18px] font-normal leading-snug tracking-tight mb-5 md:mb-6 max-w-[340px] sm:max-w-[400px] md:max-w-[420px] text-center md:text-left"
-              style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               Nuestros tratamientos estéticos son realizados por especialistas en dermatología y cirugía plástica, buscando mejorar la calidad de piel mediante procedimientos seguros y efectivos.
             </p>

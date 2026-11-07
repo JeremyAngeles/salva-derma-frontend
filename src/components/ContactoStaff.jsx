@@ -14,8 +14,8 @@ const ContactoStaff = () => {
         {/* Capa de protección sutil */}
         <div className="absolute inset-0 bg-black/15 pointer-events-none z-0"></div>
 
-        {/* TÍTULO Y PÁRRAFO SUPERIOR (En blanco, más arriba y a la derecha) */}
-        <div className="relative z-10 flex flex-col items-end text-right w-full mt-2 pr-2">
+        {/* TÍTULO Y PÁRRAFO SUPERIOR (En blanco, ahora CENTRADO) */}
+        <div className="relative z-10 flex flex-col items-center text-center w-full mt-2">
           
           <h2 
             className="text-white text-[1.1rem] sm:text-[1.4rem] leading-[1.15] tracking-wide drop-shadow-md mb-3"
@@ -28,7 +28,7 @@ const ContactoStaff = () => {
             <span className="block">TRICOLOGIA</span>
           </h2>
 
-          <p className="text-white text-[10.5px] sm:text-[13px] font-medium leading-[1.3] drop-shadow-md max-w-[260px]">
+          <p className="text-white text-[10.5px] sm:text-[13px] font-medium leading-[1.3] drop-shadow-md max-w-[260px] mx-auto">
             Agenda tu evaluación con nuestro staff altamente capacitado dentro y fuera del país. Para mayor información y citas, ¡contáctanos!
           </p>
 

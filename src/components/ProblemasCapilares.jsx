@@ -40,10 +40,10 @@ const ProblemasCapilares = () => {
             PROBLEMAS CAPILARES
           </h2>
 
-          {/* Párrafo con letra más redonda y con más cuerpo */}
+          {/* Párrafo en Montserrat (celular y PC) */}
           <p 
             className="font-normal text-[clamp(11px,2.55vw,24px)] lg:text-[clamp(15px,1.45vw,21px)] leading-[1.22] mb-[7vw] lg:mb-[clamp(56px,8vw,115px)] text-white"
-            style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             Tratamos distintos tipos de alopecias con<br className="hidden lg:block" />
             {' '}tratamiento médico y la combinación de<br className="hidden lg:block" />
@@ -53,13 +53,13 @@ const ProblemasCapilares = () => {
             {' '}micropunción, Nanopore y láser.
           </p>
 
-          {/* Lista con letra más redonda */}
+          {/* Lista en Montserrat (celular y PC) */}
           <ul className="flex flex-col gap-[0.8vw] lg:gap-[clamp(8px,0.85vw,12px)]">
             {problemas.map((item, index) => (
               <li
                 key={index}
                 className="flex items-center gap-[1.8vw] lg:gap-[clamp(10px,1.1vw,16px)] font-normal text-[clamp(11px,2.55vw,24px)] lg:text-[clamp(15px,1.45vw,21px)] leading-tight text-white"
-                style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
                 <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-white flex-shrink-0"></span>
                 {item}

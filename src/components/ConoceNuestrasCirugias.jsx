@@ -17,8 +17,11 @@ const ConoceNuestrasCirugias = () => {
           ========================================= */}
       <div className="relative z-10 max-w-[1150px] mx-auto px-4 sm:px-6 lg:px-8 pt-14 md:pt-20 pb-16 md:pb-20">
         
-        {/* AQUÍ ESTÁ EL CAMBIO: Título más chico en celular (1.1rem a 1.45rem) y tracking-wide para que no se desborde */}
-        <h2 className="text-white text-[1.1rem] min-[360px]:text-[1.25rem] min-[400px]:text-[1.45rem] sm:text-[2.2rem] md:text-[3rem] lg:text-[4rem] font-light text-center mb-8 md:mb-10 tracking-wide md:tracking-widest drop-shadow-md leading-none whitespace-nowrap">
+        {/* TÍTULO AJUSTADO: Un poco más chico en celular */}
+        <h2 
+          className="text-white text-[1.45rem] min-[360px]:text-[1.6rem] min-[400px]:text-[1.75rem] sm:text-[2.2rem] md:text-[3rem] lg:text-[4rem] font-light text-center mb-8 md:mb-10 tracking-tight drop-shadow-md leading-none whitespace-nowrap"
+          style={{ fontFamily: 'Alta, serif' }}
+        >
           CONOCE NUESTRAS CIRUGÍAS
         </h2>
 

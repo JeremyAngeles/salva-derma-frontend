@@ -33,7 +33,7 @@ const Nosotros = () => {
             ¿QUIÉNES SOMOS?
           </h1>
           <p className="text-white text-[13px] sm:text-[16px] md:text-[20px] font-light leading-[1.25] drop-shadow-md mx-auto max-w-[340px] sm:max-w-[520px] md:max-w-[680px]">
-            Somos unidad! un centro médico enfocado en el manejo global de la piel
+            Somos un centro médico enfocado en el manejo global de la piel
             con especialidades que trabajan en conjunto para resolver cualquier
             caso, e incluso hacer más por ti, siempre con empatía y profesionalismo.
           </p>
@@ -67,7 +67,7 @@ const Nosotros = () => {
             </h1>
 
             <p className="text-white text-[15px] md:text-[17px] lg:text-[19px] font-light leading-[1.1] drop-shadow-md mx-auto max-w-[750px]">
-              Somos unidad! un centro médico enfocado en el manejo global de<br className="hidden md:block"/>
+              Somos un centro médico enfocado en el manejo global de<br className="hidden md:block"/>
               la piel con especialidades que trabajan en conjunto para resolver<br className="hidden md:block"/>
               cualquier caso, e incluso hacer más por ti, siempre con empatía y<br className="hidden md:block"/>
               profesionalismo.
@@ -85,11 +85,12 @@ const Nosotros = () => {
           {/* MISIÓN (Azul) */}
           <div className="relative w-full lg:w-1/2 bg-[#053d57] text-white text-center rounded-[1.5rem] lg:rounded-[2rem] pt-[58px] sm:pt-[85px] lg:pt-[130px] pb-8 sm:pb-10 lg:pb-12 px-3 sm:px-6 lg:px-10 shadow-2xl">
 
-            <div className="absolute -top-[45px] sm:-top-[65px] lg:-top-[70px] left-1/2 transform -translate-x-1/2 w-[92px] h-[92px] sm:w-[130px] sm:h-[130px] lg:w-[200px] lg:h-[200px] rounded-full border-[7px] sm:border-[10px] lg:border-[24px] border-[#fcfbf9] bg-[#053d57] flex items-center justify-center shadow-sm p-2 sm:p-3 lg:p-6 z-40">
+            {/* ✅ overflow-hidden + isolate: recorta el ícono dentro del círculo (quita las esquinas puntiagudas en iPhone/Safari) */}
+            <div className="absolute -top-[45px] sm:-top-[65px] lg:-top-[70px] left-1/2 transform -translate-x-1/2 w-[92px] h-[92px] sm:w-[130px] sm:h-[130px] lg:w-[200px] lg:h-[200px] rounded-full overflow-hidden isolate border-[7px] sm:border-[10px] lg:border-[24px] border-[#fcfbf9] bg-[#053d57] bg-clip-padding flex items-center justify-center shadow-sm p-2 sm:p-3 lg:p-6 z-40">
               <img
                 src="/misión.svg"
                 alt="Ícono Misión"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain rounded-full"
               />
             </div>
 
@@ -107,11 +108,11 @@ const Nosotros = () => {
           {/* VISIÓN (Rosa) */}
           <div className="relative w-full lg:w-1/2 bg-[#c9a79e] text-white text-center rounded-[1.5rem] lg:rounded-[2rem] pt-[58px] sm:pt-[85px] lg:pt-[130px] pb-8 sm:pb-10 lg:pb-12 px-3 sm:px-6 lg:px-10 shadow-2xl">
 
-            <div className="absolute -top-[45px] sm:-top-[65px] lg:-top-[70px] left-1/2 transform -translate-x-1/2 w-[92px] h-[92px] sm:w-[130px] sm:h-[130px] lg:w-[200px] lg:h-[200px] rounded-full border-[7px] sm:border-[10px] lg:border-[24px] border-[#fcfbf9] bg-[#c9a79e] flex items-center justify-center shadow-sm p-2 sm:p-3 lg:p-6 z-40">
+            <div className="absolute -top-[45px] sm:-top-[65px] lg:-top-[70px] left-1/2 transform -translate-x-1/2 w-[92px] h-[92px] sm:w-[130px] sm:h-[130px] lg:w-[200px] lg:h-[200px] rounded-full overflow-hidden isolate border-[7px] sm:border-[10px] lg:border-[24px] border-[#fcfbf9] bg-[#c9a79e] bg-clip-padding flex items-center justify-center shadow-sm p-2 sm:p-3 lg:p-6 z-40">
               <img
                 src="/visión.svg"
                 alt="Ícono Visión"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain rounded-full"
               />
             </div>
 

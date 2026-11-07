@@ -1,7 +1,29 @@
 import React, { useState } from 'react';
 
+/* ============================================================
+   🎛️ ANIMACIÓN DEL CELULAR
+   - VELOCIDAD_MS: cuánto dura el movimiento al hacer click.
+     Más grande = más lento y suave (ej: 900). Más pequeño = más rápido (ej: 500).
+   ============================================================ */
+const VELOCIDAD_MS = 800;
+const CURVA = 'cubic-bezier(0.22, 1, 0.36, 1)'; // salida suave, sin golpe
+
+/* Medidas en vw (las mismas del diseño original) */
+const CENTRO = { w: 41.5, h: 59, r: 5 };
+const LADO = { w: 25.6, h: 28, r: 4 };
+const GAP = 2.4;
+const ANCHO_TOTAL = LADO.w + GAP + CENTRO.w + GAP + LADO.w; // 97.5vw
+const INICIO = (100 - ANCHO_TOTAL) / 2;
+
+// Posición de cada "slot": 0 = izquierda, 1 = centro, 2 = derecha
+const SLOTS = [
+  { left: INICIO, top: (CENTRO.h - LADO.h) / 2, ...LADO },
+  { left: INICIO + LADO.w + GAP, top: 0, ...CENTRO },
+  { left: INICIO + LADO.w + GAP + CENTRO.w + GAP, top: (CENTRO.h - LADO.h) / 2, ...LADO },
+];
+
 const EspacioSkinLounge = () => {
-  // Estado para controlar el orden de los elementos (índices: 0 = izquierda, 1 = centro, 2 = derecha)
+  // orden[slot] = índice del item que está en ese slot (0 = izquierda, 1 = centro, 2 = derecha)
   const [orden, setOrden] = useState([0, 1, 2]);
 
   const listaCaracteristicas = [
@@ -22,28 +44,20 @@ const EspacioSkinLounge = () => {
     }
   ];
 
-  // Función para rotar o mover al centro el card presionado
-  const manejarClickCard = (clickedIndexInOrden) => {
+  // Al tocar un card lateral, intercambia lugar con el del centro
+  const manejarClickCard = (slotClickeado) => {
+    if (slotClickeado === 1) return;
     const nuevoOrden = [...orden];
-    // Si hacen clic en el de la izquierda (posición 0 en el orden actual)
-    if (clickedIndexInOrden === 0) {
-      const temp = nuevoOrden[0];
-      nuevoOrden[0] = nuevoOrden[1];
-      nuevoOrden[1] = temp;
-    } 
-    // Si hacen clic en el de la derecha (posición 2 en el orden actual)
-    else if (clickedIndexInOrden === 2) {
-      const temp = nuevoOrden[2];
-      nuevoOrden[2] = nuevoOrden[1];
-      nuevoOrden[1] = temp;
-    }
+    [nuevoOrden[slotClickeado], nuevoOrden[1]] = [nuevoOrden[1], nuevoOrden[slotClickeado]];
     setOrden(nuevoOrden);
   };
+
+  const transicion = `${VELOCIDAD_MS}ms ${CURVA}`;
 
   return (
     <>
       {/* =====================================================
-          CELULAR Y TABLET (con animación interactiva por click)
+          CELULAR Y TABLET (animación suave por click)
           ===================================================== */}
       <section className="lg:hidden w-full bg-[#faf9f8] pt-[3vw] pb-[10vw] font-principal relative z-20 overflow-hidden">
 
@@ -55,26 +69,41 @@ const EspacioSkinLounge = () => {
           EL ESPACIO PARA TI Y TU PIEL
         </h2>
 
-        {/* Cards interactivos en fila */}
-        <div className="flex items-center justify-center gap-[2.4vw] px-[1.6vw] mt-[6vw]">
-          {orden.map((itemIndex, positionIndex) => {
-            const item = listaCaracteristicas[itemIndex];
-            const esCentro = positionIndex === 1;
+        {/* Cards: cada uno es fijo y se desliza de un lugar a otro (no se reordena el DOM) */}
+        <div className="relative w-full mt-[6vw]" style={{ height: `${CENTRO.h}vw` }}>
+          {listaCaracteristicas.map((item, itemIndex) => {
+            const slot = orden.indexOf(itemIndex);
+            const pos = SLOTS[slot];
+            const esCentro = slot === 1;
 
             return (
               <div
                 key={item.id}
-                onClick={() => manejarClickCard(positionIndex)}
-                className={`relative flex-shrink-0 overflow-hidden shadow-md cursor-pointer transition-all duration-700 ease-in-out ${
-                  esCentro
-                    ? 'w-[41.5vw] h-[59vw] rounded-[5vw] z-10 scale-100 shadow-xl'
-                    : 'w-[25.6vw] h-[28vw] rounded-[4vw] scale-95 opacity-85 hover:opacity-100'
-                }`}
+                onClick={() => manejarClickCard(slot)}
+                className="absolute overflow-hidden cursor-pointer motion-reduce:!transition-none"
+                style={{
+                  left: `${pos.left}vw`,
+                  top: `${pos.top}vw`,
+                  width: `${pos.w}vw`,
+                  height: `${pos.h}vw`,
+                  borderRadius: `${pos.r}vw`,
+                  zIndex: esCentro ? 10 : 0,
+                  opacity: esCentro ? 1 : 0.88,
+                  boxShadow: esCentro
+                    ? '0 3vw 6vw -1vw rgba(0,0,0,0.28)'
+                    : '0 1vw 2.5vw -0.5vw rgba(0,0,0,0.16)',
+                  transition: `left ${transicion}, top ${transicion}, width ${transicion}, height ${transicion}, border-radius ${transicion}, opacity ${transicion}, box-shadow ${transicion}`,
+                  willChange: 'left, top, width, height',
+                }}
               >
                 <img
                   src={item.img}
                   alt={item.texto.replace('\n', ' ')}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-in-out"
+                  className="w-full h-full object-cover"
+                  style={{
+                    transform: esCentro ? 'scale(1)' : 'scale(1.12)',
+                    transition: `transform ${transicion}`,
+                  }}
                   onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#dcc4bc]' }}
                 />
 
@@ -82,11 +111,19 @@ const EspacioSkinLounge = () => {
                 <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none"></div>
 
                 {/* Texto */}
-                <div className={`absolute left-0 w-full text-center px-1 ${esCentro ? 'bottom-[3.4vw]' : 'bottom-[2vw]'}`}>
+                <div
+                  className="absolute left-0 w-full text-center px-1"
+                  style={{
+                    bottom: esCentro ? '3.4vw' : '2vw',
+                    transition: `bottom ${transicion}`,
+                  }}
+                >
                   <p
-                    className={`text-white font-medium tracking-wide leading-[1.2] drop-shadow-md ${
-                      esCentro ? 'text-[1.8vw]' : 'text-[1.2vw]'
-                    }`}
+                    className="text-white font-medium tracking-wide leading-[1.2] drop-shadow-md"
+                    style={{
+                      fontSize: esCentro ? '1.8vw' : '1.2vw',
+                      transition: `font-size ${transicion}`,
+                    }}
                   >
                     {item.texto.split('\n').map((linea, i) => (
                       <span key={i} className="block whitespace-nowrap">{linea}</span>
@@ -116,7 +153,7 @@ const EspacioSkinLounge = () => {
       </section>
 
       {/* =====================================================
-          PC (sin cambios, estático)
+          PC (igual que antes + elevación suave al pasar el mouse)
           ===================================================== */}
       <section className="hidden lg:block w-full bg-[#faf9f8] -mt-24 md:-mt-32 pt-8 md:pt-12 pb-16 md:pb-20 font-principal px-6 lg:px-12 relative z-20">
         <div className="max-w-[1250px] mx-auto">
@@ -132,12 +169,12 @@ const EspacioSkinLounge = () => {
             {listaCaracteristicas.map((item) => (
               <div 
                 key={item.id} 
-                className="relative w-full h-[350px] md:h-[400px] lg:h-[420px] rounded-[2rem] overflow-hidden shadow-sm group"
+                className="relative w-full h-[350px] md:h-[400px] lg:h-[420px] rounded-[2rem] overflow-hidden shadow-sm group transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-2xl"
               >
                 <img 
                   src={item.img} 
                   alt={item.texto.replace('\n', ' ')} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                   onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='w-full h-full object-cover bg-[#dcc4bc]' }}
                 />
                 

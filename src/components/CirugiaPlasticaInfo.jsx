@@ -12,9 +12,9 @@ const CirugiaPlasticaInfo = () => {
         {/* Forzado hacia la izquierda con -translate-x */}
         <div className="w-full lg:w-[45%] flex flex-col text-center lg:text-left items-center lg:items-start lg:-translate-x-8 xl:-translate-x-16">
           
-          {/* Título forzado a 2 filas exactas bloqueando el salto de línea automático */}
+          {/* Título con letras juntas (tracking-tighter) y filas bien pegadas (leading-[0.85]) */}
           <h2 
-            className="text-[1.6rem] min-[400px]:text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] lg:text-[3.2rem] xl:text-[3.5rem] text-[#053d57] leading-[1.1] mb-2 md:mb-3 tracking-wide"
+            className="text-[1.6rem] min-[400px]:text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] lg:text-[3.2rem] xl:text-[3.5rem] text-[#053d57] leading-[0.85] tracking-tighter mb-2 md:mb-3"
             style={{ fontFamily: 'Alta, serif' }}
           >
             <span className="whitespace-nowrap">SI LO PUEDES SOÑAR, LO</span><br />

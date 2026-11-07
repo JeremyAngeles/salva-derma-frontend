@@ -20,12 +20,12 @@ const MasAllaSkinLounge = () => {
             MÁS ALLÁ DE UN FACIAL
           </h2>
 
-          {/* Lista de beneficios */}
+          {/* Lista de beneficios (Letras con font-medium para darles un toque más de cuerpo) */}
           <div className="flex flex-col items-end mt-[4.2vw] gap-[3.6vw]">
 
             {/* Relajación */}
             <div className="flex items-center justify-end gap-[3.2vw]">
-              <span className="text-[#5a5550] text-[2.9vw] font-semibold tracking-wide uppercase">
+              <span className="text-[#5f5d5b] text-[2.9vw] font-medium tracking-wide uppercase">
                 Relajación
               </span>
               <div className="w-[9.6vw] h-[9.6vw] flex items-center justify-center flex-shrink-0">
@@ -40,7 +40,7 @@ const MasAllaSkinLounge = () => {
 
             {/* Nutrición */}
             <div className="flex items-center justify-end gap-[3.2vw]">
-              <span className="text-[#5a5550] text-[2.9vw] font-semibold tracking-wide uppercase leading-[1.5] text-right">
+              <span className="text-[#5f5d5b] text-[2.9vw] font-medium tracking-wide uppercase leading-[1.5] text-right">
                 <span className="block whitespace-nowrap">Mejora la nutrición,</span>
                 <span className="block whitespace-nowrap">hidratación y calidad</span>
                 <span className="block whitespace-nowrap">de la piel</span>
@@ -57,7 +57,7 @@ const MasAllaSkinLounge = () => {
 
             {/* Skincare */}
             <div className="flex items-center justify-end gap-[3.2vw]">
-              <span className="text-[#5a5550] text-[2.9vw] font-semibold tracking-wide uppercase">
+              <span className="text-[#5f5d5b] text-[2.9vw] font-medium tracking-wide uppercase">
                 Potencia tu skincare
               </span>
               <div className="w-[9.6vw] h-[9.6vw] flex items-center justify-center flex-shrink-0">
@@ -139,10 +139,11 @@ const MasAllaSkinLounge = () => {
                 MÁS ALLÁ DE UN FACIAL
               </h2>
 
+              {/* Lista de beneficios (Letras con font-medium en PC) */}
               <div className="flex flex-col gap-6 md:gap-8 mb-10 md:mb-12 w-full">
                 
                 <div className="flex items-center justify-center md:justify-end gap-5 md:gap-6">
-                  <span className="text-[#5a5550] text-[17px] md:text-[20px] font-bold tracking-wide uppercase">
+                  <span className="text-[#5f5d5b] text-[17px] md:text-[20px] font-medium tracking-wide uppercase">
                     Relajación
                   </span>
                   <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center flex-shrink-0">
@@ -156,7 +157,7 @@ const MasAllaSkinLounge = () => {
                 </div>
 
                 <div className="flex items-center justify-center md:justify-end gap-5 md:gap-6">
-                  <span className="text-[#5a5550] text-[17px] md:text-[20px] font-bold tracking-wide text-right uppercase leading-tight">
+                  <span className="text-[#5f5d5b] text-[17px] md:text-[20px] font-medium tracking-wide text-right uppercase leading-tight">
                     Mejora la nutrición,<br />
                     hidratación y calidad de la piel
                   </span>
@@ -171,7 +172,7 @@ const MasAllaSkinLounge = () => {
                 </div>
 
                 <div className="flex items-center justify-center md:justify-end gap-5 md:gap-6">
-                  <span className="text-[#5a5550] text-[17px] md:text-[20px] font-bold tracking-wide uppercase">
+                  <span className="text-[#5f5d5b] text-[17px] md:text-[20px] font-medium tracking-wide uppercase">
                     Potencia tu skincare
                   </span>
                   <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center flex-shrink-0">

@@ -12,10 +12,10 @@ const SalvarHydrolips = () => {
 >
   <div className="relative z-10 w-full px-[6.4vw] pt-[4vw]">
 
-    {/* Texto superior (Letra más redondita y con cuerpo) */}
+    {/* Texto superior en Montserrat */}
     <p 
       className="text-white/95 text-[3.3vw] font-normal leading-[1.3] tracking-wide drop-shadow-md mb-[5.5vw]"
-      style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+      style={{ fontFamily: "'Montserrat', sans-serif" }}
     >
       <span className="block whitespace-nowrap">Pregunta también por</span>
       <span className="block whitespace-nowrap">nuestro</span>
@@ -35,10 +35,10 @@ const SalvarHydrolips = () => {
       <div className="absolute -right-[0.8vw] top-1/2 -translate-y-1/2 w-[1.6vw] h-[1.6vw] bg-white rounded-full"></div>
     </div>
 
-    {/* Párrafo inferior (Letra más redondita y con cuerpo) */}
+    {/* Párrafo inferior en Montserrat */}
     <p 
       className="text-white/95 text-[3.3vw] font-normal leading-[1.25] drop-shadow-md"
-      style={{ fontFamily: "'Nunito', 'Quicksand', 'Varela Round', sans-serif" }}
+      style={{ fontFamily: "'Montserrat', sans-serif" }}
     >
       <span className="block whitespace-nowrap">Hidratación profunda no invasiva de</span>
       <span className="block whitespace-nowrap">labios, enfocado en dar</span>
@@ -50,7 +50,7 @@ const SalvarHydrolips = () => {
 </section>
 
       {/* =====================================================
-          PC (tu código original, sin cambios)
+          PC (igual que antes, solo cambió la fuente a Montserrat en los 2 textos)
           ===================================================== */}
       <section 
         className="hidden lg:flex relative w-full h-[550px] md:h-[650px] lg:h-[750px] bg-cover bg-center items-center font-principal mb-16 md:mb-24"
@@ -64,7 +64,10 @@ const SalvarHydrolips = () => {
           
           <div className="w-full md:w-[60%] lg:w-1/2">
             
-            <p className="text-white/95 text-[14px] md:text-[15px] lg:text-[16px] font-light mb-2 tracking-wide drop-shadow-md">
+            <p
+              className="text-white/95 text-[14px] md:text-[15px] lg:text-[16px] font-light mb-2 tracking-wide drop-shadow-md"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
               Pregunta también por nuestro
             </p>
             
@@ -82,7 +85,10 @@ const SalvarHydrolips = () => {
               </div>
             </h2>
 
-            <p className="text-white/95 text-[13px] md:text-[14px] lg:text-[15.5px] font-light leading-snug max-w-[450px] drop-shadow-md">
+            <p
+              className="text-white/95 text-[13px] md:text-[14px] lg:text-[15.5px] font-light leading-snug max-w-[450px] drop-shadow-md"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
               Hidratación profunda no invasiva de labios, enfocado en dar luminosidad a esos labios deshidratados o con esas descamación incómoda.
             </p>
 
