@@ -73,9 +73,9 @@ const CasosExito = () => {
 
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-2 sm:px-4 md:px-6 flex flex-col items-center text-center">
 
-        {/* TÍTULO: 3 filas exactas con whitespace-nowrap. Tamaño en celular se cambia arriba en TITULO_CELULAR */}
+        {/* TÍTULO: leading-[0.85] y lg:leading-[0.9] para pegar mucho más la distancia entre las 3 filas */}
         <h2
-          className="text-[length:var(--tit)] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.6rem] text-[#053d57] leading-[1.05] lg:leading-[1.1] mb-5 w-full uppercase tracking-tighter drop-shadow-sm lg:drop-shadow-none flex flex-col items-center"
+          className="text-[length:var(--tit)] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.6rem] text-[#053d57] leading-[0.85] lg:leading-[0.9] mb-5 w-full uppercase tracking-tighter drop-shadow-sm lg:drop-shadow-none flex flex-col items-center"
           style={{ fontFamily: 'Alta, serif', '--tit': `${TITULO_CELULAR}vw` }}
         >
           <span className="block whitespace-nowrap">PORQUE NUESTRA UNIDAD DERMOLÁSER VA</span>
@@ -83,8 +83,11 @@ const CasosExito = () => {
           <span className="block whitespace-nowrap">EN TU PIEL, IMPACTA EN TUS EMOCIONES.</span>
         </h2>
 
-        {/* Párrafo: en celular ya sin caja redonda y con letra más delgada (igual que PC) */}
-        <p className="text-[#88807a] text-[13px] md:text-[17px] font-normal md:font-light leading-[1.15] mb-10 max-w-[750px] drop-shadow-sm md:drop-shadow-none">
+        {/* Párrafo: Se le agregó la tipografía Montserrat para asegurar que sea igual en celular y PC */}
+        <p 
+          className="text-[#88807a] text-[13px] md:text-[17px] font-normal md:font-light leading-[1.15] mb-10 max-w-[750px] drop-shadow-sm md:drop-shadow-none"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
           Te dejamos algunos de nuestros casos de éxito, siempre realizado con nuestros<br className="hidden md:block" />
           protocolos combinados. Nuestra clave es combinar más de 1 tecnología.
         </p>

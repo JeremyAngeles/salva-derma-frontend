@@ -14,27 +14,30 @@ const ContactoStaff = () => {
         {/* Capa de protección sutil */}
         <div className="absolute inset-0 bg-black/15 pointer-events-none z-0"></div>
 
-        {/* TÍTULO Y PÁRRAFO SUPERIOR (En blanco, ahora CENTRADO) */}
+        {/* TÍTULO Y PÁRRAFO SUPERIOR (En blanco, CENTRADO) */}
         <div className="relative z-10 flex flex-col items-center text-center w-full mt-2">
           
+          {/* ✅ Título en 3 filas (solo celular/tablet) */}
           <h2 
-            className="text-white text-[1.1rem] sm:text-[1.4rem] leading-[1.15] tracking-wide drop-shadow-md mb-3"
+            className="text-white text-[clamp(14px,4.6vw,28px)] leading-[1.1] tracking-tighter font-light drop-shadow-md mb-4 whitespace-nowrap"
             style={{ fontFamily: 'Alta, serif' }}
           >
             <span className="block">SALVAR DERMATOPLÁSTICA</span>
-            <span className="block">ESPECIALISTAS EN</span>
-            <span className="block">DERMATOLOGÍA CLÍNICA,</span>
-            <span className="block">ESTÉTICA, LÁSER Y</span>
-            <span className="block">TRICOLOGIA</span>
+            <span className="block">ESPECIALISTAS EN DERMATOLOGÍA CLÍNICA,</span>
+            <span className="block">ESTÉTICA, LÁSER Y TRICOLOGIA</span>
           </h2>
 
-          <p className="text-white text-[10.5px] sm:text-[13px] font-medium leading-[1.3] drop-shadow-md max-w-[260px] mx-auto">
+          {/* ✅ Párrafo en Montserrat (celular) */}
+          <p
+            className="text-white text-[15px] font-normal leading-[1.35] drop-shadow-md max-w-[340px] sm:max-w-[420px] mx-auto"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+          >
             Agenda tu evaluación con nuestro staff altamente capacitado dentro y fuera del país. Para mayor información y citas, ¡contáctanos!
           </p>
 
         </div>
 
-        {/* BOTÓN WHATSAPP Y REDES SOCIALES (Mucho más abajo en la parte inferior) */}
+        {/* BOTÓN WHATSAPP Y REDES SOCIALES */}
         <div className="relative z-10 flex flex-col items-center w-full mb-1">
           
           {/* Botón de WhatsApp centrado */}
@@ -79,7 +82,7 @@ const ContactoStaff = () => {
       </div>
 
       {/* =========================================
-          VISTA PC (lg:) - INTACTA SIN CAMBIOS
+          VISTA PC (lg:) - título intacto, párrafo en Montserrat
           ========================================= */}
       <div 
         className="hidden lg:flex w-full relative bg-cover bg-center bg-no-repeat min-h-[850px] items-center"
@@ -100,7 +103,11 @@ const ContactoStaff = () => {
               TRICOLOGIA
             </h2>
 
-            <p className="relative -top-10 md:-top-20 text-white text-[15px] md:text-[18px] lg:text-[19px] font-light leading-[1.3] mb-16 md:mb-24 max-w-[450px] drop-shadow-sm">
+            {/* ✅ Párrafo en Montserrat (PC) */}
+            <p
+              className="relative -top-10 md:-top-20 text-white text-[15px] md:text-[18px] lg:text-[19px] font-light leading-[1.3] mb-16 md:mb-24 max-w-[450px] drop-shadow-sm"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
               Agenda tu evaluación con nuestro staff<br className="hidden md:block" />
               altamente capacitado dentro y fuera del país.<br className="hidden md:block" />
               Para mayor información y citas, ¡contáctanos!

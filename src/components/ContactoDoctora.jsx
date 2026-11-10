@@ -4,7 +4,7 @@ const BG_IMG =
   'https://res.cloudinary.com/da47iihxz/image/upload/v1792810329/jwlbnofvb3ot0smmutuc.jpg';
 
 /*
-  Medidas de PC (sin cambios)
+  Medidas de PC (sin cambios estructurales)
 */
 const S = 1.2;
 const px = (n) => `${Math.round(n * S * 10) / 10}px`;
@@ -33,27 +33,26 @@ const ContactoDoctora = () => {
         {/* ARRIBA: título + párrafo centrados */}
         <div className="relative z-10 w-full px-[5vw] flex flex-col items-center text-center text-white">
 
-          {/* TÍTULO */}
+          {/* TÍTULO EN 3 FILAS (Celular) y filas más juntas (leading-[0.85]) */}
           <h2
-            className="text-[clamp(18px,5.4vw,52px)] leading-[1.1] tracking-[0.03em] font-normal drop-shadow-md m-0 mb-[3.5vw] sm:mb-[2.5vw] whitespace-nowrap"
+            className="text-[clamp(15px,5vw,50px)] leading-[0.85] tracking-[0.03em] font-normal drop-shadow-md m-0 mb-[4vw] sm:mb-[3vw] whitespace-nowrap"
             style={{ fontFamily: 'Alta, serif' }}
           >
-            CADA PIEL TIENE SU<br />
-            PROPIA HISTORIA, TE<br />
-            AYUDAMOS A CONTARLA<br />
-            DE LA MEJOR MANERA
+            CADA PIEL TIENE SU PROPIA<br />
+            HISTORIA, TE AYUDAMOS A<br />
+            CONTARLA DE LA MEJOR MANERA
           </h2>
 
-          {/* PÁRRAFO */}
-          <p className="text-[clamp(12px,3vw,24px)] leading-[1.3] font-light drop-shadow-sm m-0 max-w-[78vw] sm:max-w-[62vw]">
-            Nuestra área de dermatología te brinda atención personalizada,
-            experiencia y tratamientos seguros,&nbsp; siempre con&nbsp; empatía y
+          {/* PÁRRAFO EN 3 FILAS (Celular) */}
+          <p className="text-[clamp(11px,2.9vw,24px)] leading-[1.3] font-light drop-shadow-sm m-0 w-full max-w-[85vw] sm:max-w-[70vw] whitespace-nowrap">
+            Nuestra área de dermatología te brinda atención personalizada,<br className="block" />
+            experiencia y tratamientos seguros,&nbsp; siempre con&nbsp; empatía y<br className="block" />
             acompañamiento en tu proceso.
           </p>
         </div>
 
         {/* ABAJO: botón + redes, uno al lado del otro */}
-        <div className="relative z-10 w-full px-[3vw] flex flex-row items-center justify-center gap-[2vw] text-white">
+        <div className="relative z-10 w-full px-[3vw] flex flex-row items-center justify-center gap-[2vw] text-white mt-auto">
 
           {/* BOTÓN TELÉFONO (ancho ajustado al contenido) */}
           <a
@@ -133,7 +132,7 @@ const ContactoDoctora = () => {
       </section>
 
       {/* =========================================
-          VERSIÓN PC (lg en adelante) - SIN CAMBIOS
+          VERSIÓN PC (lg en adelante)
           ========================================= */}
       <div className="hidden lg:block w-full overflow-x-auto">
         <section
@@ -150,7 +149,7 @@ const ContactoDoctora = () => {
             className="absolute text-right"
             style={{ right: '160px', top: 0, width: '800px', height: '930px', overflow: 'hidden' }}
           >
-            {/* TÍTULO */}
+            {/* TÍTULO EN 4 FILAS (PC) - Filas más juntas reduciendo el lineHeight */}
             <h2
               className="absolute text-white drop-shadow-md m-0"
               style={{
@@ -158,7 +157,7 @@ const ContactoDoctora = () => {
                 top: `${parseFloat(py(75)) - TITULO_SUBIR}px`,
                 fontFamily: 'Alta, serif',
                 fontSize: px(45),
-                lineHeight: px(48),
+                lineHeight: px(40), // Antes era 48, ahora están más pegadas
                 letterSpacing: '0.04em',
                 whiteSpace: 'nowrap',
                 fontWeight: 400,

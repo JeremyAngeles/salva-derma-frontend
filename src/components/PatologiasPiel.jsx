@@ -31,9 +31,9 @@ const PatologiasPiel = () => {
       ></div>
 
       <div className="relative z-10 w-full flex flex-col pt-[3.5vw] lg:pt-24 lg:pb-24">
-        {/* Título CELULAR / TABLET: centrado arriba */}
+        {/* Título CELULAR / TABLET: centrado arriba, filas juntas con leading-[0.85] */}
         <h2
-          className="lg:hidden text-center text-[8.3vw] leading-[1.12] text-[#053d57] uppercase mb-[14.1vw]"
+          className="lg:hidden text-center text-[8.3vw] leading-[0.85] text-[#053d57] uppercase mb-[14.1vw]"
           style={{ fontFamily: 'Alta, serif' }}
         >
           PATOLOGÍAS
@@ -43,9 +43,9 @@ const PatologiasPiel = () => {
 
         {/* Bloque de contenido: mitad derecha en celular/tablet */}
         <div className="ml-[57%] w-[41%] lg:ml-[45%] lg:w-[50%] flex flex-col items-start">
-          {/* Título ESCRITORIO */}
+          {/* Título ESCRITORIO: filas juntas con leading-[0.85] */}
           <h2
-            className="hidden lg:block lg:text-[5.2rem] leading-[1.05] text-[#053d57] lg:mb-16 uppercase"
+            className="hidden lg:block lg:text-[5.2rem] leading-[0.85] text-[#053d57] lg:mb-16 uppercase"
             style={{ fontFamily: 'Alta, serif' }}
           >
             PATOLOGÍAS

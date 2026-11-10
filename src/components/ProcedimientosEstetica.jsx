@@ -115,12 +115,31 @@ const ProcedimientosEstetica = () => {
                   {proc.title}
                 </h3>
                 {proc.desc && (
-                  /* MODIFICADO: text-[#7d7d7d] y fuente Montserrat para celular */
                   <p 
-                    className="text-[#7d7d7d] text-[13px] min-[400px]:text-[14px] sm:text-[17px] font-normal leading-[1.3] lg:leading-tight max-w-[240px] sm:max-w-[420px]"
+                    className="text-[#7d7d7d] text-[13px] min-[400px]:text-[14px] sm:text-[17px] font-normal leading-[1.3] max-w-[240px] sm:max-w-[420px]"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
-                    {proc.desc}
+                    {/* DESCRIPCIONES FORZADAS EN MÓVIL (ocultas en PC gracias a lg:inline) */}
+                    {proc.id === 1 && (
+                      <>
+                        De rejuvenecimiento fraccionado, <br className="lg:hidden" />
+                        láser 4D con efecto lifting/tensado, <br className="lg:hidden" />
+                        láser despigmentante y de ojeras.
+                      </>
+                    )}
+                    {proc.id === 4 && (
+                      <>
+                        Despigmentantes, hidratantes, <br className="lg:hidden" />
+                        exosomas y PDRN de salmón.
+                      </>
+                    )}
+                    {proc.id === 5 && (
+                      <>
+                        Botox, Ácido hialurónico, <br className="lg:hidden" />
+                        Bioestimuladores de colágeno, etc.
+                      </>
+                    )}
+                    {proc.id !== 1 && proc.id !== 4 && proc.id !== 5 && proc.desc}
                   </p>
                 )}
               </div>
@@ -164,7 +183,7 @@ const ProcedimientosEstetica = () => {
       </div>
 
       {/* =========================================
-          VISTA PC (lg:)
+          VISTA PC (lg:) - TEXTO FLUIDO ORIGINAL
           ========================================= */}
       <div className="hidden lg:block relative z-10 w-full max-w-[1300px] mx-auto px-6 lg:px-10">
         
@@ -195,7 +214,6 @@ const ProcedimientosEstetica = () => {
                     {proc.title}
                   </h3>
                   {proc.desc && (
-                    /* MODIFICADO: text-[#7d7d7d] y fuente Montserrat para PC */
                     <p 
                       className="text-[#7d7d7d] text-[14px] md:text-[16px] font-normal leading-snug max-w-[450px]"
                       style={{ fontFamily: "'Montserrat', sans-serif" }}

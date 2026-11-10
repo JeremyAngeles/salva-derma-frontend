@@ -21,9 +21,14 @@ const CirugiaPlasticaInfo = () => {
             <span className="whitespace-nowrap">PUEDES LOGRAR</span>
           </h2>
           
-          {/* Párrafo subido y con las oraciones más juntas */}
-          <p className="text-[#88807a] text-[15px] md:text-[16.5px] font-light leading-[1.15] max-w-[500px]">
-            No todos los días vamos a poder salvarle la vida a alguien, pero cada día tenemos la oportunidad de influir en la vida de alguien.
+          {/* Párrafo con tipografía Montserrat y 2 filas garantizadas en PC */}
+          <p 
+            className="text-[#88807a] text-[15px] md:text-[16.5px] font-light leading-[1.15] max-w-[500px] lg:max-w-none"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+          >
+            <span className="lg:block lg:whitespace-nowrap">No todos los días vamos a poder salvarle la vida a alguien,</span>
+            <span className="lg:hidden"> </span>
+            <span className="lg:block lg:whitespace-nowrap">pero cada día tenemos la oportunidad de influir en la vida de alguien.</span>
           </p>
         </div>
 

@@ -72,15 +72,21 @@ const EsteticaEspecialistas = () => {
           ESTÉTICA DE LA MANO DE ESPECIALISTAS
         </h2>
 
-        {/* Subtítulo CELULAR Y TABLET (3 filas fijas) */}
-        <p className="lg:hidden text-[#88807a] text-[3.2vw] font-medium leading-snug mx-auto mb-[5vw]">
+        {/* Subtítulo CELULAR Y TABLET (3 filas fijas) con fuente Montserrat */}
+        <p 
+          className="lg:hidden text-[#88807a] text-[3.2vw] font-medium leading-snug mx-auto mb-[5vw]"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
           <span className="block whitespace-nowrap">Resaltamos la belleza respetando la naturalidad de</span>
           <span className="block whitespace-nowrap">cada rostro, siempre bajo tratamientos seguros y con</span>
           <span className="block whitespace-nowrap">nuestros especialistas altamente capacitados</span>
         </p>
 
-        {/* Subtítulo PC (sin cambios) */}
-        <p className="hidden lg:block text-[#88807a] text-[16px] font-medium leading-snug max-w-[700px] mx-auto mb-16">
+        {/* Subtítulo PC (TEXTO MÁS GRANDE y contenedor más ancho para mantener 2 filas) */}
+        <p 
+          className="hidden lg:block text-[#88807a] text-[18px] lg:text-[20px] font-medium leading-snug max-w-[900px] mx-auto mb-16"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
           Resaltamos la belleza respetando la naturalidad de cada rostro, siempre bajo<br />
           tratamientos seguros y con nuestros especialistas altamente capacitados
         </p>

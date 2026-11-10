@@ -82,12 +82,29 @@ const DermatologiaEstetica = () => {
             </h2>
           </div>
           
-          {/* Párrafo forzado a exactamente 4 filas como en la referencia */}
-          <div className="flex flex-col items-center text-[#88807a] text-[10px] min-[375px]:text-[11px] min-[400px]:text-[12px] sm:text-[16px] md:text-[20px] lg:text-[1.65rem] font-light leading-[1.6] md:leading-[1.5] text-center w-full">
-            <span className="whitespace-nowrap">Combina el conocimiento y ciencia de nuestros dermatólogos</span>
-            <span className="whitespace-nowrap">junto a la tecnología y tratamientos avanzados para la mejora</span>
-            <span className="whitespace-nowrap">de la calidad de piel (líneas de expresión, flacidez, ojeras, textura</span>
-            <span className="whitespace-nowrap">poros y pigmentaciones etc).</span>
+          {/* =========================================
+              PÁRRAFO: 4 filas en móvil/tablet | 2 filas en PC
+              Aplicando fuente Montserrat en ambos
+              ========================================= */}
+          <div 
+            className="text-[#88807a] font-light leading-[1.6] md:leading-[1.5] text-center w-full text-[10px] min-[375px]:text-[11px] min-[400px]:text-[12px] sm:text-[16px] md:text-[20px] lg:text-[1.65rem]"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+          >
+            
+            {/* VERSIÓN MÓVIL/TABLET (4 FILAS) */}
+            <div className="flex flex-col items-center lg:hidden">
+              <span className="whitespace-nowrap">Combina el conocimiento y ciencia de nuestros dermatólogos</span>
+              <span className="whitespace-nowrap">junto a la tecnología y tratamientos avanzados para la mejora</span>
+              <span className="whitespace-nowrap">de la calidad de piel (líneas de expresión, flacidez, ojeras, textura</span>
+              <span className="whitespace-nowrap">poros y pigmentaciones etc).</span>
+            </div>
+
+            {/* VERSIÓN PC (2 FILAS) */}
+            <div className="hidden lg:flex flex-col items-center w-full max-w-[1400px] mx-auto px-4">
+              <span className="whitespace-nowrap">Combina el conocimiento y ciencia de nuestros dermatólogos junto a la tecnología y tratamientos avanzados para la mejora</span>
+              <span className="whitespace-nowrap">de la calidad de piel (líneas de expresión, flacidez, ojeras, textura, poros y pigmentaciones etc).</span>
+            </div>
+
           </div>
 
         </div>
