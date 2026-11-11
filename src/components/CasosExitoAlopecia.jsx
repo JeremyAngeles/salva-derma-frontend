@@ -52,9 +52,9 @@ const CasosExitoAlopecia = () => {
 
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
 
-        {/* Título — letras más juntas (tracking-tighter) y filas pegadas (leading-[0.85]) */}
+        {/* Título — tamaño igualado a CasosExito en PC (lg:text-[2.6rem]) */}
         <h2
-          className="text-[4.0vw] sm:text-[3.6vw] lg:text-[2.2rem] text-[#053d57] leading-[0.85] mb-3 sm:mb-5 max-w-[900px] tracking-tighter uppercase whitespace-nowrap lg:whitespace-normal"
+          className="text-[4.0vw] sm:text-[3.6vw] lg:text-[2.6rem] text-[#053d57] leading-[0.85] mb-3 sm:mb-5 max-w-[900px] tracking-tighter uppercase whitespace-nowrap lg:whitespace-normal"
           style={{ fontFamily: 'Alta, serif' }}
         >
           LA ALOPECIA SÍ SE PUEDE TRATAR. NO CON MITOS,<br />
@@ -62,7 +62,7 @@ const CasosExitoAlopecia = () => {
           PROTOCOLOS CLÍNICOS REALES.
         </h2>
 
-        {/* Subtítulo — ahora con fuente Montserrat */}
+        {/* Subtítulo — 100% asegurado con fuente Montserrat en celular y PC */}
         <p 
           className="text-[#88807a] text-[clamp(11px,2.6vw,20px)] lg:text-base font-medium leading-[1.2] mb-6 sm:mb-10 lg:mb-12 max-w-[700px]"
           style={{ fontFamily: "'Montserrat', sans-serif" }}
