@@ -62,26 +62,26 @@ const PatologiasPiel = () => {
 
           {/* Subtítulo + lista: desplazados a la derecha en celular/tablet */}
           <div className="ml-[3vw] w-[calc(100%-2vw)] lg:ml-0 lg:w-full">
-          {/* Subtítulo */}
-          <h3
-            className="text-[#c59e93] text-[5vw] leading-[1.2] lg:text-[2.4rem] font-light tracking-[0.02em] uppercase mb-[3.5vw] lg:mb-8"
-            style={{ fontFamily: 'Alta, serif' }}
-          >
-            ENFERMEDADES DE LA PIEL
-          </h3>
+            {/* Subtítulo (Más grande en PC: lg:text-[3.2rem]) */}
+            <h3
+              className="text-[#c59e93] text-[5vw] leading-[1.2] lg:text-[3.2rem] font-light tracking-[0.02em] uppercase mb-[3.5vw] lg:mb-8"
+              style={{ fontFamily: 'Alta, serif' }}
+            >
+              ENFERMEDADES DE LA PIEL
+            </h3>
 
-          {/* Lista */}
-          <ul className="flex flex-col gap-0 lg:gap-3">
-            {patologias.map((item, index) => (
-              <li
-                key={index}
-                className="flex items-start text-[#7d7570] text-[2.75vw] leading-[1.15] lg:text-[1.05rem] lg:leading-relaxed font-medium"
-              >
-                <span className="mr-[0.8vw] lg:mr-3">•</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+            {/* Lista */}
+            <ul className="flex flex-col gap-0 lg:gap-3">
+              {patologias.map((item, index) => (
+                <li
+                  key={index}
+                  className="flex items-start text-[#7d7570] text-[2.75vw] leading-[1.15] lg:text-[1.05rem] lg:leading-relaxed font-medium"
+                >
+                  <span className="mr-[0.8vw] lg:mr-3">•</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
