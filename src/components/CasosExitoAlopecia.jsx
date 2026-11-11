@@ -52,10 +52,9 @@ const CasosExitoAlopecia = () => {
 
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
 
-        {/* Título — filas más juntas: leading-[1.1] (antes 1.3).
-            Para juntar más: leading-[1] | para separar: leading-[1.2] */}
+        {/* Título — filas súper pegadas con leading-[0.85] */}
         <h2
-          className="text-[4.0vw] sm:text-[3.6vw] lg:text-[2.2rem] text-[#053d57] leading-[1.1] mb-3 sm:mb-5 max-w-[900px] tracking-wide uppercase whitespace-nowrap lg:whitespace-normal"
+          className="text-[4.0vw] sm:text-[3.6vw] lg:text-[2.2rem] text-[#053d57] leading-[0.85] mb-3 sm:mb-5 max-w-[900px] tracking-wide uppercase whitespace-nowrap lg:whitespace-normal"
           style={{ fontFamily: 'Alta, serif' }}
         >
           LA ALOPECIA SÍ SE PUEDE TRATAR. NO CON MITOS,<br />
@@ -63,8 +62,7 @@ const CasosExitoAlopecia = () => {
           PROTOCOLOS CLÍNICOS REALES.
         </h2>
 
-        {/* Subtítulo — filas más juntas: leading-[1.2] (antes leading-relaxed = 1.625).
-            Para juntar más: leading-[1.1] | para separar: leading-[1.35] */}
+        {/* Subtítulo */}
         <p className="text-[#88807a] text-[clamp(11px,2.6vw,20px)] lg:text-base font-medium leading-[1.2] mb-6 sm:mb-10 lg:mb-12 max-w-[700px]">
           Nuestro staff de dermatólogos capacitados en tricología te<br />
           presentan algunos de nuestros casos de éxito.

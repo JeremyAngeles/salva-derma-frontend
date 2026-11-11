@@ -1,163 +1,240 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const ContactoStaff = () => {
+const CasosExitoEstetica = () => {
+  const [currentCase, setCurrentCase] = useState(0);
+
+  const casos = [
+    { id: 1, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696123/antes_y_despu%C3%A9s_estetica_1.jpg' },
+    { id: 2, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696120/antes_y_despu%C3%A9s_estetica_2.jpg' },
+    { id: 3, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696121/antes_y_despu%C3%A9s_estetica_3.jpg' },
+    { id: 4, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696123/antes_y_despu%C3%A9s_estetica_4.jpg' }
+  ];
+
+  // Lógica para deslizar con el dedo (Swipe)
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setCurrentCase((prev) => (prev === casos.length - 1 ? 0 : prev + 1));
+    }
+    if (isRightSwipe) {
+      setCurrentCase((prev) => (prev === 0 ? casos.length - 1 : prev - 1));
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCase((prev) => (prev + 1) % casos.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [casos.length]);
+
   return (
-    <section className="w-full font-principal overflow-hidden relative mt-[-2px]">
+    <section className="w-full bg-white font-principal pt-6 pb-0 md:pt-[140px] md:pb-[95px]">
       
       {/* =========================================
-          VISTA CELULAR Y TABLET (< lg)
+          VISTA CELULAR (< md)
           ========================================= */}
-      <div 
-        className="lg:hidden relative w-full aspect-[629/880] bg-cover bg-center bg-no-repeat overflow-hidden flex flex-col justify-between pt-8 pb-3 px-6"
-        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793751615/toppj3zf2tzbvyrofdrh.png')" }}
-      >
-        {/* Capa de protección sutil */}
-        <div className="absolute inset-0 bg-black/15 pointer-events-none z-0"></div>
+      <div className="md:hidden block">
+        {/* FRANJA DE FONDO */}
+        <div
+          className="w-full bg-cover bg-center flex items-center py-12"
+          style={{ 
+            backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1792811388/ltdu5utjhfkbul0cfkjz.png')"
+          }}
+        >
+          <div className="w-full max-w-[1100px] mx-auto px-6 flex flex-col items-center gap-10">
 
-        {/* TÍTULO Y PÁRRAFO SUPERIOR (En blanco, CENTRADO) */}
-        <div className="relative z-10 flex flex-col items-center text-center w-full mt-2">
-          
-          {/* ✅ Título en 3 filas (solo celular/tablet) */}
-          <h2 
-            className="text-white text-[clamp(19px,6.2vw,28px)] leading-[1] tracking-tighter font-light drop-shadow-md mb-4 whitespace-nowrap"
-            style={{ fontFamily: 'Alta, serif' }}
-          >
-            <span className="block">SALVAR DERMATOPLÁSTICA</span>
-            <span className="block">ESPECIALISTAS EN</span>
-            <span className="block">DERMATOLOGÍA CLÍNICA,</span>
-            <span className="block">ESTÉTICA, LÁSER Y</span>
-            <span className="block">TRICOLOGIA</span>
-          </h2>
+            {/* FOTO Y PUNTOS AGRUPADOS (Puntos debajo del card) */}
+            <div className="flex flex-col items-center w-full max-w-[310px] sm:max-w-[340px] shrink-0">
+              
+              {/* FOTO VERTICAL */}
+              <div 
+                className="relative z-20 w-full h-[620px] sm:h-[660px] rounded-2xl overflow-hidden bg-white shadow-lg touch-pan-y"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                <img src={casos[0].img} alt="layout" className="w-full h-full object-cover invisible pointer-events-none" />
+                {casos.map((caso, index) => (
+                  <img
+                    key={caso.id}
+                    src={caso.img}
+                    alt={`Caso Estética ${index + 1}`}
+                    className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                      currentCase === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                    }`}
+                    onError={(e) => {
+                      e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
+                      e.target.className = 'absolute top-0 left-0 w-full h-full object-cover bg-[#dcc4bc]';
+                    }}
+                  />
+                ))}
+              </div>
 
-          {/* ✅ Párrafo en Montserrat (celular) */}
-          <p
-            className="text-white text-[15px] font-normal leading-[1.35] drop-shadow-md max-w-[340px] sm:max-w-[420px] mx-auto"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            Agenda tu evaluación con nuestro staff altamente capacitado dentro y fuera del país. Para mayor información y citas, ¡contáctanos!
-          </p>
-
-        </div>
-
-        {/* BOTÓN WHATSAPP Y REDES SOCIALES */}
-        <div className="relative z-10 flex flex-col items-center w-full mb-1">
-          
-          {/* Botón de WhatsApp centrado */}
-          <a 
-            href="https://wa.me/51994060977" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="w-[240px] sm:w-[280px] h-[44px] bg-[#d9c4bc] text-white rounded-full flex items-center justify-center gap-2.5 shadow-lg active:scale-95 transition-transform mb-2.5"
-          >
-            <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
-              <img 
-                src="/iconotelefonoblanco.svg" 
-                alt="Teléfono WhatsApp" 
-                className="w-full h-full object-contain"
-                onError={(e) => { e.target.style.display = 'none'; }}
-              />
+              {/* PUNTOS EXCLUSIVOS PARA CELULAR */}
+              <div className="flex gap-[13px] mt-4 z-20">
+                {casos.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentCase(index)}
+                    aria-label={`Ver caso ${index + 1}`}
+                    className={`w-[18px] h-[18px] rounded-full border-[1.5px] transition-colors shadow-sm ${
+                      currentCase === index
+                        ? 'bg-[#cfaaa6] border-[#cfaaa6]'
+                        : 'bg-transparent border-[#1b4a72] hover:bg-[#1b4a72]/10'
+                    }`}
+                  ></button>
+                ))}
+              </div>
             </div>
-            <span className="text-[1rem] sm:text-[1.15rem] font-light tracking-wide whitespace-nowrap leading-none">
-              +51 994 060 977
-            </span>
-          </a>
 
-          {/* Redes Sociales centradas */}
-          <div className="flex items-center gap-2.5 text-white drop-shadow-md">
-            <span className="text-[11px] sm:text-[13px] font-light tracking-wide">
-              Síguenos en:
-            </span>
-            <div className="flex gap-2">
-              <a href="#" className="w-5 h-5 flex items-center justify-center">
-                <img src="/fcolor.svg" alt="Facebook" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-              </a>
-              <a href="#" className="w-5 h-5 flex items-center justify-center">
-                <img src="/igcolor.svg" alt="Instagram" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-              </a>
-              <a href="#" className="w-5 h-5 flex items-center justify-center">
-                <img src="/tiktokcolor.svg" alt="TikTok" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-              </a>
+            {/* TEXTOS */}
+            <div className="relative z-10 flex flex-col items-center text-center text-white -mx-3">
+              {/* ✅ Título en 3 filas (solo celular) */}
+              <h2
+                className="text-[clamp(19px,6.2vw,28px)] leading-[0.95] tracking-tighter font-light mb-5 drop-shadow-md whitespace-nowrap"
+                style={{ fontFamily: 'Alta, serif' }}
+              >
+                QUERERTE ES ACEPTARTE<br />
+                COMO ERES, PERO TAMBIÉN ES<br />
+                CONSTRUIRTE COMO QUIERES.
+              </h2>
+              <div className="w-[150px] h-[3px] bg-[#cfaaa6] mb-6"></div>
+              
+              {/* ✅ Párrafo en Montserrat (celular) */}
+              <p 
+                className="text-white text-[15px] font-normal leading-[1.35] max-w-[620px] drop-shadow-md"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
+                Nuestros tratamientos en dermatología estética
+                buscan calidad y belleza, sin olvidar que la piel
+                es un órgano complejo que tiene distintas capas
+                y también posibles enfermedades. Nuestro
+                objetivo es mejorar la piel con conocimiento y
+                ciencia que nos brinda nuestra especialidad.
+              </p>
             </div>
+
           </div>
-
         </div>
       </div>
 
       {/* =========================================
-          VISTA PC (lg:) - título intacto, párrafo en Montserrat
+          VISTA PC ORIGINAL (>= md)
           ========================================= */}
-      <div 
-        className="hidden lg:flex w-full relative bg-cover bg-center bg-no-repeat min-h-[850px] items-center"
-        style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793088625/d76epe6tvn07vzwnlqop.jpg')" }}
-      >
-        <div className="relative z-10 w-full max-w-[1350px] mx-auto px-6 lg:px-10 flex flex-col justify-center">
-          
-          <div className="w-full md:w-[60%] lg:w-[50%] flex flex-col items-center md:items-start text-center md:text-left">
-            
-            <h2 
-              className="relative -top-8 md:-top-16 text-[#053d57] text-[1.8rem] sm:text-4xl md:text-[2.5rem] lg:text-[2.8rem] leading-[1.1] mb-6 md:mb-8 tracking-wide drop-shadow-sm"
-              style={{ fontFamily: 'Alta, serif' }}
-            >
-              SALVAR DERMATOPLÁSTICA<br />
-              ESPECIALISTAS EN<br />
-              DERMATOLOGÍA CLÍNICA,<br />
-              ESTÉTICA, LÁSER Y<br />
-              TRICOLOGIA
-            </h2>
+      <div className="hidden md:block">
+        {/* FRANJA DE FONDO */}
+        <div
+          className="w-full bg-cover bg-center min-h-[580px] flex items-center"
+          style={{ 
+            backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1792811388/ltdu5utjhfkbul0cfkjz.png')"
+          }}
+        >
+          {/* Contenedor interno centrado */}
+          <div className="w-full max-w-[1100px] mx-auto px-0 flex flex-row items-center justify-between gap-10 py-0">
 
-            {/* ✅ Párrafo en Montserrat (PC) */}
-            <p
-              className="relative -top-10 md:-top-20 text-white text-[15px] md:text-[18px] lg:text-[19px] font-light leading-[1.3] mb-16 md:mb-24 max-w-[450px] drop-shadow-sm"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            {/* FOTO VERTICAL */}
+            <div 
+              className="relative z-20 w-full max-w-[310px] h-[680px] -my-[50px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-lg touch-pan-y"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
-              Agenda tu evaluación con nuestro staff<br className="hidden md:block" />
-              altamente capacitado dentro y fuera del país.<br className="hidden md:block" />
-              Para mayor información y citas, ¡contáctanos!
-            </p>
+              {/* Imagen base invisible para mantener la estructura y altura correcta */}
+              <img
+                src={casos[0].img}
+                alt="layout"
+                className="w-full h-full object-cover invisible pointer-events-none"
+              />
 
-            <a 
-              href="https://wa.me/51994060977" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="relative top-12 md:top-24 bg-[#dcc4bc] hover:bg-[#ceb5ac] text-white rounded-full py-4 px-8 md:px-10 flex items-center justify-center gap-4 shadow-md transition-all group mb-4 md:mb-5 w-fit"
-            >
-              <div className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center">
-                <img 
-                  src="/iconotelefonoblanco.svg" 
-                  alt="Teléfono WhatsApp" 
-                  className="w-full h-full object-contain"
-                  onError={(e) => { e.target.style.display = 'none'; }}
+              {/* Mapeo de todas las imágenes con transición de opacidad (fade) */}
+              {casos.map((caso, index) => (
+                <img
+                  key={caso.id}
+                  src={caso.img}
+                  alt={`Caso Estética ${index + 1}`}
+                  className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                    currentCase === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+                  onError={(e) => {
+                    e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
+                    e.target.className = 'absolute top-0 left-0 w-full h-full object-cover bg-[#dcc4bc]';
+                  }}
                 />
-              </div>
-              <span className="text-[1.5rem] md:text-[1.9rem] font-light tracking-wide">
-                +51 994 060 977
-              </span>
-            </a>
+              ))}
+            </div>
 
-            <div className="relative top-8 md:top-28 flex items-center gap-5 text-white drop-shadow-sm">
-              <span className="text-[17px] md:text-[20px] font-light tracking-wide">
-                Síguenos en:
-              </span>
-              <div className="flex gap-5 md:gap-6">
-                <a href="#" className="flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                  <img src="/fblanco.svg" alt="Facebook" className="w-7 h-7 md:w-9 md:h-9 object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-                </a>
-                <a href="#" className="flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                  <img src="/igblanco.svg" alt="Instagram" className="w-7 h-7 md:w-9 md:h-9 object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-                </a>
-                <a href="#" className="flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                  <img src="/tiktokblanco.svg" alt="TikTok" className="w-7 h-7 md:w-9 md:h-9 object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-                </a>
-              </div>
+            {/* TEXTOS */}
+            <div className="relative z-10 flex flex-col items-end text-right text-white ml-auto">
+              
+              <h2
+                className="text-[42px] lg:text-[46px] leading-[0.9] tracking-tighter font-light mb-5 drop-shadow-md"
+                style={{ fontFamily: 'Alta, serif' }}
+              >
+                QUERERTE ES ACEPTARTE<br />
+                COMO ERES, PERO<br />
+                TAMBIÉN ES CONSTRUIRTE<br />
+                COMO QUIERES.
+              </h2>
+
+              {/* Línea divisoria */}
+              <div className="w-[220px] h-[3px] bg-[#cfaaa6] mb-6"></div>
+
+              {/* ✅ Párrafo en Montserrat (PC) */}
+              <p 
+                className="text-white text-[16px] lg:text-[17px] font-normal leading-[1.35] max-w-[720px] drop-shadow-md"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
+                Nuestros tratamientos en dermatología estética<br className="block" />
+                buscan calidad y belleza, sin olvidar que la piel<br className="block" />
+                es un órgano complejo que tiene distintas capas<br className="block" />
+                y también posibles enfermedades. Nuestro<br className="block" />
+                objetivo es mejorar la piel con conocimiento y<br className="block" />
+                ciencia que nos brinda nuestra especialidad.
+              </p>
+
             </div>
 
           </div>
+        </div>
 
+        {/* PUNTOS ORIGINALES DE PC: debajo de la franja, a la derecha de la foto */}
+        <div className="w-full max-w-[1060px] mx-auto px-0 pt-7 flex justify-start pl-[385px]">
+          <div className="flex gap-[13px]">
+            {casos.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentCase(index)}
+                aria-label={`Ver caso ${index + 1}`}
+                className={`w-[18px] h-[18px] rounded-full border-[1.5px] transition-colors shadow-sm ${
+                  currentCase === index
+                    ? 'bg-[#cfaaa6] border-[#cfaaa6]'
+                    : 'bg-transparent border-[#1b4a72] hover:bg-[#1b4a72]/10'
+                }`}
+              ></button>
+            ))}
+          </div>
         </div>
       </div>
-
+      
     </section>
   );
 };
 
-export default ContactoStaff;
+export default CasosExitoEstetica;
