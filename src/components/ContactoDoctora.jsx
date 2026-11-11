@@ -43,12 +43,12 @@ const ContactoDoctora = () => {
             CONTARLA DE LA MEJOR MANERA
           </h2>
 
-          {/* PÁRRAFO EN 3 FILAS (Celular) */}
-          <p className="text-[clamp(11px,2.9vw,24px)] leading-[1.3] font-light drop-shadow-sm m-0 w-full max-w-[85vw] sm:max-w-[70vw] whitespace-nowrap">
-            Nuestra área de dermatología te brinda atención personalizada,<br className="block" />
-            experiencia y tratamientos seguros,&nbsp; siempre con&nbsp; empatía y<br className="block" />
-            acompañamiento en tu proceso.
-          </p>
+          {/* PÁRRAFO EN 3 FILAS EXACTAS (Celular) - Forzado con flex y nowrap */}
+          <div className="text-[clamp(11px,2.9vw,24px)] leading-[1.3] font-light drop-shadow-sm m-0 w-full flex flex-col items-center text-center">
+            <span className="whitespace-nowrap">Nuestra área de dermatología te brinda atención personalizada,</span>
+            <span className="whitespace-nowrap">experiencia y tratamientos seguros, siempre con empatía y</span>
+            <span className="whitespace-nowrap">acompañamiento en tu proceso.</span>
+          </div>
         </div>
 
         {/* ABAJO: botón + redes, uno al lado del otro */}
@@ -157,7 +157,7 @@ const ContactoDoctora = () => {
                 top: `${parseFloat(py(75)) - TITULO_SUBIR}px`,
                 fontFamily: 'Alta, serif',
                 fontSize: px(45),
-                lineHeight: px(40), // Antes era 48, ahora están más pegadas
+                lineHeight: px(40),
                 letterSpacing: '0.04em',
                 whiteSpace: 'nowrap',
                 fontWeight: 400,
@@ -183,8 +183,8 @@ const ContactoDoctora = () => {
               Nuestra área de dermatología<br />
               te brinda atención<br />
               personalizada, experiencia y<br />
-              tratamientos seguros,&nbsp; siempre<br />
-              con&nbsp; empatía y<br />
+              tratamientos seguros, siempre<br />
+              con empatía y<br />
               acompañamiento en tu<br />
               proceso.
             </p>
