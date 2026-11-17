@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- URL Canónica Oficial -->
+    <link rel="canonical" href="https://salvardermatoplastica.com/" />
+
     <!-- Ícono y Favicon en /public -->
     <link rel="icon" type="image/png" href="/icon-logo-salva.png" />
     <link rel="shortcut icon" type="image/png" href="/icon-logo-salva.png" />
@@ -32,7 +35,7 @@
     <meta name="rating" content="general" />
     <meta name="theme-color" content="#053d57" />
     <meta name="msapplication-TileColor" content="#053d57" />
-    <meta name="msapplication-TileImage" content="/icon-logo-salva.png" />
+    <meta name="msapplication-TileImage" content="https://salvardermatoplastica.com/icon-logo-salva.png" />
 
     <!-- Meta Etiquetas de Geolocalización (Lince, Lima, Perú) -->
     <meta name="geo.region" content="PE-LIM" />
@@ -42,13 +45,15 @@
     <!-- Open Graph / Facebook / WhatsApp (Vista previa al compartir enlace) -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_PE" />
+    <meta property="og:url" content="https://salvardermatoplastica.com/" />
     <meta property="og:site_name" content="Salva Dermatoplástica" />
     <meta property="og:title" content="Salva Dermatoplástica | Dermatología y Cirugía Plástica en Lince" />
     <meta
       property="og:description"
       content="Atención especializada en dermatología clínica, cirugía plástica, láser y tricología. Visítanos en Av. Ignacio Merino 2475, Lince, Lima, Perú."
     />
-    <meta property="og:image" content="/icon-logo-salva.png" />
+    <meta property="og:image" content="https://salvardermatoplastica.com/icon-logo-salva.png" />
+    <meta property="og:image:secure_url" content="https://salvardermatoplastica.com/icon-logo-salva.png" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:alt" content="Logo Salva Dermatoplástica - Lince, Lima" />
 
@@ -62,12 +67,13 @@
 
     <!-- Twitter / X Cards -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://salvardermatoplastica.com/" />
     <meta name="twitter:title" content="Salva Dermatoplástica | Dermatología y Cirugía Plástica en Lince, Lima" />
     <meta
       name="twitter:description"
       content="Especialistas en dermatología, cirugía plástica, unidad dermoláser y estética avanzada en Av. Ignacio Merino 2475, Lince, Lima."
     />
-    <meta name="twitter:image" content="/icon-logo-salva.png" />
+    <meta name="twitter:image" content="https://salvardermatoplastica.com/icon-logo-salva.png" />
     <meta name="twitter:image:alt" content="Salva Dermatoplástica Lince Lima Perú" />
 
     <!-- Google Fonts: Montserrat (pesos 300, 400, 500, 600, 700) -->
@@ -83,11 +89,13 @@
       {
         "@context": "https://schema.org",
         "@type": "MedicalClinic",
+        "@id": "https://salvardermatoplastica.com/",
         "name": "Salva Dermatoplástica",
         "alternateName": "Salvar Dermatoplástica",
+        "url": "https://salvardermatoplastica.com/",
         "description": "Clínica especializada en dermatología clínica, dermatología estética, cirugía plástica, unidad dermoláser y tricología en Lince, Lima, Perú.",
-        "image": "/icon-logo-salva.png",
-        "logo": "/icon-logo-salva.png",
+        "image": "https://salvardermatoplastica.com/icon-logo-salva.png",
+        "logo": "https://salvardermatoplastica.com/icon-logo-salva.png",
         "telephone": "+51 994 060 977",
         "email": "salvar.peru@gmail.com",
         "medicalSpecialty": [
@@ -104,7 +112,26 @@
         "areaServed": {
           "@type": "City",
           "name": "Lima"
-        }
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr",
+          "https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h",
+          "https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu"
+        ]
       }
     </script>
   </head>
