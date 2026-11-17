@@ -1,11 +1,112 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <title>clinica-frontend</title>
+
+    <!-- Ícono y Favicon en /public -->
+    <link rel="icon" type="image/png" href="/icon-logo-salva.png" />
+    <link rel="shortcut icon" type="image/png" href="/icon-logo-salva.png" />
+    <link rel="apple-touch-icon" href="/icon-logo-salva.png" />
+
+    <!-- Título Principal SEO -->
+    <title>Salva Dermatoplástica | Dermatología, Cirugía Plástica y Láser en Lince, Lima</title>
+
+    <!-- Meta Etiquetas SEO Principales -->
+    <meta name="title" content="Salva Dermatoplástica | Dermatología, Cirugía Plástica y Láser en Lince, Lima" />
+    <meta
+      name="description"
+      content="Clínica Salva Dermatoplástica en Av. Ignacio Merino 2475, Lince, Lima, Perú. Especialistas en dermatología clínica, cirugía plástica, unidad dermoláser, dermatología estética, alopecia, tricología y rejuvenecimiento facial con protocolos avanzados."
+    />
+    <meta
+      name="keywords"
+      content="Salva Dermatoplástica, Salvar Dermatoplástica, dermatología en Lince, cirugía plástica en Lince, clínica dermatológica Lima, dermatólogos en Lima Perú, cirujano plástico Lima, unidad dermoláser, dermatología estética Lince, tratamiento alopecia Lima, tricología Perú, láser 4D rejuvenecimiento, láser despigmentante, botox Lince, ácido hialurónico Lima, bioestimuladores de colágeno, mesoterapia facial, nanopore, peeling químico, psoriasis, dermatitis atópica, cáncer de piel, biopsia de piel, Avenida Ignacio Merino 2475"
+    />
+    <meta name="author" content="Salva Dermatoplástica" />
+    <meta name="publisher" content="Salva Dermatoplástica" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="language" content="Spanish" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="distribution" content="global" />
+    <meta name="rating" content="general" />
+    <meta name="theme-color" content="#053d57" />
+    <meta name="msapplication-TileColor" content="#053d57" />
+    <meta name="msapplication-TileImage" content="/icon-logo-salva.png" />
+
+    <!-- Meta Etiquetas de Geolocalización (Lince, Lima, Perú) -->
+    <meta name="geo.region" content="PE-LIM" />
+    <meta name="geo.placename" content="Avenida Ignacio Merino 2475, Lince, Lima, Perú" />
+    <meta name="ICBM" content="Lince, Lima, Perú" />
+
+    <!-- Open Graph / Facebook / WhatsApp (Vista previa al compartir enlace) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_PE" />
+    <meta property="og:site_name" content="Salva Dermatoplástica" />
+    <meta property="og:title" content="Salva Dermatoplástica | Dermatología y Cirugía Plástica en Lince" />
+    <meta
+      property="og:description"
+      content="Atención especializada en dermatología clínica, cirugía plástica, láser y tricología. Visítanos en Av. Ignacio Merino 2475, Lince, Lima, Perú."
+    />
+    <meta property="og:image" content="/icon-logo-salva.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Logo Salva Dermatoplástica - Lince, Lima" />
+
+    <!-- Datos de Contacto del Negocio -->
+    <meta property="business:contact_data:street_address" content="Avenida Ignacio Merino 2475" />
+    <meta property="business:contact_data:locality" content="Lince" />
+    <meta property="business:contact_data:region" content="Lima" />
+    <meta property="business:contact_data:country_name" content="Perú" />
+    <meta property="business:contact_data:email" content="salvar.peru@gmail.com" />
+    <meta property="business:contact_data:phone_number" content="+51 994 060 977" />
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Salva Dermatoplástica | Dermatología y Cirugía Plástica en Lince, Lima" />
+    <meta
+      name="twitter:description"
+      content="Especialistas en dermatología, cirugía plástica, unidad dermoláser y estética avanzada en Av. Ignacio Merino 2475, Lince, Lima."
+    />
+    <meta name="twitter:image" content="/icon-logo-salva.png" />
+    <meta name="twitter:image:alt" content="Salva Dermatoplástica Lince Lima Perú" />
+
+    <!-- Google Fonts: Montserrat (pesos 300, 400, 500, 600, 700) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Datos Estructurados Schema.org para Google (Clínica Médica en Lince, Lima) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MedicalClinic",
+        "name": "Salva Dermatoplástica",
+        "alternateName": "Salvar Dermatoplástica",
+        "description": "Clínica especializada en dermatología clínica, dermatología estética, cirugía plástica, unidad dermoláser y tricología en Lince, Lima, Perú.",
+        "image": "/icon-logo-salva.png",
+        "logo": "/icon-logo-salva.png",
+        "telephone": "+51 994 060 977",
+        "email": "salvar.peru@gmail.com",
+        "medicalSpecialty": [
+          "Dermatology",
+          "PlasticSurgery"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Avenida Ignacio Merino 2475",
+          "addressLocality": "Lince",
+          "addressRegion": "Lima",
+          "addressCountry": "PE"
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": "Lima"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
