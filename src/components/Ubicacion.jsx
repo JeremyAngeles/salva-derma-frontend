@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Ubicacion = () => {
+  const googleMapsUrl =
+    'https://www.google.com/maps/search/?api=1&query=Av.+Ignacio+Merino+2475,+Lince,+Lima,+Peru';
+
   return (
     <section 
       className="relative w-full py-16 md:py-24 bg-cover bg-center bg-no-repeat overflow-hidden font-principal flex flex-col items-center"
@@ -32,7 +34,12 @@ const Ubicacion = () => {
           {/* =========================================
               DIRECCIÓN (Arriba del mapa SOLO en Celular y Tablet)
               ========================================= */}
-          <div className="lg:hidden flex items-center justify-center gap-3 w-full mb-2">
+          <a
+            href={googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="lg:hidden flex items-center justify-center gap-3 w-full mb-2 hover:opacity-80 transition-opacity"
+          >
             <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center">
               <img 
                 src="/iconolugarcolor.svg" 
@@ -46,19 +53,27 @@ const Ubicacion = () => {
                 Av. Ignacio Merino 2475, Lince
               </p>
             </div>
-          </div>
+          </a>
 
-          {/* COLUMNA IZQUIERDA: Mapa de Google Maps */}
+          {/* COLUMNA IZQUIERDA: Mapa de Google Maps clicable */}
           <div className="lg:col-span-7 bg-white p-2.5 sm:p-3 rounded-[2rem] sm:rounded-[2.5rem] shadow-xl border border-gray-200 group overflow-hidden w-full">
             <div className="w-full h-[350px] sm:h-[450px] md:h-[550px] lg:h-[620px] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden relative">
               <iframe 
                 title="Ubicacion Salvar Dermatoplastica"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.859871587634!2d-77.03456!3d-12.08643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c512345679%3A0x123456789abcdef!2sAv.%20Ignacio%20Merino%202475%2C%20Lince%2015073!5e0!3m2!1ses!2spe!4v1650000000000!5m2!1ses!2spe" 
-                className="w-full h-full border-0 grayscale contrast-[1.10] opacity-90 transition-all duration-500 ease-in-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100"
+                className="w-full h-full border-0 grayscale contrast-[1.10] opacity-90 transition-all duration-500 ease-in-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100 pointer-events-none"
                 allowFullScreen="" 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
+              <a
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Abrir Av. Ignacio Merino 2475, Lince en Google Maps"
+                title="Ver dirección en Google Maps"
+                className="absolute inset-0 z-10 cursor-pointer"
+              />
             </div>
           </div>
 
@@ -66,7 +81,12 @@ const Ubicacion = () => {
           <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left gap-6 w-full px-2 sm:px-0">
             
             {/* Dirección (SOLO visible en PC dentro de la columna derecha) */}
-            <div className="hidden lg:flex items-center gap-3">
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:flex items-center gap-3 hover:opacity-80 transition-opacity"
+            >
               <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
                 <img 
                   src="/iconolugarcolor.svg" 
@@ -80,7 +100,7 @@ const Ubicacion = () => {
                   Av. Ignacio Merino 2475, Lince
                 </p>
               </div>
-            </div>
+            </a>
 
             {/* CAJA DE HORARIO DE ATENCIÓN */}
             <div className="w-full max-w-[420px] lg:max-w-none border border-[#d2bcbc] rounded-[1.5rem] p-3 sm:p-5 flex flex-col gap-3 sm:gap-4 bg-white/40 backdrop-blur-sm">
@@ -156,13 +176,28 @@ const Ubicacion = () => {
             <div className="flex items-center justify-center lg:justify-start gap-4 mt-1">
               <span className="text-[#6b625c] text-sm md:text-base font-light">Síguenos en:</span>
               <div className="flex gap-3">
-                <a href="#" className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                <a 
+                  href="https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                >
                   <img src="/fcolor.svg" alt="Facebook" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
                 </a>
-                <a href="#" className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                <a 
+                  href="https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                >
                   <img src="/igcolor.svg" alt="Instagram" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
                 </a>
-                <a href="#" className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                <a 
+                  href="https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                >
                   <img src="/tiktokcolor.svg" alt="TikTok" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
                 </a>
               </div>

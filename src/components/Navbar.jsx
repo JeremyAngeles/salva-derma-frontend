@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from 'react';
 const Navbar = () => {
   const location = useLocation();
   const [isDermaOpen, setIsDermaOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); 
-  const [isScrolled, setIsScrolled] = useState(false);             
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef(null);
 
   const isTratamientosPage = location.pathname.toLowerCase().includes('tratamiento');
@@ -54,39 +54,26 @@ const Navbar = () => {
     };
   }, [isMobileMenuOpen]);
 
-  /* =========================================================================
-     CONFIGURACIÓN DE CLASES Y REDONDEO (MÓVIL Y PC)
-     ========================================================================= */
-  
-  // NAV a z-[999] para que esté por encima de TODO
-  let navClasses = 'fixed top-0 left-0 w-full z-[999] px-4 md:px-10 pt-3 md:pt-4 flex justify-between items-center gap-2 md:gap-4 font-principal transition-all duration-300 ';
-  let navStyle = {};
+  const navBackgroundStyle = {
+    backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792689387/01_-_franja_1.png')",
+  };
 
-  if (isTratamientosPage) {
-    navClasses += 'shadow-lg text-white bg-cover bg-center bg-no-repeat rounded-b-[1.5rem] md:rounded-b-[3rem] pb-3 md:pb-8';
-    navStyle.backgroundImage = "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792689387/01_-_franja_1.png')";
-  } else {
-    if (isScrolled || isMobileMenuOpen) {
-      navClasses += ' lg:bg-white lg:bg-none lg:text-[#053d57] lg:shadow-md lg:pb-4 ';
-      navClasses += " max-lg:text-white max-lg:shadow-lg max-lg:bg-cover max-lg:bg-center max-lg:bg-no-repeat max-lg:pb-3 max-lg:bg-[url('https://res.cloudinary.com/da47iihxz/image/upload/v1793296508/jl3mbg00eblxtrzudlit.png')]";
-    } else {
-      navClasses += 'bg-transparent text-white pb-3 md:pb-4';
-    }
-  }
+  // En T. Estéticos siempre activo; en las demás páginas aparece al hacer scroll o abrir menú móvil
+  const showNavBackground = isTratamientosPage || isScrolled || isMobileMenuOpen;
 
-  const menuClasses = isTratamientosPage
-    ? 'bg-white/20 shadow-sm border border-white/30 text-white' 
-    : (isScrolled 
-        ? 'bg-[#f4f2ef] shadow-sm text-[#053d57]' 
-        : 'bg-white/20 shadow-md text-white');
+  const navClasses = showNavBackground
+    ? 'fixed top-0 left-0 w-full z-[999] px-4 md:px-10 pt-3 md:pt-4 flex justify-between items-center gap-2 md:gap-4 font-principal transition-all duration-300 shadow-lg text-white bg-cover bg-center bg-no-repeat rounded-b-[1.5rem] md:rounded-b-[3rem] pb-3 md:pb-8'
+    : 'fixed top-0 left-0 w-full z-[999] px-4 md:px-10 pt-3 md:pt-4 flex justify-between items-center gap-2 md:gap-4 font-principal transition-all duration-300 bg-transparent text-white pb-3 md:pb-4';
 
-  const underlineClass = (!isTratamientosPage && isScrolled) ? 'bg-[#053d57]' : 'bg-white';
+  const menuClasses = showNavBackground
+    ? 'bg-white/20 shadow-sm border border-white/30 text-white'
+    : 'bg-white/20 shadow-md text-white';
 
   return (
     <>
-      <nav 
+      <nav
         className={navClasses}
-        style={navStyle}
+        style={showNavBackground ? navBackgroundStyle : {}}
       >
         <Link to="/" className="flex-shrink-0 z-50">
           <img
@@ -100,12 +87,12 @@ const Navbar = () => {
           
           <Link to="/" className="relative pb-1 transition-colors hover:opacity-80">
             <span className={isActive('/') ? 'font-semibold' : ''}>Inicio</span>
-            {isActive('/') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${underlineClass}`}></span>}
+            {isActive('/') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
           </Link>
           
           <Link to="/nosotros" className="relative pb-1 transition-colors hover:opacity-80">
             <span className={isActive('/nosotros') ? 'font-semibold' : ''}>Nosotros</span>
-            {isActive('/nosotros') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${underlineClass}`}></span>}
+            {isActive('/nosotros') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
           </Link>
 
           <div className="relative" ref={dropdownRef}>
@@ -117,7 +104,7 @@ const Navbar = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className={`w-3.5 h-3.5 transition-transform duration-300 ${isDermaOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
-              {isActive('/dermatologia') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${underlineClass}`}></span>}
+              {isActive('/dermatologia') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
             </button>
 
             {isDermaOpen && (
@@ -137,32 +124,30 @@ const Navbar = () => {
 
           <Link to="/cirugia" className="relative pb-1 transition-colors hover:opacity-80">
             <span className={isActive('/cirugia') ? 'font-semibold' : ''}>Cirugía Plástica</span>
-            {isActive('/cirugia') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${underlineClass}`}></span>}
+            {isActive('/cirugia') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
           </Link>
           
           <Link to="/tratamientos" className="relative pb-1 transition-colors hover:opacity-80">
             <span className={isActive('/tratamientos') ? 'font-semibold' : ''}>T. Estéticos</span>
-            {isActive('/tratamientos') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${underlineClass}`}></span>}
+            {isActive('/tratamientos') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
           </Link>
           
           <Link to="/skinlounge" className="relative pb-1 transition-colors hover:opacity-80">
             <span className={isActive('/skinlounge') ? 'font-semibold' : ''}>SkinLounge</span>
-            {isActive('/skinlounge') && <span className={`absolute bottom-0 left-0 w-full h-0.5 rounded-full ${underlineClass}`}></span>}
+            {isActive('/skinlounge') && <span className="absolute bottom-0 left-0 w-full h-0.5 rounded-full bg-white"></span>}
           </Link>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3 z-[1000]">
           
-          <Link
-            to="/reservar-cita"
-            className={`flex-shrink-0 px-4 py-1.5 md:px-8 md:py-3 rounded-full font-medium shadow-md transition-all text-[13.5px] md:text-base ${
-              isTratamientosPage 
-                ? 'bg-[#7ba9b7] text-white hover:bg-[#6a95a3]' 
-                : 'bg-[#7ba9b7] lg:bg-[#c59e93] text-white hover:bg-[#6a95a3] lg:hover:bg-[#b38b80]'
-            }`}
+          <a
+            href="https://wa.me/51994060977"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-shrink-0 px-4 py-1.5 md:px-8 md:py-3 rounded-full font-medium shadow-md transition-all text-[13.5px] md:text-base bg-[#7ba9b7] text-white hover:bg-[#6a95a3]"
           >
             Reservas
-          </Link>
+          </a>
 
           <button 
             className="lg:hidden p-1.5 transition-colors bg-white/20 backdrop-blur-sm rounded-full border border-white/30 shadow-sm flex items-center justify-center"
@@ -185,36 +170,33 @@ const Navbar = () => {
           ========================================= */}
       {isMobileMenuOpen && (
         <div 
-          className={`fixed inset-0 z-[998] flex flex-col pt-24 px-6 overflow-y-auto font-principal lg:hidden ${
-            isTratamientosPage ? 'bg-cover bg-center text-white' : 'bg-white text-[#053d57]'
-          }`}
-          style={isTratamientosPage ? { backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792689387/01_-_franja_1.png')" } : {}}
+          className="fixed inset-0 z-[998] flex flex-col pt-24 px-6 overflow-y-auto font-principal lg:hidden bg-cover bg-center text-white"
+          style={navBackgroundStyle}
         >
-          <Link to="/" className={`py-4 border-b text-lg ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>Inicio</Link>
-          <Link to="/nosotros" className={`py-4 border-b text-lg ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>Nosotros</Link>
+          <Link to="/" className="py-4 border-b border-white/30 text-lg">Inicio</Link>
+          <Link to="/nosotros" className="py-4 border-b border-white/30 text-lg">Nosotros</Link>
           
-          <div className={`py-4 border-b flex flex-col gap-3 ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>
-            <span className={`text-lg font-semibold ${isTratamientosPage ? 'text-white' : 'text-[#c59e93]'}`}>Dermatología</span>
+          <div className="py-4 border-b border-white/30 flex flex-col gap-3">
+            <span className="text-lg font-semibold text-white">Dermatología</span>
             <div className="flex flex-col gap-2 pl-4">
-              <Link to="/dermatologia/laser" className={`py-2 text-base ${isTratamientosPage ? 'text-white/90' : 'text-gray-700'}`}>Dermatología Láser</Link>
-              <Link to="/dermatologia/clinica" className={`py-2 text-base ${isTratamientosPage ? 'text-white/90' : 'text-gray-700'}`}>Dermatología Clínica</Link>
-              <Link to="/dermatologia/estetica" className={`py-2 text-base ${isTratamientosPage ? 'text-white/90' : 'text-gray-700'}`}>Dermatología Estética</Link>
+              <Link to="/dermatologia/laser" className="py-2 text-base text-white/90">Dermatología Láser</Link>
+              <Link to="/dermatologia/clinica" className="py-2 text-base text-white/90">Dermatología Clínica</Link>
+              <Link to="/dermatologia/estetica" className="py-2 text-base text-white/90">Dermatología Estética</Link>
             </div>
           </div>
 
-          <Link to="/cirugia" className={`py-4 border-b text-lg ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>Cirugía Plástica</Link>
-          {/* Quitada la clase font-semibold de aquí para que sea normal igual que los demás */}
-          <Link to="/tratamientos" className={`py-4 border-b text-lg ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>T. Estéticos</Link>
-          <Link to="/skinlounge" className={`py-4 border-b text-lg ${isTratamientosPage ? 'border-white/30' : 'border-gray-200'}`}>SkinLounge</Link>
+          <Link to="/cirugia" className="py-4 border-b border-white/30 text-lg">Cirugía Plástica</Link>
+          <Link to="/tratamientos" className="py-4 border-b border-white/30 text-lg">T. Estéticos</Link>
+          <Link to="/skinlounge" className="py-4 border-b border-white/30 text-lg">SkinLounge</Link>
 
-          <Link
-            to="/reservar-cita"
-            className={`mt-8 mb-10 px-8 py-3.5 rounded-full font-medium text-center shadow-md text-lg ${
-              isTratamientosPage ? 'bg-white text-[#b58c85] hover:bg-gray-100' : 'bg-[#c59e93] text-white hover:bg-[#b38b80]'
-            }`}
+          <a
+            href="https://wa.me/51994060977"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 mb-10 px-8 py-3.5 rounded-full font-medium text-center shadow-md text-lg bg-white text-[#b58c85] hover:bg-gray-100"
           >
             Reservar Cita
-          </Link>
+          </a>
         </div>
       )}
 

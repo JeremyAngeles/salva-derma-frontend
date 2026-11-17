@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 const MejorVersion = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -57,12 +56,14 @@ const MejorVersion = () => {
             </p>
 
             <div>
-              <Link 
-                to="/reservar-cita" 
+              <a 
+                href="https://wa.me/51994060977"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block bg-gradient-to-r from-[#cdb3ae] to-[#e4d1cd] text-white px-8 py-3 lg:px-12 lg:py-4 rounded-full font-medium text-base lg:text-xl shadow-sm hover:shadow-md transition-all"
               >
                 Reserva tu consulta
-              </Link>
+              </a>
             </div>
           </div>
         </div>

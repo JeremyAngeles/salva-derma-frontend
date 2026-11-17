@@ -107,13 +107,27 @@ const ContactoDoctora = () => {
 
             <div className="flex items-center" style={{ gap: 'clamp(3px,1vw,10px)' }}>
               {[
-                { src: '/fcolor.svg', alt: 'Facebook' },
-                { src: '/igcolor.svg', alt: 'Instagram' },
-                { src: '/tiktokcolor.svg', alt: 'TikTok' },
+                {
+                  src: '/fcolor.svg',
+                  alt: 'Facebook',
+                  href: 'https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr',
+                },
+                {
+                  src: '/igcolor.svg',
+                  alt: 'Instagram',
+                  href: 'https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h',
+                },
+                {
+                  src: '/tiktokcolor.svg',
+                  alt: 'TikTok',
+                  href: 'https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu',
+                },
               ].map((red) => (
                 <a
                   key={red.alt}
-                  href="#"
+                  href={red.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center hover:scale-110 transition-transform duration-300"
                   style={{ width: 'clamp(16px,4vw,34px)', height: 'clamp(16px,4vw,34px)' }}
                 >
@@ -245,7 +259,9 @@ const ContactoDoctora = () => {
 
               <div className="flex items-center" style={{ gap: px(17) }}>
                 <a
-                  href="#"
+                  href="https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center hover:scale-110 transition-transform duration-300"
                   style={{ width: px(38), height: px(38) }}
                 >
@@ -257,7 +273,9 @@ const ContactoDoctora = () => {
                   />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center hover:scale-110 transition-transform duration-300"
                   style={{ width: px(38), height: px(38) }}
                 >
@@ -269,7 +287,9 @@ const ContactoDoctora = () => {
                   />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center hover:scale-110 transition-transform duration-300"
                   style={{ width: px(38), height: px(38) }}
                 >

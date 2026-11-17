@@ -71,13 +71,28 @@ const ContactoDoctorCirugia = () => {
               Síguenos en:
             </span>
             <div className="flex gap-2.5 sm:gap-3.5">
-              <a href="#" className="w-6 h-6 min-[390px]:w-7 min-[390px]:h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <a
+                href="https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-6 h-6 min-[390px]:w-7 min-[390px]:h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+              >
                 <img src="/fcolor.svg" alt="Facebook" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
               </a>
-              <a href="#" className="w-6 h-6 min-[390px]:w-7 min-[390px]:h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <a
+                href="https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-6 h-6 min-[390px]:w-7 min-[390px]:h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+              >
                 <img src="/igcolor.svg" alt="Instagram" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
               </a>
-              <a href="#" className="w-6 h-6 min-[390px]:w-7 min-[390px]:h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <a
+                href="https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-6 h-6 min-[390px]:w-7 min-[390px]:h-7 sm:w-8 sm:h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+              >
                 <img src="/tiktokcolor.svg" alt="TikTok" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
               </a>
             </div>
@@ -161,13 +176,28 @@ const ContactoDoctorCirugia = () => {
                   Síguenos en:
                 </span>
                 <div className="flex gap-3">
-                  <a href="#" className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                  <a
+                    href="https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                  >
                     <img src="/fcolor.svg" alt="Facebook" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
                   </a>
-                  <a href="#" className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                  <a
+                    href="https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                  >
                     <img src="/igcolor.svg" alt="Instagram" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
                   </a>
-                  <a href="#" className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                  <a
+                    href="https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                  >
                     <img src="/tiktokcolor.svg" alt="TikTok" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
                   </a>
                 </div>

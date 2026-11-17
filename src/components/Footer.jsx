@@ -64,11 +64,18 @@ const Footer = () => {
             <h3 className="text-[2.6vw] font-semibold tracking-wide leading-none mb-[3vw] whitespace-nowrap">Agenda tu cita:</h3>
             <ul className="flex flex-col gap-[3.6vw] text-[1.75vw] font-light leading-[1.4]">
 
-              <li className="flex items-center gap-[1.6vw]">
-                <div className="w-[3.2vw] h-[3.2vw] flex-shrink-0 flex items-center justify-center">
-                  <img src="/iconotelefonoblanco.svg" alt="Teléfono" className="w-full h-full object-contain" />
-                </div>
-                <span className="whitespace-nowrap">+51 994 060 977</span>
+              <li>
+                <a
+                  href="https://wa.me/51994060977"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-[1.6vw] hover:opacity-80 transition-opacity"
+                >
+                  <div className="w-[3.2vw] h-[3.2vw] flex-shrink-0 flex items-center justify-center">
+                    <img src="/iconotelefonoblanco.svg" alt="Teléfono" className="w-full h-full object-contain" />
+                  </div>
+                  <span className="whitespace-nowrap">+51 994 060 977</span>
+                </a>
               </li>
 
               <li className="flex items-start gap-[1.6vw]">
@@ -100,13 +107,28 @@ const Footer = () => {
             <h3 className="text-[2.6vw] font-semibold tracking-wide leading-none mb-[3vw] whitespace-nowrap">Síguenos en:</h3>
 
             <div className="flex gap-[1.4vw] mb-[3vw]">
-              <a href="#" className="w-[3vw] h-[3vw] flex items-center justify-center">
+              <a
+                href="https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[3vw] h-[3vw] flex items-center justify-center"
+              >
                 <img src="/fblanco.svg" alt="Facebook" className="w-full h-full object-contain" />
               </a>
-              <a href="#" className="w-[3vw] h-[3vw] flex items-center justify-center">
+              <a
+                href="https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[3vw] h-[3vw] flex items-center justify-center"
+              >
                 <img src="/igblanco.svg" alt="Instagram" className="w-full h-full object-contain" />
               </a>
-              <a href="#" className="w-[3vw] h-[3vw] flex items-center justify-center">
+              <a
+                href="https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[3vw] h-[3vw] flex items-center justify-center"
+              >
                 <img src="/tiktokblanco.svg" alt="TikTok" className="w-full h-full object-contain" />
               </a>
             </div>
@@ -187,11 +209,18 @@ const Footer = () => {
           <div className="flex flex-col">
             <h3 className="text-xl font-semibold mb-6 tracking-wide">Agenda tu cita:</h3>
             <ul className="flex flex-col gap-5 text-sm md:text-base font-light">
-              <li className="flex items-center gap-3">
-                <div className="w-7 h-7 flex-shrink-0 flex items-center justify-center">
-                  <img src="/iconotelefonoblanco.svg" alt="Teléfono" className="w-full h-full object-contain" />
-                </div>
-                <span>+51 994 060 977</span>
+              <li>
+                <a
+                  href="https://wa.me/51994060977"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:text-gray-300 transition-colors"
+                >
+                  <div className="w-7 h-7 flex-shrink-0 flex items-center justify-center">
+                    <img src="/iconotelefonoblanco.svg" alt="Teléfono" className="w-full h-full object-contain" />
+                  </div>
+                  <span>+51 994 060 977</span>
+                </a>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-7 h-7 flex-shrink-0 mt-0.5 flex items-center justify-center">
@@ -218,13 +247,28 @@ const Footer = () => {
             <h3 className="text-xl font-semibold mb-6 tracking-wide">Síguenos en:</h3>
             
             <div className="flex gap-5 mb-6">
-              <a href="#" className="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <a
+                href="https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+              >
                 <img src="/fblanco.svg" alt="Facebook" className="w-full h-full object-contain" />
               </a>
-              <a href="#" className="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <a
+                href="https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+              >
                 <img src="/igblanco.svg" alt="Instagram" className="w-full h-full object-contain" />
               </a>
-              <a href="#" className="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <a
+                href="https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+              >
                 <img src="/tiktokblanco.svg" alt="TikTok" className="w-full h-full object-contain" />
               </a>
             </div>
