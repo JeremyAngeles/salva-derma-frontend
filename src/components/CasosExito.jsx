@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 /* ============================================================
    🎛️ TAMAÑO DEL TÍTULO EN CELULAR
    Cambia este número para hacerlo más grande o más pequeño.
-   - Más grande = letras más grandes (ej: 4.8)
-   - Más pequeño = letras más chicas (ej: 4.2)
+- Más grande = letras más grandes (ej: 4.8)
+- Más pequeño = letras más chicas (ej: 4.2)
    Si ves que alguna fila se corta por los lados, bájalo un poquito.
    Solo afecta celular (tablet y PC no cambian).
    ============================================================ */
@@ -13,7 +13,64 @@ const TITULO_CELULAR = 4.6;
 const BG_IMG =
   'https://res.cloudinary.com/cgfzvuli/image/upload/v1792531259/04_-_FONDO_antes_despues.png';
 
+/* ============================================================
+   ✨ ANIMACIONES DELICADAS (todo vive en este mismo archivo)
+- 0.95s = entrada suave y sedosa
+- 10px  = movimiento mínimo para no verse brusco
+- 90ms  = pausa sutil entre cada elemento
+   ============================================================ */
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes ce-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  /* Entran una sola vez de forma sutil al hacer scroll */
+  .ce-reveal .rv { opacity: 0; }
+  .ce-reveal.is-visible .rv {
+    animation: ce-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ce-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+/* Marca la sección como visible la primera vez que entra en pantalla */
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
+
 const CasosExito = () => {
+  const [ref, visible] = useReveal(0.12);
   const [currentCase, setCurrentCase] = useState(0);
 
   const casos = [
@@ -62,7 +119,11 @@ const CasosExito = () => {
   }, [casos.length]);
 
   return (
-    <section className="relative w-full py-16 md:py-28 font-principal overflow-hidden flex flex-col items-center">
+    <section
+      ref={ref}
+      className={`ce-reveal ${visible ? 'is-visible' : ''} relative w-full py-16 md:py-28 font-principal overflow-hidden flex flex-col items-center`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
 
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
@@ -75,8 +136,8 @@ const CasosExito = () => {
 
         {/* TÍTULO: leading-[0.85] y lg:leading-[0.9] para pegar mucho más la distancia entre las 3 filas */}
         <h2
-          className="text-[length:var(--tit)] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.6rem] text-[#053d57] leading-[0.85] lg:leading-[0.9] mb-5 w-full uppercase tracking-tighter drop-shadow-sm lg:drop-shadow-none flex flex-col items-center"
-          style={{ fontFamily: 'Alta, serif', '--tit': `${TITULO_CELULAR}vw` }}
+          className="rv text-[length:var(--tit)] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.6rem] text-[#053d57] leading-[0.85] lg:leading-[0.9] mb-5 w-full uppercase tracking-tighter drop-shadow-sm lg:drop-shadow-none flex flex-col items-center"
+          style={{ fontFamily: 'Alta, serif', '--tit': `${TITULO_CELULAR}vw`, '--i': 0 }}
         >
           <span className="block whitespace-nowrap">PORQUE NUESTRA UNIDAD DERMOLÁSER VA</span>
           <span className="block whitespace-nowrap">MÁS ALLÁ DE LA ESTÉTICA, ES SALUD... IMPACTA</span>
@@ -85,8 +146,8 @@ const CasosExito = () => {
 
         {/* Párrafo: Se le agregó la tipografía Montserrat para asegurar que sea igual en celular y PC */}
         <p 
-          className="text-[#88807a] text-[13px] md:text-[17px] font-normal md:font-light leading-[1.15] mb-10 max-w-[750px] drop-shadow-sm md:drop-shadow-none"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
+          className="rv text-[#88807a] text-[13px] md:text-[17px] font-normal md:font-light leading-[1.15] mb-10 max-w-[750px] drop-shadow-sm md:drop-shadow-none"
+          style={{ fontFamily: "'Montserrat', sans-serif", '--i': 1 }}
         >
           Te dejamos algunos de nuestros casos de éxito, siempre realizado con nuestros<br className="hidden md:block" />
           protocolos combinados. Nuestra clave es combinar más de 1 tecnología.
@@ -94,7 +155,8 @@ const CasosExito = () => {
 
         {/* CARD DE FOTOS CON EVENTOS TÁCTILES */}
         <div 
-          className="w-full max-w-[850px] rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden shadow-2xl bg-white relative z-20 transition-all duration-500 border border-gray-100 touch-pan-y"
+          style={{ '--i': 2 }}
+          className="rv w-full max-w-[850px] rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden shadow-2xl bg-white relative z-20 transition-all duration-500 border border-gray-100 touch-pan-y"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -108,7 +170,7 @@ const CasosExito = () => {
               className="block w-full h-auto lg:h-full lg:object-cover invisible pointer-events-none"
             />
 
-            {/* Mapeo de todas las imágenes para la transición fluida (fade) */}
+            {/* Mapeo de todas las imágenes para la transición fluida (fade limpio sin zoom) */}
             {casos.map((caso, index) => (
               <img
                 key={caso.id}
@@ -144,12 +206,15 @@ const CasosExito = () => {
         </div>
 
         {/* Puntitos indicadores */}
-        <div className="flex gap-3 mt-8 md:mt-10 relative z-20 bg-white/50 md:bg-transparent p-2 md:p-0 rounded-full">
+        <div
+          style={{ '--i': 3 }}
+          className="rv flex gap-3 mt-8 md:mt-10 relative z-20 bg-white/50 md:bg-transparent p-2 md:p-0 rounded-full"
+        >
           {casos.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentCase(index)}
-              className={`w-3.5 h-3.5 md:w-4 md:h-4 rounded-full transition-all border border-[#bc9b92] ${
+              className={`w-3.5 h-3.5 md:w-4 md:h-4 rounded-full transition-all duration-500 ease-out border border-[#bc9b92] ${
                 currentCase === index ? 'bg-[#bc9b92] scale-110' : 'bg-transparent hover:bg-[#bc9b92]/30'
               }`}
               aria-label={`Ver caso ${index + 1}`}

@@ -1,6 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes pc-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .pc-reveal .rv { opacity: 0; }
+  .pc-reveal.is-visible .rv {
+    animation: pc-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pc-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const ProblemasCapilares = () => {
+  const [ref, visible] = useReveal(0.12);
+
   const problemas = [
     "Alopecia androgenética",
     "Alopecia areata",
@@ -11,9 +61,11 @@ const ProblemasCapilares = () => {
 
   return (
     <section
-      className="relative w-full min-h-[86vw] lg:min-h-[850px] py-[8vw] lg:py-28 flex items-center bg-cover bg-[position:40%_center] lg:bg-center bg-no-repeat overflow-hidden"
+      ref={ref}
+      className={`pc-reveal ${visible ? 'is-visible' : ''} relative w-full min-h-[86vw] lg:min-h-[850px] py-[8vw] lg:py-28 flex items-center bg-cover bg-[position:40%_center] lg:bg-center bg-no-repeat overflow-hidden`}
       style={{ backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1793083402/fssguvc8ef5bwqnf4by0.jpg')" }}
     >
+      <style>{ESTILOS_ANIMACION}</style>
 
       {/* Capa de protección sutil (solo PC) */}
       <div className="hidden lg:block absolute inset-0 bg-black/10 pointer-events-none z-0"></div>
@@ -23,7 +75,10 @@ const ProblemasCapilares = () => {
         <div className="flex flex-col items-start text-left text-white max-w-[64%] lg:max-w-none">
 
           {/* Ícono */}
-          <div className="w-[clamp(40px,8.6vw,90px)] h-[clamp(40px,8.6vw,90px)] lg:w-[clamp(64px,6.9vw,100px)] lg:h-[clamp(64px,6.9vw,100px)] flex items-center justify-center mb-[2.5vw] lg:mb-[clamp(24px,3vw,44px)]">
+          <div
+            style={{ '--i': 0 }}
+            className="rv w-[clamp(40px,8.6vw,90px)] h-[clamp(40px,8.6vw,90px)] lg:w-[clamp(64px,6.9vw,100px)] lg:h-[clamp(64px,6.9vw,100px)] flex items-center justify-center mb-[2.5vw] lg:mb-[clamp(24px,3vw,44px)]"
+          >
             <img
               src="/problemas-capilares.svg"
               alt="Icono Problemas Capilares"
@@ -34,16 +89,16 @@ const ProblemasCapilares = () => {
 
           {/* Título (una sola fila) */}
           <h2
-            className="text-[clamp(20px,5.4vw,52px)] lg:text-[clamp(32px,3.4vw,52px)] leading-none font-light tracking-[0.02em] mb-[3vw] lg:mb-[clamp(20px,2.4vw,34px)] whitespace-nowrap"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="rv text-[clamp(20px,5.4vw,52px)] lg:text-[clamp(32px,3.4vw,52px)] leading-none font-light tracking-[0.02em] mb-[3vw] lg:mb-[clamp(20px,2.4vw,34px)] whitespace-nowrap"
+            style={{ fontFamily: 'Alta, serif', '--i': 1 }}
           >
             PROBLEMAS CAPILARES
           </h2>
 
           {/* Párrafo en Montserrat (celular y PC) */}
           <p 
-            className="font-normal text-[clamp(11px,2.55vw,24px)] lg:text-[clamp(15px,1.45vw,21px)] leading-[1.22] mb-[7vw] lg:mb-[clamp(56px,8vw,115px)] text-white"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            className="rv font-normal text-[clamp(11px,2.55vw,24px)] lg:text-[clamp(15px,1.45vw,21px)] leading-[1.22] mb-[7vw] lg:mb-[clamp(56px,8vw,115px)] text-white"
+            style={{ fontFamily: "'Montserrat', sans-serif", '--i': 2 }}
           >
             Tratamos distintos tipos de alopecias con<br className="hidden lg:block" />
             {' '}tratamiento médico y la combinación de<br className="hidden lg:block" />
@@ -58,8 +113,8 @@ const ProblemasCapilares = () => {
             {problemas.map((item, index) => (
               <li
                 key={index}
-                className="flex items-center gap-[1.8vw] lg:gap-[clamp(10px,1.1vw,16px)] font-normal text-[clamp(11px,2.55vw,24px)] lg:text-[clamp(15px,1.45vw,21px)] leading-tight text-white"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
+                className="rv flex items-center gap-[1.8vw] lg:gap-[clamp(10px,1.1vw,16px)] font-normal text-[clamp(11px,2.55vw,24px)] lg:text-[clamp(15px,1.45vw,21px)] leading-tight text-white"
+                style={{ fontFamily: "'Montserrat', sans-serif", '--i': index + 3 }}
               >
                 <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-white flex-shrink-0"></span>
                 {item}

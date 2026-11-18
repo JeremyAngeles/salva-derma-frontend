@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 /* ============================================================
    🎛️ ANIMACIÓN DEL CELULAR
-   - VELOCIDAD_MS: cuánto dura el movimiento al hacer click.
+- VELOCIDAD_MS: cuánto dura el movimiento al hacer click.
      Más grande = más lento y suave (ej: 900). Más pequeño = más rápido (ej: 500).
    ============================================================ */
 const VELOCIDAD_MS = 800;
@@ -22,7 +22,56 @@ const SLOTS = [
   { left: INICIO + LADO.w + GAP + CENTRO.w + GAP, top: (CENTRO.h - LADO.h) / 2, ...LADO },
 ];
 
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes esl-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .esl-reveal .rv { opacity: 0; }
+  .esl-reveal.is-visible .rv {
+    animation: esl-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .esl-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
+
 const EspacioSkinLounge = () => {
+  const [ref, visible] = useReveal(0.12);
   // orden[slot] = índice del item que está en ese slot (0 = izquierda, 1 = centro, 2 = derecha)
   const [orden, setOrden] = useState([0, 1, 2]);
 
@@ -55,7 +104,9 @@ const EspacioSkinLounge = () => {
   const transicion = `${VELOCIDAD_MS}ms ${CURVA}`;
 
   return (
-    <>
+    <div ref={ref} className={`esl-reveal ${visible ? 'is-visible' : ''}`}>
+      <style>{ESTILOS_ANIMACION}</style>
+
       {/* =====================================================
           CELULAR Y TABLET (animación suave por click)
           ===================================================== */}
@@ -63,14 +114,14 @@ const EspacioSkinLounge = () => {
 
         {/* Título con animación de entrada */}
         <h2
-          className="text-center text-[6.3vw] text-[#053d57] tracking-wide leading-none whitespace-nowrap opacity-0 animate-fade-up"
-          style={{ fontFamily: 'Alta, serif', animationDelay: '0.1s' }}
+          className="rv text-center text-[6.3vw] text-[#053d57] tracking-wide leading-none whitespace-nowrap"
+          style={{ fontFamily: 'Alta, serif', '--i': 0 }}
         >
           EL ESPACIO PARA TI Y TU PIEL
         </h2>
 
         {/* Cards: cada uno es fijo y se desliza de un lugar a otro (no se reordena el DOM) */}
-        <div className="relative w-full mt-[6vw]" style={{ height: `${CENTRO.h}vw` }}>
+        <div style={{ '--i': 1, height: `${CENTRO.h}vw` }} className="rv relative w-full mt-[6vw]">
           {listaCaracteristicas.map((item, itemIndex) => {
             const slot = orden.indexOf(itemIndex);
             const pos = SLOTS[slot];
@@ -136,7 +187,7 @@ const EspacioSkinLounge = () => {
         </div>
 
         {/* Texto inferior con "+" */}
-        <div className="flex items-start gap-[1.6vw] mt-[11vw] pl-[4vw] pr-[4vw] opacity-0 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+        <div style={{ '--i': 2 }} className="rv flex items-start gap-[1.6vw] mt-[11vw] pl-[4vw] pr-[4vw]">
           <div className="flex-shrink-0 mt-[0.6vw]">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-[3.6vw] h-[3.6vw] text-[#c9aea5]" viewBox="0 0 24 24" fill="currentColor">
               <path d="M19 11h-6V5a1 1 0 00-2 0v6H5a1 1 0 000 2h6v6a1 1 0 002 0v-6h6a1 1 0 000-2z" />
@@ -159,17 +210,18 @@ const EspacioSkinLounge = () => {
         <div className="max-w-[1250px] mx-auto">
           
           <h2 
-            className="text-center text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] text-[#053d57] mb-12 md:mb-16 tracking-wide"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="rv text-center text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] text-[#053d57] mb-12 md:mb-16 tracking-wide"
+            style={{ fontFamily: 'Alta, serif', '--i': 0 }}
           >
             EL ESPACIO PARA TI Y TU PIEL
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {listaCaracteristicas.map((item) => (
+            {listaCaracteristicas.map((item, index) => (
               <div 
-                key={item.id} 
-                className="relative w-full h-[350px] md:h-[400px] lg:h-[420px] rounded-[2rem] overflow-hidden shadow-sm group transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-2xl"
+                key={item.id}
+                style={{ '--i': index + 1 }}
+                className="rv relative w-full h-[350px] md:h-[400px] lg:h-[420px] rounded-[2rem] overflow-hidden shadow-sm group transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-2xl"
               >
                 <img 
                   src={item.img} 
@@ -189,7 +241,7 @@ const EspacioSkinLounge = () => {
             ))}
           </div>
 
-          <div className="flex items-start gap-4 md:gap-6 mt-12 md:mt-16 max-w-[1050px] mx-auto">
+          <div style={{ '--i': 4 }} className="rv flex items-start gap-4 md:gap-6 mt-12 md:mt-16 max-w-[1050px] mx-auto">
             <div className="flex-shrink-0 mt-1 md:mt-0">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 md:w-10 md:h-10 text-[#c59e93]" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M19 11h-6V5a1 1 0 00-2 0v6H5a1 1 0 000 2h6v6a1 1 0 002 0v-6h6a1 1 0 000-2z" />
@@ -204,24 +256,7 @@ const EspacioSkinLounge = () => {
 
         </div>
       </section>
-
-      {/* Estilos para la animación fade-up */}
-      <style>{`
-        @keyframes fadeUp {
-          0% {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-up {
-          animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-      `}</style>
-    </>
+    </div>
   );
 };
 

@@ -1,8 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes masl-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .masl-reveal .rv { opacity: 0; }
+  .masl-reveal.is-visible .rv {
+    animation: masl-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .masl-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const MasAllaSkinLounge = () => {
+  const [ref, visible] = useReveal(0.12);
+
   return (
-    <>
+    <div ref={ref} className={`masl-reveal ${visible ? 'is-visible' : ''}`}>
+      <style>{ESTILOS_ANIMACION}</style>
+
       {/* =====================================================
           CELULAR Y TABLET (todo en vw, igualito al diseño)
           ===================================================== */}
@@ -14,8 +66,8 @@ const MasAllaSkinLounge = () => {
 
           {/* Título */}
           <h2
-            className="text-[#053d57] text-[5.5vw] tracking-wide leading-none whitespace-nowrap"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="rv text-[#053d57] text-[5.5vw] tracking-wide leading-none whitespace-nowrap"
+            style={{ fontFamily: 'Alta, serif', '--i': 0 }}
           >
             MÁS ALLÁ DE UN FACIAL
           </h2>
@@ -24,7 +76,7 @@ const MasAllaSkinLounge = () => {
           <div className="flex flex-col items-end mt-[4.2vw] gap-[3.6vw]">
 
             {/* Relajación */}
-            <div className="flex items-center justify-end gap-[3.2vw]">
+            <div style={{ '--i': 1 }} className="rv flex items-center justify-end gap-[3.2vw]">
               <span className="text-[#5f5d5b] text-[2.9vw] font-medium tracking-wide uppercase">
                 Relajación
               </span>
@@ -39,7 +91,7 @@ const MasAllaSkinLounge = () => {
             </div>
 
             {/* Nutrición */}
-            <div className="flex items-center justify-end gap-[3.2vw]">
+            <div style={{ '--i': 2 }} className="rv flex items-center justify-end gap-[3.2vw]">
               <span className="text-[#5f5d5b] text-[2.9vw] font-medium tracking-wide uppercase leading-[1.5] text-right">
                 <span className="block whitespace-nowrap">Mejora la nutrición,</span>
                 <span className="block whitespace-nowrap">hidratación y calidad</span>
@@ -56,7 +108,7 @@ const MasAllaSkinLounge = () => {
             </div>
 
             {/* Skincare */}
-            <div className="flex items-center justify-end gap-[3.2vw]">
+            <div style={{ '--i': 3 }} className="rv flex items-center justify-end gap-[3.2vw]">
               <span className="text-[#5f5d5b] text-[2.9vw] font-medium tracking-wide uppercase">
                 Potencia tu skincare
               </span>
@@ -72,7 +124,7 @@ const MasAllaSkinLounge = () => {
           </div>
 
           {/* Párrafo (3 filas fijas) */}
-          <p className="text-[#88807a] text-[2.35vw] font-medium leading-[1.35] text-right mt-[10vw]">
+          <p style={{ '--i': 4 }} className="rv text-[#88807a] text-[2.35vw] font-medium leading-[1.35] text-right mt-[10vw]">
             <span className="block whitespace-nowrap">Si quieres conocer cada paso de nuestros</span>
             <span className="block whitespace-nowrap">faciales SKIN LOUNGE y más  detalles,</span>
             <span className="block whitespace-nowrap">¡escríbenos!</span>
@@ -83,7 +135,8 @@ const MasAllaSkinLounge = () => {
             href="https://wa.me/51994060977"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-[2vw] bg-gradient-to-r from-[#d1b3ab] to-[#efe0dc] text-white w-auto px-[5vw] py-[2vw] rounded-full shadow-md mt-[2.6vw]"
+            style={{ '--i': 5 }}
+            className="rv inline-flex items-center justify-center gap-[2vw] bg-gradient-to-r from-[#d1b3ab] to-[#efe0dc] text-white w-auto px-[5vw] py-[2vw] rounded-full shadow-md mt-[2.6vw]"
           >
             <img
               src="/iconotelefonoblanco.svg"
@@ -95,7 +148,7 @@ const MasAllaSkinLounge = () => {
           </a>
 
           {/* Redes */}
-          <div className="flex items-center gap-[4vw] mt-[3.6vw] mr-[1.2vw]">
+          <div style={{ '--i': 6 }} className="rv flex items-center gap-[4vw] mt-[3.6vw] mr-[1.2vw]">
             <span className="text-[#88807a] font-light text-[2.3vw]">Síguenos en:</span>
             <div className="flex gap-[1.8vw]">
               <a
@@ -148,8 +201,8 @@ const MasAllaSkinLounge = () => {
             <div className="w-full md:w-[60%] lg:w-[55%] flex flex-col items-center md:items-end text-center md:text-right mt-16 md:mt-0">
               
               <h2 
-                className="text-[1.8rem] sm:text-[2.2rem] md:text-[2.6rem] lg:text-[3.2rem] xl:text-[4rem] text-[#053d57] mb-10 md:mb-14 tracking-wide leading-none whitespace-nowrap"
-                style={{ fontFamily: 'Alta, serif' }}
+                className="rv text-[1.8rem] sm:text-[2.2rem] md:text-[2.6rem] lg:text-[3.2rem] xl:text-[4rem] text-[#053d57] mb-10 md:mb-14 tracking-wide leading-none whitespace-nowrap"
+                style={{ fontFamily: 'Alta, serif', '--i': 0 }}
               >
                 MÁS ALLÁ DE UN FACIAL
               </h2>
@@ -157,7 +210,7 @@ const MasAllaSkinLounge = () => {
               {/* Lista de beneficios (Letras con font-medium en PC) */}
               <div className="flex flex-col gap-6 md:gap-8 mb-10 md:mb-12 w-full">
                 
-                <div className="flex items-center justify-center md:justify-end gap-5 md:gap-6">
+                <div style={{ '--i': 1 }} className="rv flex items-center justify-center md:justify-end gap-5 md:gap-6">
                   <span className="text-[#5f5d5b] text-[17px] md:text-[20px] font-medium tracking-wide uppercase">
                     Relajación
                   </span>
@@ -171,7 +224,7 @@ const MasAllaSkinLounge = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-center md:justify-end gap-5 md:gap-6">
+                <div style={{ '--i': 2 }} className="rv flex items-center justify-center md:justify-end gap-5 md:gap-6">
                   <span className="text-[#5f5d5b] text-[17px] md:text-[20px] font-medium tracking-wide text-right uppercase leading-tight">
                     Mejora la nutrición,<br />
                     hidratación y calidad de la piel
@@ -186,7 +239,7 @@ const MasAllaSkinLounge = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-center md:justify-end gap-5 md:gap-6">
+                <div style={{ '--i': 3 }} className="rv flex items-center justify-center md:justify-end gap-5 md:gap-6">
                   <span className="text-[#5f5d5b] text-[17px] md:text-[20px] font-medium tracking-wide uppercase">
                     Potencia tu skincare
                   </span>
@@ -202,7 +255,7 @@ const MasAllaSkinLounge = () => {
 
               </div>
 
-              <p className="text-[#88807a] text-[14px] md:text-[16px] lg:text-[17px] font-medium max-w-[420px] mb-6 md:mb-8 leading-snug">
+              <p style={{ '--i': 4 }} className="rv text-[#88807a] text-[14px] md:text-[16px] lg:text-[17px] font-medium max-w-[420px] mb-6 md:mb-8 leading-snug">
                 Si quieres conocer cada paso de nuestros faciales SKIN LOUNGE y más detalles, ¡escríbenos!
               </p>
 
@@ -210,8 +263,9 @@ const MasAllaSkinLounge = () => {
               <a 
                 href="https://wa.me/51994060977" 
                 target="_blank" 
-                rel="noopener noreferrer" 
-                className="inline-flex items-center gap-4 bg-[#d1b3ab] text-white px-8 py-3.5 rounded-full hover:bg-[#c59e93] transition-colors mb-8 shadow-md"
+                rel="noopener noreferrer"
+                style={{ '--i': 5 }}
+                className="rv inline-flex items-center gap-4 bg-[#d1b3ab] text-white px-8 py-3.5 rounded-full hover:bg-[#c59e93] transition-colors mb-8 shadow-md"
               >
                 <img 
                   src="/iconotelefonoblanco.svg" 
@@ -222,7 +276,7 @@ const MasAllaSkinLounge = () => {
                 <span className="text-[22px] md:text-[26px] tracking-wide font-light">+51 994 060 977</span>
               </a>
 
-              <div className="flex items-center justify-center md:justify-end gap-4">
+              <div style={{ '--i': 6 }} className="rv flex items-center justify-center md:justify-end gap-4">
                 <span className="text-[#88807a] font-light text-[14px] md:text-[15px]">Síguenos en:</span>
                 <div className="flex gap-3">
                   <a
@@ -257,7 +311,7 @@ const MasAllaSkinLounge = () => {
           </div>
         </section>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,6 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes tsl-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .tsl-reveal .rv { opacity: 0; }
+  .tsl-reveal.is-visible .rv {
+    animation: tsl-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tsl-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.08) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const TratamientosSkinLounge = () => {
+  const [ref, visible] = useReveal(0.08);
+
   const tratamientos = [
     {
       id: 1,
@@ -47,14 +97,16 @@ const TratamientosSkinLounge = () => {
   ];
 
   return (
-    <>
+    <div ref={ref} className={`tsl-reveal ${visible ? 'is-visible' : ''}`}>
+      <style>{ESTILOS_ANIMACION}</style>
+
       {/* =====================================================
           CELULAR Y TABLET (todo en vw, igualito al diseño)
           ===================================================== */}
       <section className="lg:hidden w-full bg-[#faf9f8] pt-[2vw] pb-[10vw] font-principal relative z-20">
 
         {/* Header */}
-        <div className="flex flex-col items-center text-center">
+        <div style={{ '--i': 0 }} className="rv flex flex-col items-center text-center">
           <h2
             className="text-[11.6vw] text-[#053d57] leading-none tracking-wide"
             style={{ fontFamily: 'Alta, serif' }}
@@ -78,7 +130,11 @@ const TratamientosSkinLounge = () => {
         {/* Lista */}
         <div className="mt-[7vw]">
           {tratamientos.map((trat, index) => (
-            <div key={trat.id} className="flex flex-col items-center text-center">
+            <div
+              key={trat.id}
+              style={{ '--i': index + 1 }}
+              className="rv flex flex-col items-center text-center"
+            >
 
               {/* Línea divisoria (entre tratamientos) */}
               {index !== 0 && (
@@ -117,7 +173,7 @@ const TratamientosSkinLounge = () => {
       <section className="hidden lg:block w-full bg-[#faf9f8] -mt-16 md:-mt-24 pt-4 pb-16 md:pb-24 font-principal relative z-20">
         <div className="max-w-[1250px] mx-auto px-6 lg:px-12">
 
-          <div className="mb-10 md:mb-14">
+          <div style={{ '--i': 0 }} className="rv mb-10 md:mb-14">
             <h2 
               className="text-[3rem] md:text-[4rem] text-[#053d57] leading-none tracking-wide"
               style={{ fontFamily: 'Alta, serif' }}
@@ -141,8 +197,9 @@ const TratamientosSkinLounge = () => {
           <div className="flex flex-col gap-6 md:gap-8">
             {tratamientos.map((trat, index) => (
               <div 
-                key={trat.id} 
-                className="flex flex-col md:flex-row items-stretch gap-6 md:gap-10 lg:gap-16"
+                key={trat.id}
+                style={{ '--i': index + 1 }}
+                className="rv flex flex-col md:flex-row items-stretch gap-6 md:gap-10 lg:gap-16"
               >
                 <div 
                   className={`w-full md:w-1/2 flex flex-col justify-center py-4 md:py-6 ${
@@ -176,7 +233,7 @@ const TratamientosSkinLounge = () => {
 
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

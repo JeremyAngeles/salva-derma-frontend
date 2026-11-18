@@ -1,28 +1,90 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+/* ============================================================
+   ✨ ANIMACIONES (todo vive en este mismo archivo)
+   - 1.1s  = duración de la entrada
+   - 120ms = retraso entre un elemento y el siguiente
+   ============================================================ */
+const ESTILOS_ANIMACION = `
+  :root { --ease-suave: cubic-bezier(0.22, 1, 0.36, 1); }
+
+  @keyframes ub-subir {
+    from { opacity: 0; translate: 0 24px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  /* Entran una sola vez al hacer scroll */
+  .ub-reveal .rv { opacity: 0; }
+  .ub-reveal.is-visible .rv {
+    animation: ub-subir 1.1s var(--ease-suave) both;
+    animation-delay: calc(var(--i, 0) * 120ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ub-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+/* Marca la sección como visible la primera vez que entra en pantalla */
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const Ubicacion = () => {
+  const [ref, visible] = useReveal(0.12);
+
   const googleMapsUrl =
     'https://www.google.com/maps/search/?api=1&query=Av.+Ignacio+Merino+2475,+Lince,+Lima,+Peru';
 
   return (
-    <section 
-      className="relative w-full py-16 md:py-24 bg-cover bg-center bg-no-repeat overflow-hidden font-principal flex flex-col items-center"
+    <section
+      ref={ref}
+      className={`ub-reveal ${visible ? 'is-visible' : ''} relative w-full py-16 md:py-24 bg-cover bg-center bg-no-repeat overflow-hidden font-principal flex flex-col items-center`}
       style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792529043/contacto.png')" }}
     >
-      
+      <style>{ESTILOS_ANIMACION}</style>
+
       <div className="relative z-10 w-full flex flex-col items-center">
         {/* Título y Subtítulo */}
         <div className="text-center max-w-4xl px-6 mb-10 md:mb-16 flex flex-col items-center">
-          <h2 
-            className="text-[2.0rem] sm:text-[2.4rem] md:text-5xl text-[#053d57] font-light tracking-wide leading-[1.1] mb-4 md:mb-5 drop-shadow-sm text-center"
-            style={{ fontFamily: 'Alta, serif' }}
+          <h2
+            className="rv text-[2.0rem] sm:text-[2.4rem] md:text-5xl text-[#053d57] font-light tracking-wide leading-[1.1] mb-4 md:mb-5 drop-shadow-sm text-center"
+            style={{ fontFamily: 'Alta, serif', '--i': 0 }}
           >
             TODOS LOS CAMINOS<br />
             CONDUCEN A SALVAR
           </h2>
-          
+
           {/* Subtítulo forzado exactamente a 2 filas en PC */}
-          <p className="text-[#7c7570] text-sm sm:text-base md:text-[22px] font-medium leading-[1.3] md:leading-[1.2] max-w-[850px]">
+          <p
+            style={{ '--i': 1 }}
+            className="rv text-[#7c7570] text-sm sm:text-base md:text-[22px] font-medium leading-[1.3] md:leading-[1.2] max-w-[850px]"
+          >
             Ubicados estratégicamente en el corazón de la ciudad, a 10 minutos del<br className="hidden md:block" />
             centro empresarial de San Isidro, contamos con estacionamiento externo.
           </p>
@@ -30,7 +92,7 @@ const Ubicacion = () => {
 
         {/* Contenedor Principal */}
         <div className="w-full max-w-[1200px] px-4 sm:px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-          
+
           {/* =========================================
               DIRECCIÓN (Arriba del mapa SOLO en Celular y Tablet)
               ========================================= */}
@@ -38,12 +100,13 @@ const Ubicacion = () => {
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="lg:hidden flex items-center justify-center gap-3 w-full mb-2 hover:opacity-80 transition-opacity"
+            style={{ '--i': 2 }}
+            className="rv lg:hidden flex items-center justify-center gap-3 w-full mb-2 hover:opacity-80 transition-opacity duration-500"
           >
             <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center">
-              <img 
-                src="/iconolugarcolor.svg" 
-                alt="Ubicación de Salvar" 
+              <img
+                src="/iconolugarcolor.svg"
+                alt="Ubicación de Salvar"
                 className="w-full h-full object-contain"
                 onError={(e) => { e.target.style.display = 'none'; }}
               />
@@ -56,14 +119,17 @@ const Ubicacion = () => {
           </a>
 
           {/* COLUMNA IZQUIERDA: Mapa de Google Maps clicable */}
-          <div className="lg:col-span-7 bg-white p-2.5 sm:p-3 rounded-[2rem] sm:rounded-[2.5rem] shadow-xl border border-gray-200 group overflow-hidden w-full">
+          <div
+            style={{ '--i': 3 }}
+            className="rv lg:col-span-7 bg-white p-2.5 sm:p-3 rounded-[2rem] sm:rounded-[2.5rem] shadow-xl hover:shadow-2xl border border-gray-200 group overflow-hidden w-full transition-shadow duration-700 ease-out"
+          >
             <div className="w-full h-[350px] sm:h-[450px] md:h-[550px] lg:h-[620px] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden relative">
-              <iframe 
+              <iframe
                 title="Ubicacion Salvar Dermatoplastica"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.859871587634!2d-77.03456!3d-12.08643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c512345679%3A0x123456789abcdef!2sAv.%20Ignacio%20Merino%202475%2C%20Lince%2015073!5e0!3m2!1ses!2spe!4v1650000000000!5m2!1ses!2spe" 
-                className="w-full h-full border-0 grayscale contrast-[1.10] opacity-90 transition-all duration-500 ease-in-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100 pointer-events-none"
-                allowFullScreen="" 
-                loading="lazy" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.859871587634!2d-77.03456!3d-12.08643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c512345679%3A0x123456789abcdef!2sAv.%20Ignacio%20Merino%202475%2C%20Lince%2015073!5e0!3m2!1ses!2spe!4v1650000000000!5m2!1ses!2spe"
+                className="w-full h-full border-0 grayscale contrast-[1.10] opacity-90 transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100 pointer-events-none"
+                allowFullScreen=""
+                loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
               <a
@@ -79,18 +145,19 @@ const Ubicacion = () => {
 
           {/* COLUMNA DERECHA: Horarios, Teléfono y Redes */}
           <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left gap-6 w-full px-2 sm:px-0">
-            
+
             {/* Dirección (SOLO visible en PC dentro de la columna derecha) */}
             <a
               href={googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden lg:flex items-center gap-3 hover:opacity-80 transition-opacity"
+              style={{ '--i': 3 }}
+              className="rv hidden lg:flex items-center gap-3 hover:opacity-80 transition-opacity duration-500"
             >
               <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                <img 
-                  src="/iconolugarcolor.svg" 
-                  alt="Ubicación de Salvar" 
+                <img
+                  src="/iconolugarcolor.svg"
+                  alt="Ubicación de Salvar"
                   className="w-full h-full object-contain"
                   onError={(e) => { e.target.style.display = 'none'; }}
                 />
@@ -103,8 +170,11 @@ const Ubicacion = () => {
             </a>
 
             {/* CAJA DE HORARIO DE ATENCIÓN */}
-            <div className="w-full max-w-[420px] lg:max-w-none border border-[#d2bcbc] rounded-[1.5rem] p-3 sm:p-5 flex flex-col gap-3 sm:gap-4 bg-white/40 backdrop-blur-sm">
-              
+            <div
+              style={{ '--i': 4 }}
+              className="rv w-full max-w-[420px] lg:max-w-none border border-[#d2bcbc] rounded-[1.5rem] p-3 sm:p-5 flex flex-col gap-3 sm:gap-4 bg-white/40 backdrop-blur-sm"
+            >
+
               <div className="flex items-center justify-center lg:justify-start gap-3">
                 <div className="hidden sm:block flex-1 h-[1px] bg-[#d2bcbc]"></div>
                 <h4 className="text-[#c59e93] font-semibold text-sm sm:text-lg tracking-wide uppercase">
@@ -114,13 +184,13 @@ const Ubicacion = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-2 sm:gap-4 items-center">
-                
+
                 {/* Lunes a viernes */}
                 <div className="flex items-center justify-start gap-2 sm:gap-3 bg-white/50 sm:bg-transparent p-2 sm:p-0 rounded-xl">
                   <div className="w-8 h-8 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center">
-                    <img 
-                      src="/iconorelojcolor.svg" 
-                      alt="Reloj" 
+                    <img
+                      src="/iconorelojcolor.svg"
+                      alt="Reloj"
                       className="w-full h-full object-contain"
                       onError={(e) => { e.target.style.display = 'none'; }}
                     />
@@ -134,9 +204,9 @@ const Ubicacion = () => {
                 {/* Sábados */}
                 <div className="flex items-center justify-start gap-2 sm:gap-3 bg-white/50 sm:bg-transparent p-2 sm:p-0 rounded-xl">
                   <div className="w-8 h-8 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center">
-                    <img 
-                      src="/iconorelojcolor.svg" 
-                      alt="Reloj" 
+                    <img
+                      src="/iconorelojcolor.svg"
+                      alt="Reloj"
                       className="w-full h-full object-contain"
                       onError={(e) => { e.target.style.display = 'none'; }}
                     />
@@ -151,21 +221,24 @@ const Ubicacion = () => {
             </div>
 
             {/* Reservas al (Número y icono grandes y proporcionados) */}
-            <div className="flex flex-col items-center lg:items-start gap-2.5 w-full max-w-[420px] lg:max-w-none">
+            <div
+              style={{ '--i': 5 }}
+              className="rv flex flex-col items-center lg:items-start gap-2.5 w-full max-w-[420px] lg:max-w-none"
+            >
               <h4 className="text-[#c59e93] font-semibold text-base sm:text-lg">Reservas al:</h4>
-              <a 
-                href="https://wa.me/51994060977" 
+              <a
+                href="https://wa.me/51994060977"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-4 bg-gradient-to-r from-[#dcc4bc] to-[#ceb5ac] hover:opacity-95 text-white rounded-full py-3.5 px-8 shadow-md transition-all duration-300 w-auto"
+                className="inline-flex items-center gap-4 bg-gradient-to-r from-[#dcc4bc] to-[#ceb5ac] hover:brightness-105 hover:shadow-xl text-white rounded-full py-3.5 px-8 shadow-md transition-all duration-500 ease-out active:scale-[0.98] w-auto"
               >
-                <img 
-                  src="/iconotelefonoblanco.svg" 
-                  alt="Teléfono" 
+                <img
+                  src="/iconotelefonoblanco.svg"
+                  alt="Teléfono"
                   className="w-10 h-10 sm:w-11 sm:h-11 object-contain flex-shrink-0"
                   onError={(e) => { e.target.style.display = 'none'; }}
                 />
-                
+
                 <span className="text-2xl sm:text-3xl font-light tracking-wide">
                   +51 994 060 977
                 </span>
@@ -173,30 +246,33 @@ const Ubicacion = () => {
             </div>
 
             {/* Redes sociales */}
-            <div className="flex items-center justify-center lg:justify-start gap-4 mt-1">
+            <div
+              style={{ '--i': 6 }}
+              className="rv flex items-center justify-center lg:justify-start gap-4 mt-1"
+            >
               <span className="text-[#6b625c] text-sm md:text-base font-light">Síguenos en:</span>
               <div className="flex gap-3">
-                <a 
-                  href="https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                <a
+                  href="https://www.facebook.com/share/1dwkJoh95C/?mibextid=wwXIfr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-500 ease-out"
                 >
                   <img src="/fcolor.svg" alt="Facebook" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
                 </a>
-                <a 
-                  href="https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                <a
+                  href="https://www.instagram.com/salvar.dermatoplastica?xtok=bmJxZG03OTB1a29h"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-500 ease-out"
                 >
                   <img src="/igcolor.svg" alt="Instagram" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
                 </a>
-                <a 
-                  href="https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                <a
+                  href="https://www.tiktok.com/@salvar_dermatoplastica?_r=1&_t=ZS-9BTxbcYcGBu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center hover:scale-110 transition-transform duration-500 ease-out"
                 >
                   <img src="/tiktokcolor.svg" alt="TikTok" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
                 </a>

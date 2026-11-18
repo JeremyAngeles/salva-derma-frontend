@@ -1,6 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes cea-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .cea-reveal .rv { opacity: 0; }
+  .cea-reveal.is-visible .rv {
+    animation: cea-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cea-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const CasosExitoAlopecia = () => {
+  const [ref, visible] = useReveal(0.12);
   const [currentCase, setCurrentCase] = useState(0);
 
   const casos = [
@@ -45,7 +94,11 @@ const CasosExitoAlopecia = () => {
   }, [casos.length]);
 
   return (
-    <section className="relative w-full py-14 sm:py-20 lg:py-28 bg-[#fafafa] font-principal flex flex-col items-center z-0 overflow-hidden lg:overflow-visible">
+    <section
+      ref={ref}
+      className={`cea-reveal ${visible ? 'is-visible' : ''} relative w-full py-14 sm:py-20 lg:py-28 bg-[#fafafa] font-principal flex flex-col items-center z-0 overflow-hidden lg:overflow-visible`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
 
       {/* Franja gris de PC */}
       <div className="hidden lg:block absolute top-[60%] left-0 w-full h-[350px] bg-[#e6e6e6] transform -translate-y-1/2 -z-10"></div>
@@ -54,8 +107,8 @@ const CasosExitoAlopecia = () => {
 
         {/* Título — tamaño igualado a CasosExito en PC (lg:text-[2.6rem]) */}
         <h2
-          className="text-[4.0vw] sm:text-[3.6vw] lg:text-[2.6rem] text-[#053d57] leading-[0.85] mb-3 sm:mb-5 max-w-[900px] tracking-tighter uppercase whitespace-nowrap lg:whitespace-normal"
-          style={{ fontFamily: 'Alta, serif' }}
+          className="rv text-[4.0vw] sm:text-[3.6vw] lg:text-[2.6rem] text-[#053d57] leading-[0.85] mb-3 sm:mb-5 max-w-[900px] tracking-tighter uppercase whitespace-nowrap lg:whitespace-normal"
+          style={{ fontFamily: 'Alta, serif', '--i': 0 }}
         >
           LA ALOPECIA SÍ SE PUEDE TRATAR. NO CON MITOS,<br />
           NO CON PROMESAS, CON DERMATOLOGÍA Y<br />
@@ -64,8 +117,8 @@ const CasosExitoAlopecia = () => {
 
         {/* Subtítulo — 100% asegurado con fuente Montserrat en celular y PC */}
         <p 
-          className="text-[#88807a] text-[clamp(11px,2.6vw,20px)] lg:text-base font-medium leading-[1.2] mb-6 sm:mb-10 lg:mb-12 max-w-[700px]"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
+          className="rv text-[#88807a] text-[clamp(11px,2.6vw,20px)] lg:text-base font-medium leading-[1.2] mb-6 sm:mb-10 lg:mb-12 max-w-[700px]"
+          style={{ fontFamily: "'Montserrat', sans-serif", '--i': 1 }}
         >
           Nuestro staff de dermatólogos capacitados en tricología te<br />
           presentan algunos de nuestros casos de éxito.
@@ -73,7 +126,8 @@ const CasosExitoAlopecia = () => {
 
         {/* Card + franja gris (celular/tablet) */}
         <div 
-          className="relative w-full max-w-[850px] touch-pan-y"
+          style={{ '--i': 2 }}
+          className="rv relative w-full max-w-[850px] touch-pan-y"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -130,12 +184,15 @@ const CasosExitoAlopecia = () => {
         </div>
 
         {/* Puntitos indicadores */}
-        <div className="flex gap-3 mt-7 sm:mt-10 relative z-20">
+        <div
+          style={{ '--i': 3 }}
+          className="rv flex gap-3 mt-7 sm:mt-10 relative z-20"
+        >
           {casos.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentCase(index)}
-              className={`w-3.5 h-3.5 md:w-4 md:h-4 rounded-full transition-all border border-[#bc9b92] ${
+              className={`w-3.5 h-3.5 md:w-4 md:h-4 rounded-full transition-all duration-500 ease-out border border-[#bc9b92] ${
                 currentCase === index ? 'bg-[#bc9b92] scale-110' : 'bg-transparent hover:bg-[#bc9b92]/30'
               }`}
               aria-label={`Ver caso ${index + 1}`}

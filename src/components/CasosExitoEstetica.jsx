@@ -1,6 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes cee-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .cee-reveal .rv { opacity: 0; }
+  .cee-reveal.is-visible .rv {
+    animation: cee-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cee-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const CasosExitoEstetica = () => {
+  const [ref, visible] = useReveal(0.12);
   const [currentCase, setCurrentCase] = useState(0);
 
   const casos = [
@@ -19,7 +68,7 @@ const CasosExitoEstetica = () => {
     setTouchStartX(e.targetTouches[0].clientX);
   };
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e) => { 
     setTouchEndX(e.targetTouches[0].clientX);
   };
 
@@ -45,7 +94,11 @@ const CasosExitoEstetica = () => {
   }, [casos.length]);
 
   return (
-    <section className="w-full bg-white font-principal pt-6 pb-0 md:pt-[140px] md:pb-[95px]">
+    <section
+      ref={ref}
+      className={`cee-reveal ${visible ? 'is-visible' : ''} w-full bg-white font-principal pt-6 pb-0 md:pt-[140px] md:pb-[95px]`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
       
       {/* =========================================
           VISTA CELULAR (< md)
@@ -61,7 +114,10 @@ const CasosExitoEstetica = () => {
           <div className="w-full max-w-[1100px] mx-auto px-6 flex flex-col items-center gap-10">
 
             {/* FOTO Y PUNTOS AGRUPADOS (Puntos debajo del card) */}
-            <div className="flex flex-col items-center w-full max-w-[310px] sm:max-w-[340px] shrink-0">
+            <div
+              style={{ '--i': 0 }}
+              className="rv flex flex-col items-center w-full max-w-[310px] sm:max-w-[340px] shrink-0"
+            >
               
               {/* FOTO VERTICAL */}
               <div 
@@ -106,21 +162,21 @@ const CasosExitoEstetica = () => {
 
             {/* TEXTOS */}
             <div className="relative z-10 flex flex-col items-center text-center text-white -mx-3">
-              {/* ✅ Título en 3 filas (solo celular) */}
+              {/* Título en 3 filas (solo celular) */}
               <h2
-                className="text-[clamp(19px,6.2vw,28px)] leading-[0.95] tracking-tighter font-light mb-5 drop-shadow-md whitespace-nowrap"
-                style={{ fontFamily: 'Alta, serif' }}
+                className="rv text-[clamp(19px,6.2vw,28px)] leading-[0.95] tracking-tighter font-light mb-5 drop-shadow-md whitespace-nowrap"
+                style={{ fontFamily: 'Alta, serif', '--i': 1 }}
               >
                 QUERERTE ES ACEPTARTE<br />
                 COMO ERES, PERO TAMBIÉN ES<br />
                 CONSTRUIRTE COMO QUIERES.
               </h2>
-              <div className="w-[150px] h-[3px] bg-[#cfaaa6] mb-6"></div>
+              <div style={{ '--i': 2 }} className="rv w-[150px] h-[3px] bg-[#cfaaa6] mb-6"></div>
               
-              {/* ✅ Párrafo en Montserrat (celular) */}
+              {/* Párrafo en Montserrat (celular) */}
               <p 
-                className="text-white text-[15px] font-normal leading-[1.35] max-w-[620px] drop-shadow-md"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
+                className="rv text-white text-[15px] font-normal leading-[1.35] max-w-[620px] drop-shadow-md"
+                style={{ fontFamily: "'Montserrat', sans-serif", '--i': 3 }}
               >
                 Nuestros tratamientos en dermatología estética
                 buscan calidad y belleza, sin olvidar que la piel
@@ -151,7 +207,8 @@ const CasosExitoEstetica = () => {
 
             {/* FOTO VERTICAL */}
             <div 
-              className="relative z-20 w-full max-w-[310px] h-[680px] -my-[50px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-lg touch-pan-y"
+              style={{ '--i': 0 }}
+              className="rv relative z-20 w-full max-w-[310px] h-[680px] -my-[50px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-lg touch-pan-y"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
@@ -184,8 +241,8 @@ const CasosExitoEstetica = () => {
             <div className="relative z-10 flex flex-col items-end text-right text-white ml-auto">
               
               <h2
-                className="text-[42px] lg:text-[46px] leading-[0.9] tracking-tighter font-light mb-5 drop-shadow-md"
-                style={{ fontFamily: 'Alta, serif' }}
+                className="rv text-[42px] lg:text-[46px] leading-[0.9] tracking-tighter font-light mb-5 drop-shadow-md"
+                style={{ fontFamily: 'Alta, serif', '--i': 1 }}
               >
                 QUERERTE ES ACEPTARTE<br />
                 COMO ERES, PERO<br />
@@ -194,12 +251,12 @@ const CasosExitoEstetica = () => {
               </h2>
 
               {/* Línea divisoria */}
-              <div className="w-[220px] h-[3px] bg-[#cfaaa6] mb-6"></div>
+              <div style={{ '--i': 2 }} className="rv w-[220px] h-[3px] bg-[#cfaaa6] mb-6"></div>
 
-              {/* ✅ Párrafo en Montserrat (PC) */}
+              {/* Párrafo en Montserrat (PC) */}
               <p 
-                className="text-white text-[16px] lg:text-[17px] font-normal leading-[1.35] max-w-[720px] drop-shadow-md"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
+                className="rv text-white text-[16px] lg:text-[17px] font-normal leading-[1.35] max-w-[720px] drop-shadow-md"
+                style={{ fontFamily: "'Montserrat', sans-serif", '--i': 3 }}
               >
                 Nuestros tratamientos en dermatología estética<br className="block" />
                 buscan calidad y belleza, sin olvidar que la piel<br className="block" />
@@ -215,7 +272,10 @@ const CasosExitoEstetica = () => {
         </div>
 
         {/* PUNTOS ORIGINALES DE PC: debajo de la franja, a la derecha de la foto */}
-        <div className="w-full max-w-[1060px] mx-auto px-0 pt-7 flex justify-start pl-[385px]">
+        <div
+          style={{ '--i': 4 }}
+          className="rv w-full max-w-[1060px] mx-auto px-0 pt-7 flex justify-start pl-[385px]"
+        >
           <div className="flex gap-[13px]">
             {casos.map((_, index) => (
               <button

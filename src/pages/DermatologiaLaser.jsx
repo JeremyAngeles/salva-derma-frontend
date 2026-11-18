@@ -1,5 +1,5 @@
 import React from 'react';
-import TiposLaser from '../components/TiposLaser'; 
+import TiposLaser from '../components/TiposLaser';
 import TratamientosLaserList from '../components/TratamientosLaserList';
 import CasosExito from '../components/CasosExito';
 import Footer from '../components/Footer';
@@ -9,11 +9,44 @@ const HERO_IMG_PC =
 const HERO_IMG_MOBILE =
   'https://res.cloudinary.com/da47iihxz/image/upload/v1793751609/miehpg4zfflinicphh28.png';
 
+/* ============================================================
+   ✨ ANIMACIONES (todo vive en este mismo archivo)
+   - 1.2s  = duración de la entrada de los textos
+   - 160ms = retraso entre un texto y el siguiente
+   - 2.6s  = duración del zoom de entrada de la foto
+   ============================================================ */
+const ESTILOS_ANIMACION = `
+  :root { --ease-suave: cubic-bezier(0.22, 1, 0.36, 1); }
+
+  @keyframes dl-subir {
+    from { opacity: 0; translate: 0 24px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+  @keyframes dl-zoom {
+    from { transform: scale(1.1); }
+    to   { transform: scale(1); }
+  }
+
+  /* La foto se asienta con un zoom lento y los textos suben al cargar */
+  .dl-zoom { animation: dl-zoom 2.6s var(--ease-suave) both; }
+  .dl-load {
+    animation: dl-subir 1.2s var(--ease-suave) both;
+    animation-delay: calc(var(--i, 0) * 160ms + 400ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dl-zoom, .dl-load {
+      animation: none !important; opacity: 1 !important; translate: none !important; transform: none !important;
+    }
+  }
+`;
+
 const DermatologiaLaser = () => {
   return (
     <main className="w-full font-principal bg-white flex flex-col min-h-screen">
+      <style>{ESTILOS_ANIMACION}</style>
 
-            {/* =========================================
+      {/* =========================================
           1A. HERO MÓVIL + TABLET (< lg)
           ========================================= */}
       <section className="lg:hidden relative w-full rounded-b-[2.5rem] md:rounded-b-[4rem] overflow-hidden">
@@ -21,7 +54,7 @@ const DermatologiaLaser = () => {
         <img
           src={HERO_IMG_MOBILE}
           alt="Unidad Dermoláser"
-          className="block w-full h-auto min-h-[680px] sm:min-h-[820px] md:min-h-[900px] object-cover object-center"
+          className="dl-zoom block w-full h-auto min-h-[680px] sm:min-h-[820px] md:min-h-[900px] object-cover object-center"
         />
 
         {/* Oscurecido + degradado abajo para leer el párrafo */}
@@ -31,18 +64,21 @@ const DermatologiaLaser = () => {
         {/* Título: al centro de la foto */}
         <div className="absolute top-[44%] left-0 w-full -translate-y-1/2 z-10 flex justify-center text-white px-4">
           <div className="flex flex-col w-fit">
-            <span className="text-white text-[1.3rem] sm:text-[1.9rem] md:text-[2.3rem] font-light tracking-wide mb-[-6px] sm:mb-[-10px] md:mb-[-14px] ml-1 text-left">
+            <span
+              style={{ '--i': 0 }}
+              className="dl-load text-white text-[1.3rem] sm:text-[1.9rem] md:text-[2.3rem] font-light tracking-wide mb-[-6px] sm:mb-[-10px] md:mb-[-14px] ml-1 text-left"
+            >
               Unidad
             </span>
 
             <h1
-              className="text-white text-[2.9rem] min-[400px]:text-[3.4rem] sm:text-[5rem] md:text-[6.5rem] leading-none tracking-normal drop-shadow-md"
-              style={{ fontFamily: 'Alta, serif' }}
+              className="dl-load text-white text-[2.9rem] min-[400px]:text-[3.4rem] sm:text-[5rem] md:text-[6.5rem] leading-none tracking-normal drop-shadow-md"
+              style={{ fontFamily: 'Alta, serif', '--i': 1 }}
             >
               DERMOLÁSER
             </h1>
 
-            <div className="w-full flex justify-end mt-[-3px] sm:mt-[-8px] pr-1">
+            <div style={{ '--i': 2 }} className="dl-load w-full flex justify-end mt-[-3px] sm:mt-[-8px] pr-1">
               <span className="text-white text-[0.95rem] sm:text-xl md:text-2xl font-light tracking-wide">
                 Tecnología avanzada
               </span>
@@ -52,7 +88,10 @@ const DermatologiaLaser = () => {
 
         {/* Párrafo: abajo, separado del título */}
         <div className="absolute bottom-0 left-0 w-full z-10 flex justify-center px-6 pb-[40px] sm:pb-[60px] md:pb-[80px]">
-          <p className="text-white text-[12.5px] sm:text-[17px] md:text-[20px] font-light leading-[1.3] text-center drop-shadow-md max-w-[330px] sm:max-w-[520px] md:max-w-[680px]">
+          <p
+            style={{ '--i': 4 }}
+            className="dl-load text-white text-[12.5px] sm:text-[17px] md:text-[20px] font-light leading-[1.3] text-center drop-shadow-md max-w-[330px] sm:max-w-[520px] md:max-w-[680px]"
+          >
             Nuestra unidad Dermoláser utiliza la mejor tecnología en dermatología láser.
             Está a cargo de nuestro staff de dermatólogas y especialistas en láser,
             brindamos protocolos personalizados según cada necesidad.
@@ -61,13 +100,13 @@ const DermatologiaLaser = () => {
       </section>
 
       {/* =========================================
-          1B. HERO PC (lg en adelante) - SIN CAMBIOS
+          1B. HERO PC (lg en adelante)
           ========================================= */}
       <section className="relative w-full hidden lg:block">
         <div className="relative w-full h-[90vh] md:h-[90vh] min-h-[750px] md:min-h-[800px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden flex flex-col justify-center items-center">
 
           <div
-            className="absolute inset-0 bg-cover bg-center"
+            className="dl-zoom absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url('${HERO_IMG_PC}')` }}
           ></div>
 
@@ -75,18 +114,21 @@ const DermatologiaLaser = () => {
 
           <div className="relative z-20 text-white px-4 pb-12 md:pb-20 w-full flex flex-col items-center justify-center">
             <div className="flex flex-col w-fit">
-              <span className="text-white text-2xl md:text-3xl lg:text-[2.5rem] font-light tracking-wide mb-[-10px] md:mb-[-18px] ml-1.5 md:ml-2 text-left">
+              <span
+                style={{ '--i': 0 }}
+                className="dl-load text-white text-2xl md:text-3xl lg:text-[2.5rem] font-light tracking-wide mb-[-10px] md:mb-[-18px] ml-1.5 md:ml-2 text-left"
+              >
                 Unidad
               </span>
 
               <h1
-                className="text-white text-[4rem] sm:text-[5.5rem] md:text-[7.5rem] lg:text-[9.5rem] leading-none tracking-normal drop-shadow-md"
-                style={{ fontFamily: 'Alta, serif' }}
+                className="dl-load text-white text-[4rem] sm:text-[5.5rem] md:text-[7.5rem] lg:text-[9.5rem] leading-none tracking-normal drop-shadow-md"
+                style={{ fontFamily: 'Alta, serif', '--i': 1 }}
               >
                 DERMOLÁSER
               </h1>
 
-              <div className="w-full flex justify-end mt-[-5px] md:mt-[-15px] pr-2 md:pr-4">
+              <div style={{ '--i': 2 }} className="dl-load w-full flex justify-end mt-[-5px] md:mt-[-15px] pr-2 md:pr-4">
                 <span className="text-white text-lg md:text-xl lg:text-2xl font-light tracking-wide">
                   Tecnología avanzada
                 </span>

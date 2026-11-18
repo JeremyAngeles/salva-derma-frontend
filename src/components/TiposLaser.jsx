@@ -1,6 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+/* ============================================================
+   ✨ ANIMACIONES (todo vive en este mismo archivo)
+   - 1.1s  = duración de la entrada
+   - 110ms = retraso entre un tipo de láser y el siguiente
+   ============================================================ */
+const ESTILOS_ANIMACION = `
+  :root { --ease-suave: cubic-bezier(0.22, 1, 0.36, 1); }
+
+  @keyframes tl-subir {
+    from { opacity: 0; translate: 0 24px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  /* Entran una sola vez al hacer scroll */
+  .tl-reveal .rv { opacity: 0; }
+  .tl-reveal.is-visible .rv {
+    animation: tl-subir 1.1s var(--ease-suave) both;
+    animation-delay: calc(var(--i, 0) * 110ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tl-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+/* Marca la sección como visible la primera vez que entra en pantalla */
+const useReveal = (threshold = 0.2) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const TiposLaser = () => {
+  const [ref, visible] = useReveal(0.2);
+
   const tipos = [
     {
       id: 1,
@@ -40,11 +97,15 @@ const TiposLaser = () => {
   ];
 
   return (
-    <section className="w-full font-principal flex flex-col items-center overflow-hidden bg-white">
+    <section
+      ref={ref}
+      className={`tl-reveal ${visible ? 'is-visible' : ''} w-full font-principal flex flex-col items-center overflow-hidden bg-white`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
 
       {/* TEXTO INTRODUCTORIO (solo PC) */}
       <div className="hidden lg:block w-full max-w-[1200px] text-center px-6 md:px-12 pt-8 pb-6 md:pt-12 md:pb-8 mx-auto">
-        <p className="text-[#88807a] text-lg md:text-xl lg:text-2xl font-light leading-snug">
+        <p style={{ '--i': 0 }} className="rv text-[#88807a] text-lg md:text-xl lg:text-2xl font-light leading-snug">
           Nuestra unidad Dermoláser utiliza la mejor tecnología en dermatología láser.<br className="hidden md:block" />
           Está a cargo de nuestro staff de dermatólogas y especialistas en láser, brindamos<br className="hidden md:block" />
           protocolos personalizados según cada necesidad.
@@ -70,8 +131,8 @@ const TiposLaser = () => {
 
             <h2
               /* TÍTULO MÁS GRANDE EN MÓVIL Y TABLET */
-              className="text-[2.4rem] min-[400px]:text-[2.8rem] sm:text-[4rem] md:text-[4.2rem] lg:text-[4.5rem] text-[#053d57] leading-none mb-6 sm:mb-10 lg:mb-12 text-center lg:text-left"
-              style={{ fontFamily: 'Alta, serif' }}
+              className="rv text-[2.4rem] min-[400px]:text-[2.8rem] sm:text-[4rem] md:text-[4.2rem] lg:text-[4.5rem] text-[#053d57] leading-none mb-6 sm:mb-10 lg:mb-12 text-center lg:text-left"
+              style={{ fontFamily: 'Alta, serif', '--i': 1 }}
             >
               {/* Celular/Tablet: 1 sola fila */}
               <span className="lg:hidden whitespace-nowrap">TIPOS DE LÁSER</span>
@@ -81,33 +142,37 @@ const TiposLaser = () => {
 
             {/* Lista: se aumentó el gap en móvil/tablet para compensar el tamaño */}
             <div className="flex flex-col gap-5 sm:gap-8 lg:gap-8 w-fit">
-              {tipos.map((tipo) => (
-                <div key={tipo.id} className="flex items-center gap-5 sm:gap-8 lg:gap-6 group py-1 lg:py-2">
+              {tipos.map((tipo, index) => (
+                <div
+                  key={tipo.id}
+                  style={{ '--i': index + 2 }}
+                  className="rv flex items-center gap-5 sm:gap-8 lg:gap-6 group py-1 lg:py-2"
+                >
 
                   {/* IMAGEN CIRCULAR MÁS GRANDE EN MÓVIL Y TABLET */}
-                  <div className="w-16 h-16 min-[400px]:w-[4.5rem] min-[400px]:h-[4.5rem] sm:w-[5.5rem] sm:h-[5.5rem] lg:w-20 lg:h-20 flex-shrink-0 rounded-full overflow-hidden border-2 border-white shadow-md transition-transform duration-300 group-hover:scale-105">
+                  <div className="w-16 h-16 min-[400px]:w-[4.5rem] min-[400px]:h-[4.5rem] sm:w-[5.5rem] sm:h-[5.5rem] lg:w-20 lg:h-20 flex-shrink-0 rounded-full overflow-hidden border-2 border-white shadow-md group-hover:shadow-xl transition-all duration-500 ease-out group-hover:scale-105">
                     <img
                       src={tipo.img}
                       alt={typeof tipo.title === 'string' ? tipo.title : 'Láser Pigmentario'}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
                       onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; }}
                     />
                   </div>
 
                   {/* Textos: Alineados a la izquierda para que se lean bien junto al ícono */}
-                  <div className="flex flex-col justify-center text-left">
+                  <div className="flex flex-col justify-center text-left transition-transform duration-500 ease-out group-hover:translate-x-1">
                     {/* TÍTULOS MÁS GRANDES EN MÓVIL Y TABLET */}
-                    <h4 className="text-[#c59e93] text-[15px] min-[400px]:text-[17px] sm:text-[22px] md:text-2xl lg:text-2xl font-medium tracking-wide uppercase leading-[1.2] lg:leading-[1.1] transition-colors duration-300 group-hover:text-[#a88277]">
+                    <h4 className="text-[#c59e93] text-[15px] min-[400px]:text-[17px] sm:text-[22px] md:text-2xl lg:text-2xl font-medium tracking-wide uppercase leading-[1.2] lg:leading-[1.1] transition-colors duration-500 group-hover:text-[#a88277]">
                       {tipo.title}
                     </h4>
 
                     {tipo.subtitle && (
                       <div className="flex flex-col mt-0.5 sm:mt-1 lg:mt-1">
-                        {tipo.subtitle.split('\n').map((line, index) => (
+                        {tipo.subtitle.split('\n').map((line, i) => (
                           <span
-                            key={index}
+                            key={i}
                             /* SUBTÍTULOS TAMBIÉN AJUSTADOS LIGERAMENTE EN MÓVIL/TABLET */
-                            className={`text-[#88807a] text-[13px] min-[400px]:text-[14px] sm:text-[17px] md:text-lg lg:text-lg font-light leading-[1.3] lg:leading-tight ${index > 0 ? 'mt-0.5 lg:mt-0.5' : ''}`}
+                            className={`text-[#88807a] text-[13px] min-[400px]:text-[14px] sm:text-[17px] md:text-lg lg:text-lg font-light leading-[1.3] lg:leading-tight ${i > 0 ? 'mt-0.5 lg:mt-0.5' : ''}`}
                           >
                             {line}
                           </span>

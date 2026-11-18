@@ -1,8 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes cdc-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .cdc-reveal .rv { opacity: 0; }
+  .cdc-reveal.is-visible .rv {
+    animation: cdc-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cdc-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const ContactoDoctorCirugia = () => {
+  const [ref, visible] = useReveal(0.12);
+
   return (
-    <div className="w-full bg-[#f4f2ef] overflow-hidden font-principal">
+    <div
+      ref={ref}
+      className={`cdc-reveal ${visible ? 'is-visible' : ''} w-full bg-[#f4f2ef] overflow-hidden font-principal`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
       
       {/* =========================================
           VISTA CELULAR Y TABLET (< lg)
@@ -17,20 +71,26 @@ const ContactoDoctorCirugia = () => {
           
           {/* Nombre del Doctor en 2 filas */}
           <h2 
-            className="text-white text-[2.1rem] min-[390px]:text-[2.45rem] sm:text-[3.5rem] leading-[0.95] tracking-wide mb-1 drop-shadow-md"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="rv text-white text-[2.1rem] min-[390px]:text-[2.45rem] sm:text-[3.5rem] leading-[0.95] tracking-wide mb-1 drop-shadow-md"
+            style={{ fontFamily: 'Alta, serif', '--i': 0 }}
           >
             DR. HÉCTOR<br />
             VARGAS
           </h2>
 
           {/* Especialidad en cursiva */}
-          <p className="text-white/95 italic font-light text-[14.5px] min-[390px]:text-[16px] sm:text-[22px] tracking-wide mb-4 sm:mb-6 drop-shadow-sm">
+          <p
+            style={{ '--i': 1 }}
+            className="rv text-white/95 italic font-light text-[14.5px] min-[390px]:text-[16px] sm:text-[22px] tracking-wide mb-4 sm:mb-6 drop-shadow-sm"
+          >
             Cirujano plástico
           </p>
 
           {/* Pastillas de CMP y RNE apiladas una debajo de la otra */}
-          <div className="flex flex-col gap-2 sm:gap-3 mb-4 sm:mb-6 w-[160px] min-[390px]:w-[175px] sm:w-[230px]">
+          <div
+            style={{ '--i': 2 }}
+            className="rv flex flex-col gap-2 sm:gap-3 mb-4 sm:mb-6 w-[160px] min-[390px]:w-[175px] sm:w-[230px]"
+          >
             <div className="bg-[#85aebf]/85 backdrop-blur-sm text-white py-1.5 sm:py-2.5 rounded-xl text-[13px] min-[390px]:text-[14px] sm:text-[17px] font-light tracking-wider shadow-md text-center">
               CMP 68988
             </div>
@@ -40,7 +100,10 @@ const ContactoDoctorCirugia = () => {
           </div>
 
           {/* Texto de llamada a la acción en 2 filas */}
-          <p className="text-white font-light text-[11.5px] min-[390px]:text-[12.5px] sm:text-[16px] leading-[1.3] mb-4 sm:mb-6 drop-shadow-md">
+          <p
+            style={{ '--i': 3 }}
+            className="rv text-white font-light text-[11.5px] min-[390px]:text-[12.5px] sm:text-[16px] leading-[1.3] mb-4 sm:mb-6 drop-shadow-md"
+          >
             Evaluemos tu intervención<br />
             quirúrgica en consulta.
           </p>
@@ -50,7 +113,8 @@ const ContactoDoctorCirugia = () => {
             href="https://wa.me/51994060977" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-gradient-to-r from-[#d3b6ad] to-[#ead8d2] hover:opacity-95 active:scale-95 text-white rounded-full py-2 sm:py-3.5 pl-3 pr-5 sm:pl-4 sm:pr-8 flex items-center justify-start gap-2.5 sm:gap-4 shadow-lg transition-all duration-300 mb-5 sm:mb-7 w-fit"
+            style={{ '--i': 4 }}
+            className="rv bg-gradient-to-r from-[#d3b6ad] to-[#ead8d2] hover:opacity-95 active:scale-95 text-white rounded-full py-2 sm:py-3.5 pl-3 pr-5 sm:pl-4 sm:pr-8 flex items-center justify-start gap-2.5 sm:gap-4 shadow-lg transition-all duration-300 mb-5 sm:mb-7 w-fit"
           >
             <div className="w-7 h-7 min-[390px]:w-8 min-[390px]:h-8 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0">
               <img 
@@ -66,7 +130,7 @@ const ContactoDoctorCirugia = () => {
           </a>
 
           {/* Redes Sociales */}
-          <div className="flex items-center gap-3 sm:gap-4 text-white drop-shadow-md">
+          <div style={{ '--i': 5 }} className="rv flex items-center gap-3 sm:gap-4 text-white drop-shadow-md">
             <span className="text-[11.5px] min-[390px]:text-[12.5px] sm:text-[15px] font-light tracking-wide">
               Síguenos en:
             </span>
@@ -118,7 +182,7 @@ const ContactoDoctorCirugia = () => {
           <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col items-center md:items-start text-center md:text-left">
             
             {/* Bloque del Doctor con nombre más grande y súper juntos */}
-            <div className="flex flex-col items-center md:items-start -mt-20 md:-mt-28">
+            <div style={{ '--i': 0 }} className="rv flex flex-col items-center md:items-start -mt-20 md:-mt-28">
               <h2 
                 className="text-white text-[2.8rem] sm:text-[3.5rem] lg:text-[4.3rem] leading-[0.85] tracking-wide -mb-2 drop-shadow-md"
                 style={{ fontFamily: 'Alta, serif' }}
@@ -135,7 +199,7 @@ const ContactoDoctorCirugia = () => {
             <div className="flex flex-col items-center md:items-start mt-14 md:mt-20 w-full">
               
               {/* Pastillas de CMP y RNE */}
-              <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
+              <div style={{ '--i': 1 }} className="rv flex flex-wrap justify-center md:justify-start gap-4 mb-8">
                 <div className="bg-[#85aebf]/85 backdrop-blur-sm text-white px-7 py-2.5 rounded-xl text-[14px] md:text-[16px] font-light tracking-wider shadow-md">
                   CMP 68988
                 </div>
@@ -145,7 +209,10 @@ const ContactoDoctorCirugia = () => {
               </div>
 
               {/* Texto de llamada a la acción */}
-              <p className="text-white font-light text-[15px] md:text-[16.5px] leading-relaxed mb-6 max-w-[380px] drop-shadow-md">
+              <p
+                style={{ '--i': 2 }}
+                className="rv text-white font-light text-[15px] md:text-[16.5px] leading-relaxed mb-6 max-w-[380px] drop-shadow-md"
+              >
                 Evaluemos tu intervención quirúrgica en<br className="hidden sm:block" />
                 consulta.
               </p>
@@ -155,7 +222,8 @@ const ContactoDoctorCirugia = () => {
                 href="https://wa.me/51994060977" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-[#d8beb6] hover:bg-[#cbb0a7] text-white rounded-full py-4 px-9 md:px-11 flex items-center justify-center gap-4 shadow-lg transition-all duration-300 mb-8 w-fit"
+                style={{ '--i': 3 }}
+                className="rv bg-[#d8beb6] hover:bg-[#cbb0a7] text-white rounded-full py-4 px-9 md:px-11 flex items-center justify-center gap-4 shadow-lg transition-all duration-300 mb-8 w-fit"
               >
                 <div className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center flex-shrink-0">
                   <img 
@@ -171,7 +239,7 @@ const ContactoDoctorCirugia = () => {
               </a>
 
               {/* Redes Sociales */}
-              <div className="flex items-center gap-4 text-white drop-shadow-md">
+              <div style={{ '--i': 4 }} className="rv flex items-center gap-4 text-white drop-shadow-md">
                 <span className="text-[14px] md:text-[15px] font-light tracking-wide">
                   Síguenos en:
                 </span>

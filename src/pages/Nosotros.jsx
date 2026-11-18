@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Footer from '../components/Footer';
 import PerfilesDoctores from '../components/PerfilesDoctores';
 
@@ -7,9 +7,79 @@ const HERO_IMG_PC =
 const HERO_IMG_MOBILE =
   'https://res.cloudinary.com/da47iihxz/image/upload/v1793751486/rmdebo0j14cc7hwlgtbi.png';
 
+/* ============================================================
+   ✨ ANIMACIONES (todo vive en este mismo archivo)
+   - 1.2s  = duración de la entrada de los textos del hero
+   - 160ms = retraso entre el título y el párrafo
+   - 2.6s  = duración del zoom de entrada de la foto
+   ============================================================ */
+const ESTILOS_ANIMACION = `
+  :root { --ease-suave: cubic-bezier(0.22, 1, 0.36, 1); }
+
+  @keyframes nos-subir {
+    from { opacity: 0; translate: 0 24px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+  @keyframes nos-zoom {
+    from { transform: scale(1.1); }
+    to   { transform: scale(1); }
+  }
+
+  /* Hero: la foto se asienta con un zoom lento y los textos suben al cargar */
+  .nos-zoom { animation: nos-zoom 2.6s var(--ease-suave) both; }
+  .nos-load {
+    animation: nos-subir 1.2s var(--ease-suave) both;
+    animation-delay: calc(var(--i, 0) * 160ms + 400ms);
+  }
+
+  /* Misión y visión: entran una sola vez al hacer scroll */
+  .nos-reveal .rv { opacity: 0; }
+  .nos-reveal.is-visible .rv {
+    animation: nos-subir 1.2s var(--ease-suave) both;
+    animation-delay: calc(var(--i, 0) * 180ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nos-zoom, .nos-load, .nos-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important; transform: none !important;
+    }
+  }
+`;
+
+/* Marca la sección como visible la primera vez que entra en pantalla */
+const useReveal = (threshold = 0.15) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
+
 const Nosotros = () => {
+  const [ref, visible] = useReveal(0.2);
+
   return (
     <main className="w-full font-principal bg-[#fcfbf9] flex flex-col min-h-screen">
+      <style>{ESTILOS_ANIMACION}</style>
 
       {/* =========================================
           1A. HERO MÓVIL + TABLET (< lg)
@@ -17,7 +87,7 @@ const Nosotros = () => {
       <section className="lg:hidden relative w-full h-[620px] sm:h-[760px] md:h-[880px] rounded-b-[2.5rem] md:rounded-b-[3.5rem] overflow-hidden">
         {/* Foto: cubre todo el ancho sin deformarse */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="nos-zoom absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${HERO_IMG_MOBILE}')` }}
         ></div>
 
@@ -27,12 +97,15 @@ const Nosotros = () => {
         {/* Textos: subidos más arriba */}
         <div className="absolute bottom-0 left-0 w-full z-10 text-center px-6 pb-[130px] sm:pb-[170px] md:pb-[210px]">
           <h1
-            className="text-white text-[2.2rem] sm:text-[3.2rem] md:text-[4.5rem] leading-none mb-3 md:mb-5 drop-shadow-lg"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="nos-load text-white text-[2.2rem] sm:text-[3.2rem] md:text-[4.5rem] leading-none mb-3 md:mb-5 drop-shadow-lg"
+            style={{ fontFamily: 'Alta, serif', '--i': 0 }}
           >
             ¿QUIÉNES SOMOS?
           </h1>
-          <p className="text-white text-[13px] sm:text-[16px] md:text-[20px] font-light leading-[1.25] drop-shadow-md mx-auto max-w-[340px] sm:max-w-[520px] md:max-w-[680px]">
+          <p
+            style={{ '--i': 1 }}
+            className="nos-load text-white text-[13px] sm:text-[16px] md:text-[20px] font-light leading-[1.25] drop-shadow-md mx-auto max-w-[340px] sm:max-w-[520px] md:max-w-[680px]"
+          >
             Somos un centro médico enfocado en el manejo global de la piel
             con especialidades que trabajan en conjunto para resolver cualquier
             caso, e incluso hacer más por ti, siempre con empatía y profesionalismo.
@@ -41,7 +114,7 @@ const Nosotros = () => {
       </section>
 
       {/* =========================================
-          1B. HERO PC (lg en adelante) - SIN CAMBIOS
+          1B. HERO PC (lg en adelante)
           ========================================= */}
       <div className="w-full overflow-x-auto hidden lg:flex justify-center bg-[#fcfbf9]">
         <section
@@ -53,20 +126,26 @@ const Nosotros = () => {
             minHeight: '950px'
           }}
         >
-          <div
-            className="absolute inset-0 bg-cover bg-center md:bg-top"
-            style={{ backgroundImage: `url('${HERO_IMG_PC}')` }}
-          ></div>
+          {/* Contenedor que recorta el zoom para que no aparezcan barras de scroll */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div
+              className="nos-zoom absolute inset-0 bg-cover bg-center md:bg-top"
+              style={{ backgroundImage: `url('${HERO_IMG_PC}')` }}
+            ></div>
+          </div>
 
           <div className="absolute bottom-[70px] md:bottom-[80px] z-40 text-center px-6 w-full max-w-[850px]">
             <h1
-              className="text-white text-[3rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] leading-none mb-4 md:mb-5 drop-shadow-lg whitespace-nowrap"
-              style={{ fontFamily: 'Alta, serif' }}
+              className="nos-load text-white text-[3rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] leading-none mb-4 md:mb-5 drop-shadow-lg whitespace-nowrap"
+              style={{ fontFamily: 'Alta, serif', '--i': 0 }}
             >
               ¿QUIÉNES SOMOS?
             </h1>
 
-            <p className="text-white text-[15px] md:text-[17px] lg:text-[19px] font-light leading-[1.1] drop-shadow-md mx-auto max-w-[750px]">
+            <p
+              style={{ '--i': 1 }}
+              className="nos-load text-white text-[15px] md:text-[17px] lg:text-[19px] font-light leading-[1.1] drop-shadow-md mx-auto max-w-[750px]"
+            >
               Somos un centro médico enfocado en el manejo global de<br className="hidden md:block"/>
               la piel con especialidades que trabajan en conjunto para resolver<br className="hidden md:block"/>
               cualquier caso, e incluso hacer más por ti, siempre con empatía y<br className="hidden md:block"/>
@@ -79,11 +158,17 @@ const Nosotros = () => {
       {/* =========================================
           2. TARJETAS DE MISIÓN Y VISIÓN
           ========================================= */}
-      <section className="w-full bg-[#fcfbf9] pb-12 lg:pb-32 px-4 sm:px-8 lg:px-6">
+      <section
+        ref={ref}
+        className={`nos-reveal ${visible ? 'is-visible' : ''} w-full bg-[#fcfbf9] pb-12 lg:pb-32 px-4 sm:px-8 lg:px-6`}
+      >
         <div className="max-w-[1050px] mx-auto grid grid-cols-2 gap-3 sm:gap-6 lg:flex lg:flex-row lg:justify-center lg:gap-16 -mt-[45px] sm:-mt-[65px] lg:-mt-[100px] relative z-30">
 
           {/* MISIÓN (Azul) */}
-          <div className="relative w-full lg:w-1/2 bg-[#053d57] text-white text-center rounded-[1.5rem] lg:rounded-[2rem] pt-[58px] sm:pt-[85px] lg:pt-[130px] pb-8 sm:pb-10 lg:pb-12 px-3 sm:px-6 lg:px-10 shadow-2xl">
+          <div
+            style={{ '--i': 0 }}
+            className="rv relative w-full lg:w-1/2 bg-[#053d57] text-white text-center rounded-[1.5rem] lg:rounded-[2rem] pt-[58px] sm:pt-[85px] lg:pt-[130px] pb-8 sm:pb-10 lg:pb-12 px-3 sm:px-6 lg:px-10 shadow-2xl"
+          >
 
             {/* ✅ overflow-hidden + isolate: recorta el ícono dentro del círculo (quita las esquinas puntiagudas en iPhone/Safari) */}
             <div className="absolute -top-[45px] sm:-top-[65px] lg:-top-[70px] left-1/2 transform -translate-x-1/2 w-[92px] h-[92px] sm:w-[130px] sm:h-[130px] lg:w-[200px] lg:h-[200px] rounded-full overflow-hidden isolate border-[7px] sm:border-[10px] lg:border-[24px] border-[#fcfbf9] bg-[#053d57] bg-clip-padding flex items-center justify-center shadow-sm p-2 sm:p-3 lg:p-6 z-40">
@@ -106,7 +191,10 @@ const Nosotros = () => {
           </div>
 
           {/* VISIÓN (Rosa) */}
-          <div className="relative w-full lg:w-1/2 bg-[#c9a79e] text-white text-center rounded-[1.5rem] lg:rounded-[2rem] pt-[58px] sm:pt-[85px] lg:pt-[130px] pb-8 sm:pb-10 lg:pb-12 px-3 sm:px-6 lg:px-10 shadow-2xl">
+          <div
+            style={{ '--i': 1 }}
+            className="rv relative w-full lg:w-1/2 bg-[#c9a79e] text-white text-center rounded-[1.5rem] lg:rounded-[2rem] pt-[58px] sm:pt-[85px] lg:pt-[130px] pb-8 sm:pb-10 lg:pb-12 px-3 sm:px-6 lg:px-10 shadow-2xl"
+          >
 
             <div className="absolute -top-[45px] sm:-top-[65px] lg:-top-[70px] left-1/2 transform -translate-x-1/2 w-[92px] h-[92px] sm:w-[130px] sm:h-[130px] lg:w-[200px] lg:h-[200px] rounded-full overflow-hidden isolate border-[7px] sm:border-[10px] lg:border-[24px] border-[#fcfbf9] bg-[#c9a79e] bg-clip-padding flex items-center justify-center shadow-sm p-2 sm:p-3 lg:p-6 z-40">
               <img

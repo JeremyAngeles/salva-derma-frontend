@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const BG_IMG =
   'https://res.cloudinary.com/da47iihxz/image/upload/v1792810329/jwlbnofvb3ot0smmutuc.jpg';
@@ -15,9 +15,61 @@ const py = (n) => `${Math.round((n * S + TOP) * 10) / 10}px`;
 // Altura compartida (celular/tablet): botón y redes miden lo mismo
 const ALTO_MOVIL = 'clamp(32px,7.6vw,60px)';
 
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes cd-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .cd-reveal .rv { opacity: 0; }
+  .cd-reveal.is-visible .rv {
+    animation: cd-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cd-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
+
 const ContactoDoctora = () => {
+  const [ref, visible] = useReveal(0.12);
+
   return (
-    <>
+    <div ref={ref} className={`cd-reveal ${visible ? 'is-visible' : ''}`}>
+      <style>{ESTILOS_ANIMACION}</style>
+
       {/* =========================================
           VERSIÓN CELULAR + TABLET (< lg)
           Arriba: título + párrafo centrados
@@ -35,8 +87,8 @@ const ContactoDoctora = () => {
 
           {/* TÍTULO EN 3 FILAS (Celular) y filas más juntas (leading-[0.85]) */}
           <h2
-            className="text-[clamp(15px,5vw,50px)] leading-[0.85] tracking-[0.03em] font-normal drop-shadow-md m-0 mb-[4vw] sm:mb-[3vw] whitespace-nowrap"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="rv text-[clamp(15px,5vw,50px)] leading-[0.85] tracking-[0.03em] font-normal drop-shadow-md m-0 mb-[4vw] sm:mb-[3vw] whitespace-nowrap"
+            style={{ fontFamily: 'Alta, serif', '--i': 0 }}
           >
             CADA PIEL TIENE SU PROPIA<br />
             HISTORIA, TE AYUDAMOS A<br />
@@ -44,7 +96,10 @@ const ContactoDoctora = () => {
           </h2>
 
           {/* PÁRRAFO EN 3 FILAS EXACTAS (Celular) - Forzado con flex y nowrap */}
-          <div className="text-[clamp(11px,2.9vw,24px)] leading-[1.3] font-light drop-shadow-sm m-0 w-full flex flex-col items-center text-center">
+          <div
+            style={{ '--i': 1 }}
+            className="rv text-[clamp(11px,2.9vw,24px)] leading-[1.3] font-light drop-shadow-sm m-0 w-full flex flex-col items-center text-center"
+          >
             <span className="whitespace-nowrap">Nuestra área de dermatología te brinda atención personalizada,</span>
             <span className="whitespace-nowrap">experiencia y tratamientos seguros, siempre con empatía y</span>
             <span className="whitespace-nowrap">acompañamiento en tu proceso.</span>
@@ -52,7 +107,10 @@ const ContactoDoctora = () => {
         </div>
 
         {/* ABAJO: botón + redes, uno al lado del otro */}
-        <div className="relative z-10 w-full px-[3vw] flex flex-row items-center justify-center gap-[2vw] text-white mt-auto">
+        <div
+          style={{ '--i': 2 }}
+          className="rv relative z-10 w-full px-[3vw] flex flex-row items-center justify-center gap-[2vw] text-white mt-auto"
+        >
 
           {/* BOTÓN TELÉFONO (ancho ajustado al contenido) */}
           <a
@@ -165,7 +223,7 @@ const ContactoDoctora = () => {
           >
             {/* TÍTULO EN 4 FILAS (PC) - Filas más juntas reduciendo el lineHeight */}
             <h2
-              className="absolute text-white drop-shadow-md m-0"
+              className="rv absolute text-white drop-shadow-md m-0"
               style={{
                 right: 0,
                 top: `${parseFloat(py(75)) - TITULO_SUBIR}px`,
@@ -175,6 +233,7 @@ const ContactoDoctora = () => {
                 letterSpacing: '0.04em',
                 whiteSpace: 'nowrap',
                 fontWeight: 400,
+                '--i': 0,
               }}
             >
               CADA PIEL TIENE SU<br />
@@ -185,13 +244,14 @@ const ContactoDoctora = () => {
 
             {/* PÁRRAFO */}
             <p
-              className="absolute text-white font-light drop-shadow-sm m-0"
+              className="rv absolute text-white font-light drop-shadow-sm m-0"
               style={{
                 right: 0,
                 top: py(286),
                 fontSize: px(18),
                 lineHeight: px(23.2),
                 whiteSpace: 'nowrap',
+                '--i': 1,
               }}
             >
               Nuestra área de dermatología<br />
@@ -208,7 +268,7 @@ const ContactoDoctora = () => {
               href="https://wa.me/51994060977"
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute flex items-center text-white shadow-md transition-all hover:brightness-95"
+              className="rv absolute flex items-center text-white shadow-md transition-all hover:brightness-95"
               style={{
                 right: 0,
                 top: py(520),
@@ -219,6 +279,7 @@ const ContactoDoctora = () => {
                 paddingLeft: px(16),
                 paddingRight: px(16),
                 gap: px(17),
+                '--i': 2,
               }}
             >
               <img
@@ -242,12 +303,13 @@ const ContactoDoctora = () => {
 
             {/* REDES SOCIALES */}
             <div
-              className="absolute flex items-center text-white drop-shadow-sm"
+              className="rv absolute flex items-center text-white drop-shadow-sm"
               style={{
                 right: 0,
                 top: py(637 - 19),
                 height: px(38),
                 gap: px(27),
+                '--i': 3,
               }}
             >
               <span
@@ -305,7 +367,7 @@ const ContactoDoctora = () => {
           </div>
         </section>
       </div>
-    </>
+    </div>
   );
 };
 

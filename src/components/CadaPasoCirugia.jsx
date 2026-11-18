@@ -1,6 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes cpc-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .cpc-reveal .rv { opacity: 0; }
+  .cpc-reveal.is-visible .rv {
+    animation: cpc-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cpc-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const CadaPasoCirugia = () => {
+  const [ref, visible] = useReveal(0.12);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Las 4 imágenes completas de Antes y Después
@@ -39,15 +88,17 @@ const CadaPasoCirugia = () => {
     const isRightSwipe = distance < -50;
 
     if (isLeftSwipe) {
-      setCurrentSlide((prev) => (prev + 1) % casos.length); // Siguiente
+      setCurrentSlide((prev) => (prev + 1) % casos.length);
     }
     if (isRightSwipe) {
-      setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length); // Anterior
+      setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length);
     }
   };
 
   return (
-    <>
+    <div ref={ref} className={`cpc-reveal ${visible ? 'is-visible' : ''}`}>
+      <style>{ESTILOS_ANIMACION}</style>
+
       {/* =========================================
           VISTA CELULAR Y TABLET (< lg)
           ========================================= */}
@@ -57,13 +108,13 @@ const CadaPasoCirugia = () => {
       >
         <div className="relative z-10 w-full max-w-[720px] mx-auto flex flex-col">
           
-          {/* Bloque superior derecho: Pegado más a la derecha y animado */}
-          <div className="w-full pl-4 pr-2 min-[390px]:pr-3 sm:pr-6 ml-auto flex flex-col items-end text-right pt-2 sm:pt-6 opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          {/* Bloque superior derecho */}
+          <div className="w-full pl-4 pr-2 min-[390px]:pr-3 sm:pr-6 ml-auto flex flex-col items-end text-right pt-2 sm:pt-6">
             
             {/* TÍTULO MODIFICADO: Letras juntas (tracking-tighter) y filas pegadas (leading-[0.85]) */}
             <h2 
-              className="flex flex-col items-end text-right text-[#053d57] text-[1.45rem] min-[375px]:text-[1.6rem] min-[410px]:text-[1.8rem] sm:text-[2.6rem] leading-[0.85] tracking-tighter mb-3 sm:mb-4"
-              style={{ fontFamily: 'Alta, serif' }}
+              className="rv flex flex-col items-end text-right text-[#053d57] text-[1.45rem] min-[375px]:text-[1.6rem] min-[410px]:text-[1.8rem] sm:text-[2.6rem] leading-[0.85] tracking-tighter mb-3 sm:mb-4"
+              style={{ fontFamily: 'Alta, serif', '--i': 0 }}
             >
               <span className="whitespace-nowrap">CADA PASO TE</span>
               <span className="whitespace-nowrap">ACERCA MÁS A TU</span>
@@ -72,15 +123,18 @@ const CadaPasoCirugia = () => {
 
             {/* Subtítulo forzado a 2 filas */}
             <h3 
-              className="flex flex-col items-end text-right text-[#7c7570] text-[9.5px] min-[375px]:text-[10.5px] min-[410px]:text-[11.5px] sm:text-[15.5px] tracking-wider uppercase leading-[1.2] mb-4 sm:mb-6 font-light"
-              style={{ fontFamily: 'Alta, serif' }}
+              className="rv flex flex-col items-end text-right text-[#7c7570] text-[9.5px] min-[375px]:text-[10.5px] min-[410px]:text-[11.5px] sm:text-[15.5px] tracking-wider uppercase leading-[1.2] mb-4 sm:mb-6 font-light"
+              style={{ fontFamily: 'Alta, serif', '--i': 1 }}
             >
               <span className="whitespace-nowrap">PARA TODO LO DEMÁS, EXISTE</span>
               <span className="whitespace-nowrap">LA CIRUGÍA PLÁSTICA</span>
             </h3>
 
             {/* Párrafo en 8 filas exactas más pegado a la derecha */}
-            <div className="flex flex-col items-end text-right text-[#7c7570] text-[9.2px] min-[375px]:text-[10px] min-[410px]:text-[11px] sm:text-[14.5px] font-light leading-[1.35] sm:leading-[1.4] ml-auto">
+            <div
+              style={{ '--i': 2 }}
+              className="rv flex flex-col items-end text-right text-[#7c7570] text-[9.2px] min-[375px]:text-[10px] min-[410px]:text-[11px] sm:text-[14.5px] font-light leading-[1.35] sm:leading-[1.4] ml-auto"
+            >
               <span className="whitespace-nowrap">La cirugía plástica, sea facial o corporal</span>
               <span className="whitespace-nowrap">es un universo en el cual el centro es el</span>
               <span className="whitespace-nowrap">paciente, no existen dos resultados</span>
@@ -93,8 +147,11 @@ const CadaPasoCirugia = () => {
 
           </div>
 
-          {/* Bloque inferior: Card animado y con Swipe */}
-          <div className="w-full max-w-[680px] mx-auto mt-10 min-[390px]:mt-12 sm:mt-16 px-4 sm:px-6 flex flex-col items-center opacity-0 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+          {/* Bloque inferior: Card con Swipe */}
+          <div
+            style={{ '--i': 3 }}
+            className="rv w-full max-w-[680px] mx-auto mt-10 min-[390px]:mt-12 sm:mt-16 px-4 sm:px-6 flex flex-col items-center"
+          >
             
             <div 
               className="w-full aspect-[2/1] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30 group touch-pan-y"
@@ -174,25 +231,28 @@ const CadaPasoCirugia = () => {
           
           <div className="w-full lg:w-[62%] flex flex-col items-center lg:items-end text-center lg:text-right">
             
-            {/* Textos con animación fade-up */}
-            <div className="opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            {/* Textos */}
+            <div>
               {/* TÍTULO MODIFICADO: Letras juntas (tracking-tighter) y filas pegadas (leading-[0.85]) */}
               <h2 
-                className="text-[#053d57] text-[2.2rem] sm:text-[2.8rem] md:text-[3.4rem] xl:text-[3.8rem] leading-[0.85] tracking-tighter mb-2 drop-shadow-sm"
-                style={{ fontFamily: 'Alta, serif' }}
+                className="rv text-[#053d57] text-[2.2rem] sm:text-[2.8rem] md:text-[3.4rem] xl:text-[3.8rem] leading-[0.85] tracking-tighter mb-2 drop-shadow-sm"
+                style={{ fontFamily: 'Alta, serif', '--i': 0 }}
               >
                 CADA PASO TE ACERCA<br />
                 MÁS A TU SUEÑO
               </h2>
 
               <h3 
-                className="text-[#7c7570] text-[15px] sm:text-[18px] md:text-[21px] tracking-wider uppercase mb-1 md:mb-1.5 font-light drop-shadow-sm"
-                style={{ fontFamily: 'Alta, serif' }}
+                className="rv text-[#7c7570] text-[15px] sm:text-[18px] md:text-[21px] tracking-wider uppercase mb-1 md:mb-1.5 font-light drop-shadow-sm"
+                style={{ fontFamily: 'Alta, serif', '--i': 1 }}
               >
                 PARA TODO LO DEMÁS, EXISTE LA CIRUGÍA PLÁSTICA
               </h3>
 
-              <p className="text-[#7c7570] text-[15px] md:text-[17px] font-light leading-snug tracking-tight max-w-[650px] mt-4 md:mt-6 mb-8 md:mb-10 drop-shadow-sm">
+              <p
+                style={{ '--i': 2 }}
+                className="rv text-[#7c7570] text-[15px] md:text-[17px] font-light leading-snug tracking-tight max-w-[650px] mt-4 md:mt-6 mb-8 md:mb-10 drop-shadow-sm"
+              >
                 La cirugía plástica, sea facial o corporal es un universo en el cual el
                 centro es el paciente, no existen dos resultados iguales, cada caso
                 es único y se refleja en el plan pre - operatorio y se define según
@@ -201,8 +261,8 @@ const CadaPasoCirugia = () => {
               </p>
             </div>
 
-            {/* Contenedor de la Imagen y Puntitos con animación */}
-            <div className="w-full max-w-[680px] flex flex-col items-center opacity-0 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            {/* Contenedor de la Imagen y Puntitos */}
+            <div style={{ '--i': 3 }} className="rv w-full max-w-[680px] flex flex-col items-center">
               
               <div className="w-full h-[250px] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30 group">
                 {casos.map((imgUrl, index) => (
@@ -261,24 +321,7 @@ const CadaPasoCirugia = () => {
 
         </div>
       </section>
-
-      {/* ESTILOS DE ANIMACIÓN */}
-      <style>{`
-        @keyframes fadeUp {
-          0% {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-up {
-          animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-      `}</style>
-    </>
+    </div>
   );
 };
 

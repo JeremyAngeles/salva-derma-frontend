@@ -1,18 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import TratamientosSkinLounge from '../components/TratamientosSkinLounge';
 import SalvarHydrolips from '../components/SalvarHydrolips';
 import EspacioSkinLounge from '../components/EspacioSkinLounge';
 import MasAllaSkinLounge from '../components/MasAllaSkinLounge';
 
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes sl-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .sl-reveal .rv { opacity: 0; }
+  .sl-reveal.is-visible .rv {
+    animation: sl-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sl-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
 const SkinLounge = () => {
+  const [heroVisible, setHeroVisible] = useState(false);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setHeroVisible(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
   return (
     <main className="w-full font-principal bg-[#faf9f8] flex flex-col min-h-screen">
+      <style>{ESTILOS_ANIMACION}</style>
 
       {/* =====================================================
           HERO CELULAR Y TABLET (todo en vw)
           ===================================================== */}
-      <section className="lg:hidden relative w-full mb-[86vw]">
+      <section className={`sl-reveal ${heroVisible ? 'is-visible' : ''} lg:hidden relative w-full mb-[86vw]`}>
 
         {/* Fondo con esquinas redondeadas abajo y nueva imagen para celular */}
         <div className="relative w-full aspect-[365/640] rounded-b-[11vw] overflow-hidden shadow-sm">
@@ -22,7 +51,10 @@ const SkinLounge = () => {
           ></div>
 
           {/* Título y subtítulo */}
-          <div className="absolute top-[20vw] left-0 w-full flex flex-col items-center text-center z-10">
+          <div
+            style={{ '--i': 0 }}
+            className="rv absolute top-[20vw] left-0 w-full flex flex-col items-center text-center z-10"
+          >
             <h1
               className="text-white text-[12.5vw] leading-[1] drop-shadow-lg flex flex-col items-center"
               style={{ fontFamily: 'Alta, serif' }}
@@ -41,7 +73,10 @@ const SkinLounge = () => {
           </div>
 
           {/* Párrafo (4 filas fijas) */}
-          <p className="absolute top-[117vw] left-0 w-full z-10 text-center text-white text-[2.4vw] font-medium leading-[1.3] drop-shadow-md">
+          <p
+            style={{ '--i': 1 }}
+            className="rv absolute top-[117vw] left-0 w-full z-10 text-center text-white text-[2.4vw] font-medium leading-[1.3] drop-shadow-md"
+          >
             <span className="block whitespace-nowrap">Experiencias Skin Lounge by Salvar son  faciales premium</span>
             <span className="block whitespace-nowrap">dermatológicos creados por especialistas en dermatología y</span>
             <span className="block whitespace-nowrap">cirugía plástica,  se enfocan en tu bienestar y la de tu piel con</span>
@@ -50,7 +85,10 @@ const SkinLounge = () => {
         </div>
 
         {/* Card del video (sale del hero hacia el blanco) con etiqueta <video> */}
-        <div className="absolute top-[139vw] left-[6vw] w-[88vw] h-[118vw] z-30 rounded-[7vw] border-[1.6vw] border-white/40 shadow-2xl overflow-hidden group cursor-pointer">
+        <div
+          style={{ '--i': 2 }}
+          className="rv absolute top-[139vw] left-[6vw] w-[88vw] h-[118vw] z-30 rounded-[7vw] border-[1.6vw] border-white/40 shadow-2xl overflow-hidden group cursor-pointer"
+        >
           <video
             src="https://res.cloudinary.com/da47iihxz/video/upload/v1793947209/pls6fpru0mn8rxi1k2gg.mp4"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -70,7 +108,7 @@ const SkinLounge = () => {
       {/* =====================================================
           HERO PC (sin cambios de estructura, solo <video>)
           ===================================================== */}
-      <section className="hidden lg:block relative w-full mb-32 md:mb-48 lg:mb-64">
+      <section className={`sl-reveal ${heroVisible ? 'is-visible' : ''} hidden lg:block relative w-full mb-32 md:mb-48 lg:mb-64`}>
         
         <div className="absolute top-0 left-0 w-full h-[95vh] min-h-[850px] md:min-h-[900px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden z-0 shadow-sm">
           <div
@@ -81,7 +119,10 @@ const SkinLounge = () => {
         </div>
 
         <div className="relative z-10 w-full h-[95vh] min-h-[850px] md:min-h-[900px] flex flex-col justify-between pt-28 pb-12 md:pb-20 px-6 lg:px-16">
-          <div className="flex flex-col items-center text-center w-full mt-4 md:mt-8">
+          <div
+            style={{ '--i': 0 }}
+            className="rv flex flex-col items-center text-center w-full mt-4 md:mt-8"
+          >
             <h1 
               className="text-white text-[4rem] sm:text-[5.5rem] md:text-[7rem] lg:text-[8rem] leading-[1.05] drop-shadow-lg flex flex-col items-center"
               style={{ fontFamily: 'Alta, serif' }}
@@ -100,7 +141,10 @@ const SkinLounge = () => {
           </div>
 
           <div className="w-full max-w-[1250px] mx-auto flex items-end relative">
-            <div className="w-full md:w-[60%] lg:w-[50%] text-left pr-4">
+            <div
+              style={{ '--i': 1 }}
+              className="rv w-full md:w-[60%] lg:w-[50%] text-left pr-4"
+            >
               <p className="text-white text-[15px] md:text-[16px] lg:text-[17px] font-medium leading-snug drop-shadow-md max-w-[480px]">
                 Experiencias Skin Lounge by Salvar son faciales premium dermatológicos creados por especialistas en dermatología y cirugía plástica, se enfocan en tu bienestar y la de tu piel con momentos de relajación y calma.
               </p>
@@ -109,7 +153,10 @@ const SkinLounge = () => {
         </div>
 
         {/* Card del video en PC con etiqueta <video> */}
-        <div className="absolute bottom-[-120px] md:bottom-[-160px] lg:bottom-[-250px] right-6 md:right-16 lg:right-[10%] xl:right-[15%] z-30 w-[260px] md:w-[320px] lg:w-[380px] h-[450px] md:h-[580px] lg:h-[650px] rounded-[2rem] border-[4px] md:border-[6px] border-white/40 shadow-2xl overflow-hidden group cursor-pointer">
+        <div
+          style={{ '--i': 2 }}
+          className="rv absolute bottom-[-120px] md:bottom-[-160px] lg:bottom-[-250px] right-6 md:right-16 lg:right-[10%] xl:right-[15%] z-30 w-[260px] md:w-[320px] lg:w-[380px] h-[450px] md:h-[580px] lg:h-[650px] rounded-[2rem] border-[4px] md:border-[6px] border-white/40 shadow-2xl overflow-hidden group cursor-pointer"
+        >
           <video 
             src="https://res.cloudinary.com/da47iihxz/video/upload/v1793947209/pls6fpru0mn8rxi1k2gg.mp4"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"

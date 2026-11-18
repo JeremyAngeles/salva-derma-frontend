@@ -1,6 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes te-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .te-reveal .rv { opacity: 0; }
+  .te-reveal.is-visible .rv {
+    animation: te-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .te-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const TratamientosEstetica = () => {
+  const [ref, visible] = useReveal(0.12);
+
   const tratamientos = [
     {
       id: 1,
@@ -38,7 +88,9 @@ const TratamientosEstetica = () => {
   ];
 
   return (
-    <>
+    <div ref={ref} className={`te-reveal ${visible ? 'is-visible' : ''}`}>
+      <style>{ESTILOS_ANIMACION}</style>
+
       {/* =========================================
           VISTA CELULAR Y TABLET (< lg)
           ========================================= */}
@@ -49,8 +101,8 @@ const TratamientosEstetica = () => {
         {/* Título superior */}
         <div className="relative z-10 w-full px-4 text-center">
           <h2 
-            className="text-[2.2rem] min-[390px]:text-[2.5rem] sm:text-[3.5rem] text-white leading-[0.95] tracking-wide drop-shadow-md"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="rv text-[2.2rem] min-[390px]:text-[2.5rem] sm:text-[3.5rem] text-white leading-[0.95] tracking-wide drop-shadow-md"
+            style={{ fontFamily: 'Alta, serif', '--i': 0 }}
           >
             TRATAMIENTOS<br />
             D. ESTÉTICA
@@ -62,10 +114,11 @@ const TratamientosEstetica = () => {
 
         {/* Tarjetas inferiores */}
         <div className="relative z-10 w-full max-w-[540px] mx-auto px-4 sm:px-6 flex flex-col gap-3.5 sm:gap-4">
-          {tratamientos.map((trat) => (
+          {tratamientos.map((trat, index) => (
             <div 
-              key={trat.id} 
-              className="flex flex-row items-center gap-3.5 sm:gap-5 bg-white/15 backdrop-blur-md rounded-[1.3rem] sm:rounded-[1.6rem] p-3 sm:p-4 shadow-lg w-full"
+              key={trat.id}
+              style={{ '--i': index + 1 }}
+              className="rv flex flex-row items-center gap-3.5 sm:gap-5 bg-white/15 backdrop-blur-md rounded-[1.3rem] sm:rounded-[1.6rem] p-3 sm:p-4 shadow-lg w-full"
             >
               {/* Imagen cuadrada a la izquierda con borde blanco */}
               <div className="w-[96px] h-[96px] min-[390px]:w-[105px] min-[390px]:h-[105px] sm:w-[130px] sm:h-[130px] flex-shrink-0">
@@ -109,18 +162,19 @@ const TratamientosEstetica = () => {
         <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 lg:px-12 flex justify-end">
           <div className="w-full max-w-[600px] flex flex-col justify-center items-center ml-auto">
             <h2 
-              className="w-full text-4xl md:text-5xl lg:text-6xl text-white leading-[0.65] mb-4 md:mb-5 text-center drop-shadow-md"
-              style={{ fontFamily: 'Alta, serif' }}
+              className="rv w-full text-4xl md:text-5xl lg:text-6xl text-white leading-[0.65] mb-4 md:mb-5 text-center drop-shadow-md"
+              style={{ fontFamily: 'Alta, serif', '--i': 0 }}
             >
               TRATAMIENTOS<br />
               D. ESTÉTICA
             </h2>
 
             <div className="w-full flex flex-col gap-5 md:gap-6">
-              {tratamientos.map((trat) => (
+              {tratamientos.map((trat, index) => (
                 <div 
-                  key={trat.id} 
-                  className="flex flex-col sm:flex-row items-center sm:items-stretch gap-5 bg-white/10 backdrop-blur-md border border-white/40 rounded-[2rem] p-4 md:p-5 shadow-lg hover:bg-white/20 transition-all duration-300 w-full"
+                  key={trat.id}
+                  style={{ '--i': index + 1 }}
+                  className="rv flex flex-col sm:flex-row items-center sm:items-stretch gap-5 bg-white/10 backdrop-blur-md border border-white/40 rounded-[2rem] p-4 md:p-5 shadow-lg hover:bg-white/20 transition-all duration-300 w-full"
                 >
                   <div className="w-full sm:w-[140px] sm:h-[140px] flex-shrink-0">
                     <img 
@@ -152,7 +206,7 @@ const TratamientosEstetica = () => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

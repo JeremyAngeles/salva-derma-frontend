@@ -1,6 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes cde-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .cde-reveal .rv { opacity: 0; }
+  .cde-reveal.is-visible .rv {
+    animation: cde-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cde-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const CirugiasDeExito = () => {
+  const [ref, visible] = useReveal(0.12);
   const [modalType, setModalType] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -105,13 +154,18 @@ const CirugiasDeExito = () => {
   };
 
   return (
-    <section className="w-full bg-[#fcfbf9] py-16 md:py-24 font-principal relative">
+    <section
+      ref={ref}
+      className={`cde-reveal ${visible ? 'is-visible' : ''} w-full bg-[#fcfbf9] py-16 md:py-24 font-principal relative`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
+
       <div className="max-w-[1150px] mx-auto px-6 lg:px-8">
         
         {/* Título Principal (Más chico y más abajo en celular) */}
         <h2 
-          className="text-[#053d57] text-[2.1rem] sm:text-[3.2rem] md:text-[4.0rem] text-center mt-10 md:mt-0 mb-12 md:mb-14 tracking-wide leading-none font-light"
-          style={{ fontFamily: 'Alta, serif' }}
+          className="rv text-[#053d57] text-[2.1rem] sm:text-[3.2rem] md:text-[4.0rem] text-center mt-10 md:mt-0 mb-12 md:mb-14 tracking-wide leading-none font-light"
+          style={{ fontFamily: 'Alta, serif', '--i': 0 }}
         >
           CIRUGÍAS DE ÉXITO
         </h2>
@@ -124,7 +178,8 @@ const CirugiasDeExito = () => {
           {/* 1. Otoplastía */}
           <div 
             onClick={() => abrirModal('otoplastia')}
-            className="relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 1 }}
+            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/otoplastia.png" 
@@ -142,7 +197,8 @@ const CirugiasDeExito = () => {
           {/* 2. Blefaroplastía */}
           <div 
             onClick={() => abrirModal('blefaroplastia')}
-            className="relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 2 }}
+            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/BLEFARO.png" 
@@ -160,7 +216,8 @@ const CirugiasDeExito = () => {
           {/* 3. Lifting Facial */}
           <div 
             onClick={() => abrirModal('lifting')}
-            className="relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 3 }}
+            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/LIFTING_FACIAL.png" 
@@ -178,7 +235,8 @@ const CirugiasDeExito = () => {
           {/* 4. Rinoseptoplastía */}
           <div 
             onClick={() => abrirModal('rinoseptoplastia')}
-            className="relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 4 }}
+            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/RINOSEPTOPLASTIA.png" 
@@ -196,7 +254,8 @@ const CirugiasDeExito = () => {
           {/* 5. Armonización Facial (Abajo ocupando todo el ancho) */}
           <div 
             onClick={() => abrirModal('armonizacion')}
-            className="relative w-full h-[320px] min-[390px]:h-[360px] sm:h-[420px] col-span-2 rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 5 }}
+            className="rv relative w-full h-[320px] min-[390px]:h-[360px] sm:h-[420px] col-span-2 rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616262/ARMONIZACI%C3%93N_FACIAL.png" 
@@ -221,7 +280,8 @@ const CirugiasDeExito = () => {
           {/* 1. OTOPLASTÍA */}
           <div 
             onClick={() => abrirModal('otoplastia')}
-            className="relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 1 }}
+            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/otoplastia.png" 
@@ -239,7 +299,8 @@ const CirugiasDeExito = () => {
           {/* 2. BLEFAROPLASTÍA */}
           <div 
             onClick={() => abrirModal('blefaroplastia')}
-            className="relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 2 }}
+            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/BLEFARO.png" 
@@ -257,7 +318,8 @@ const CirugiasDeExito = () => {
           {/* 3. ARMONIZACIÓN FACIAL */}
           <div 
             onClick={() => abrirModal('armonizacion')}
-            className="relative w-full col-span-1 row-span-2 h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 3 }}
+            className="rv relative w-full col-span-1 row-span-2 h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616262/ARMONIZACI%C3%93N_FACIAL.png" 
@@ -275,7 +337,8 @@ const CirugiasDeExito = () => {
           {/* 4. LIFTING FACIAL */}
           <div 
             onClick={() => abrirModal('lifting')}
-            className="relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 4 }}
+            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/LIFTING_FACIAL.png" 
@@ -293,7 +356,8 @@ const CirugiasDeExito = () => {
           {/* 5. RINOSEPTOPLASTÍA */}
           <div 
             onClick={() => abrirModal('rinoseptoplastia')}
-            className="relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            style={{ '--i': 5 }}
+            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/RINOSEPTOPLASTIA.png" 
@@ -330,7 +394,6 @@ const CirugiasDeExito = () => {
               &#10094;
             </button>
 
-            {/* SE AGREGARON LOS EVENTOS DE SWIPE AQUÍ */}
             <div 
               onClick={(e) => e.stopPropagation()} 
               onTouchStart={handleTouchStart}

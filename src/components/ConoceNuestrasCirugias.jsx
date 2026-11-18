@@ -1,8 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes cnc-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .cnc-reveal .rv { opacity: 0; }
+  .cnc-reveal.is-visible .rv {
+    animation: cnc-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cnc-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const ConoceNuestrasCirugias = () => {
+  const [ref, visible] = useReveal(0.12);
+
   return (
-    <section className="relative w-full font-principal overflow-hidden">
+    <section
+      ref={ref}
+      className={`cnc-reveal ${visible ? 'is-visible' : ''} relative w-full font-principal overflow-hidden`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
       
       {/* =========================================
           FONDO: SOLO LA IMAGEN, 100% LIMPIA, SIN NADA ENCIMA
@@ -19,14 +73,17 @@ const ConoceNuestrasCirugias = () => {
         
         {/* TÍTULO AJUSTADO: Un poco más chico en celular */}
         <h2 
-          className="text-white text-[1.45rem] min-[360px]:text-[1.6rem] min-[400px]:text-[1.75rem] sm:text-[2.2rem] md:text-[3rem] lg:text-[4rem] font-light text-center mb-8 md:mb-10 tracking-tight drop-shadow-md leading-none whitespace-nowrap"
-          style={{ fontFamily: 'Alta, serif' }}
+          className="rv text-white text-[1.45rem] min-[360px]:text-[1.6rem] min-[400px]:text-[1.75rem] sm:text-[2.2rem] md:text-[3rem] lg:text-[4rem] font-light text-center mb-8 md:mb-10 tracking-tight drop-shadow-md leading-none whitespace-nowrap"
+          style={{ fontFamily: 'Alta, serif', '--i': 0 }}
         >
           CONOCE NUESTRAS CIRUGÍAS
         </h2>
 
         {/* MARCO TRANSLÚCIDO ÚNICO QUE ENVUELVE AMBAS TARJETAS */}
-        <div className="w-full bg-white/40 backdrop-blur-md p-3 sm:p-4 md:p-5 rounded-[2.2rem] md:rounded-[3rem] shadow-xl border border-white/50">
+        <div
+          style={{ '--i': 1 }}
+          className="rv w-full bg-white/40 backdrop-blur-md p-3 sm:p-4 md:p-5 rounded-[2.2rem] md:rounded-[3rem] shadow-xl border border-white/50"
+        >
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             

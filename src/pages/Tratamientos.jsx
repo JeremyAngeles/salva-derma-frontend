@@ -1,10 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Footer from '../components/Footer';
 import PrincipalesTecnologias from '../components/PrincipalesTecnologias';
 import OtrosTratamientosEsteticos from '../components/OtrosTratamientosEsteticos';
 import EsteticaEspecialistas from '../components/EsteticaEspecialistas';
 
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes tr-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .tr-reveal .rv { opacity: 0; }
+  .tr-reveal.is-visible .rv {
+    animation: tr-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tr-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.08) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
+
 const Tratamientos = () => {
+  const [heroVisible, setHeroVisible] = useState(false);
+  const [gridRef, gridVisible] = useReveal(0.08);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setHeroVisible(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
   const tratamientosGrid = [
     { 
       id: 1, 
@@ -40,16 +96,19 @@ const Tratamientos = () => {
 
   return (
     <main className="w-full font-principal bg-[#faf9f8] flex flex-col min-h-screen pt-28 md:pt-36">
+      <style>{ESTILOS_ANIMACION}</style>
       
       {/* 1. CABECERA (Títulos y Textos) */}
-      <section className="max-w-[1250px] mx-auto px-5 lg:px-12 w-full mb-10 md:mb-14">
+      <section
+        className={`tr-reveal ${heroVisible ? 'is-visible' : ''} max-w-[1250px] mx-auto px-5 lg:px-12 w-full mb-10 md:mb-14`}
+      >
         <div className="flex flex-col md:flex-row justify-between items-center md:items-end text-center md:text-left gap-6 md:gap-10">
           
           {/* Contenedor del Título centrado y con ancho controlado para móvil */}
           <div className="w-full md:w-auto flex flex-col items-center md:items-start">
             <h1 
-              className="text-[2.8rem] min-[380px]:text-[3.2rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] xl:text-[7rem] text-[#053d57] leading-[0.95] tracking-wide drop-shadow-sm text-center md:text-left max-w-[450px] md:max-w-none mx-auto" 
-              style={{ fontFamily: 'Alta, serif' }}
+              className="rv text-[2.8rem] min-[380px]:text-[3.2rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] xl:text-[7rem] text-[#053d57] leading-[0.95] tracking-wide drop-shadow-sm text-center md:text-left max-w-[450px] md:max-w-none mx-auto" 
+              style={{ fontFamily: 'Alta, serif', '--i': 0 }}
             >
               TRATAMIENTOS<br />ESTÉTICOS
             </h1>
@@ -58,15 +117,17 @@ const Tratamientos = () => {
           {/* Contenedor del Párrafo y Botón centrados en móvil */}
           <div className="w-full md:w-auto flex flex-col items-center md:items-start mt-1 md:mt-0 md:pb-3">
             
-            {/* MODIFICADO: Párrafo con la tipografía Montserrat */}
             <p 
-              className="text-[#88807a] text-[15px] sm:text-[16px] md:text-[15px] lg:text-[18px] font-normal leading-snug tracking-tight mb-5 md:mb-6 max-w-[340px] sm:max-w-[400px] md:max-w-[420px] text-center md:text-left"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              className="rv text-[#88807a] text-[15px] sm:text-[16px] md:text-[15px] lg:text-[18px] font-normal leading-snug tracking-tight mb-5 md:mb-6 max-w-[340px] sm:max-w-[400px] md:max-w-[420px] text-center md:text-left"
+              style={{ fontFamily: "'Montserrat', sans-serif", '--i': 1 }}
             >
               Nuestros tratamientos estéticos son realizados por especialistas en dermatología y cirugía plástica, buscando mejorar la calidad de piel mediante procedimientos seguros y efectivos.
             </p>
             
-            <span className="bg-[#d1b3ab] text-white px-7 md:px-8 py-2.5 rounded-full text-[14px] md:text-[15px] tracking-wide shadow-sm font-medium whitespace-nowrap w-max mx-auto md:mx-0">
+            <span
+              style={{ '--i': 2 }}
+              className="rv bg-[#d1b3ab] text-white px-7 md:px-8 py-2.5 rounded-full text-[14px] md:text-[15px] tracking-wide shadow-sm font-medium whitespace-nowrap w-max mx-auto md:mx-0"
+            >
               Realza la belleza y equilibrio de tu piel
             </span>
           </div>
@@ -75,12 +136,16 @@ const Tratamientos = () => {
       </section>
 
       {/* 2. CUADRÍCULA DE FOTOS (GRID) */}
-      <section className="max-w-[1250px] mx-auto px-6 lg:px-12 w-full mb-16 md:mb-24">
+      <section
+        ref={gridRef}
+        className={`tr-reveal ${gridVisible ? 'is-visible' : ''} max-w-[1250px] mx-auto px-6 lg:px-12 w-full mb-16 md:mb-24`}
+      >
         <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
           {tratamientosGrid.map((trat, index) => (
             <div 
-              key={trat.id} 
-              className={`relative w-full h-[180px] sm:h-[260px] md:h-[320px] lg:h-[380px] xl:h-[400px] group cursor-pointer overflow-hidden bg-[#e8e4e1] shadow-md transition-all duration-300 ${getRoundedClass(index)}`}
+              key={trat.id}
+              style={{ '--i': index }}
+              className={`rv relative w-full h-[180px] sm:h-[260px] md:h-[320px] lg:h-[380px] xl:h-[400px] group cursor-pointer overflow-hidden bg-[#e8e4e1] shadow-md transition-all duration-300 ${getRoundedClass(index)}`}
             >
               <img 
                 src={trat.img} 

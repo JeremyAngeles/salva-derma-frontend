@@ -1,6 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes pt-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .pt-reveal .rv { opacity: 0; }
+  .pt-reveal.is-visible .rv {
+    animation: pt-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pt-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const PrincipalesTecnologias = () => {
+  const [ref, visible] = useReveal(0.12);
+
   // Cada fila de texto es un ítem del arreglo (así queda igualito al diseño)
   const tecnologias = [
     { 
@@ -42,7 +92,11 @@ const PrincipalesTecnologias = () => {
   ];
 
   return (
-    <section className="relative w-full font-principal overflow-hidden bg-[#7a736c] aspect-[464/756] md:aspect-auto">
+    <section
+      ref={ref}
+      className={`pt-reveal ${visible ? 'is-visible' : ''} relative w-full font-principal overflow-hidden bg-[#7a736c] aspect-[464/756] md:aspect-auto`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
       
       {/* FONDO CELULAR Y TABLET */}
       <div 
@@ -66,21 +120,28 @@ const PrincipalesTecnologias = () => {
           
           {/* Título Principal */}
           <h2 
-            className="text-white text-[8.8vw] md:text-[4rem] lg:text-[4.5rem] leading-[1] tracking-wide drop-shadow-md mb-2"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="rv text-white text-[8.8vw] md:text-[4rem] lg:text-[4.5rem] leading-[1] tracking-wide drop-shadow-md mb-2"
+            style={{ fontFamily: 'Alta, serif', '--i': 0 }}
           >
             PRINCIPALES<br />TECNOLOGÍAS
           </h2>
           
           {/* Subtítulo */}
-          <p className="text-white/80 text-[2.4vw] md:text-[15px] font-light tracking-widest uppercase mb-[8vw] md:mb-12">
+          <p
+            style={{ '--i': 1 }}
+            className="rv text-white/80 text-[2.4vw] md:text-[15px] font-light tracking-widest uppercase mb-[8vw] md:mb-12"
+          >
             (EQUIPOS)
           </p>
 
           {/* LISTA DE EQUIPOS */}
           <div className="flex flex-col gap-[4vw] md:gap-7 pl-[2.2vw] md:pl-0">
-            {tecnologias.map((tech) => (
-              <div key={tech.id} className="flex items-center gap-[2.4vw] md:gap-6 group">
+            {tecnologias.map((tech, index) => (
+              <div
+                key={tech.id}
+                style={{ '--i': index + 2 }}
+                className="rv flex items-center gap-[2.4vw] md:gap-6 group"
+              >
                 
                 {/* Imagen Circular (Miniatura) */}
                 <div className="w-[12.3vw] h-[12.3vw] md:w-[70px] md:h-[70px] flex-shrink-0 rounded-full overflow-hidden border-[1.5px] border-white/20 shadow-lg bg-[#e8e4e1] transition-transform duration-300 group-hover:scale-105">

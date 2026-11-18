@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Footer from '../components/Footer';
 import TratamientosEstetica from '../components/TratamientosEstetica';
 import ProcedimientosEstetica from '../components/ProcedimientosEstetica';
@@ -10,15 +10,74 @@ const HERO_IMG_PC =
 const HERO_IMG_MOBILE =
   'https://res.cloudinary.com/da47iihxz/image/upload/v1793751614/ulpfkkjvpc8l5wkrajq6.png';
 
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes de-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .de-reveal .rv { opacity: 0; }
+  .de-reveal.is-visible .rv {
+    animation: de-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .de-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
+
 const DermatologiaEstetica = () => {
+  const [heroVisible, setHeroVisible] = useState(false);
+  const [introRef, introVisible] = useReveal(0.12);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setHeroVisible(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
   return (
     <main className="w-full font-principal bg-white flex flex-col min-h-screen">
+      <style>{ESTILOS_ANIMACION}</style>
 
       {/* =========================================
           1A. HERO MÓVIL + TABLET (< lg)
           ========================================= */}
-      <section className="lg:hidden relative w-full h-[680px] sm:h-[820px] md:h-[900px] rounded-b-[2.5rem] md:rounded-b-[4rem] overflow-hidden">
-        {/* Fondo exclusivo para móvil y tablet (actualizado) */}
+      <section
+        className={`de-reveal ${heroVisible ? 'is-visible' : ''} lg:hidden relative w-full h-[680px] sm:h-[820px] md:h-[900px] rounded-b-[2.5rem] md:rounded-b-[4rem] overflow-hidden`}
+      >
+        {/* Fondo exclusivo para móvil y tablet */}
         <div 
           className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${HERO_IMG_MOBILE}')` }}
@@ -27,13 +86,16 @@ const DermatologiaEstetica = () => {
         {/* Título: desplazado más abajo (top-[68%]) y con textos más grandes */}
         <div className="absolute top-[68%] sm:top-[65%] left-0 w-full -translate-y-1/2 flex items-center justify-center z-10 text-white px-4">
           <div className="flex flex-col items-center text-center w-fit mt-4 sm:mt-0">
-            <span className="text-white text-[1.4rem] min-[400px]:text-[1.6rem] sm:text-[2.2rem] md:text-[2.6rem] font-light tracking-wider mb-1 sm:mb-2 drop-shadow-md">
+            <span
+              style={{ '--i': 0 }}
+              className="rv text-white text-[1.4rem] min-[400px]:text-[1.6rem] sm:text-[2.2rem] md:text-[2.6rem] font-light tracking-wider mb-1 sm:mb-2 drop-shadow-md"
+            >
               DERMATOLOGÍA
             </span>
 
             <h1
-              className="text-white text-[4.5rem] min-[400px]:text-[5.2rem] sm:text-[7.5rem] md:text-[9.8rem] leading-none tracking-normal drop-shadow-lg"
-              style={{ fontFamily: 'Alta, serif' }}
+              className="rv text-white text-[4.5rem] min-[400px]:text-[5.2rem] sm:text-[7.5rem] md:text-[9.8rem] leading-none tracking-normal drop-shadow-lg"
+              style={{ fontFamily: 'Alta, serif', '--i': 1 }}
             >
               ESTÉTICA
             </h1>
@@ -44,7 +106,9 @@ const DermatologiaEstetica = () => {
       {/* =========================================
           1B. HERO PC (lg en adelante) - SIN CAMBIOS
           ========================================= */}
-      <section className="relative w-full hidden lg:block">
+      <section
+        className={`de-reveal ${heroVisible ? 'is-visible' : ''} relative w-full hidden lg:block`}
+      >
         <div className="relative w-full h-[90vh] md:h-[90vh] min-h-[750px] md:min-h-[800px] rounded-b-[3rem] md:rounded-b-[5rem] overflow-hidden flex flex-col items-center justify-center">
 
           <div
@@ -54,13 +118,16 @@ const DermatologiaEstetica = () => {
 
           <div className="relative z-20 flex flex-col items-center text-center px-4 w-full mt-10 md:mt-20">
 
-            <span className="text-white text-2xl md:text-3xl lg:text-4xl font-light tracking-wider mb-2 md:mb-3 drop-shadow-md z-10">
+            <span
+              style={{ '--i': 0 }}
+              className="rv text-white text-2xl md:text-3xl lg:text-4xl font-light tracking-wider mb-2 md:mb-3 drop-shadow-md z-10"
+            >
               DERMATOLOGÍA
             </span>
 
             <h1
-              className="text-white text-[5rem] sm:text-[6.5rem] md:text-[8rem] lg:text-[10rem] leading-none tracking-normal drop-shadow-lg"
-              style={{ fontFamily: 'Alta, serif' }}
+              className="rv text-white text-[5rem] sm:text-[6.5rem] md:text-[8rem] lg:text-[10rem] leading-none tracking-normal drop-shadow-lg"
+              style={{ fontFamily: 'Alta, serif', '--i': 1 }}
             >
               ESTÉTICA
             </h1>
@@ -72,12 +139,18 @@ const DermatologiaEstetica = () => {
       {/* =========================================
           2. TEXTO INTRODUCTORIO
           ========================================= */}
-      <section className="w-full py-16 md:py-24 bg-[#fbfbfb] flex flex-col justify-center items-center px-2 min-[375px]:px-4 overflow-x-hidden">
+      <section
+        ref={introRef}
+        className={`de-reveal ${introVisible ? 'is-visible' : ''} w-full py-16 md:py-24 bg-[#fbfbfb] flex flex-col justify-center items-center px-2 min-[375px]:px-4 overflow-x-hidden`}
+      >
         <div className="max-w-[1200px] w-full flex flex-col items-center">
           
           {/* Título forzado en 1 sola fila con responsive text */}
           <div className="w-full flex justify-center mb-5 md:mb-8 px-2">
-            <h2 className="text-[#053d57] text-[3.2vw] min-[400px]:text-[3.5vw] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.2rem] font-semibold text-center tracking-wide whitespace-nowrap">
+            <h2
+              style={{ '--i': 0 }}
+              className="rv text-[#053d57] text-[3.2vw] min-[400px]:text-[3.5vw] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.2rem] font-semibold text-center tracking-wide whitespace-nowrap"
+            >
               ¿QUÉ HACEMOS EN DERMATOLOGÍA ESTÉTICA?
             </h2>
           </div>
@@ -87,8 +160,8 @@ const DermatologiaEstetica = () => {
               Aplicando fuente Montserrat en ambos
               ========================================= */}
           <div 
-            className="text-[#88807a] font-light leading-[1.6] md:leading-[1.5] text-center w-full text-[10px] min-[375px]:text-[11px] min-[400px]:text-[12px] sm:text-[16px] md:text-[20px] lg:text-[1.65rem]"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            className="rv text-[#88807a] font-light leading-[1.6] md:leading-[1.5] text-center w-full text-[10px] min-[375px]:text-[11px] min-[400px]:text-[12px] sm:text-[16px] md:text-[20px] lg:text-[1.65rem]"
+            style={{ fontFamily: "'Montserrat', sans-serif", '--i': 1 }}
           >
             
             {/* VERSIÓN MÓVIL/TABLET (4 FILAS) */}

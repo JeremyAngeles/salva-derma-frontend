@@ -1,6 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes pe-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .pe-reveal .rv { opacity: 0; }
+  .pe-reveal.is-visible .rv {
+    animation: pe-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pe-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const ProcedimientosEstetica = () => {
+  const [ref, visible] = useReveal(0.12);
+
   const procedimientos = [
     {
       id: 1,
@@ -77,10 +127,13 @@ const ProcedimientosEstetica = () => {
   }, [imagenesDerecha.length]);
 
   return (
-    <section 
-      className="relative w-full py-12 sm:py-16 lg:py-28 font-principal overflow-hidden bg-cover bg-center bg-no-repeat"
+    <section
+      ref={ref}
+      className={`pe-reveal ${visible ? 'is-visible' : ''} relative w-full py-12 sm:py-16 lg:py-28 font-principal overflow-hidden bg-cover bg-center bg-no-repeat`}
       style={{ backgroundImage: "url('https://res.cloudinary.com/cgfzvuli/image/upload/v1792531302/03_fondo_blanco.png')" }}
     >
+      <style>{ESTILOS_ANIMACION}</style>
+
       <div className="absolute inset-0 bg-white/50 lg:bg-white/20 pointer-events-none z-0"></div>
 
       {/* =========================================
@@ -89,17 +142,18 @@ const ProcedimientosEstetica = () => {
       <div className="relative z-10 w-full lg:hidden flex flex-col items-center">
         
         <h2 
-          className="text-[2.2rem] min-[390px]:text-[2.5rem] sm:text-[3.5rem] text-[#053d57] text-center mb-8 sm:mb-12 tracking-wide px-4"
-          style={{ fontFamily: 'Alta, serif' }}
+          className="rv text-[2.2rem] min-[390px]:text-[2.5rem] sm:text-[3.5rem] text-[#053d57] text-center mb-8 sm:mb-12 tracking-wide px-4"
+          style={{ fontFamily: 'Alta, serif', '--i': 0 }}
         >
           PROCEDIMIENTOS
         </h2>
 
         <div className="flex flex-col gap-5 sm:gap-8 w-fit mx-auto px-4">
-          {procedimientos.map((proc) => (
+          {procedimientos.map((proc, index) => (
             <div 
-              key={proc.id} 
-              className="flex items-center gap-5 sm:gap-8 group py-1"
+              key={proc.id}
+              style={{ '--i': index + 1 }}
+              className="rv flex items-center gap-5 sm:gap-8 group py-1"
             >
               <div className="w-16 h-16 min-[400px]:w-[4.5rem] min-[400px]:h-[4.5rem] sm:w-[5.5rem] sm:h-[5.5rem] flex-shrink-0 rounded-full overflow-hidden shadow-md border-2 border-white bg-white">
                 <img 
@@ -119,7 +173,7 @@ const ProcedimientosEstetica = () => {
                     className="text-[#7d7d7d] text-[13px] min-[400px]:text-[14px] sm:text-[17px] font-normal leading-[1.3] max-w-[240px] sm:max-w-[420px]"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
-                    {/* DESCRIPCIONES FORZADAS EN MÓVIL (ocultas en PC gracias a lg:inline) */}
+                    {/* DESCRIPCIONES FORZADAS EN MÓVIL */}
                     {proc.id === 1 && (
                       <>
                         De rejuvenecimiento fraccionado, <br className="lg:hidden" />
@@ -148,7 +202,10 @@ const ProcedimientosEstetica = () => {
         </div>
 
         {/* CARRUSEL ABAJO CELULAR */}
-        <div className="w-full max-w-[420px] sm:max-w-[550px] px-5 mt-10 sm:mt-14">
+        <div
+          style={{ '--i': procedimientos.length + 1 }}
+          className="rv w-full max-w-[420px] sm:max-w-[550px] px-5 mt-10 sm:mt-14"
+        >
           <div 
             className="relative w-full h-[400px] sm:h-[500px] rounded-[2rem] border-[6px] sm:border-[8px] border-white shadow-xl overflow-hidden bg-white touch-pan-y"
             onTouchStart={handleTouchStart}
@@ -188,8 +245,8 @@ const ProcedimientosEstetica = () => {
       <div className="hidden lg:block relative z-10 w-full max-w-[1300px] mx-auto px-6 lg:px-10">
         
         <h2 
-          className="text-[2.8rem] md:text-5xl lg:text-[4.5rem] text-[#053d57] text-center mb-16 md:mb-20 tracking-wide drop-shadow-sm"
-          style={{ fontFamily: 'Alta, serif' }}
+          className="rv text-[2.8rem] md:text-5xl lg:text-[4.5rem] text-[#053d57] text-center mb-16 md:mb-20 tracking-wide drop-shadow-sm"
+          style={{ fontFamily: 'Alta, serif', '--i': 0 }}
         >
           PROCEDIMIENTOS
         </h2>
@@ -197,8 +254,12 @@ const ProcedimientosEstetica = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
           
           <div className="flex flex-col gap-6 md:gap-8 bg-white/50 md:bg-transparent p-6 md:p-0 rounded-[2rem] backdrop-blur-sm md:backdrop-blur-none shadow-sm md:shadow-none">
-            {procedimientos.map((proc) => (
-              <div key={proc.id} className="flex items-center gap-5 md:gap-6 group">
+            {procedimientos.map((proc, index) => (
+              <div
+                key={proc.id}
+                style={{ '--i': index + 1 }}
+                className="rv flex items-center gap-5 md:gap-6 group"
+              >
                 
                 <div className="w-16 h-16 md:w-[95px] md:h-[95px] flex-shrink-0 rounded-full overflow-hidden shadow-md border-[3px] border-white bg-white transition-transform duration-300 group-hover:scale-105">
                   <img 
@@ -226,7 +287,10 @@ const ProcedimientosEstetica = () => {
             ))}
           </div>
 
-          <div className="w-full flex justify-center lg:justify-end mt-8 lg:mt-0 relative">
+          <div
+            style={{ '--i': 2 }}
+            className="rv w-full flex justify-center lg:justify-end mt-8 lg:mt-0 relative"
+          >
             <div className="relative w-full max-w-[450px] lg:max-w-[500px] h-[450px] md:h-[550px] lg:h-[650px] rounded-[2.5rem] border-[8px] md:border-[12px] border-white shadow-2xl overflow-hidden bg-white">
               {imagenesDerecha.map((img, index) => (
                 <img 

@@ -1,6 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes ee-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .ee-reveal .rv { opacity: 0; }
+  .ee-reveal.is-visible .rv {
+    animation: ee-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ee-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const EsteticaEspecialistas = () => {
+  const [ref, visible] = useReveal(0.12);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const casos = [
@@ -53,29 +102,33 @@ const EsteticaEspecialistas = () => {
     const isRightSwipe = distance < -50;
 
     if (isLeftSwipe) {
-      setCurrentSlide((prev) => (prev + 1) % casos.length); // Siguiente
+      setCurrentSlide((prev) => (prev + 1) % casos.length);
     }
     if (isRightSwipe) {
-      setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length); // Anterior
+      setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length);
     }
   };
 
   return (
-    <section className="relative w-full bg-white pt-[8vw] md:pt-[6vw] lg:pt-24 pb-[10vw] lg:pb-20 font-principal overflow-hidden">
+    <section
+      ref={ref}
+      className={`ee-reveal ${visible ? 'is-visible' : ''} relative w-full bg-white pt-[8vw] md:pt-[6vw] lg:pt-24 pb-[10vw] lg:pb-20 font-principal overflow-hidden`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
       
-      {/* Contenedor de títulos con animación */}
-      <div className="max-w-[1400px] mx-auto px-[3vw] lg:px-12 text-center relative z-10 opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+      {/* Contenedor de títulos */}
+      <div className="max-w-[1400px] mx-auto px-[3vw] lg:px-12 text-center relative z-10">
         <h2 
-          className="text-[5.0vw] lg:text-[3.6rem] xl:text-[4.2rem] text-[#053d57] leading-none mb-[2.5vw] lg:mb-4 whitespace-nowrap"
-          style={{ fontFamily: 'Alta, serif' }}
+          className="rv text-[5.0vw] lg:text-[3.6rem] xl:text-[4.2rem] text-[#053d57] leading-none mb-[2.5vw] lg:mb-4 whitespace-nowrap"
+          style={{ fontFamily: 'Alta, serif', '--i': 0 }}
         >
           ESTÉTICA DE LA MANO DE ESPECIALISTAS
         </h2>
 
         {/* Subtítulo CELULAR Y TABLET (3 filas fijas) con fuente Montserrat */}
         <p 
-          className="lg:hidden text-[#88807a] text-[3.2vw] font-medium leading-snug mx-auto mb-[5vw]"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
+          className="rv lg:hidden text-[#88807a] text-[3.2vw] font-medium leading-snug mx-auto mb-[5vw]"
+          style={{ fontFamily: "'Montserrat', sans-serif", '--i': 1 }}
         >
           <span className="block whitespace-nowrap">Resaltamos la belleza respetando la naturalidad de</span>
           <span className="block whitespace-nowrap">cada rostro, siempre bajo tratamientos seguros y con</span>
@@ -84,18 +137,18 @@ const EsteticaEspecialistas = () => {
 
         {/* Subtítulo PC (TEXTO MÁS GRANDE y contenedor más ancho para mantener 2 filas) */}
         <p 
-          className="hidden lg:block text-[#88807a] text-[18px] lg:text-[20px] font-medium leading-snug max-w-[900px] mx-auto mb-16"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
+          className="rv hidden lg:block text-[#88807a] text-[18px] lg:text-[20px] font-medium leading-snug max-w-[900px] mx-auto mb-16"
+          style={{ fontFamily: "'Montserrat', sans-serif", '--i': 1 }}
         >
           Resaltamos la belleza respetando la naturalidad de cada rostro, siempre bajo<br />
           tratamientos seguros y con nuestros especialistas altamente capacitados
         </p>
       </div>
 
-      {/* Carrusel con Swipe y Animación */}
+      {/* Carrusel con Swipe */}
       <div 
-        className="relative w-full mb-[6vw] lg:mb-10 opacity-0 animate-fade-up touch-pan-y"
-        style={{ animationDelay: '0.4s' }}
+        style={{ '--i': 2 }}
+        className="rv relative w-full mb-[6vw] lg:mb-10 touch-pan-y"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -148,7 +201,10 @@ const EsteticaEspecialistas = () => {
       </div>
 
       {/* Puntos */}
-      <div className="flex justify-center items-center gap-[2.4vw] lg:gap-3 mb-[8vw] lg:mb-20">
+      <div
+        style={{ '--i': 3 }}
+        className="rv flex justify-center items-center gap-[2.4vw] lg:gap-3 mb-[8vw] lg:mb-20"
+      >
         {casos.map((_, index) => (
           <button
             key={index}
@@ -163,8 +219,8 @@ const EsteticaEspecialistas = () => {
         ))}
       </div>
 
-      {/* Botón y redes con animación */}
-      <div className="flex flex-col items-center opacity-0 animate-fade-up" style={{ animationDelay: '0.6s' }}>
+      {/* Botón y redes */}
+      <div style={{ '--i': 4 }} className="rv flex flex-col items-center">
         <a 
           href="https://wa.me/51994060977" 
           target="_blank" 
@@ -216,23 +272,6 @@ const EsteticaEspecialistas = () => {
           </div>
         </div>
       </div>
-
-      {/* Estilos de animación */}
-      <style>{`
-        @keyframes fadeUp {
-          0% {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-up {
-          animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-      `}</style>
 
     </section>
   );

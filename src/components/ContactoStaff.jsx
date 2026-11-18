@@ -1,8 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+const ESTILOS_ANIMACION = `
+  :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
+
+  @keyframes cs-aparecer {
+    from { opacity: 0; translate: 0 10px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .cs-reveal .rv { opacity: 0; }
+  .cs-reveal.is-visible .rv {
+    animation: cs-aparecer 0.95s var(--ease-delicado) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-reveal .rv {
+      animation: none !important; opacity: 1 !important; translate: none !important;
+    }
+  }
+`;
+
+const useReveal = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+};
 
 const ContactoStaff = () => {
+  const [ref, visible] = useReveal(0.12);
+
   return (
-    <section className="w-full font-principal overflow-hidden relative mt-[-2px]">
+    <section
+      ref={ref}
+      className={`cs-reveal ${visible ? 'is-visible' : ''} w-full font-principal overflow-hidden relative mt-[-2px]`}
+    >
+      <style>{ESTILOS_ANIMACION}</style>
       
       {/* =========================================
           VISTA CELULAR Y TABLET (< lg)
@@ -17,20 +71,20 @@ const ContactoStaff = () => {
         {/* TÍTULO Y PÁRRAFO SUPERIOR (En blanco, CENTRADO) */}
         <div className="relative z-10 flex flex-col items-center text-center w-full mt-2">
           
-          {/* ✅ Título en 3 filas (solo celular/tablet) */}
+          {/* Título en 3 filas (solo celular/tablet) */}
           <h2 
-            className="text-white text-[clamp(14px,4.6vw,28px)] leading-[1.1] tracking-tighter font-light drop-shadow-md mb-4 whitespace-nowrap"
-            style={{ fontFamily: 'Alta, serif' }}
+            className="rv text-white text-[clamp(14px,4.6vw,28px)] leading-[1.1] tracking-tighter font-light drop-shadow-md mb-4 whitespace-nowrap"
+            style={{ fontFamily: 'Alta, serif', '--i': 0 }}
           >
             <span className="block">SALVAR DERMATOPLÁSTICA</span>
             <span className="block">ESPECIALISTAS EN DERMATOLOGÍA CLÍNICA,</span>
             <span className="block">ESTÉTICA, LÁSER Y TRICOLOGIA</span>
           </h2>
 
-          {/* ✅ Párrafo en Montserrat (celular) */}
+          {/* Párrafo en Montserrat (celular) */}
           <p
-            className="text-white text-[15px] font-normal leading-[1.35] drop-shadow-md max-w-[340px] sm:max-w-[420px] mx-auto"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            className="rv text-white text-[15px] font-normal leading-[1.35] drop-shadow-md max-w-[340px] sm:max-w-[420px] mx-auto"
+            style={{ fontFamily: "'Montserrat', sans-serif", '--i': 1 }}
           >
             Agenda tu evaluación con nuestro staff altamente capacitado dentro y fuera del país. Para mayor información y citas, ¡contáctanos!
           </p>
@@ -45,7 +99,8 @@ const ContactoStaff = () => {
             href="https://wa.me/51994060977" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="w-[240px] sm:w-[280px] h-[44px] bg-[#d9c4bc] text-white rounded-full flex items-center justify-center gap-2.5 shadow-lg active:scale-95 transition-transform mb-2.5"
+            style={{ '--i': 2 }}
+            className="rv w-[240px] sm:w-[280px] h-[44px] bg-[#d9c4bc] text-white rounded-full flex items-center justify-center gap-2.5 shadow-lg active:scale-95 transition-transform mb-2.5"
           >
             <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
               <img 
@@ -61,7 +116,7 @@ const ContactoStaff = () => {
           </a>
 
           {/* Redes Sociales centradas */}
-          <div className="flex items-center gap-2.5 text-white drop-shadow-md">
+          <div style={{ '--i': 3 }} className="rv flex items-center gap-2.5 text-white drop-shadow-md">
             <span className="text-[11px] sm:text-[13px] font-light tracking-wide">
               Síguenos en:
             </span>
@@ -108,8 +163,8 @@ const ContactoStaff = () => {
           <div className="w-full md:w-[60%] lg:w-[50%] flex flex-col items-center md:items-start text-center md:text-left">
             
             <h2 
-              className="relative -top-8 md:-top-16 text-[#053d57] text-[1.8rem] sm:text-4xl md:text-[2.5rem] lg:text-[2.8rem] leading-[1.1] mb-6 md:mb-8 tracking-wide drop-shadow-sm"
-              style={{ fontFamily: 'Alta, serif' }}
+              className="rv relative -top-8 md:-top-16 text-[#053d57] text-[1.8rem] sm:text-4xl md:text-[2.5rem] lg:text-[2.8rem] leading-[1.1] mb-6 md:mb-8 tracking-wide drop-shadow-sm"
+              style={{ fontFamily: 'Alta, serif', '--i': 0 }}
             >
               SALVAR DERMATOPLÁSTICA<br />
               ESPECIALISTAS EN<br />
@@ -118,10 +173,10 @@ const ContactoStaff = () => {
               TRICOLOGIA
             </h2>
 
-            {/* ✅ Párrafo en Montserrat (PC) */}
+            {/* Párrafo en Montserrat (PC) */}
             <p
-              className="relative -top-10 md:-top-20 text-white text-[15px] md:text-[18px] lg:text-[19px] font-light leading-[1.3] mb-16 md:mb-24 max-w-[450px] drop-shadow-sm"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              className="rv relative -top-10 md:-top-20 text-white text-[15px] md:text-[18px] lg:text-[19px] font-light leading-[1.3] mb-16 md:mb-24 max-w-[450px] drop-shadow-sm"
+              style={{ fontFamily: "'Montserrat', sans-serif", '--i': 1 }}
             >
               Agenda tu evaluación con nuestro staff<br className="hidden md:block" />
               altamente capacitado dentro y fuera del país.<br className="hidden md:block" />
@@ -132,7 +187,8 @@ const ContactoStaff = () => {
               href="https://wa.me/51994060977" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="relative top-12 md:top-24 bg-[#dcc4bc] hover:bg-[#ceb5ac] text-white rounded-full py-4 px-8 md:px-10 flex items-center justify-center gap-4 shadow-md transition-all group mb-4 md:mb-5 w-fit"
+              style={{ '--i': 2 }}
+              className="rv relative top-12 md:top-24 bg-[#dcc4bc] hover:bg-[#ceb5ac] text-white rounded-full py-4 px-8 md:px-10 flex items-center justify-center gap-4 shadow-md transition-all group mb-4 md:mb-5 w-fit"
             >
               <div className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center">
                 <img 
@@ -147,7 +203,7 @@ const ContactoStaff = () => {
               </span>
             </a>
 
-            <div className="relative top-8 md:top-28 flex items-center gap-5 text-white drop-shadow-sm">
+            <div style={{ '--i': 3 }} className="rv relative top-8 md:top-28 flex items-center gap-5 text-white drop-shadow-sm">
               <span className="text-[17px] md:text-[20px] font-light tracking-wide">
                 Síguenos en:
               </span>
