@@ -84,10 +84,14 @@ const SkinLounge = () => {
           </p>
         </div>
 
-        {/* Card del video (sale del hero hacia el blanco) con etiqueta <video> */}
-        <div
+        {/* Card del video (sale del hero hacia el blanco) con enlace a Instagram */}
+        <a
+          href="https://www.instagram.com/reel/DWPntvOAast/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ver reel en Instagram"
           style={{ '--i': 2 }}
-          className="rv absolute top-[139vw] left-[6vw] w-[88vw] h-[118vw] z-30 rounded-[7vw] border-[1.6vw] border-white/40 shadow-2xl overflow-hidden group cursor-pointer"
+          className="rv block absolute top-[139vw] left-[6vw] w-[88vw] h-[118vw] z-30 rounded-[7vw] border-[1.6vw] border-white/40 shadow-2xl overflow-hidden group cursor-pointer"
         >
           <video
             src="https://res.cloudinary.com/da47iihxz/video/upload/v1793947209/pls6fpru0mn8rxi1k2gg.mp4"
@@ -102,11 +106,11 @@ const SkinLounge = () => {
               <path d="M8 5v14l11-7z" />
             </svg>
           </div>
-        </div>
+        </a>
       </section>
 
       {/* =====================================================
-          HERO PC (sin cambios de estructura, solo <video>)
+          HERO PC (con enlace a Instagram en el video)
           ===================================================== */}
       <section className={`sl-reveal ${heroVisible ? 'is-visible' : ''} hidden lg:block relative w-full mb-32 md:mb-48 lg:mb-64`}>
         
@@ -152,10 +156,14 @@ const SkinLounge = () => {
           </div>
         </div>
 
-        {/* Card del video en PC con etiqueta <video> */}
-        <div
+        {/* Card del video en PC con enlace a Instagram */}
+        <a
+          href="https://www.instagram.com/reel/DWPntvOAast/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ver reel en Instagram"
           style={{ '--i': 2 }}
-          className="rv absolute bottom-[-120px] md:bottom-[-160px] lg:bottom-[-250px] right-6 md:right-16 lg:right-[10%] xl:right-[15%] z-30 w-[260px] md:w-[320px] lg:w-[380px] h-[450px] md:h-[580px] lg:h-[650px] rounded-[2rem] border-[4px] md:border-[6px] border-white/40 shadow-2xl overflow-hidden group cursor-pointer"
+          className="rv block absolute bottom-[-120px] md:bottom-[-160px] lg:bottom-[-250px] right-6 md:right-16 lg:right-[10%] xl:right-[15%] z-30 w-[260px] md:w-[320px] lg:w-[380px] h-[450px] md:h-[580px] lg:h-[650px] rounded-[2rem] border-[4px] md:border-[6px] border-white/40 shadow-2xl overflow-hidden group cursor-pointer"
         >
           <video 
             src="https://res.cloudinary.com/da47iihxz/video/upload/v1793947209/pls6fpru0mn8rxi1k2gg.mp4"
@@ -170,7 +178,7 @@ const SkinLounge = () => {
               <path d="M8 5v14l11-7z" />
             </svg>
           </div>
-        </div>
+        </a>
       </section>
 
       <TratamientosSkinLounge />
