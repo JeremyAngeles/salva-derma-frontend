@@ -84,6 +84,14 @@ const CasosExito = () => {
     { id: 8, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793082628/q6paz1utzz2s50piug2z.png' },
   ];
 
+  const prevCase = () => {
+    setCurrentCase((prev) => (prev === 0 ? casos.length - 1 : prev - 1));
+  };
+
+  const nextCase = () => {
+    setCurrentCase((prev) => (prev === casos.length - 1 ? 0 : prev + 1));
+  };
+
   // Lógica para deslizar con el dedo (Swipe)
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
@@ -103,12 +111,8 @@ const CasosExito = () => {
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
 
-    if (isLeftSwipe) {
-      setCurrentCase((prev) => (prev === casos.length - 1 ? 0 : prev + 1));
-    }
-    if (isRightSwipe) {
-      setCurrentCase((prev) => (prev === 0 ? casos.length - 1 : prev - 1));
-    }
+    if (isLeftSwipe) nextCase();
+    if (isRightSwipe) prevCase();
   };
 
   useEffect(() => {
@@ -116,7 +120,7 @@ const CasosExito = () => {
       setCurrentCase((prev) => (prev + 1) % casos.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [casos.length]);
+  }, [casos.length, currentCase]);
 
   return (
     <section
@@ -153,56 +157,84 @@ const CasosExito = () => {
           protocolos combinados. Nuestra clave es combinar más de 1 tecnología.
         </p>
 
-        {/* CARD DE FOTOS CON EVENTOS TÁCTILES */}
-        <div 
-          style={{ '--i': 2 }}
-          className="rv w-full max-w-[850px] rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden shadow-2xl bg-white relative z-20 transition-all duration-500 border border-gray-100 touch-pan-y"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="w-full relative flex items-center justify-center bg-gray-50 lg:h-[420px]">
-            
-            {/* Imagen base invisible para dar altura estructural en móvil */}
-            <img
-              src={casos[0].img}
-              alt="layout"
-              className="block w-full h-auto lg:h-full lg:object-cover invisible pointer-events-none"
-            />
+        {/* CONTENEDOR DEL CARD + FLECHAS EN PC */}
+        <div style={{ '--i': 2 }} className="rv relative w-full max-w-[850px] z-20">
+          
+          {/* Flecha Izquierda (Solo PC) */}
+          <button
+            type="button"
+            onClick={prevCase}
+            aria-label="Caso anterior"
+            className="hidden lg:flex items-center justify-center absolute top-1/2 -translate-y-1/2 -left-14 xl:-left-16 z-30 w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-[#bc9b92]/50 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
 
-            {/* Mapeo de todas las imágenes para la transición fluida (fade limpio sin zoom) */}
-            {casos.map((caso, index) => (
+          {/* CARD DE FOTOS CON EVENTOS TÁCTILES */}
+          <div 
+            className="w-full rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden shadow-2xl bg-white relative transition-all duration-500 border border-gray-100 touch-pan-y"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div className="w-full relative flex items-center justify-center bg-gray-50 lg:h-[420px]">
+              
+              {/* Imagen base invisible para dar altura estructural en móvil */}
               <img
-                key={caso.id}
-                src={caso.img}
-                alt={`Caso de éxito ${index + 1}`}
-                className={`absolute top-0 left-0 w-full h-full lg:object-cover transition-opacity duration-1000 ease-in-out ${
-                  currentCase === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                }`}
-                onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute top-0 left-0 w-full h-full object-cover bg-[#ebdcd5]'; }}
+                src={casos[0].img}
+                alt="layout"
+                className="block w-full h-auto lg:h-full lg:object-cover invisible pointer-events-none"
               />
-            ))}
 
-            {/* Textos Flotantes de ANTES y DESPUÉS con letras muy juntas */}
-            <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none z-20">
-              <span
-                className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                ANTES
-              </span>
+              {/* Mapeo de todas las imágenes para la transición fluida (fade limpio sin zoom) */}
+              {casos.map((caso, index) => (
+                <img
+                  key={caso.id}
+                  src={caso.img}
+                  alt={`Caso de éxito ${index + 1}`}
+                  className={`absolute top-0 left-0 w-full h-full lg:object-cover transition-opacity duration-1000 ease-in-out ${
+                    currentCase === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+                  onError={(e) => { e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; e.target.className='absolute top-0 left-0 w-full h-full object-cover bg-[#ebdcd5]'; }}
+                />
+              ))}
+
+              {/* Textos Flotantes de ANTES y DESPUÉS con letras muy juntas */}
+              <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none z-20">
+                <span
+                  className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  ANTES
+                </span>
+              </div>
+
+              <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none z-20">
+                <span
+                  className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  DESPUÉS
+                </span>
+              </div>
+
             </div>
-
-            <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none z-20">
-              <span
-                className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                DESPUÉS
-              </span>
-            </div>
-
           </div>
+
+          {/* Flecha Derecha (Solo PC) */}
+          <button
+            type="button"
+            onClick={nextCase}
+            aria-label="Siguiente caso"
+            className="hidden lg:flex items-center justify-center absolute top-1/2 -translate-y-1/2 -right-14 xl:-right-16 z-30 w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-[#bc9b92]/50 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
         </div>
 
         {/* Puntitos indicadores */}

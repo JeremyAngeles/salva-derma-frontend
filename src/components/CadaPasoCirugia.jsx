@@ -60,13 +60,21 @@ const CadaPasoCirugia = () => {
     'https://res.cloudinary.com/da47iihxz/image/upload/v1793123759/ebl5bpkcvqh32etudong.jpg',
   ];
 
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % casos.length);
+  };
+
   // Efecto para que cambien automáticamente cada 5 segundos
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % casos.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [casos.length]);
+  }, [casos.length, currentSlide]);
 
   // --- LÓGICA DE SWIPE (Deslizar a los lados para cambiar fotos en celular) ---
   const [touchStartX, setTouchStartX] = useState(null);
@@ -87,12 +95,8 @@ const CadaPasoCirugia = () => {
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
 
-    if (isLeftSwipe) {
-      setCurrentSlide((prev) => (prev + 1) % casos.length);
-    }
-    if (isRightSwipe) {
-      setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length);
-    }
+    if (isLeftSwipe) nextSlide();
+    if (isRightSwipe) prevSlide();
   };
 
   return (
@@ -216,7 +220,7 @@ const CadaPasoCirugia = () => {
       </section>
 
       {/* =========================================
-          VISTA PC (lg:) - ANIMADA
+          VISTA PC (lg:) - ANIMADA CON FLECHAS AL COSTADO
           ========================================= */}
       <section 
         className="hidden lg:block relative w-full py-16 md:py-24 font-principal overflow-hidden bg-cover bg-center bg-no-repeat"
@@ -226,8 +230,8 @@ const CadaPasoCirugia = () => {
         {/* Capa sutil de protección para legibilidad */}
         <div className="absolute inset-0 bg-white/20 md:bg-white/10 pointer-events-none z-0"></div>
 
-        {/* Contenedor principal alineado a la derecha */}
-        <div className="relative z-10 max-w-[1350px] mx-auto px-6 lg:px-12 flex justify-center lg:justify-end">
+        {/* Contenedor principal alineado a la derecha (con espacio extra a la derecha para la flecha) */}
+        <div className="relative z-10 max-w-[1380px] mx-auto px-6 lg:px-16 flex justify-center lg:justify-end">
           
           <div className="w-full lg:w-[62%] flex flex-col items-center lg:items-end text-center lg:text-right">
             
@@ -261,43 +265,73 @@ const CadaPasoCirugia = () => {
               </p>
             </div>
 
-            {/* Contenedor de la Imagen y Puntitos */}
+            {/* Contenedor de la Imagen, Flechas externas y Puntitos */}
             <div style={{ '--i': 3 }} className="rv w-full max-w-[680px] flex flex-col items-center">
               
-              <div className="w-full h-[250px] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30 group">
-                {casos.map((imgUrl, index) => (
-                  <img 
-                    key={index}
-                    src={imgUrl} 
-                    alt={`Caso Antes y Después ${index + 1}`} 
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-                      index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                    }`}
-                    onError={(e) => { 
-                      e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; 
-                      e.target.className = 'absolute inset-0 w-full h-full bg-[#d8d4d0] object-cover'; 
-                    }}
-                  />
-                ))}
+              {/* Wrapper relativo fuera del overflow-hidden para que las flechas queden al costado */}
+              <div className="relative w-full">
 
-                {/* Etiquetas ANTES y DESPUÉS en Montserrat, con letras más juntas */}
-                <div className="absolute bottom-4 md:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none z-20">
-                  <span 
-                    className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    ANTES
-                  </span>
+                {/* Flecha Izquierda (separada al costado de la foto) */}
+                <button
+                  type="button"
+                  onClick={prevSlide}
+                  aria-label="Caso anterior"
+                  className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 -left-14 xl:-left-16 z-30 w-11 h-11 rounded-full bg-white/95 backdrop-blur-md border border-[#c9a79e]/70 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
+                {/* Tarjeta de fotos */}
+                <div className="w-full h-[250px] sm:h-[300px] md:h-[340px] rounded-[1.4rem] overflow-hidden shadow-lg relative bg-white/40 backdrop-blur-sm border border-white/30">
+                  {casos.map((imgUrl, index) => (
+                    <img 
+                      key={index}
+                      src={imgUrl} 
+                      alt={`Caso Antes y Después ${index + 1}`} 
+                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                        index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                      }`}
+                      onError={(e) => { 
+                        e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='; 
+                        e.target.className = 'absolute inset-0 w-full h-full bg-[#d8d4d0] object-cover'; 
+                      }}
+                    />
+                  ))}
+
+                  {/* Etiquetas ANTES y DESPUÉS en Montserrat, con letras más juntas */}
+                  <div className="absolute bottom-4 md:bottom-6 left-0 w-1/2 flex justify-center pointer-events-none z-20">
+                    <span 
+                      className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
+                    >
+                      ANTES
+                    </span>
+                  </div>
+
+                  <div className="absolute bottom-4 md:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none z-20">
+                    <span 
+                      className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
+                    >
+                      DESPUÉS
+                    </span>
+                  </div>
                 </div>
 
-                <div className="absolute bottom-4 md:bottom-6 right-0 w-1/2 flex justify-center pointer-events-none z-20">
-                  <span 
-                    className="text-white text-sm sm:text-xl lg:text-2xl font-medium tracking-[0.02em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    DESPUÉS
-                  </span>
-                </div>
+                {/* Flecha Derecha (separada al costado de la foto) */}
+                <button
+                  type="button"
+                  onClick={nextSlide}
+                  aria-label="Siguiente caso"
+                  className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 -right-14 xl:-right-16 z-30 w-11 h-11 rounded-full bg-white/95 backdrop-blur-md border border-[#c9a79e]/70 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+
               </div>
 
               <div className="flex items-center justify-center gap-3 mt-4">

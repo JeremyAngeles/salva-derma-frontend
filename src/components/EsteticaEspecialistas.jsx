@@ -75,12 +75,20 @@ const EsteticaEspecialistas = () => {
     }
   ];
 
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % casos.length);
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % casos.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [casos.length]);
+  }, [casos.length, currentSlide]);
 
   // --- LÓGICA DE SWIPE (Deslizar con el dedo) ---
   const [touchStartX, setTouchStartX] = useState(null);
@@ -101,12 +109,8 @@ const EsteticaEspecialistas = () => {
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
 
-    if (isLeftSwipe) {
-      setCurrentSlide((prev) => (prev + 1) % casos.length);
-    }
-    if (isRightSwipe) {
-      setCurrentSlide((prev) => (prev - 1 + casos.length) % casos.length);
-    }
+    if (isLeftSwipe) nextSlide();
+    if (isRightSwipe) prevSlide();
   };
 
   return (
@@ -145,7 +149,7 @@ const EsteticaEspecialistas = () => {
         </p>
       </div>
 
-      {/* Carrusel con Swipe */}
+      {/* Carrusel con Swipe y Flechas en PC */}
       <div 
         style={{ '--i': 2 }}
         className="rv relative w-full mb-[6vw] lg:mb-10 touch-pan-y"
@@ -157,6 +161,19 @@ const EsteticaEspecialistas = () => {
         <div className="absolute inset-x-0 top-[18%] bottom-[19%] lg:top-[25%] lg:bottom-[25%] bg-[#d3d3d3] z-0"></div>
 
         <div className="relative z-10 max-w-[1000px] mx-auto px-[3.2vw] lg:px-12">
+          
+          {/* Flecha Izquierda (Solo PC) */}
+          <button
+            type="button"
+            onClick={prevSlide}
+            aria-label="Caso anterior"
+            className="hidden lg:flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-6 xl:-left-3 z-30 w-12 h-12 rounded-full bg-white/95 backdrop-blur-md border border-[#d1b3ab]/60 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
           <div className="w-[99%] lg:w-full mx-auto rounded-[3vw] lg:rounded-[2rem] overflow-hidden shadow-lg flex flex-row bg-[#e8e4e1] relative">
             
             {casos.map((caso, index) => (
@@ -197,6 +214,19 @@ const EsteticaEspecialistas = () => {
             <div className="w-full h-[38vw] lg:h-[450px] pointer-events-none"></div>
 
           </div>
+
+          {/* Flecha Derecha (Solo PC) */}
+          <button
+            type="button"
+            onClick={nextSlide}
+            aria-label="Siguiente caso"
+            className="hidden lg:flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-6 xl:-right-3 z-30 w-12 h-12 rounded-full bg-white/95 backdrop-blur-md border border-[#d1b3ab]/60 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
         </div>
       </div>
 

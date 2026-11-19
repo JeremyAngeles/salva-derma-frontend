@@ -59,6 +59,14 @@ const CasosExitoAlopecia = () => {
     { id: 4, img: 'https://res.cloudinary.com/da47iihxz/image/upload/v1793086367/qeby8xeztxheirwjt7hg.png' }
   ];
 
+  const prevCase = () => {
+    setCurrentCase((prev) => (prev === 0 ? casos.length - 1 : prev - 1));
+  };
+
+  const nextCase = () => {
+    setCurrentCase((prev) => (prev === casos.length - 1 ? 0 : prev + 1));
+  };
+
   // Lógica para deslizar con el dedo (Swipe)
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
@@ -78,12 +86,8 @@ const CasosExitoAlopecia = () => {
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
 
-    if (isLeftSwipe) {
-      setCurrentCase((prev) => (prev === casos.length - 1 ? 0 : prev + 1));
-    }
-    if (isRightSwipe) {
-      setCurrentCase((prev) => (prev === 0 ? casos.length - 1 : prev - 1));
-    }
+    if (isLeftSwipe) nextCase();
+    if (isRightSwipe) prevCase();
   };
 
   useEffect(() => {
@@ -91,7 +95,7 @@ const CasosExitoAlopecia = () => {
       setCurrentCase((prev) => (prev + 1) % casos.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [casos.length]);
+  }, [casos.length, currentCase]);
 
   return (
     <section
@@ -115,16 +119,16 @@ const CasosExitoAlopecia = () => {
           PROTOCOLOS CLÍNICOS REALES.
         </h2>
 
-        {/* Subtítulo — 100% asegurado con fuente Montserrat en celular y PC */}
+        {/* Subtítulo — igualado en Montserrat, color #88807a y peso delicado en celular y PC */}
         <p 
-          className="rv text-[#88807a] text-[clamp(11px,2.6vw,20px)] lg:text-base font-medium leading-[1.2] mb-6 sm:mb-10 lg:mb-12 max-w-[700px]"
+          className="rv text-[#88807a] text-[13px] md:text-[17px] font-normal md:font-light leading-[1.15] mb-6 sm:mb-10 lg:mb-12 max-w-[750px]"
           style={{ fontFamily: "'Montserrat', sans-serif", '--i': 1 }}
         >
-          Nuestro staff de dermatólogos capacitados en tricología te<br />
+          Nuestro staff de dermatólogos capacitados en tricología te<br className="hidden md:block" />{' '}
           presentan algunos de nuestros casos de éxito.
         </p>
 
-        {/* Card + franja gris (celular/tablet) */}
+        {/* Card + franja gris (celular/tablet) + Flechas (PC) */}
         <div 
           style={{ '--i': 2 }}
           className="rv relative w-full max-w-[850px] touch-pan-y"
@@ -132,6 +136,18 @@ const CasosExitoAlopecia = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
+
+          {/* Flecha Izquierda (Solo PC) */}
+          <button
+            type="button"
+            onClick={prevCase}
+            aria-label="Caso anterior"
+            className="hidden lg:flex items-center justify-center absolute top-1/2 -translate-y-1/2 -left-14 xl:-left-16 z-30 w-12 h-12 rounded-full bg-white/95 backdrop-blur-md border border-[#bc9b92]/50 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
 
           {/* Franja gris detrás del card (solo celular/tablet) */}
           <div className="lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-[62%] bg-[#e6e6e6] -z-10"></div>
@@ -181,6 +197,19 @@ const CasosExitoAlopecia = () => {
 
             </div>
           </div>
+
+          {/* Flecha Derecha (Solo PC) */}
+          <button
+            type="button"
+            onClick={nextCase}
+            aria-label="Siguiente caso"
+            className="hidden lg:flex items-center justify-center absolute top-1/2 -translate-y-1/2 -right-14 xl:-right-16 z-30 w-12 h-12 rounded-full bg-white/95 backdrop-blur-md border border-[#bc9b92]/50 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
         </div>
 
         {/* Puntitos indicadores */}

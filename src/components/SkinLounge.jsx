@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 /* ============================================================
    ✨ ANIMACIONES (todo vive en este mismo archivo)
-   - 1.1s  = duración de la entrada
-   - 120ms = retraso entre un elemento y el siguiente
+- 1.1s  = duración de la entrada
+- 120ms = retraso entre un elemento y el siguiente
    ============================================================ */
 const ESTILOS_ANIMACION = `
   :root { --ease-suave: cubic-bezier(0.22, 1, 0.36, 1); }
@@ -63,6 +63,8 @@ const SkinLounge = () => {
   // 1. Carrusel de Imágenes (Izquierda)
   // =========================================
   const [currentImage, setCurrentImage] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
 
   const images = [
     'https://res.cloudinary.com/da47iihxz/image/upload/v1792799855/zdeq0dpeah0wot2ulxio.jpg',
@@ -77,13 +79,35 @@ const SkinLounge = () => {
       setCurrentImage((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [images.length]);
+  }, [images.length, currentImage]);
+
+  const handleImageTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleImageTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleImageTouchEnd = () => {
+    if (touchStartX === null || touchEndX === null) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > 50) {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    } else if (distance < -50) {
+      setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+    }
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
 
   // =========================================
   // 2. Carrusel de Testimonios (Solo Móvil)
   // =========================================
   const testimonialRef = useRef(null);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [isTouchingTestimonial, setIsTouchingTestimonial] = useState(false);
 
   const testimonials = [
     {
@@ -101,21 +125,40 @@ const SkinLounge = () => {
   ];
 
   useEffect(() => {
+    if (isTouchingTestimonial) return;
+
     const timer = setInterval(() => {
       if (window.innerWidth < 768 && testimonialRef.current) {
+        const container = testimonialRef.current;
         const nextIndex = (currentTestimonial + 1) % testimonials.length;
         setCurrentTestimonial(nextIndex);
 
-        const cardWidth = testimonialRef.current.offsetWidth;
-        testimonialRef.current.scrollTo({
-          left: nextIndex * cardWidth,
-          behavior: 'smooth'
-        });
+        const targetCard = container.children[nextIndex];
+        if (targetCard) {
+          container.scrollTo({
+            left: targetCard.offsetLeft - container.offsetLeft,
+            behavior: 'smooth'
+          });
+        }
       }
-    }, 3000);
+    }, 3500);
 
     return () => clearInterval(timer);
-  }, [currentTestimonial, testimonials.length]);
+  }, [currentTestimonial, testimonials.length, isTouchingTestimonial]);
+
+  const handleTestimonialScroll = () => {
+    const container = testimonialRef.current;
+    if (!container || window.innerWidth >= 768) return;
+
+    const firstCard = container.children[0];
+    if (!firstCard) return;
+
+    const step = firstCard.offsetWidth + 20; // ancho de tarjeta + gap-5 (20px)
+    const index = Math.round(container.scrollLeft / step);
+    if (index >= 0 && index < testimonials.length && index !== currentTestimonial) {
+      setCurrentTestimonial(index);
+    }
+  };
 
   return (
     <section
@@ -155,10 +198,13 @@ const SkinLounge = () => {
             </p>
           </div>
 
-          {/* Tarjeta de Imagen Vertical (Carrusel Animado CON BORDE MÁS GRUESO) */}
+          {/* Tarjeta de Imagen Vertical (Carrusel Animado con Swipe) */}
           <div
             style={{ '--i': 3 }}
-            className="rv relative w-[300px] md:w-[360px] lg:w-[380px] h-[460px] md:h-[540px] lg:h-[570px] rounded-[2rem] overflow-hidden border-[6px] md:border-[8px] border-white border-opacity-40 shadow-2xl mx-auto lg:mx-0 bg-black/10"
+            onTouchStart={handleImageTouchStart}
+            onTouchMove={handleImageTouchMove}
+            onTouchEnd={handleImageTouchEnd}
+            className="rv relative w-[300px] md:w-[360px] lg:w-[380px] h-[460px] md:h-[540px] lg:h-[570px] rounded-[2rem] overflow-hidden border-[6px] md:border-[8px] border-white border-opacity-40 shadow-2xl mx-auto lg:mx-0 bg-black/10 touch-pan-y select-none"
           >
 
             {/* Imágenes con fundido lento + zoom casi imperceptible */}
@@ -167,6 +213,7 @@ const SkinLounge = () => {
                 key={index}
                 src={img}
                 alt={`Skin Lounge Procedimiento ${index + 1}`}
+                draggable="false"
                 className={`absolute inset-0 w-full h-full object-cover ${
                   index === currentImage ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 }`}
@@ -204,11 +251,14 @@ const SkinLounge = () => {
             ========================================= */}
         <div className="flex flex-col gap-6 w-full max-w-[520px] mx-auto lg:ml-auto lg:-mr-12 xl:-mr-20 mt-10 lg:mt-0">
 
-          {/* Carrusel en celular y Lista normal en PC */}
+          {/* Carrusel deslizable con el dedo en celular y Lista normal en PC */}
           <div
             ref={testimonialRef}
-            className="flex md:flex-col overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide pb-4 md:pb-0 gap-5 md:gap-6"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            onScroll={handleTestimonialScroll}
+            onTouchStart={() => setIsTouchingTestimonial(true)}
+            onTouchEnd={() => setIsTouchingTestimonial(false)}
+            className="flex md:flex-col overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide pb-4 md:pb-0 gap-5 md:gap-6 touch-pan-x"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {testimonials.map((testimonio, i) => (
               <div

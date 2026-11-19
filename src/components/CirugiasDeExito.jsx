@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const ESTILOS_ANIMACION = `
   :root { --ease-delicado: cubic-bezier(0.25, 1, 0.5, 1); }
@@ -14,9 +14,115 @@ const ESTILOS_ANIMACION = `
     animation-delay: calc(var(--i, 0) * 90ms);
   }
 
+  /* ============================================
+     ANIMACIONES VISIBLES DEL MODAL (ABRIR Y CERRAR)
+     ============================================ */
+  @keyframes cde-fondo-entrar {
+    from {
+      opacity: 0;
+      backdrop-filter: blur(0px);
+    }
+    to {
+      opacity: 1;
+      backdrop-filter: blur(8px);
+    }
+  }
+
+  @keyframes cde-fondo-salir {
+    from {
+      opacity: 1;
+      backdrop-filter: blur(8px);
+    }
+    to {
+      opacity: 0;
+      backdrop-filter: blur(0px);
+    }
+  }
+
+  @keyframes cde-card-entrar {
+    0% {
+      opacity: 0;
+      transform: translateY(38px) scale(0.84);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes cde-card-salir {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    45% {
+      opacity: 0.85;
+      transform: translateY(16px) scale(0.92);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(44px) scale(0.82);
+    }
+  }
+
+  @keyframes cde-flecha-entrar {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes cde-flecha-salir {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+  }
+
+  .cde-fondo-enter {
+    animation: cde-fondo-entrar 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .cde-fondo-exit {
+    animation: cde-fondo-salir 0.42s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .cde-card-enter {
+    animation: cde-card-entrar 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .cde-card-exit {
+    animation: cde-card-salir 0.42s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .cde-flecha-enter {
+    animation: cde-flecha-entrar 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+  }
+
+  .cde-flecha-exit {
+    animation: cde-flecha-salir 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .cde-reveal .rv {
-      animation: none !important; opacity: 1 !important; translate: none !important;
+    .cde-reveal .rv,
+    .cde-fondo-enter,
+    .cde-fondo-exit,
+    .cde-card-enter,
+    .cde-card-exit,
+    .cde-flecha-enter,
+    .cde-flecha-exit {
+      animation: none !important;
+      opacity: 1 !important;
+      translate: none !important;
+      transform: none !important;
     }
   }
 `;
@@ -51,7 +157,9 @@ const useReveal = (threshold = 0.12) => {
 const CirugiasDeExito = () => {
   const [ref, visible] = useReveal(0.12);
   const [modalType, setModalType] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const closeTimerRef = useRef(null);
 
   const galeriaCirugias = {
     otoplastia: {
@@ -102,29 +210,65 @@ const CirugiasDeExito = () => {
   };
 
   const abrirModal = (tipo) => {
-    setModalType(tipo);
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    setIsClosing(false);
     setCurrentImageIndex(0);
+    setModalType(tipo);
   };
 
-  const cerrarModal = () => {
-    setModalType(null);
-  };
+  const cerrarModal = useCallback(() => {
+    if (!modalType || isClosing) return;
+    setIsClosing(true);
+    closeTimerRef.current = setTimeout(() => {
+      setModalType(null);
+      setIsClosing(false);
+      closeTimerRef.current = null;
+    }, 420);
+  }, [modalType, isClosing]);
 
-  const siguienteFoto = (e) => {
+  const siguienteFoto = useCallback((e) => {
     if (e) e.stopPropagation();
     if (modalType) {
       const total = galeriaCirugias[modalType].fotos.length;
       setCurrentImageIndex((prev) => (prev + 1) % total);
     }
-  };
+  }, [modalType]);
 
-  const anteriorFoto = (e) => {
+  const anteriorFoto = useCallback((e) => {
     if (e) e.stopPropagation();
     if (modalType) {
       const total = galeriaCirugias[modalType].fotos.length;
       setCurrentImageIndex((prev) => (prev - 1 + total) % total);
     }
-  };
+  }, [modalType]);
+
+  // Teclado (Escape para cerrar, flechas para navegar) y bloqueo de scroll
+  useEffect(() => {
+    if (!modalType) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') cerrarModal();
+      if (e.key === 'ArrowRight') siguienteFoto();
+      if (e.key === 'ArrowLeft') anteriorFoto();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [modalType, cerrarModal, siguienteFoto, anteriorFoto]);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
+  }, []);
 
   // --- LÓGICA DE SWIPE (Solo para celular) ---
   const [touchStartX, setTouchStartX] = useState(null);
@@ -145,12 +289,8 @@ const CirugiasDeExito = () => {
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
 
-    if (isLeftSwipe) {
-      siguienteFoto();
-    }
-    if (isRightSwipe) {
-      anteriorFoto();
-    }
+    if (isLeftSwipe) siguienteFoto();
+    if (isRightSwipe) anteriorFoto();
   };
 
   return (
@@ -162,7 +302,7 @@ const CirugiasDeExito = () => {
 
       <div className="max-w-[1150px] mx-auto px-6 lg:px-8">
         
-        {/* Título Principal (Más chico y más abajo en celular) */}
+        {/* Título Principal */}
         <h2 
           className="rv text-[#053d57] text-[2.1rem] sm:text-[3.2rem] md:text-[4.0rem] text-center mt-10 md:mt-0 mb-12 md:mb-14 tracking-wide leading-none font-light"
           style={{ fontFamily: 'Alta, serif', '--i': 0 }}
@@ -171,7 +311,7 @@ const CirugiasDeExito = () => {
         </h2>
 
         {/* =========================================
-            VISTA CELULAR Y TABLET (< lg): Orden exacto de referencia
+            VISTA CELULAR Y TABLET (< lg)
             ========================================= */}
         <div className="grid grid-cols-2 gap-4 lg:hidden">
           
@@ -179,7 +319,7 @@ const CirugiasDeExito = () => {
           <div 
             onClick={() => abrirModal('otoplastia')}
             style={{ '--i': 1 }}
-            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.97] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/otoplastia.png" 
@@ -198,7 +338,7 @@ const CirugiasDeExito = () => {
           <div 
             onClick={() => abrirModal('blefaroplastia')}
             style={{ '--i': 2 }}
-            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.97] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/BLEFARO.png" 
@@ -217,7 +357,7 @@ const CirugiasDeExito = () => {
           <div 
             onClick={() => abrirModal('lifting')}
             style={{ '--i': 3 }}
-            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.97] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/LIFTING_FACIAL.png" 
@@ -236,7 +376,7 @@ const CirugiasDeExito = () => {
           <div 
             onClick={() => abrirModal('rinoseptoplastia')}
             style={{ '--i': 4 }}
-            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full h-[220px] min-[390px]:h-[250px] sm:h-[300px] rounded-[1.5rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.97] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/RINOSEPTOPLASTIA.png" 
@@ -251,11 +391,11 @@ const CirugiasDeExito = () => {
             </div>
           </div>
 
-          {/* 5. Armonización Facial (Abajo ocupando todo el ancho) */}
+          {/* 5. Armonización Facial */}
           <div 
             onClick={() => abrirModal('armonizacion')}
             style={{ '--i': 5 }}
-            className="rv relative w-full h-[320px] min-[390px]:h-[360px] sm:h-[420px] col-span-2 rounded-[1.5rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full h-[320px] min-[390px]:h-[360px] sm:h-[420px] col-span-2 rounded-[1.5rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.98] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616262/ARMONIZACI%C3%93N_FACIAL.png" 
@@ -273,7 +413,7 @@ const CirugiasDeExito = () => {
         </div>
 
         {/* =========================================
-            VISTA PC (lg:) - INTACTA SIN CAMBIOS
+            VISTA PC (lg:)
             ========================================= */}
         <div className="hidden lg:grid grid-cols-3 grid-rows-[270px_270px] gap-6">
           
@@ -281,7 +421,7 @@ const CirugiasDeExito = () => {
           <div 
             onClick={() => abrirModal('otoplastia')}
             style={{ '--i': 1 }}
-            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.97] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/otoplastia.png" 
@@ -300,7 +440,7 @@ const CirugiasDeExito = () => {
           <div 
             onClick={() => abrirModal('blefaroplastia')}
             style={{ '--i': 2 }}
-            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.97] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616263/BLEFARO.png" 
@@ -319,7 +459,7 @@ const CirugiasDeExito = () => {
           <div 
             onClick={() => abrirModal('armonizacion')}
             style={{ '--i': 3 }}
-            className="rv relative w-full col-span-1 row-span-2 h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full col-span-1 row-span-2 h-full rounded-[2.2rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.97] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616262/ARMONIZACI%C3%93N_FACIAL.png" 
@@ -338,7 +478,7 @@ const CirugiasDeExito = () => {
           <div 
             onClick={() => abrirModal('lifting')}
             style={{ '--i': 4 }}
-            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.97] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/LIFTING_FACIAL.png" 
@@ -357,7 +497,7 @@ const CirugiasDeExito = () => {
           <div 
             onClick={() => abrirModal('rinoseptoplastia')}
             style={{ '--i': 5 }}
-            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md group bg-[#2b2b2b] cursor-pointer"
+            className="rv relative w-full h-full rounded-[2.2rem] overflow-hidden shadow-md hover:shadow-xl active:scale-[0.97] transition-all duration-300 group bg-[#2b2b2b] cursor-pointer"
           >
             <img 
               src="https://res.cloudinary.com/cgfzvuli/image/upload/v1792616264/RINOSEPTOPLASTIA.png" 
@@ -377,33 +517,41 @@ const CirugiasDeExito = () => {
       </div>
 
       {/* =========================================
-          POP-UP / MODAL MEJORADO Y ELEGANTE
+          POP-UP / MODAL CON ANIMACIÓN CLARA AL ABRIR Y CERRAR
           ========================================= */}
       {modalType && (
         <div 
           onClick={cerrarModal}
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 md:p-6 transition-opacity duration-300 animate-fadeIn"
+          className={`fixed inset-0 z-50 bg-black/75 flex items-center justify-center p-4 md:p-6 ${
+            isClosing ? 'cde-fondo-exit pointer-events-none' : 'cde-fondo-enter'
+          }`}
         >
           <div className="relative flex items-center justify-center w-full max-w-[950px] gap-2 md:gap-6">
             
+            {/* Flecha Izquierda */}
             <button 
               onClick={anteriorFoto}
-              className="hidden sm:flex shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 hover:bg-white/40 border border-white/50 text-white items-center justify-center text-2xl transition-all backdrop-blur-md shadow-lg"
+              className={`hidden sm:flex shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 hover:bg-white/40 hover:scale-105 active:scale-95 border border-white/50 text-white items-center justify-center text-2xl backdrop-blur-md shadow-lg cursor-pointer transition-transform duration-300 ${
+                isClosing ? 'cde-flecha-exit' : 'cde-flecha-enter'
+              }`}
               aria-label="Foto anterior"
             >
               &#10094;
             </button>
 
+            {/* Card Principal del Modal */}
             <div 
               onClick={(e) => e.stopPropagation()} 
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-              className="relative w-full max-w-[750px] bg-white rounded-[2rem] overflow-hidden shadow-2xl p-6 md:p-8 flex flex-col items-center transform transition-all duration-300 scale-100 animate-scaleUp border border-[#e6e2de]"
+              className={`relative w-full max-w-[750px] bg-white rounded-[2rem] overflow-hidden shadow-2xl p-6 md:p-8 flex flex-col items-center border border-[#e6e2de] ${
+                isClosing ? 'cde-card-exit' : 'cde-card-enter'
+              }`}
             >
               <button 
                 onClick={cerrarModal}
-                className="absolute top-4 right-4 md:top-6 md:right-6 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#f4f2ef] hover:bg-[#e6e2de] text-[#053d57] flex items-center justify-center font-bold text-xl transition-colors z-20 shadow-sm"
+                className="absolute top-4 right-4 md:top-6 md:right-6 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#f4f2ef] hover:bg-[#053d57] text-[#053d57] hover:text-white hover:rotate-90 active:scale-90 flex items-center justify-center font-bold text-xl transition-all duration-300 z-20 shadow-sm cursor-pointer"
                 aria-label="Cerrar modal"
               >
                 &times;
@@ -436,7 +584,7 @@ const CirugiasDeExito = () => {
                   <button
                     key={idx}
                     onClick={() => setCurrentImageIndex(idx)}
-                    className={`rounded-full transition-all duration-300 ${
+                    className={`rounded-full transition-all duration-300 cursor-pointer ${
                       currentImageIndex === idx 
                         ? 'bg-[#053d57] w-3 h-3 md:w-3.5 md:h-3.5 scale-110 shadow-sm' 
                         : 'bg-[#dcc4bc] w-2.5 h-2.5 hover:bg-[#c59e93]'
@@ -449,13 +597,13 @@ const CirugiasDeExito = () => {
               <div className="flex sm:hidden justify-between w-full mt-4 px-4">
                 <button 
                   onClick={anteriorFoto}
-                  className="px-4 py-2 bg-[#f4f2ef] rounded-full text-[#053d57] font-semibold shadow-sm text-sm"
+                  className="px-4 py-2 bg-[#f4f2ef] active:scale-95 rounded-full text-[#053d57] font-semibold shadow-sm text-sm transition-transform"
                 >
                   Anterior
                 </button>
                 <button 
                   onClick={siguienteFoto}
-                  className="px-4 py-2 bg-[#f4f2ef] rounded-full text-[#053d57] font-semibold shadow-sm text-sm"
+                  className="px-4 py-2 bg-[#f4f2ef] active:scale-95 rounded-full text-[#053d57] font-semibold shadow-sm text-sm transition-transform"
                 >
                   Siguiente
                 </button>
@@ -463,9 +611,12 @@ const CirugiasDeExito = () => {
 
             </div>
 
+            {/* Flecha Derecha */}
             <button 
               onClick={siguienteFoto}
-              className="hidden sm:flex shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 hover:bg-white/40 border border-white/50 text-white items-center justify-center text-2xl transition-all backdrop-blur-md shadow-lg"
+              className={`hidden sm:flex shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 hover:bg-white/40 hover:scale-105 active:scale-95 border border-white/50 text-white items-center justify-center text-2xl backdrop-blur-md shadow-lg cursor-pointer transition-transform duration-300 ${
+                isClosing ? 'cde-flecha-exit' : 'cde-flecha-enter'
+              }`}
               aria-label="Siguiente foto"
             >
               &#10095;
@@ -474,23 +625,6 @@ const CirugiasDeExito = () => {
           </div>
         </div>
       )}
-
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes scaleUp {
-          from { opacity: 0; transform: scale(0.97); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out forwards;
-        }
-        .animate-scaleUp {
-          animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-      `}</style>
 
     </section>
   );

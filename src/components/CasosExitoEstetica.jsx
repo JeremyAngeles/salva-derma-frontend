@@ -59,6 +59,14 @@ const CasosExitoEstetica = () => {
     { id: 4, img: 'https://res.cloudinary.com/cgfzvuli/image/upload/v1792696123/antes_y_despu%C3%A9s_estetica_4.jpg' }
   ];
 
+  const prevCase = () => {
+    setCurrentCase((prev) => (prev === 0 ? casos.length - 1 : prev - 1));
+  };
+
+  const nextCase = () => {
+    setCurrentCase((prev) => (prev === casos.length - 1 ? 0 : prev + 1));
+  };
+
   // Lógica para deslizar con el dedo (Swipe)
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
@@ -78,12 +86,8 @@ const CasosExitoEstetica = () => {
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
 
-    if (isLeftSwipe) {
-      setCurrentCase((prev) => (prev === casos.length - 1 ? 0 : prev + 1));
-    }
-    if (isRightSwipe) {
-      setCurrentCase((prev) => (prev === 0 ? casos.length - 1 : prev - 1));
-    }
+    if (isLeftSwipe) nextCase();
+    if (isRightSwipe) prevCase();
   };
 
   useEffect(() => {
@@ -91,7 +95,7 @@ const CasosExitoEstetica = () => {
       setCurrentCase((prev) => (prev + 1) % casos.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [casos.length]);
+  }, [casos.length, currentCase]);
 
   return (
     <section
@@ -202,39 +206,68 @@ const CasosExitoEstetica = () => {
             backgroundImage: "url('https://res.cloudinary.com/da47iihxz/image/upload/v1792811388/ltdu5utjhfkbul0cfkjz.png')"
           }}
         >
-          {/* Contenedor interno centrado */}
-          <div className="w-full max-w-[1100px] mx-auto px-0 flex flex-row items-center justify-between gap-10 py-0">
+          {/* Contenedor interno centrado con espacio lateral para las flechas */}
+          <div className="w-full max-w-[1140px] mx-auto md:px-16 xl:px-12 flex flex-row items-center justify-between md:gap-20 lg:gap-24 py-0">
 
-            {/* FOTO VERTICAL */}
-            <div 
+            {/* CONTENEDOR EXTERNO PARA FOTO + FLECHAS SEPARADAS A LOS COSTADOS */}
+            <div
               style={{ '--i': 0 }}
-              className="rv relative z-20 w-full max-w-[310px] h-[680px] -my-[50px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-lg touch-pan-y"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              className="rv relative z-20 w-full max-w-[310px] h-[680px] -my-[50px] shrink-0"
             >
-              {/* Imagen base invisible para mantener la estructura y altura correcta */}
-              <img
-                src={casos[0].img}
-                alt="layout"
-                className="w-full h-full object-cover invisible pointer-events-none"
-              />
+              {/* Flecha Izquierda (fuera de la foto) */}
+              <button
+                type="button"
+                onClick={prevCase}
+                aria-label="Caso anterior"
+                className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 -left-14 z-30 w-11 h-11 rounded-full bg-white/95 backdrop-blur-md border border-[#cfaaa6]/70 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
 
-              {/* Mapeo de todas las imágenes con transición de opacidad (fade) */}
-              {casos.map((caso, index) => (
+              {/* FOTO VERTICAL */}
+              <div 
+                className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg relative touch-pan-y"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                {/* Imagen base invisible para mantener la estructura y altura correcta */}
                 <img
-                  key={caso.id}
-                  src={caso.img}
-                  alt={`Caso Estética ${index + 1}`}
-                  className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-                    currentCase === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                  }`}
-                  onError={(e) => {
-                    e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
-                    e.target.className = 'absolute top-0 left-0 w-full h-full object-cover bg-[#dcc4bc]';
-                  }}
+                  src={casos[0].img}
+                  alt="layout"
+                  className="w-full h-full object-cover invisible pointer-events-none"
                 />
-              ))}
+
+                {/* Mapeo de todas las imágenes con transición de opacidad (fade) */}
+                {casos.map((caso, index) => (
+                  <img
+                    key={caso.id}
+                    src={caso.img}
+                    alt={`Caso Estética ${index + 1}`}
+                    className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                      currentCase === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                    }`}
+                    onError={(e) => {
+                      e.target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
+                      e.target.className = 'absolute top-0 left-0 w-full h-full object-cover bg-[#dcc4bc]';
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Flecha Derecha (fuera de la foto) */}
+              <button
+                type="button"
+                onClick={nextCase}
+                aria-label="Siguiente caso"
+                className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 -right-14 z-30 w-11 h-11 rounded-full bg-white/95 backdrop-blur-md border border-[#cfaaa6]/70 text-[#053d57] shadow-lg hover:bg-[#053d57] hover:text-white hover:border-[#053d57] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
 
             {/* TEXTOS */}
@@ -274,7 +307,7 @@ const CasosExitoEstetica = () => {
         {/* PUNTOS ORIGINALES DE PC: debajo de la franja, a la derecha de la foto */}
         <div
           style={{ '--i': 4 }}
-          className="rv w-full max-w-[1060px] mx-auto px-0 pt-7 flex justify-start pl-[385px]"
+          className="rv w-full max-w-[1060px] mx-auto px-0 pt-7 flex justify-start md:pl-[440px] lg:pl-[455px] xl:pl-[435px]"
         >
           <div className="flex gap-[13px]">
             {casos.map((_, index) => (

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 /* ============================================================
    ✨ ANIMACIONES (todo vive en este mismo archivo)
-   - 1.1s  = duración de la entrada de textos
-   - 120ms = retraso entre un elemento y el siguiente
+- 1.1s  = duración de la entrada de textos
+- 120ms = retraso entre un elemento y el siguiente
    ============================================================ */
 const ESTILOS_ANIMACION = `
   :root { --ease-suave: cubic-bezier(0.22, 1, 0.36, 1); }
@@ -67,6 +67,10 @@ const MejorVersion = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [ref, visible] = useReveal(0.15);
 
+  // Estados para deslizar con el dedo en celular
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
   // Array con las 4 imágenes
   const images = [
     'https://res.cloudinary.com/da47iihxz/image/upload/v1792799600/oi9kvjsmby3ih66rcebj.jpg',
@@ -81,7 +85,28 @@ const MejorVersion = () => {
       setCurrentImage((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [images.length, currentImage]);
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX === null || touchEndX === null) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > 50) {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    } else if (distance < -50) {
+      setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+    }
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
 
   return (
     <section
@@ -143,7 +168,7 @@ const MejorVersion = () => {
         </div>
 
         {/* =========================================
-            COLUMNA DERECHA: Carrusel estirado en móvil
+            COLUMNA DERECHA: Carrusel estirado en móvil (con Swipe)
             ========================================= */}
         <div className="lg:col-span-7 relative w-full h-[460px] min-[390px]:h-[520px] sm:h-[600px] lg:h-[760px] mt-6 lg:mt-0">
 
@@ -156,13 +181,17 @@ const MejorVersion = () => {
           {/* IMÁGENES PRINCIPALES DEL CARRUSEL */}
           <div
             style={{ '--i': 1 }}
-            className="rd absolute right-0 top-0 w-[94%] lg:w-[80%] h-full rounded-l-[2.5rem] lg:rounded-l-[4.5rem] overflow-hidden shadow-2xl z-10 bg-[#f9f9f9]"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className="rd absolute right-0 top-0 w-[94%] lg:w-[80%] h-full rounded-l-[2.5rem] lg:rounded-l-[4.5rem] overflow-hidden shadow-2xl z-10 bg-[#f9f9f9] touch-pan-y select-none"
           >
             {images.map((img, index) => (
               <img
                 key={index}
                 src={img}
                 alt={`Clínica Instalaciones ${index + 1}`}
+                draggable="false"
                 className={`absolute inset-0 w-full h-full object-cover ${
                   index === currentImage ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 }`}
